@@ -1,4 +1,6 @@
-import { UserRole } from "../helpers/authHelper";
+import {
+  UserRole
+} from "../helpers/authHelper";
 
 /*
 Menu Types:
@@ -9,10 +11,21 @@ export const defaultMenuType = 'menu-default';
 export const subHiddenBreakpoint = 1440;
 export const menuHiddenBreakpoint = 768;
 export const defaultLocale = 'en';
-export const localeOptions = [
-  { id: 'en', name: 'English - LTR', direction: 'ltr' },
-  { id: 'es', name: 'Español', direction: 'ltr' },
-  { id: 'enrtl', name: 'English - RTL', direction: 'rtl' },
+export const localeOptions = [{
+    id: 'en',
+    name: 'English - LTR',
+    direction: 'ltr'
+  },
+  {
+    id: 'es',
+    name: 'Español',
+    direction: 'ltr'
+  },
+  {
+    id: 'enrtl',
+    name: 'English - RTL',
+    direction: 'rtl'
+  },
 ];
 
 export const firebaseConfig = {
@@ -58,6 +71,5 @@ export const colors = [
   'greysteel',
 ];
 
-
-export const API_BASE_URL = 'https://api.hubbers.io/api/v1'
-export const API_UPLOAD_URL = 'https://api.hubbers.io/api/v1/upload'
+export const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://api.hubbers.io/api/v1' : process.env.NODE_ENV === 'development' ? 'http://localhost:8888/api/v1' : 'https://api.hubbers.io/api/v1'
+export const API_UPLOAD_URL = process.env.NODE_ENV === 'production' ? 'https://api.hubbers.io/api/v1/upload' : process.env.NODE_ENV === 'development' ? 'http://localhost:8888/api/v1/upload' : 'https://api.hubbers.io/api/v1/upload'

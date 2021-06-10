@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
-import { Card, Table, Select, Input, Button, Popconfirm, Tooltip, message, Spin } from 'antd';
+import { Card, Table, Select, Input, Button, Popconfirm, Tooltip, message, Spin, Upload, Space } from 'antd';
 import { EyeOutlined, FileExcelOutlined, SearchOutlined, EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import AvatarStatus from '../../../components/shared-components/AvatarStatus';
 import Flex from '../../../components/shared-components/Flex'
@@ -10,6 +10,7 @@ import * as Actions from '../../../redux/actions'
 import { useHistory } from "react-router-dom";
 import oldUsers from '../../../data/user'
 import api from '../../../ApiConfig'
+import CreateUserButton from './create-user';
 
 const { Option } = Select
 
@@ -218,7 +219,6 @@ const AllUsers = () => {
             >
               <Button danger icon={<DeleteOutlined />} size="small" />
             </Popconfirm>
-
           </Tooltip>
         </div>
       )
@@ -267,21 +267,18 @@ const AllUsers = () => {
               <Spin />
             </div>
           )}
-          <Tooltip title="Import Users">
-            <Popconfirm
-              title="Are you sure Import all users from old website?"
-              onConfirm={() => importAllUsersFromJson()}
-              onCancel={cancel}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Button type="primary" icon={<PlusOutlined />} block className = "mr-2">Import All Users</Button>  
-            </Popconfirm>
-
-          </Tooltip>
-          <Button type="primary" icon={<FileExcelOutlined />} block>Export All</Button>  
+          <Space>
+            <Tooltip title="Create User">
+              <CreateUserButton />
+            </Tooltip>
+            <Tooltip title="Import Users">
+              <Upload>
+                <Button type="primary" icon={<PlusOutlined />} block className = "mr-2">Import Users</Button>  
+              </Upload>
+            </Tooltip>
+            {/* <Button type="primary" icon={<FileExcelOutlined />} block>Export All</Button>   */}
+          </Space>
         </div>
-
       </Flex>
       <div className="table-responsive">
         <Table
