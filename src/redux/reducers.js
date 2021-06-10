@@ -5,12 +5,16 @@ import authUser from './auth/reducer';
 import userRole from './user-role/reducer';
 import users from './user/reducer';
 
+import innovationType from './options/innovation-type/reducer'
+
 const reducers = combineReducers({
   menu,
   settings,
   authUser,
   userRole,
-  users
+  users,
+//options
+  innovationType
 });
 
 export default reducers;

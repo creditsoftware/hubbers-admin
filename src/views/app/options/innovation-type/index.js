@@ -3,7 +3,7 @@ import { Drawer, Form, Button, Col, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux'
-// import AllInnovationTypes from './all_innovation';
+import AllInnovationTypes from './all_innovation';
 import { useHistory } from "react-router-dom";
 import { Row } from 'reactstrap';
 import { Colxx, Separator } from '../../../../components/common/CustomBootstrap';
@@ -11,8 +11,6 @@ import Breadcrumb from '../../../../containers/navs/Breadcrumb';
 
 
 const InnovationType = ({ match }) => {
-
-  let history = useHistory();
 
   const [visible, setVisible] = useState(false)
   const dispatch = useDispatch()
@@ -26,13 +24,9 @@ const InnovationType = ({ match }) => {
   };
 
   const onSubmit = values => {
-    console.log('veluse =>', values)
     values.index = 0;
-    dispatch(Actions.createInnovationType(values));
-    // setVisible(false)
-    // dispatch(Actions.createInnovationType(values)).then(() => {
-    //     history.push('/app/setting/innovation-type')
-    // })
+    dispatch(Actions.createInnovationType(values))
+    setVisible(false)
   }
 
   return (
@@ -81,7 +75,7 @@ const InnovationType = ({ match }) => {
             </Drawer>
 
             <div className="all-property-admins" style={{ marginTop: 10 }}>
-              {/* <AllInnovationTypes /> */}
+              <AllInnovationTypes />
             </div>
           </div>
         </Colxx>
