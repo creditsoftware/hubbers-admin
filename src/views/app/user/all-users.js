@@ -228,10 +228,10 @@ const AllUsers = () => {
             <Tooltip title="Import Users">
               <Upload
                 showUploadList={false}
-                beforeUpload={() => {
-                  console.log('uploading');
-                  setUploading(true);
-                }}
+                // beforeUpload={() => {
+                //   console.log('uploading');
+                //   setUploading(true);
+                // }}
                 action={`${API_BASE_URL}/user/json`}
                 onChange={(e) => console.log(e)}
               >

@@ -215,6 +215,9 @@ const EditUser = () => {
           )}
         </Card>
 
+        <Card title="Detail Information" className="mt-2">
+          d
+        </Card>
         <Card title="Education" className="mt-2" />
 
         <Card title="Reset Password" className="mt-2">
