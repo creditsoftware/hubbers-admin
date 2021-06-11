@@ -1,0 +1,5 @@
+export const USER_STATUS = {
+    PENDING:'PENDING',
+    ACTIVATED:'ACTIVATED',
+    DECLINED:'DECLINED',
+}
