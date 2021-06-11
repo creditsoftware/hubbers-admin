@@ -14,6 +14,7 @@ import {
   DatePicker,
   Space,
 } from 'antd';
+import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import * as Actions from '../../../redux/actions';
 import AvatarUpload from '../../../components/util-components/Upload/AvatarUpload';
@@ -90,6 +91,7 @@ const EditUser = () => {
               address: singleUser.detail?.address,
               nationality: singleUser.detail?.nationality,
               joinedDate: moment(singleUser.detail?.joinedDate),
+              education: singleUser.detail?.education,
             }}
           >
             <Card
@@ -397,9 +399,81 @@ const EditUser = () => {
                 </Button>
               </div>
             </Card>
+            <Card title="Education" className="mt-2">
+              <Form.List name="education">
+                {(fields, { add, remove }) => (
+                  <>
+                    {fields.map(({ key, name, fieldKey, ...restField }) => (
+                      <Space
+                        key={key}
+                        style={{ display: 'flex', marginBottom: 8 }}
+                        align="baseline"
+                      >
+                        <Form.Item
+                          {...restField}
+                          name={[name, 'country']}
+                          fieldKey={[fieldKey, 'country']}
+                          rules={[
+                            { required: true, message: 'Missing Country' },
+                          ]}
+                        >
+                          <Input placeholder="Country" />
+                        </Form.Item>
+                        <Form.Item
+                          {...restField}
+                          name={[name, 'university']}
+                          fieldKey={[fieldKey, 'university']}
+                          rules={[
+                            { required: true, message: 'Missing University' },
+                          ]}
+                        >
+                          <Input placeholder="College/university Name" />
+                        </Form.Item>
+                        <Form.Item
+                          {...restField}
+                          name={[name, 'title']}
+                          fieldKey={[fieldKey, 'title']}
+                          rules={[{ required: true, message: 'Missing title' }]}
+                        >
+                          <Input placeholder="title" />
+                        </Form.Item>
+                        <Form.Item
+                          {...restField}
+                          name={[name, 'degree']}
+                          fieldKey={[fieldKey, 'degree']}
+                          rules={[
+                            { required: true, message: 'Missing degree' },
+                          ]}
+                        >
+                          <Input placeholder="degree" />
+                        </Form.Item>
+                        <Form.Item
+                          {...restField}
+                          name={[name, 'year']}
+                          fieldKey={[fieldKey, 'year']}
+                          rules={[{ required: true, message: 'Missing year' }]}
+                        >
+                          <Input placeholder="year" type="number" />
+                        </Form.Item>
+                        <MinusCircleOutlined onClick={() => remove(name)} />
+                      </Space>
+                    ))}
+                    <Form.Item>
+                      <Button
+                        type="dashed"
+                        onClick={() => add()}
+                        block
+                        icon={<PlusOutlined />}
+                      >
+                        Add
+                      </Button>
+                    </Form.Item>
+                  </>
+                )}
+              </Form.List>
+            </Card>
           </Form>
         )}
-        <Card title="Education" className="mt-2" />
 
         <Card title="Reset Password" className="mt-2">
           <Form layout="vertical" onFinish={onChangePassword}>
