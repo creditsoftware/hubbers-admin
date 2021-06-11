@@ -1,15 +1,10 @@
-
-import React from "react";
+import React from 'react';
 import { Row } from 'reactstrap';
 import { Colxx, Separator } from '../../../components/common/CustomBootstrap';
 import Breadcrumb from '../../../containers/navs/Breadcrumb';
-import { useDispatch, useSelector } from 'react-redux'
 import AllUsers from './all-users';
-import AvatarUpload from "../../../components/util-components/Upload/AvatarUpload";
-
 
 const Users = ({ match }) => {
-
   return (
     <>
       <Row>

@@ -6,17 +6,16 @@ import AppLayout from '../../layout/AppLayout';
 import { ProtectedRoute, UserRole } from '../../helpers/authHelper';
 
 const Dashboard = React.lazy(() => import('./dashboard'));
-const Users = React.lazy(() => import('./user'))
-const EditUser = React.lazy(() => import('./user/edit-user'))
+const Users = React.lazy(() => import('./user'));
+const EditUser = React.lazy(() => import('./user/edit-user'));
 
-const Investor = React.lazy(() => import('./investor'))
+const Investor = React.lazy(() => import('./investor'));
 
-const HubbersTeam = React.lazy(() => import('./hubbers-team'))
+const HubbersTeam = React.lazy(() => import('./hubbers-team'));
 
-const Teams = React.lazy(() => import('./teams'))
+const Teams = React.lazy(() => import('./teams'));
 
-const Partner = React.lazy(() => import('./partner'))
-
+const Partner = React.lazy(() => import('./partner'));
 
 const Options = React.lazy(() => import('./options'));
 const BlankPage = React.lazy(() => import('./blank-page'));
@@ -27,7 +26,11 @@ const App = ({ match }) => {
       <div className="dashboard-wrapper">
         <Suspense fallback={<div className="loading" />}>
           <Switch>
-            <Redirect exact from={`${match.url}/`} to={`${match.url}/dashboard`} />
+            <Redirect
+              exact
+              from={`${match.url}/`}
+              to={`${match.url}/dashboard`}
+            />
             <Route
               path={`${match.url}/dashboard`}
               render={(props) => <Dashboard {...props} />}

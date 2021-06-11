@@ -2,18 +2,10 @@ import React, { Suspense } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import UserLayout from '../../layout/UserLayout';
 
-const Login = React.lazy(() =>
-  import('./login')
-);
-const Register = React.lazy(() =>
-  import('./register')
-);
-const ForgotPassword = React.lazy(() =>
-  import('./forgot-password')
-);
-const ResetPassword = React.lazy(() =>
-  import('./reset-password')
-);
+const Login = React.lazy(() => import('./login'));
+const Register = React.lazy(() => import('./register'));
+const ForgotPassword = React.lazy(() => import('./forgot-password'));
+const ResetPassword = React.lazy(() => import('./reset-password'));
 
 const User = ({ match }) => {
   return (

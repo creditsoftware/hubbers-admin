@@ -6,7 +6,7 @@ import IntlMessages from '../../helpers/IntlMessages';
 import { adminRoot } from '../../constants/defaultValues';
 
 const getMenuTitle = (sub) => {
-  if('/'+sub===adminRoot) return <IntlMessages id="menu.home" />;
+  if (`/${sub}` === adminRoot) return <IntlMessages id="menu.home" />;
   return <IntlMessages id={`menu.${sub}`} />;
 };
 

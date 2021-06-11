@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { injectIntl } from 'react-intl';
 
@@ -17,7 +16,7 @@ import {
   setContainerClassnames,
   clickOnMobileMenu,
   changeLocale,
-  logoutUser
+  logoutUser,
 } from '../../redux/actions';
 
 import {
@@ -46,7 +45,7 @@ const TopNav = ({
   clickOnMobileMenuAction,
   changeLocaleAction,
   logoutUser,
-  currentUser
+  currentUser,
 }) => {
   const [isInFullScreen, setIsInFullScreen] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -282,8 +281,8 @@ const TopNav = ({
             {isInFullScreen ? (
               <i className="simple-icon-size-actual d-block" />
             ) : (
-                <i className="simple-icon-size-fullscreen d-block" />
-              )}
+              <i className="simple-icon-size-fullscreen d-block" />
+            )}
           </button>
         </div>
         <div className="user d-inline-block">
@@ -291,7 +290,10 @@ const TopNav = ({
             <DropdownToggle className="p-0" color="empty">
               {currentUser && (
                 <>
-                  <span className="name mr-1"> {currentUser.firstname} {currentUser.lastname}</span>
+                  <span className="name mr-1">
+                    {' '}
+                    {currentUser.firstname} {currentUser.lastname}
+                  </span>
                   <span>
                     <img alt="Profile" src={currentUser.avatar} />
                   </span>
@@ -315,13 +317,13 @@ const TopNav = ({
 const mapStateToProps = ({ menu, settings, authUser }) => {
   const { containerClassnames, menuClickCount, selectedMenuHasSubItems } = menu;
   const { locale } = settings;
-  const { currentUser } = authUser
+  const { currentUser } = authUser;
   return {
     containerClassnames,
     menuClickCount,
     selectedMenuHasSubItems,
     locale,
-    currentUser
+    currentUser,
   };
 };
 export default injectIntl(
@@ -329,6 +331,6 @@ export default injectIntl(
     setContainerClassnamesAction: setContainerClassnames,
     clickOnMobileMenuAction: clickOnMobileMenu,
     changeLocaleAction: changeLocale,
-    logoutUser: logoutUser
+    logoutUser,
   })(TopNav)
 );

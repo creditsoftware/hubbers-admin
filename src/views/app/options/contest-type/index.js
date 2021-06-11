@@ -1,6 +1,9 @@
 import React from 'react';
 import { Row } from 'reactstrap';
-import { Colxx, Separator } from '../../../../components/common/CustomBootstrap';
+import {
+  Colxx,
+  Separator,
+} from '../../../../components/common/CustomBootstrap';
 import Breadcrumb from '../../../../containers/navs/Breadcrumb';
 
 const ContestType = ({ match }) => (
@@ -12,9 +15,7 @@ const ContestType = ({ match }) => (
       </Colxx>
     </Row>
     <Row>
-      <Colxx xxs="12" className="mb-4">
-
-      </Colxx>
+      <Colxx xxs="12" className="mb-4" />
     </Row>
   </>
 );

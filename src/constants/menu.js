@@ -1,5 +1,5 @@
-import { adminRoot } from "./defaultValues";
-import { UserRole } from "../helpers/authHelper"
+import { adminRoot } from './defaultValues';
+import { UserRole } from '../helpers/authHelper';
 
 const data = [
   {
@@ -14,7 +14,6 @@ const data = [
         label: 'menu.default',
         to: `${adminRoot}/dashboard/default`,
         // roles: [UserRole.Admin],
-
       },
       {
         icon: 'simple-icon-doc',
@@ -124,6 +123,5 @@ const data = [
     to: 'https://gogo-react-docs.coloredstrategies.com/',
     newWindow: true,
   },
-
 ];
 export default data;

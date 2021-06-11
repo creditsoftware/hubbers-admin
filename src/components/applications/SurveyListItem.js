@@ -20,7 +20,7 @@ const SurveyListItem = ({ item, handleCheckChange, isSelected }) => {
                   item.status === 'COMPLETED'
                     ? 'simple-icon-check heading-icon'
                     : 'simple-icon-refresh heading-icon'
-                  }`}
+                }`}
               />
               <span className="align-middle d-inline-block">{item.title}</span>
             </NavLink>

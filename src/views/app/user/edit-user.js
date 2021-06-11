@@ -1,57 +1,64 @@
-import React, { useEffect, useState } from 'react'
-import { useHistory, useParams } from "react-router-dom";
-import { Input, Row, Col, Card, Form, Button, Select, Upload, Checkbox } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+import {
+  Input,
+  Row,
+  Col,
+  Card,
+  Form,
+  Button,
+  Select,
+  Upload,
+  Checkbox,
+} from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
 import * as Actions from '../../../redux/actions';
-import { useSelector, useDispatch } from 'react-redux'
-import AvatarUpload from "../../../components/util-components/Upload/AvatarUpload";
+import AvatarUpload from '../../../components/util-components/Upload/AvatarUpload';
 
 const { Option } = Select;
 
 const EditUser = () => {
+  const history = useHistory();
+  const params = useParams();
 
-  let history = useHistory();
-  let params = useParams()
+  const [uploadedImg, setImage] = useState('');
 
-  const [uploadedImg, setImage] = useState('')
+  const { singleUser } = useSelector((state) => state.users);
+  const { userRoleData } = useSelector((state) => state.userRole);
+  console.log('sxxxx =>', userRoleData);
+  console.log('single user =>', singleUser);
 
-  const { singleUser } = useSelector(state => state.users)
-  const { userRoleData } = useSelector(state => state.userRole)
-  console.log('sxxxx =>', userRoleData)
-  console.log('single user =>', singleUser)
-
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(Actions.getSingleUser(params.id))
+    dispatch(Actions.getSingleUser(params.id));
     dispatch(Actions.getAllUserRoles());
-  }, [])
+  }, [dispatch, params.id]);
 
   useEffect(() => {
     if (singleUser) {
-      setImage(singleUser.avatar)
+      setImage(singleUser.avatar);
     }
-  }, [singleUser])
-
+  }, [singleUser]);
 
   const onUpdateItem = (values) => {
-    values.avatar = uploadedImg
-    console.log('update user =>', values)
+    values.avatar = uploadedImg;
+    console.log('update user =>', values);
     // dispatch(Actions.updateUser(params.id, values));
-    history.push('/app/users')
-  }
+    history.push('/app/users');
+  };
 
   const onClose = () => {
-    history.push('/app/users')
-  }
+    history.push('/app/users');
+  };
 
   const onChangeAvatar = (imageUrl) => {
-    setImage(imageUrl)
-  }
+    setImage(imageUrl);
+  };
 
   const onChangePassword = () => {
-    console.log('change password')
-  }
+    console.log('change password');
+  };
 
   return (
     <Row gutter={16}>
@@ -68,18 +75,30 @@ const EditUser = () => {
                 email: singleUser.email,
                 status: singleUser.status,
                 preferedRole: singleUser.preferedRole?.name,
-                role: singleUser.role
+                role: singleUser.role,
               }}
             >
               <Row gutter={16}>
                 <Col xs={24} sm={12} md={6}>
-                  <AvatarUpload statusChange={onChangeAvatar} image={uploadedImg} />
+                  <AvatarUpload
+                    statusChange={onChangeAvatar}
+                    image={uploadedImg}
+                  />
                 </Col>
-                <Col xs={24} sm={12} md={2}></Col>
+                <Col xs={24} sm={12} md={2} />
                 <Col xs={24} sm={12} md={16}>
                   <Row gutter={16}>
                     <Col span={12}>
-                      <Form.Item name="firstname" label="First Name" rules={[{ required: true, message: 'Please Enter First Name' }]} >
+                      <Form.Item
+                        name="firstname"
+                        label="First Name"
+                        rules={[
+                          {
+                            required: true,
+                            message: 'Please Enter First Name',
+                          },
+                        ]}
+                      >
                         <Input placeholder="Please enter First Name" />
                       </Form.Item>
                     </Col>
@@ -88,7 +107,9 @@ const EditUser = () => {
                       <Form.Item
                         name="lastname"
                         label="Last Name"
-                        rules={[{ required: true, message: 'Please enter Last Name' }]}
+                        rules={[
+                          { required: true, message: 'Please enter Last Name' },
+                        ]}
                       >
                         <Input placeholder="Please enter Last Name" />
                       </Form.Item>
@@ -100,7 +121,9 @@ const EditUser = () => {
                       <Form.Item
                         name="email"
                         label="Email"
-                        rules={[{ required: true, message: 'Please enter email' }]}
+                        rules={[
+                          { required: true, message: 'Please enter email' },
+                        ]}
                       >
                         <Input placeholder="Please enter email" />
                       </Form.Item>
@@ -109,7 +132,12 @@ const EditUser = () => {
                       <Form.Item
                         name="status"
                         label="Status"
-                        rules={[{ required: true, message: 'Please choose the status' }]}
+                        rules={[
+                          {
+                            required: true,
+                            message: 'Please choose the status',
+                          },
+                        ]}
                       >
                         <Select placeholder="Please choose the status">
                           <Option value="PENDING">PENDING</Option>
@@ -121,19 +149,26 @@ const EditUser = () => {
                   </Row>
 
                   <Row gutter={16}>
-
                     <Col span={12}>
                       <Form.Item
                         name="preferedRole"
                         label="preferedRole"
-                        rules={[{ required: true, message: 'Please choose the preferedRole' }]}
+                        rules={[
+                          {
+                            required: true,
+                            message: 'Please choose the preferedRole',
+                          },
+                        ]}
                       >
                         <Select placeholder="Please choose the value">
-                          {userRoleData && userRoleData.map((item, index) => {
-                            return (
-                              <Option value={item.id} key={index}>{item.name}</Option>
-                            )
-                          })}
+                          {userRoleData &&
+                            userRoleData.map((item, index) => {
+                              return (
+                                <Option value={item.id} key={index}>
+                                  {item.name}
+                                </Option>
+                              );
+                            })}
                         </Select>
                       </Form.Item>
                     </Col>
@@ -142,33 +177,36 @@ const EditUser = () => {
                       <Form.Item
                         name="role"
                         label="Role"
-                        rules={[{ required: true, message: 'Please choose the Role' }]}
+                        rules={[
+                          { required: true, message: 'Please choose the Role' },
+                        ]}
                       >
                         <Select
                           mode="multiple"
                           style={{ width: '100%' }}
                           placeholder="Enter Role"
                           defaultValue={[]}
-                          onChange={() => { }}
+                          onChange={() => {}}
                           optionLabelProp="label"
                         >
                           {userRoleData.map((item, i) => {
                             return (
-                              <Option value={item.id} label={item.name} key={i}><span>{item.name}</span></Option>
-                            )
+                              <Option value={item.id} label={item.name} key={i}>
+                                <span>{item.name}</span>
+                              </Option>
+                            );
                           })}
                         </Select>
                       </Form.Item>
                     </Col>
                   </Row>
-
                 </Col>
               </Row>
 
               <div style={{ textAlign: 'right' }}>
-                <Button onClick={onClose} style={{ marginRight: 8 }} >
+                <Button onClick={onClose} style={{ marginRight: 8 }}>
                   Back
-              </Button>
+                </Button>
                 <Button type="primary" htmlType="submit">
                   Update
                 </Button>
@@ -177,36 +215,45 @@ const EditUser = () => {
           )}
         </Card>
 
-        <Card title="Education" className = "mt-2">
-          
-        </Card>
+        <Card title="Education" className="mt-2" />
 
-        <Card title="Reset Password" className = "mt-2">
-          <Form layout="vertical" onFinish={onChangePassword} >
+        <Card title="Reset Password" className="mt-2">
+          <Form layout="vertical" onFinish={onChangePassword}>
             <Row gutter={16}>
               <Col span={24}>
-                <Form.Item name="old_password" label="Old Password" rules={[{ required: true, message: 'Please Enter old password' }]} >
-                  <Input placeholder="old password" type = "password"/>
+                <Form.Item
+                  name="old_password"
+                  label="Old Password"
+                  rules={[
+                    { required: true, message: 'Please Enter old password' },
+                  ]}
+                >
+                  <Input placeholder="old password" type="password" />
                 </Form.Item>
               </Col>
             </Row>
-            <Row gutter = {16}>
+            <Row gutter={16}>
               <Col span={12}>
                 <Form.Item
                   name="new_password"
                   label="New Password"
                   rules={[{ required: true, message: 'Please enter Password' }]}
                 >
-                  <Input placeholder="New Password" type = "password"/>
+                  <Input placeholder="New Password" type="password" />
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item
                   name="confirm_password"
                   label="Confirm New Password"
-                  rules={[{ required: true, message: 'Please enter Confirm New Password' }]}
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please enter Confirm New Password',
+                    },
+                  ]}
                 >
-                  <Input placeholder="Confirm New Password" type = "password"/>
+                  <Input placeholder="Confirm New Password" type="password" />
                 </Form.Item>
               </Col>
             </Row>
@@ -216,16 +263,14 @@ const EditUser = () => {
           </Form>
         </Card>
 
-        <Card title="Transactions" className = "mt-2" extra={<Button type="primary">Add New</Button>}>
-          
-        </Card>
-
+        <Card
+          title="Transactions"
+          className="mt-2"
+          extra={<Button type="primary">Add New</Button>}
+        />
       </Col>
     </Row>
-  )
-}
+  );
+};
 
-export default EditUser
-
-
-
+export default EditUser;

@@ -1,33 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import { Drawer, Form, Button, Col, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import * as Actions from '../../../../redux/actions';
-import { useDispatch, useSelector } from 'react-redux'
-import AllInnovationTypes from './all_innovation';
-import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { Row } from 'reactstrap';
-import { Colxx, Separator } from '../../../../components/common/CustomBootstrap';
+import AllInnovationTypes from './all_innovation';
+import * as Actions from '../../../../redux/actions';
+import {
+  Colxx,
+  Separator,
+} from '../../../../components/common/CustomBootstrap';
 import Breadcrumb from '../../../../containers/navs/Breadcrumb';
 
-
 const InnovationType = ({ match }) => {
-
-  const [visible, setVisible] = useState(false)
-  const dispatch = useDispatch()
+  const [visible, setVisible] = useState(false);
+  const dispatch = useDispatch();
 
   const showDrawer = () => {
-    setVisible(true)
+    setVisible(true);
   };
 
   const onClose = () => {
-    setVisible(false)
+    setVisible(false);
   };
 
-  const onSubmit = values => {
+  const onSubmit = (values) => {
     values.index = 0;
-    dispatch(Actions.createInnovationType(values))
-    setVisible(false)
-  }
+    dispatch(Actions.createInnovationType(values));
+    setVisible(false);
+  };
 
   return (
     <>
@@ -51,20 +52,31 @@ const InnovationType = ({ match }) => {
               visible={visible}
               bodyStyle={{ paddingBottom: 80 }}
             >
-              <Form layout="vertical" hideRequiredMark onFinish={onSubmit} className = "p-4 mt-4">
+              <Form
+                layout="vertical"
+                hideRequiredMark
+                onFinish={onSubmit}
+                className="p-4 mt-4"
+              >
                 <Row gutter={16}>
                   <Col span={12}>
-                    <Form.Item name="name" label="Name" rules={[{ required: true, message: 'Please enter Innovation Type name' }]} >
+                    <Form.Item
+                      name="name"
+                      label="Name"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please enter Innovation Type name',
+                        },
+                      ]}
+                    >
                       <Input placeholder="Please enter Innovation Type name" />
                     </Form.Item>
                   </Col>
                 </Row>
 
-                <div style={{textAlign: 'right'}}>
-                  <Button
-                    onClick={onClose}
-                    style={{ marginRight: 8 }}
-                  >
+                <div style={{ textAlign: 'right' }}>
+                  <Button onClick={onClose} style={{ marginRight: 8 }}>
                     Cancel
                   </Button>
                   <Button type="primary" htmlType="submit">
@@ -81,10 +93,7 @@ const InnovationType = ({ match }) => {
         </Colxx>
       </Row>
     </>
-
-  )
-
-}
-
+  );
+};
 
 export default InnovationType;

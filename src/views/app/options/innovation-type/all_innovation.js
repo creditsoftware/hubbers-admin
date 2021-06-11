@@ -1,19 +1,37 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react'
-import { Card, Table, Input, Button, Tooltip, message, Popconfirm, Modal, Form, Col, Row, } from 'antd';
-import { FileExcelOutlined, SearchOutlined, EditOutlined, DeleteOutlined, ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
-import Flex from '../../../../components/shared-components/Flex'
-import utils from '../../../../helpers/utils/index'
-import { useSelector, useDispatch } from 'react-redux'
-import * as Actions from '../../../../redux/actions'
+import React, { useState, useEffect } from 'react';
+import {
+  Card,
+  Table,
+  Input,
+  Button,
+  Tooltip,
+  message,
+  Popconfirm,
+  Modal,
+  Form,
+  Col,
+  Row,
+} from 'antd';
+import {
+  FileExcelOutlined,
+  SearchOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  ArrowUpOutlined,
+  ArrowDownOutlined,
+} from '@ant-design/icons';
+import { useSelector, useDispatch } from 'react-redux';
+import Flex from '../../../../components/shared-components/Flex';
+import utils from '../../../../helpers/utils/index';
+import * as Actions from '../../../../redux/actions';
 
 const AllInnovationTypes = () => {
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
-
-  const [dataList, SetdataList] = useState([])
-  const [selectedRows, setSelectedRows] = useState([])
-  const [selectedRowKeys, setSelectedRowKeys] = useState([])
+  const [dataList, SetdataList] = useState([]);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editItemId, SetEditItemId] = useState(null);
   const [index, SetIndex] = useState(null);
@@ -21,59 +39,55 @@ const AllInnovationTypes = () => {
 
   const [form] = Form.useForm();
 
-  const { innovationTypeData } = useSelector(state => state.innovationType)
-  console.log('innovation Data =>', innovationTypeData)
+  const { innovationTypeData } = useSelector((state) => state.innovationType);
+  console.log('innovation Data =>', innovationTypeData);
 
   useEffect(() => {
     dispatch(Actions.getAllInnovationTypes());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
-    SetdataList(innovationTypeData)
+    SetdataList(innovationTypeData);
   }, [innovationTypeData]);
 
-  const editItem = elm => {
-    setIsModalVisible(true)
-    SetEditItemId(elm.id)
-    SetIndex(elm.index)
+  const editItem = (elm) => {
+    setIsModalVisible(true);
+    SetEditItemId(elm.id);
+    SetIndex(elm.index);
     form.setFieldsValue({
       name: elm.name,
-      index: index
+      index,
     });
-  }
+  };
 
-  const deleteItem = id => {
-    console.log('id value =>', id)
+  const deleteItem = (id) => {
+    console.log('id value =>', id);
     dispatch(Actions.deleteInnovationType(id));
-  }
+  };
 
   const cancel = (e) => {
     message.error('Click on No');
-  }
+  };
 
   const handleCancel = () => {
     setIsModalVisible(false);
   };
 
   const handleOk = () => {
-    let id = editItemId;
-    let values = { name: targetName }
+    const id = editItemId;
+    const values = { name: targetName };
     // dispatch(Actions.updateInnovationType(id, values)).then(() => {
     //   setIsModalVisible(false);
     // })
   };
 
   const changeName = (e) => {
-    SetTargeName(e.target.value)
-  }
+    SetTargeName(e.target.value);
+  };
 
-  const plusIndex = (elm) => {
+  const plusIndex = (elm) => {};
 
-  }
-
-  const downIndex = (elm) => {
-
-  }
+  const downIndex = (elm) => {};
 
   const tableColumns = [
     {
@@ -84,24 +98,41 @@ const AllInnovationTypes = () => {
           <span>{record.name}</span>
         </div>
       ),
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'name')
+      sorter: (a, b) => utils.antdTableSorter(a, b, 'name'),
     },
     {
       title: '',
       dataIndex: 'actions',
       render: (_, elm) => (
         <div className="text-right">
-
           <Tooltip title="Up">
-            <Button type="primary" className="mr-2" icon={<ArrowUpOutlined />} onClick={() => plusIndex(elm)} size="small" />
+            <Button
+              type="primary"
+              className="mr-2"
+              icon={<ArrowUpOutlined />}
+              onClick={() => plusIndex(elm)}
+              size="small"
+            />
           </Tooltip>
 
           <Tooltip title="Down">
-            <Button type="primary" className="mr-2" icon={<ArrowDownOutlined />} onClick={() => downIndex(elm)} size="small" />
+            <Button
+              type="primary"
+              className="mr-2"
+              icon={<ArrowDownOutlined />}
+              onClick={() => downIndex(elm)}
+              size="small"
+            />
           </Tooltip>
 
           <Tooltip title="Edit">
-            <Button type="primary" className="mr-2" icon={<EditOutlined />} onClick={() => editItem(elm)} size="small" />
+            <Button
+              type="primary"
+              className="mr-2"
+              icon={<EditOutlined />}
+              onClick={() => editItem(elm)}
+              size="small"
+            />
           </Tooltip>
 
           <Tooltip title="Delete">
@@ -116,52 +147,58 @@ const AllInnovationTypes = () => {
             </Popconfirm>
           </Tooltip>
         </div>
-      )
-    }
+      ),
+    },
   ];
 
   const rowSelection = {
     onChange: (key, rows) => {
-      setSelectedRows(rows)
-      setSelectedRowKeys(key)
-    }
+      setSelectedRows(rows);
+      setSelectedRowKeys(key);
+    },
   };
 
-  const onSearch = e => {
-    const value = e.currentTarget.value
-    const searchArray = e.currentTarget.value ? dataList : innovationTypeData
-    const data = utils.wildCardSearch(searchArray, value)
-    SetdataList(data)
-    setSelectedRowKeys([])
-  }
+  const onSearch = (e) => {
+    const { value } = e.currentTarget;
+    const searchArray = e.currentTarget.value ? dataList : innovationTypeData;
+    const data = utils.wildCardSearch(searchArray, value);
+    SetdataList(data);
+    setSelectedRowKeys([]);
+  };
 
   return (
     <Card>
       <Flex alignItems="center" justifyContent="between" mobileFlex={false}>
         <Flex className="mb-1" mobileFlex={false}>
           <div className="mr-md-3 mb-3">
-            <Input placeholder="Search" prefix={<SearchOutlined />} onChange={e => onSearch(e)} />
+            <Input
+              placeholder="Search"
+              prefix={<SearchOutlined />}
+              onChange={(e) => onSearch(e)}
+            />
           </div>
         </Flex>
         <div>
-          <Button type="primary" icon={<FileExcelOutlined />} block>Export All</Button>
+          <Button type="primary" icon={<FileExcelOutlined />} block>
+            Export All
+          </Button>
         </div>
       </Flex>
       <div className="table-responsive">
-
         <Table
           columns={tableColumns}
           dataSource={dataList}
-          rowKey='id'
+          rowKey="id"
           rowSelection={{
-            selectedRowKeys: selectedRowKeys,
+            selectedRowKeys,
             type: 'checkbox',
             preserveSelectedRowKeys: false,
             ...rowSelection,
           }}
         />
 
-        <Modal title="Edit Innovation Type"
+        <Modal
+          title="Edit Innovation Type"
           visible={isModalVisible}
           onOk={handleOk}
           onCancel={handleCancel}
@@ -171,23 +208,34 @@ const AllInnovationTypes = () => {
             </Button>,
             <Button key="submit" type="primary" onClick={handleOk}>
               Update
-            </Button>
+            </Button>,
           ]}
         >
           <Form layout="vertical" hideRequiredMark form={form}>
             <Row gutter={16}>
               <Col span={12}>
-                <Form.Item name="name" label="Name" rules={[{ required: true, message: 'Please enter Innovation Type name' }]} >
-                  <Input placeholder="Please enter Innovation Type name" onChange={(e) => changeName(e)} />
+                <Form.Item
+                  name="name"
+                  label="Name"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please enter Innovation Type name',
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder="Please enter Innovation Type name"
+                    onChange={(e) => changeName(e)}
+                  />
                 </Form.Item>
               </Col>
             </Row>
           </Form>
         </Modal>
-
       </div>
-    </Card >
-  )
-}
+    </Card>
+  );
+};
 
-export default AllInnovationTypes
+export default AllInnovationTypes;

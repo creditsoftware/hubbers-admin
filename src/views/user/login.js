@@ -56,16 +56,11 @@ const Login = ({ history, loading, error, loginUserAction }) => {
         <Card className="auth-card">
           <div className="position-relative image-side ">
             <p className="text-white h2">Hubbers Admin Panle</p>
-            <p className="white mb-0">
-              Please use your credentials to login.
-            </p>
+            <p className="white mb-0">Please use your credentials to login.</p>
           </div>
           <div className="form-side">
             <NavLink to="/" className="white">
-              <img
-                alt="detail"
-                src="/assets/logos/black.png"
-              />
+              <img alt="detail" src="/assets/logos/black.png" />
             </NavLink>
             <CardTitle className="mb-4">
               <IntlMessages id="user.login-title" />
@@ -113,7 +108,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
                       color="primary"
                       className={`btn-shadow btn-multiple-state ${
                         loading ? 'show-spinner' : ''
-                        }`}
+                      }`}
                       size="lg"
                     >
                       <span className="spinner d-inline-block">

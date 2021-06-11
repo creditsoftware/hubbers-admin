@@ -1,9 +1,7 @@
 import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-const Second = React.lazy(() =>
-  import('./second')
-);
+const Second = React.lazy(() => import('./second'));
 const SecondMenu = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>

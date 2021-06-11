@@ -1,13 +1,13 @@
-
 import React from 'react';
-import {
-  Route,
-  Redirect,
-} from 'react-router-dom';
-import { getCurrentUser } from './Utils'
+import { Route, Redirect } from 'react-router-dom';
+import { getCurrentUser } from './Utils';
 import { isAuthGuardActive } from '../constants/defaultValues';
 
-const ProtectedRoute = ({ component: Component, roles = undefined, ...rest }) => {
+const ProtectedRoute = ({
+  component: Component,
+  roles = undefined,
+  ...rest
+}) => {
   const setComponent = (props) => {
     if (isAuthGuardActive) {
       const currentUser = getCurrentUser();
@@ -15,39 +15,35 @@ const ProtectedRoute = ({ component: Component, roles = undefined, ...rest }) =>
         if (roles) {
           if (roles.includes(currentUser.role)) {
             return <Component {...props} />;
-          } else {
-            return <Redirect
+          }
+          return (
+            <Redirect
               to={{
                 pathname: '/unauthorized',
                 state: { from: props.location },
-              }} />
-          }
-        } else {
-          return <Component {...props} />;
+              }}
+            />
+          );
         }
-      } else {
-        return <Redirect
+        return <Component {...props} />;
+      }
+      return (
+        <Redirect
           to={{
             pathname: '/user/login',
             state: { from: props.location },
-          }} />
-      }
-    } else {
-      return <Component {...props} />;
+          }}
+        />
+      );
     }
+    return <Component {...props} />;
+  };
 
-  }
-
-  return (
-    <Route
-      {...rest}
-      render={setComponent}
-    />
-  );
-}
+  return <Route {...rest} render={setComponent} />;
+};
 const UserRole = {
-  Admin: "Super Admin",
-  Editor: "Admin",
-}
+  Admin: 'Super Admin',
+  Editor: 'Admin',
+};
 
 export { ProtectedRoute, UserRole };

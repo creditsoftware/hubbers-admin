@@ -4,15 +4,8 @@ import authSagas from './auth/saga';
 import userRoleSagas from './user-role/saga';
 import userSaga from './user/saga';
 
-
-import innovationTypeSaga from './options/innovation-type/saga'
+import innovationTypeSaga from './options/innovation-type/saga';
 
 export default function* rootSaga(getState) {
-  yield all([
-    authSagas(),
-    userRoleSagas(),
-    userSaga(),
-
-    innovationTypeSaga(),
-  ]);
+  yield all([authSagas(), userRoleSagas(), userSaga(), innovationTypeSaga()]);
 }

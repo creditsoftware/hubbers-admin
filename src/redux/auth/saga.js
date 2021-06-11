@@ -1,8 +1,8 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
+import jwtDecode from 'jwt-decode';
 import { auth } from '../../helpers/Firebase';
-import api from '../../ApiConfig'
-import jwtDecode from 'jwt-decode'
-import history from '../../history'
+import api from '../../ApiConfig';
+import history from '../../history';
 
 import {
   LOGIN_USER,
@@ -23,7 +23,7 @@ import {
   resetPasswordError,
 } from './actions';
 
-import { adminRoot, currentUser } from "../../constants/defaultValues"
+import { adminRoot, currentUser } from '../../constants/defaultValues';
 import { setCurrentUser, setSession, removeSession } from '../../helpers/Utils';
 
 export function* watchLoginUser() {
@@ -31,30 +31,31 @@ export function* watchLoginUser() {
 }
 
 const loginWithEmailPasswordAsync = async (userInfo) =>
-  await api.post(`/auth/admin/signin`, userInfo)
-  .then((res) => res)
-  .catch((error) => error);
-
+  await api
+    .post(`/auth/admin/signin`, userInfo)
+    .then((res) => res)
+    .catch((error) => error);
 
 function* loginWithEmailPassword({ payload }) {
   const { history } = payload;
   try {
     const loginResult = yield call(loginWithEmailPasswordAsync, payload.user);
-    if(loginResult.data.success) {
-      setSession(loginResult.data.result.accessToken, loginResult.data.result.refreshToken);
-      const authUser = jwtDecode(loginResult.data.result.refreshToken)
+    if (loginResult.data.success) {
+      setSession(
+        loginResult.data.result.accessToken,
+        loginResult.data.result.refreshToken
+      );
+      const authUser = jwtDecode(loginResult.data.result.refreshToken);
       setCurrentUser(authUser.data);
       yield put(loginUserSuccess(authUser.data));
       history.push(adminRoot);
     } else {
       yield put(loginUserError(loginResult.data.message));
     }
-   
   } catch (error) {
     yield put(loginUserError(error));
   }
 }
-
 
 export function* watchRegisterUser() {
   yield takeEvery(REGISTER_USER, registerWithEmailPassword);
@@ -93,11 +94,12 @@ export function* watchLogoutUser() {
 }
 
 const logoutAsync = async () => {
-  await api.post(`/auth/admin/signout`)
-  .then((res) => {
-    console.log('logout result =>', res)
-  })
-  .catch((error) => error);
+  await api
+    .post(`/auth/admin/signout`)
+    .then((res) => {
+      console.log('logout result =>', res);
+    })
+    .catch((error) => error);
 
   history.push(adminRoot);
 };

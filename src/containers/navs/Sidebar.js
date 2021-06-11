@@ -13,7 +13,6 @@ import {
   addContainerClassname,
   changeDefaultClassnames,
   changeSelectedMenuHasSubItems,
-
 } from '../../redux/actions';
 
 import menuItems from '../../constants/menu';
@@ -194,9 +193,10 @@ class Sidebar extends Component {
       selectedlink.parentElement.classList.add('active');
       this.setState(
         {
-          selectedParentMenu: selectedlink.parentElement.parentElement.getAttribute(
-            'data-parent'
-          ),
+          selectedParentMenu:
+            selectedlink.parentElement.parentElement.getAttribute(
+              'data-parent'
+            ),
         },
         callback
       );
@@ -207,9 +207,8 @@ class Sidebar extends Component {
       if (selectedParentNoSubItem != null) {
         this.setState(
           {
-            selectedParentMenu: selectedParentNoSubItem.getAttribute(
-              'data-flag'
-            ),
+            selectedParentMenu:
+              selectedParentNoSubItem.getAttribute('data-flag'),
           },
           callback
         );
@@ -325,21 +324,17 @@ class Sidebar extends Component {
   };
 
   filteredList = (menuItems) => {
-    const { currentUser: { role } } = this.props;
-    return menuItems.filter(x => (x.roles && x.roles.includes(role)) || !x.roles)
-  }
-
-
-
+    const {
+      currentUser: { role },
+    } = this.props;
+    return menuItems.filter(
+      (x) => (x.roles && x.roles.includes(role)) || !x.roles
+    );
+  };
 
   render() {
-
-
-    const {
-      selectedParentMenu,
-      viewingParentMenu,
-      collapsedMenus,
-    } = this.state;
+    const { selectedParentMenu, viewingParentMenu, collapsedMenus } =
+      this.state;
     return (
       <div className="sidebar">
         <div className="main-menu">
@@ -370,15 +365,15 @@ class Sidebar extends Component {
                             <IntlMessages id={item.label} />
                           </a>
                         ) : (
-                            <NavLink
-                              to={item.to}
-                              onClick={(e) => this.openSubMenu(e, item)}
-                              data-flag={item.id}
-                            >
-                              <i className={item.icon} />{' '}
-                              <IntlMessages id={item.label} />
-                            </NavLink>
-                          )}
+                          <NavLink
+                            to={item.to}
+                            onClick={(e) => this.openSubMenu(e, item)}
+                            data-flag={item.id}
+                          >
+                            <i className={item.icon} />{' '}
+                            <IntlMessages id={item.label} />
+                          </NavLink>
+                        )}
                       </NavItem>
                     );
                   })}
@@ -414,7 +409,7 @@ class Sidebar extends Component {
                                 sub.subs && sub.subs.length > 0
                                   ? 'has-sub-item'
                                   : ''
-                                }`}
+                              }`}
                             >
                               {sub.newWindow ? (
                                 <a
@@ -434,7 +429,7 @@ class Sidebar extends Component {
                                       ) === -1
                                         ? ''
                                         : 'collapsed'
-                                      }`}
+                                    }`}
                                     to={sub.to}
                                     id={`${item.id}_${index}`}
                                     onClick={(e) =>
@@ -456,42 +451,48 @@ class Sidebar extends Component {
                                     }
                                   >
                                     <Nav className="third-level-menu">
-                                      {this.filteredList(sub.subs).map((thirdSub, thirdIndex) => {
-                                        return (
-                                          <NavItem
-                                            key={`${item.id}_${index}_${thirdIndex}`}
-                                          >
-                                            {thirdSub.newWindow ? (
-                                              <a
-                                                href={thirdSub.to}
-                                                rel="noopener noreferrer"
-                                                target="_blank"
-                                              >
-                                                <i className={thirdSub.icon} />{' '}
-                                                <IntlMessages
-                                                  id={thirdSub.label}
-                                                />
-                                              </a>
-                                            ) : (
+                                      {this.filteredList(sub.subs).map(
+                                        (thirdSub, thirdIndex) => {
+                                          return (
+                                            <NavItem
+                                              key={`${item.id}_${index}_${thirdIndex}`}
+                                            >
+                                              {thirdSub.newWindow ? (
+                                                <a
+                                                  href={thirdSub.to}
+                                                  rel="noopener noreferrer"
+                                                  target="_blank"
+                                                >
+                                                  <i
+                                                    className={thirdSub.icon}
+                                                  />{' '}
+                                                  <IntlMessages
+                                                    id={thirdSub.label}
+                                                  />
+                                                </a>
+                                              ) : (
                                                 <NavLink to={thirdSub.to}>
-                                                  <i className={thirdSub.icon} />{' '}
+                                                  <i
+                                                    className={thirdSub.icon}
+                                                  />{' '}
                                                   <IntlMessages
                                                     id={thirdSub.label}
                                                   />
                                                 </NavLink>
                                               )}
-                                          </NavItem>
-                                        );
-                                      })}
+                                            </NavItem>
+                                          );
+                                        }
+                                      )}
                                     </Nav>
                                   </Collapse>
                                 </>
                               ) : (
-                                    <NavLink to={sub.to}>
-                                      <i className={sub.icon} />{' '}
-                                      <IntlMessages id={sub.label} />
-                                    </NavLink>
-                                  )}
+                                <NavLink to={sub.to}>
+                                  <i className={sub.icon} />{' '}
+                                  <IntlMessages id={sub.label} />
+                                </NavLink>
+                              )}
                             </NavItem>
                           );
                         })}
@@ -522,7 +523,7 @@ const mapStateToProps = ({ menu, authUser }) => {
     menuHiddenBreakpoint,
     menuClickCount,
     selectedMenuHasSubItems,
-    currentUser
+    currentUser,
   };
 };
 export default withRouter(

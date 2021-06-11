@@ -1,13 +1,9 @@
 import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-const DefaultDashboard = React.lazy(() =>
-  import('./default')
-);
+const DefaultDashboard = React.lazy(() => import('./default'));
 
-const DashboardContent = React.lazy(() =>
-  import('./content')
-);
+const DashboardContent = React.lazy(() => import('./content'));
 
 const Dashboard = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
@@ -17,7 +13,7 @@ const Dashboard = ({ match }) => (
         path={`${match.url}/default`}
         render={(props) => <DefaultDashboard {...props} />}
       />
-       <Route
+      <Route
         path={`${match.url}/content`}
         render={(props) => <DashboardContent {...props} />}
       />

@@ -19,18 +19,15 @@ export const loginUser = (user, history) => ({
   payload: { user, history },
 });
 
-
 export const loginUserSuccess = (user) => ({
   type: LOGIN_USER_SUCCESS,
   payload: user,
 });
 
-
 export const loginUserError = (message) => ({
   type: LOGIN_USER_ERROR,
   payload: { message },
 });
-
 
 export const forgotPassword = (forgotUserMail, history) => ({
   type: FORGOT_PASSWORD,

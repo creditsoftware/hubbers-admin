@@ -5,7 +5,7 @@ import authUser from './auth/reducer';
 import userRole from './user-role/reducer';
 import users from './user/reducer';
 
-import innovationType from './options/innovation-type/reducer'
+import innovationType from './options/innovation-type/reducer';
 
 const reducers = combineReducers({
   menu,
@@ -13,8 +13,8 @@ const reducers = combineReducers({
   authUser,
   userRole,
   users,
-//options
-  innovationType
+  // options
+  innovationType,
 });
 
 export default reducers;

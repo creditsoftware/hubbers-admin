@@ -1,46 +1,44 @@
-
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import { Row } from 'reactstrap';
-import { Colxx, Separator } from '../../../components/common/CustomBootstrap';
-import Breadcrumb from '../../../containers/navs/Breadcrumb';
 import { Drawer, Form, Button, Col, Input, Select, Card } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
+import Breadcrumb from '../../../containers/navs/Breadcrumb';
+import { Colxx, Separator } from '../../../components/common/CustomBootstrap';
 // import AllUsers from './all-users';
-import AvatarUpload from "../../../components/util-components/Upload/AvatarUpload";
+import AvatarUpload from '../../../components/util-components/Upload/AvatarUpload';
 import * as Actions from '../../../redux/actions';
 
 const { Option } = Select;
 
 const Partner = ({ match }) => {
+  const [visible, setVisible] = useState(false);
+  const [uploadedImg, setImage] = useState('');
 
-  const [visible, setVisible] = useState(false)
-  const [uploadedImg, setImage] = useState('')
-
-  const { userRoleData } = useSelector(state => state.userRole)
-  const dispatch = useDispatch()
+  const { userRoleData } = useSelector((state) => state.userRole);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(Actions.getAllUserRoles());
-  }, []);
+  }, [dispatch]);
 
   const showDrawer = () => {
-    setVisible(true)
+    setVisible(true);
   };
 
   const onClose = () => {
-    setVisible(false)
+    setVisible(false);
   };
 
   const onChangeAvatar = (imageUrl) => {
-    setImage(imageUrl)
-  }
+    setImage(imageUrl);
+  };
 
-  const onSubmit = values => {
-    values.avatar = uploadedImg
-    console.log('submit values =>', values)
+  const onSubmit = (values) => {
+    values.avatar = uploadedImg;
+    console.log('submit values =>', values);
     // dispatch(Actions.createUser(values));
-  }
+  };
 
   return (
     <>
@@ -64,20 +62,34 @@ const Partner = ({ match }) => {
             visible={visible}
             bodyStyle={{ paddingBottom: 80 }}
           >
-            <Form layout="vertical" hideRequiredMark onFinish={onSubmit} className = "p-4 mt-4">
+            <Form
+              layout="vertical"
+              hideRequiredMark
+              onFinish={onSubmit}
+              className="p-4 mt-4"
+            >
               <Row>
-                <Col span={12} >
-                  <Form.Item name="firstname" label="First Name" rules={[{ required: true, message: 'Please enter First Name' }]} className = "mr-2">
+                <Col span={12}>
+                  <Form.Item
+                    name="firstname"
+                    label="First Name"
+                    rules={[
+                      { required: true, message: 'Please enter First Name' },
+                    ]}
+                    className="mr-2"
+                  >
                     <Input placeholder="Please enter First Name" />
                   </Form.Item>
                 </Col>
 
-                <Col span={12} >
+                <Col span={12}>
                   <Form.Item
                     name="lastname"
                     label="Last Name"
-                    rules={[{ required: true, message: 'Please enter Last Name' }]}
-                    className = "ml-2"
+                    rules={[
+                      { required: true, message: 'Please enter Last Name' },
+                    ]}
+                    className="ml-2"
                   >
                     <Input placeholder="Please enter Last Name" />
                   </Form.Item>
@@ -90,7 +102,7 @@ const Partner = ({ match }) => {
                     name="email"
                     label="Email"
                     rules={[{ required: true, message: 'Please enter email' }]}
-                    className = "mr-2"
+                    className="mr-2"
                   >
                     <Input placeholder="Please enter email" />
                   </Form.Item>
@@ -99,10 +111,15 @@ const Partner = ({ match }) => {
                   <Form.Item
                     name="password"
                     label="Password"
-                    rules={[{ required: true, message: 'Please enter user Password' }]}
-                    className = "ml-2"
+                    rules={[
+                      { required: true, message: 'Please enter user Password' },
+                    ]}
+                    className="ml-2"
                   >
-                    <Input placeholder="Please enter user Password" type="password" />
+                    <Input
+                      placeholder="Please enter user Password"
+                      type="password"
+                    />
                   </Form.Item>
                 </Col>
               </Row>
@@ -111,8 +128,10 @@ const Partner = ({ match }) => {
                   <Form.Item
                     name="status"
                     label="Status"
-                    rules={[{ required: true, message: 'Please choose the status' }]}
-                    className = "mr-2"
+                    rules={[
+                      { required: true, message: 'Please choose the status' },
+                    ]}
+                    className="mr-2"
                   >
                     <Select placeholder="Please choose the status">
                       <Option value="PENDING">PENDING</Option>
@@ -125,16 +144,23 @@ const Partner = ({ match }) => {
                   <Form.Item
                     name="preferedRole"
                     label="preferedRole"
-                    rules={[{ required: true, message: 'Please choose the preferedRole' }]}
-                    className = "ml-2"
-
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please choose the preferedRole',
+                      },
+                    ]}
+                    className="ml-2"
                   >
                     <Select placeholder="Please choose the value">
-                      {userRoleData && userRoleData.map((item, index) => {
-                        return (
-                          <Option value={item.id} key={index}>{item.name}</Option>
-                        )
-                      })}
+                      {userRoleData &&
+                        userRoleData.map((item, index) => {
+                          return (
+                            <Option value={item.id} key={index}>
+                              {item.name}
+                            </Option>
+                          );
+                        })}
                     </Select>
                   </Form.Item>
                 </Col>
@@ -144,22 +170,26 @@ const Partner = ({ match }) => {
                   <Form.Item
                     name="role"
                     label="Role"
-                    rules={[{ required: true, message: 'Please choose the Role' }]}
+                    rules={[
+                      { required: true, message: 'Please choose the Role' },
+                    ]}
                   >
                     <Select
-                        mode="multiple"
-                        style={{ width: '100%' }}
-                        placeholder="Enter Role"
-                        defaultValue={[]}
-                        onChange={() => { }}
-                        optionLabelProp="label"
-                      >
-                        {userRoleData.map((item, i) => {
-                          return (
-                            <Option value={item.id} label={item.name} key={i}><span>{item.name}</span></Option>
-                          )
-                        })}
-                      </Select>
+                      mode="multiple"
+                      style={{ width: '100%' }}
+                      placeholder="Enter Role"
+                      defaultValue={[]}
+                      onChange={() => {}}
+                      optionLabelProp="label"
+                    >
+                      {userRoleData.map((item, i) => {
+                        return (
+                          <Option value={item.id} label={item.name} key={i}>
+                            <span>{item.name}</span>
+                          </Option>
+                        );
+                      })}
+                    </Select>
                   </Form.Item>
                 </Col>
               </Row>
@@ -175,17 +205,13 @@ const Partner = ({ match }) => {
                   textAlign: 'right',
                 }}
               >
-                <Button
-                  onClick={onClose}
-                  style={{ marginRight: 8 }}
-                >
+                <Button onClick={onClose} style={{ marginRight: 8 }}>
                   Cancel
-                  </Button>
+                </Button>
                 <Button type="primary" htmlType="submit">
                   Submit
-            </Button>
+                </Button>
               </div>
-
             </Form>
           </Drawer>
           <div className="all-users" style={{ marginTop: 10 }}>
@@ -193,7 +219,6 @@ const Partner = ({ match }) => {
           </div>
         </div>
       </Colxx>
-
     </>
   );
 };

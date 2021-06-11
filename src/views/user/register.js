@@ -15,7 +15,8 @@ import { registerUser } from '../../redux/actions';
 
 import IntlMessages from '../../helpers/IntlMessages';
 import { Colxx } from '../../components/common/CustomBootstrap';
-import { adminRoot } from '../../constants/defaultValues'
+import { adminRoot } from '../../constants/defaultValues';
+
 const Register = ({ history }) => {
   const [email] = useState('demo@gogo.com');
   const [password] = useState('gogo123');
@@ -89,7 +90,7 @@ const Register = ({ history }) => {
     </Row>
   );
 };
-const mapStateToProps = () => { };
+const mapStateToProps = () => {};
 
 export default connect(mapStateToProps, {
   registerUserAction: registerUser,

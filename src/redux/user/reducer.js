@@ -1,18 +1,20 @@
 import {
   CREATE_USER,
-  GET_ALL_USER, GET_USER,
-  UPDATE_USER, DELETE_USER,
+  GET_ALL_USER,
+  GET_USER,
+  UPDATE_USER,
+  DELETE_USER,
   GET_ALL_USER_SUCCESS,
   GET_ALL_USER_ERROR,
   GET_USER_SUCCESS,
-  GET_USER_ERROR
+  GET_USER_ERROR,
 } from '../types/user';
 
 const INIT_STATE = {
   loading: false,
   users: [],
   singleUser: null,
-  error: ''
+  error: '',
 };
 
 export default (state = INIT_STATE, action) => {
@@ -29,7 +31,7 @@ export default (state = INIT_STATE, action) => {
         error: action.payload,
       };
     case GET_USER:
-      return { ...state, loading: true }
+      return { ...state, loading: true };
     case GET_USER_SUCCESS:
       return { ...state, loading: false, singleUser: action.payload };
     case GET_USER_ERROR:
