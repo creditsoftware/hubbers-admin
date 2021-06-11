@@ -96,7 +96,7 @@ const AllUsers = () => {
       /* eslint-disable */
       render: (_, record) => (
         <div className="d-flex">
-          <span>{record.joinedDate}</span>
+          <span>{record.detail?.joinedDate}</span>
         </div>
       ),
       /* eslint-enable */
@@ -108,13 +108,15 @@ const AllUsers = () => {
       /* eslint-disable */
       render: (_, record) => (
         <span
-          style={{
-            color: `${record.status === STATUS_LIST.PENDING ? 'orange' : ''}${
-              record.status === STATUS_LIST.ACTIVATED ? '#75ac2a' : 'red'
-            }`,
-          }}
+        style={{
+          color: `${record.status === STATUS_LIST.PENDING ? 'orange' : ''}${
+            record.status === STATUS_LIST.ACTIVATED ? '#75ac2a' : ''
+          }${
+            record.status === STATUS_LIST.DECLINED ? 'red' : ''
+          }`,
+        }}
         >
-          {record.status}
+        {record.status}
         </span>
       ),
       /* eslint-enable */
@@ -134,7 +136,7 @@ const AllUsers = () => {
       title: 'Email Verify',
       dataIndex: 'emailVerified',
       /* eslint-disable */
-      render: (_, record) => <span>{record.emailVerified}</span>,
+      render: (_, record) => <span>{record.detail?.emailVerified}</span>,
       /* eslint-enable */
       sorter: (a, b) => utils.antdTableSorter(a, b, 'emailVerified'),
     },
@@ -142,7 +144,7 @@ const AllUsers = () => {
       title: 'Phone Verify',
       dataIndex: 'phoneVerified',
       /* eslint-disable */
-      render: (_, record) => <span>{record.phoneVerified}</span>,
+      render: (_, record) => <span>{record.detail?.phoneVerified}</span>,
       /* eslint-enable */
       sorter: (a, b) => utils.antdTableSorter(a, b, 'phoneVerified'),
     },
@@ -228,10 +230,6 @@ const AllUsers = () => {
             <Tooltip title="Import Users">
               <Upload
                 showUploadList={false}
-                // beforeUpload={() => {
-                //   console.log('uploading');
-                //   setUploading(true);
-                // }}
                 action={`${API_BASE_URL}/user/json`}
                 onChange={(e) => console.log(e)}
               >
@@ -250,5 +248,4 @@ const AllUsers = () => {
     </Card>
   );
 };
-
 export default AllUsers;

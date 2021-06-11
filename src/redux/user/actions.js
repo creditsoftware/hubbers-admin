@@ -14,6 +14,11 @@ export const getAllUsers = () => ({
   type: GET_ALL_USER,
 });
 
+export const updateUser = (id, data) => ({
+  type: UPDATE_USER,
+  payload: { id, data },
+});
+
 export const getAllUsersSuccess = (data) => ({
   type: GET_ALL_USER_SUCCESS,
   payload: data,

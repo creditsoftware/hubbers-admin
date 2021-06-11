@@ -36,6 +36,8 @@ export default (state = INIT_STATE, action) => {
       return { ...state, loading: false, singleUser: action.payload };
     case GET_USER_ERROR:
       return { ...state, loading: false, error: action.payload };
+    case UPDATE_USER:
+      return { ...state, loading: true };
     default:
       return { ...state };
   }

@@ -77,7 +77,8 @@ export const API_BASE_URL =
     : 'https://api.hubbers.io/api/v1';
 export const API_UPLOAD_URL =
   process.env.NODE_ENV === 'production'
-    ? 'https://api.hubbers.io/api/v1/upload'
+    ? // process.env.NODE_ENV === 'development'
+      'https://api.hubbers.io/api/v1/upload'
     : process.env.NODE_ENV === 'development'
     ? 'http://localhost:8888/api/v1/upload'
     : 'https://api.hubbers.io/api/v1/upload';

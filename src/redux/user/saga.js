@@ -19,10 +19,6 @@ import {
   getUsersError,
 } from './actions';
 
-export function* watchGetAllUsers() {
-  yield takeEvery(GET_ALL_USER, GetAllUsers);
-}
-
 const getAllUsersAsync = async () =>
   await api
     .get(`/user`)
@@ -42,8 +38,8 @@ function* GetAllUsers() {
   }
 }
 
-export function* watchGetUser() {
-  yield takeEvery(GET_USER, getUser);
+export function* watchGetAllUsers() {
+  yield takeEvery(GET_ALL_USER, GetAllUsers);
 }
 
 const getUsersAsync = async ({ payload }) =>
@@ -65,6 +61,36 @@ function* getUser(userId) {
   }
 }
 
+export function* watchGetUser() {
+  yield takeEvery(GET_USER, getUser);
+}
+
+const updateUserAsync = async ({ payload }) =>
+  await api
+    .put(`/user/detail/${payload.id}`, { ...payload.data })
+    .then((res) => res)
+    .catch((error) => error);
+
+function* updateUser(user) {
+  try {
+    const result = yield call(updateUserAsync, user);
+    if (result.status === 200 && result.statusText === 'OK') {
+      yield put(getUsersSuccess(result.data.result));
+    } else {
+      yield put(getUsersError('Get User Response is not success!'));
+    }
+  } catch (error) {
+    yield put(getUsersError('Get User Error !'));
+  }
+}
+
+export function* watchUpdateUser() {
+  yield takeEvery(UPDATE_USER, updateUser);
+}
 export default function* rootSaga() {
-  yield all([fork(watchGetAllUsers), fork(watchGetUser)]);
+  yield all([
+    fork(watchGetAllUsers),
+    fork(watchGetUser),
+    fork(watchUpdateUser),
+  ]);
 }
