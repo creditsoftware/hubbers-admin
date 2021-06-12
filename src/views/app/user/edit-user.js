@@ -18,80 +18,93 @@ import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import * as Actions from '../../../redux/actions';
 import AvatarUpload from '../../../components/util-components/Upload/AvatarUpload';
-
 const { Option } = Select;
-
 const EditUser = () => {
   const history = useHistory();
   const params = useParams();
-
-  const [uploadedImg, setImage] = useState('');
-
+  const [form] = Form.useForm();
+  const [userDetail, setUserDetail] = useState(null);
   const { singleUser } = useSelector((state) => state.users);
   const { userRoleData } = useSelector((state) => state.userRole);
-
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(Actions.getSingleUser(params.id));
     dispatch(Actions.getAllUserRoles());
   }, [dispatch, params.id]);
-
   useEffect(() => {
     if (singleUser) {
-      setImage(singleUser.avatar);
+      setUserDetail(singleUser);
+      form.setFieldsValue({
+        firstname: singleUser.firstname,
+        lastname: singleUser.lastname,
+        email: singleUser.email,
+        status: singleUser.status,
+        preferedRoleId: singleUser.preferedRole?.id,
+        roleIds: singleUser.roles.map((role) => role.id),
+        phoneNumberCountryCode: singleUser.detail?.phoneNumberCountryCode,
+        phoneNumber: singleUser.detail?.phoneNumber,
+        phoneVerified: singleUser.detail?.phoneVerified,
+        emailVerified: singleUser.detail?.emailVerified,
+        gender: singleUser.detail?.gender,
+        birthday: moment(singleUser.detail?.birthday),
+        bio: singleUser.detail?.bio,
+        headLine: singleUser.detail?.headLine,
+        industry: singleUser.detail?.industry,
+        workingContactTime: singleUser.detail?.workingContactTime,
+        contactTime: singleUser.detail?.contactTime,
+        doingWork: singleUser.detail?.doingWork,
+        address: singleUser.detail?.address,
+        nationality: singleUser.detail?.nationality,
+        joinedDate: moment(singleUser.detail?.joinedDate),
+        education: singleUser.detail?.education,
+      })
     }
   }, [singleUser]);
-
   const onUpdateItem = (values) => {
-    values.avatar = uploadedImg;
     dispatch(Actions.updateUser(params.id, values));
     history.push('/app/users');
   };
-
   const onClose = () => {
     history.push('/app/users');
   };
-
   const onChangeAvatar = (imageUrl) => {
-    setImage(imageUrl);
+    setUserDetail({ ...userDetail, avatar: imageUrl })
   };
-
   const onChangePassword = () => {
     console.log('change password');
   };
-
   return (
     <Row gutter={16}>
       <Col xs={24} sm={24} md={24}>
-        {singleUser && (
+        {userDetail && (
           <Form
+            form={form}
             layout="vertical"
             name="permission-form"
             onFinish={onUpdateItem}
             initialValues={{
-              firstname: singleUser.firstname,
-              lastname: singleUser.lastname,
-              email: singleUser.email,
-              status: singleUser.status,
-              preferedRoleId: singleUser.preferedRole?.id,
-              roleIds: singleUser.roles.map((role) => role.id),
-              phoneNumberCountryCode: singleUser.detail?.phoneNumberCountryCode,
-              phoneNumber: singleUser.detail?.phoneNumber,
-              phoneVerified: singleUser.detail?.phoneVerified,
-              emailVerified: singleUser.detail?.emailVerified,
-              gender: singleUser.detail?.gender,
-              birthday: moment(singleUser.detail?.birthday),
-              bio: singleUser.detail?.bio,
-              headLine: singleUser.detail?.headLine,
-              industry: singleUser.detail?.industry,
-              workingContactTime: singleUser.detail?.workingContactTime,
-              contactTime: singleUser.detail?.contactTime,
-              doingWork: singleUser.detail?.doingWork,
-              address: singleUser.detail?.address,
-              nationality: singleUser.detail?.nationality,
-              joinedDate: moment(singleUser.detail?.joinedDate),
-              education: singleUser.detail?.education,
+              firstname: userDetail.firstname,
+              lastname: userDetail.lastname,
+              email: userDetail.email,
+              status: userDetail.status,
+              preferedRoleId: userDetail.preferedRole?.id,
+              roleIds: userDetail.roles.map((role) => role.id),
+              phoneNumberCountryCode: userDetail.detail?.phoneNumberCountryCode,
+              phoneNumber: userDetail.detail?.phoneNumber,
+              phoneVerified: userDetail.detail?.phoneVerified,
+              emailVerified: userDetail.detail?.emailVerified,
+              gender: userDetail.detail?.gender,
+              birthday: moment(userDetail.detail?.birthday),
+              bio: userDetail.detail?.bio,
+              headLine: userDetail.detail?.headLine,
+              industry: userDetail.detail?.industry,
+              workingContactTime: userDetail.detail?.workingContactTime,
+              contactTime: userDetail.detail?.contactTime,
+              doingWork: userDetail.detail?.doingWork,
+              address: userDetail.detail?.address,
+              nationality: userDetail.detail?.nationality,
+              joinedDate: moment(userDetail.detail?.joinedDate),
+              education: userDetail.detail?.education,
             }}
           >
             <Card
@@ -111,7 +124,7 @@ const EditUser = () => {
                 <Col xs={24} sm={12} md={6}>
                   <AvatarUpload
                     statusChange={onChangeAvatar}
-                    image={uploadedImg}
+                    image={userDetail.avatar}
                   />
                 </Col>
                 <Col xs={24} sm={12} md={2} />
