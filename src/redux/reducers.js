@@ -6,6 +6,7 @@ import userRole from './user-role/reducer';
 import users from './user/reducer';
 
 import innovationType from './options/innovation-type/reducer';
+import productionType from './options/product-type/reducer'
 
 const reducers = combineReducers({
   menu,
@@ -15,6 +16,7 @@ const reducers = combineReducers({
   users,
   // options
   innovationType,
+  productionType,
 });
 
 export default reducers;

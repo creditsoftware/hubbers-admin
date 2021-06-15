@@ -32,3 +32,4 @@ export * from './auth/actions';
 export * from './user-role/actions';
 export * from './user/actions';
 export * from './options/innovation-type/actions';
+export * from './options/product-type/actions';

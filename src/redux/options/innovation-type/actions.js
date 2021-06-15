@@ -1,15 +1,18 @@
 import {
-  CREATE_INNOVATION_TYPE,
-  CREATE_INNOVATION_TYPE_SUCCESS,
-  CREATE_INNOVATION_TYPE_ERROR,
-  GET_ALL_INNOVATION_TYPES,
-  GET_ALL_INNOVATION_TYPES_SUCCESS,
-  GET_ALL_INNOVATION_TYPES_ERROR,
-  GET_INNOVATION_TYPE,
-  UPDATE_INNOVATION_TYPE,
-  DELETE_INNOVATION_TYPE,
-  DELETE_INNOVATION_TYPE_SUCCESS,
-  DELETE_INNOVATION_TYPE_ERROR,
+    CREATE_INNOVATION_TYPE,
+    CREATE_INNOVATION_TYPE_SUCCESS,
+    CREATE_INNOVATION_TYPE_ERROR,
+    GET_ALL_INNOVATION_TYPES,
+    GET_ALL_INNOVATION_TYPES_SUCCESS,
+    GET_ALL_INNOVATION_TYPES_ERROR,
+    GET_INNOVATION_TYPE,
+    UPDATE_INNOVATION_TYPE,
+    UPDATE_INNOVATION_TYPE_SUCCESS,
+    UPDATE_INNOVATION_TYPE_ERROR,
+
+    DELETE_INNOVATION_TYPE,
+    DELETE_INNOVATION_TYPE_SUCCESS,
+    DELETE_INNOVATION_TYPE_ERROR
 } from '../../types/options/innovation-type';
 
 // getAll
@@ -55,6 +58,29 @@ export const deleteInnovationTypeSuccess = (data) => ({
 });
 
 export const deleteInnovationTypeError = (data) => ({
-  type: DELETE_INNOVATION_TYPE_ERROR,
-  payload: data,
-});
+    type: DELETE_INNOVATION_TYPE_ERROR,
+    payload: data
+})
+
+//update
+export const updateInnovationType = (data) => ({
+    type: UPDATE_INNOVATION_TYPE,
+    payload: data
+})
+
+export const updateInnovationTypeSuccess = (data) => ({
+    type: UPDATE_INNOVATION_TYPE_SUCCESS,
+    payload: data
+})
+
+export const updateInnovationTypeError = (data) => ({
+    type: UPDATE_INNOVATION_TYPE_ERROR,
+    payload: data
+})
+  
+
+
+
+
+
+

@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import * as Actions from '../../../../redux/actions'
 import { useHistory } from "react-router-dom";
 
-const AllInnovationTypes = () => {
+const AllProductTypes = () => {
   const dispatch = useDispatch();
 
   const [dataList, SetdataList] = useState([]);
@@ -21,15 +21,15 @@ const AllInnovationTypes = () => {
 
   const [form] = Form.useForm();
 
-  const { innovationTypeData } = useSelector(state => state.innovationType)
+  const { productTypeData } = useSelector(state => state.productionType)
 
   useEffect(() => {
-    dispatch(Actions.getAllInnovationTypes());
+    dispatch(Actions.getAllProductTypes());
   }, [dispatch]);
 
   useEffect(() => {
-    SetdataList(innovationTypeData);
-  }, [innovationTypeData]);
+    SetdataList(productTypeData);
+  }, [productTypeData]);
 
   const editItem = (elm) => {
     setIsModalVisible(true);
@@ -54,8 +54,8 @@ const AllInnovationTypes = () => {
   };
 
   const handleOk = () => {
-    let values = {id: editItemId, name: targetName }
-    dispatch(Actions.updateInnovationType(values));
+    let values = { id: editItemId, name: targetName }
+    // dispatch(Actions.updateInnovationType(values));
     setIsModalVisible(false)
   };
 
@@ -63,9 +63,9 @@ const AllInnovationTypes = () => {
     SetTargeName(e.target.value);
   };
 
-  const plusIndex = (elm) => {};
+  const plusIndex = (elm) => { };
 
-  const downIndex = (elm) => {};
+  const downIndex = (elm) => { };
 
   const tableColumns = [
     {
@@ -138,7 +138,7 @@ const AllInnovationTypes = () => {
 
   const onSearch = (e) => {
     const { value } = e.currentTarget;
-    const searchArray = e.currentTarget.value ? dataList : innovationTypeData;
+    const searchArray = e.currentTarget.value ? dataList : productTypeData;
     const data = utils.wildCardSearch(searchArray, value);
     SetdataList(data);
     setSelectedRowKeys([]);
@@ -216,4 +216,4 @@ const AllInnovationTypes = () => {
   );
 };
 
-export default AllInnovationTypes;
+export default AllProductTypes;
