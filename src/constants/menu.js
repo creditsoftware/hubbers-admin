@@ -30,6 +30,44 @@ const data = [
     to: `${adminRoot}/users`,
   },
   {
+    id: 'community',
+    icon: 'iconsminds-shop-4',
+    label: 'menu.community',
+    to: `${adminRoot}/community`,
+    subs: [
+      {
+        icon: 'simple-icon-briefcase',
+        label: 'menu.community',
+        to: `${adminRoot}/community/all`,
+      },
+      {
+        icon: 'simple-icon-doc',
+        label: 'menu.member',
+        to: `${adminRoot}/community/member`,
+      },
+      {
+        icon: 'simple-icon-doc',
+        label: 'menu.topic',
+        to: `${adminRoot}/community/topic`,
+      },
+      {
+        icon: 'simple-icon-doc',
+        label: 'menu.post',
+        to: `${adminRoot}/community/post`,
+      },
+      {
+        icon: 'simple-icon-doc',
+        label: 'menu.article',
+        to: `${adminRoot}/community/article`,
+      },
+      {
+        icon: 'simple-icon-doc',
+        label: 'menu.event',
+        to: `${adminRoot}/community/event`,
+      },
+    ],
+  },
+  {
     id: 'investors',
     icon: 'iconsminds-user',
     label: 'menu.investors',

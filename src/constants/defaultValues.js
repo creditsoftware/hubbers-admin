@@ -70,9 +70,9 @@ export const colors = [
 ];
 
 export const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://api.hubbers.io/api/v1' : process.env.NODE_ENV === 'development'
-    ? 'https://api.hubbers.io/api/v1' : 'https://api.hubbers.io/api/v1';
+    ? 'http://localhost:8888/api/v1' : 'https://api.hubbers.io/api/v1';
 
 
 export const API_UPLOAD_URL =
   process.env.NODE_ENV === 'production' ? 'https://api.hubbers.io/api/v1/upload' : process.env.NODE_ENV === 'development'
-    ? 'https://api.hubbers.io/api/v1/upload' : 'https://api.hubbers.io/api/v1/upload';
+    ? 'http://localhost:8888/api/v1/upload' : 'https://api.hubbers.io/api/v1/upload';
