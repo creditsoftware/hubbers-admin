@@ -2,8 +2,8 @@ import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import api from '../../../ApiConfig';
 
 import {
-    CREATE_PRODUCT_TYPE,
-    GET_ALL_PRODUCT_TYPES
+  CREATE_PRODUCT_TYPE,
+  GET_ALL_PRODUCT_TYPES,
 } from '../../types/options/product-type';
 
 import {
@@ -39,7 +39,6 @@ function* getAllProductTypes() {
   }
 }
 
-
 // create
 export function* watchCreateProductionType() {
   yield takeEvery(CREATE_PRODUCT_TYPE, createProductType);
@@ -55,22 +54,19 @@ const createProductTypeAsync = async ({ payload }) => {
 function* createProductType(data) {
   try {
     const result = yield call(createProductTypeAsync, data);
-    console.log('result =>', result)
+    console.log('result =>', result);
     if (result.success) {
       yield put(createProductTypeSuccess(result.data));
     } else {
-      yield put(createProductTypeError('Create Production Type is not success!'));
+      yield put(
+        createProductTypeError('Create Production Type is not success!')
+      );
     }
   } catch (error) {
-    console.log('error =>', error)
+    console.log('error =>', error);
   }
 }
 
-
 export default function* rootSaga() {
-  yield all([
-    fork(watchCreateProductionType),
-    fork(watchGetAllProductionType)
-  ]);
+  yield all([fork(watchCreateProductionType), fork(watchGetAllProductionType)]);
 }
-

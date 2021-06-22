@@ -9,6 +9,8 @@ const Dashboard = React.lazy(() => import('./dashboard'));
 const Users = React.lazy(() => import('./user'));
 const EditUser = React.lazy(() => import('./user/edit-user'));
 
+const Community = React.lazy(() => import('./community'));
+
 const Investor = React.lazy(() => import('./investor'));
 
 const HubbersTeam = React.lazy(() => import('./hubbers-team'));
@@ -43,6 +45,10 @@ const App = ({ match }) => {
             <Route
               path={`${match.url}/users/:id`}
               render={(props) => <EditUser {...props} />}
+            />
+            <Route
+              path={`${match.url}/community`}
+              render={(props) => <Community {...props} />}
             />
             <Route
               exact

@@ -16,9 +16,8 @@ import {
   getAllInnovationTypesError,
   deleteInnovationTypeSuccess,
   deleteInnovationTypeError,
-
   updateInnovationTypeSuccess,
-  updateInnovationTypeError
+  updateInnovationTypeError,
 } from './actions';
 
 // get all
@@ -102,35 +101,34 @@ const deleteInnovationTypeAsync = async ({ payload }) => {
     .catch((error) => error);
 };
 
-//update
+// update
 
 export function* watchUpdateInnovationType() {
-  yield takeEvery(UPDATE_INNOVATION_TYPE, updateInnovationType)
+  yield takeEvery(UPDATE_INNOVATION_TYPE, updateInnovationType);
 }
 
 function* updateInnovationType(data) {
   try {
-    const result = yield call(updateInnovationTypeAsync, data)
-    console.log('result =>', result)
-    if(result.success) {
-      yield put(updateInnovationTypeSuccess(result.data))
+    const result = yield call(updateInnovationTypeAsync, data);
+    console.log('result =>', result);
+    if (result.success) {
+      yield put(updateInnovationTypeSuccess(result.data));
     } else {
-      yield put(updateInnovationTypeError(result.message))
+      yield put(updateInnovationTypeError(result.message));
     }
   } catch (error) {
-    console.log('error =>', error)
+    console.log('error =>', error);
   }
 }
 
-const updateInnovationTypeAsync = async ({payload}) => {
-  console.log('data =>', payload)
-  
-  return await api.put(`/innovation-types/${payload.id}`, payload)
+const updateInnovationTypeAsync = async ({ payload }) => {
+  console.log('data =>', payload);
+
+  return await api
+    .put(`/innovation-types/${payload.id}`, payload)
     .then((res) => res.data)
-    .catch((error) => error)
-}
-
-
+    .catch((error) => error);
+};
 
 export default function* rootSaga() {
   yield all([

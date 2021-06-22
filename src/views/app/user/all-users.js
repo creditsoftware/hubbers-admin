@@ -7,7 +7,7 @@ import {
   Button,
   Popconfirm,
   Tooltip,
-  Spin,
+  // Spin,
   Avatar,
   Upload,
   Space,
@@ -33,7 +33,7 @@ const AllUsers = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [userList, SetUserList] = useState(null);
-  const [uploading, setUploading] = useState(false);
+  // const [uploading, setUploading] = useState(false);
   const { users } = useSelector((state) => state.users);
   useEffect(() => {
     dispatch(Actions.getAllUsers());
@@ -234,7 +234,8 @@ const AllUsers = () => {
                 onChange={(e) => console.log(e)}
               >
                 <Button type="primary" icon={<PlusOutlined />} block>
-                  {uploading ? <Spin /> : 'Import Users'}
+                  {/* {uploading ? <Spin /> : 'Import Users'} */}
+                  Import Users
                 </Button>
               </Upload>
             </Tooltip>

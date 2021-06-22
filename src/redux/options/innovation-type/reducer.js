@@ -6,11 +6,9 @@ import {
   GET_ALL_INNOVATION_TYPES_SUCCESS,
   GET_ALL_INNOVATION_TYPES_ERROR,
   GET_INNOVATION_TYPE,
-
   UPDATE_INNOVATION_TYPE,
   UPDATE_INNOVATION_TYPE_SUCCESS,
   UPDATE_INNOVATION_TYPE_ERROR,
-
   DELETE_INNOVATION_TYPE,
   DELETE_INNOVATION_TYPE_SUCCESS,
   DELETE_INNOVATION_TYPE_ERROR,
@@ -66,13 +64,18 @@ export default (state = INIT_STATE, action) => {
       return { ...state, loading: true };
 
     case UPDATE_INNOVATION_TYPE_SUCCESS:
-      const foundIndex = state.innovationTypeData.findIndex(x => x.id === action.payload.id)
-      state.innovationTypeData[foundIndex] = action.payload
-      return { ...state, loading: false, innovationTypeData: state.innovationTypeData};
+      const foundIndex = state.innovationTypeData.findIndex(
+        (x) => x.id === action.payload.id
+      );
+      state.innovationTypeData[foundIndex] = action.payload;
+      return {
+        ...state,
+        loading: false,
+        innovationTypeData: state.innovationTypeData,
+      };
 
     case UPDATE_INNOVATION_TYPE_ERROR:
       return { ...state, loading: false, error: action.payload };
-
 
     default:
       return { ...state };
