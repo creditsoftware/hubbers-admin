@@ -33,9 +33,10 @@ module.exports = {
   'menu.dashboards': 'Dashboards',
   'menu.dashboard': 'Dashboard',
   'menu.community': 'Community',
+  'menu.all': 'All',
   'menu.member': 'Member',
   'menu.topic': 'Topic',
-  'menu.Post': 'Post',
+  'menu.post': 'Post',
   'menu.article': 'Article',
   'menu.event': 'Event',
   'menu.default': 'Default',
@@ -127,6 +128,9 @@ module.exports = {
 
   // users
   'users.title': 'Users',
+
+  // community
+  'community.title': 'Community',
 
   // investors
   'investors.title': 'Investors',

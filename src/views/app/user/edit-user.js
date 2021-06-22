@@ -18,6 +18,7 @@ import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import * as Actions from '../../../redux/actions';
 import AvatarUpload from '../../../components/util-components/Upload/AvatarUpload';
+
 const { Option } = Select;
 const EditUser = () => {
   const history = useHistory();
@@ -57,9 +58,9 @@ const EditUser = () => {
         nationality: singleUser.detail?.nationality,
         joinedDate: moment(singleUser.detail?.joinedDate),
         education: singleUser.detail?.education,
-      })
+      });
     }
-  }, [singleUser]);
+  }, [form, singleUser]);
   const onUpdateItem = (values) => {
     dispatch(Actions.updateUser(params.id, values));
     history.push('/app/users');
@@ -68,7 +69,7 @@ const EditUser = () => {
     history.push('/app/users');
   };
   const onChangeAvatar = (imageUrl) => {
-    setUserDetail({ ...userDetail, avatar: imageUrl })
+    setUserDetail({ ...userDetail, avatar: imageUrl });
   };
   const onChangePassword = () => {
     console.log('change password');

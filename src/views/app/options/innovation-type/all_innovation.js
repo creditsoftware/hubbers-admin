@@ -1,12 +1,31 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react'
-import { Card, Table, Input, Button, Tooltip, message, Popconfirm, Modal, Form, Col, Row, } from 'antd';
-import { FileExcelOutlined, SearchOutlined, EditOutlined, DeleteOutlined, ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
-import Flex from '../../../../components/shared-components/Flex'
-import utils from '../../../../helpers/utils/index'
-import { useSelector, useDispatch } from 'react-redux'
-import * as Actions from '../../../../redux/actions'
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import {
+  Card,
+  Table,
+  Input,
+  Button,
+  Tooltip,
+  message,
+  Popconfirm,
+  Modal,
+  Form,
+  Col,
+  Row,
+} from 'antd';
+import {
+  FileExcelOutlined,
+  SearchOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  ArrowUpOutlined,
+  ArrowDownOutlined,
+} from '@ant-design/icons';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import Flex from '../../../../components/shared-components/Flex';
+import utils from '../../../../helpers/utils/index';
+import * as Actions from '../../../../redux/actions';
 
 const AllInnovationTypes = () => {
   const dispatch = useDispatch();
@@ -21,7 +40,7 @@ const AllInnovationTypes = () => {
 
   const [form] = Form.useForm();
 
-  const { innovationTypeData } = useSelector(state => state.innovationType)
+  const { innovationTypeData } = useSelector((state) => state.innovationType);
 
   useEffect(() => {
     dispatch(Actions.getAllInnovationTypes());
@@ -41,7 +60,7 @@ const AllInnovationTypes = () => {
     });
   };
 
-  const deleteItem = id => {
+  const deleteItem = (id) => {
     dispatch(Actions.deleteInnovationType(id));
   };
 
@@ -54,9 +73,9 @@ const AllInnovationTypes = () => {
   };
 
   const handleOk = () => {
-    let values = {id: editItemId, name: targetName }
+    const values = { id: editItemId, name: targetName };
     dispatch(Actions.updateInnovationType(values));
-    setIsModalVisible(false)
+    setIsModalVisible(false);
   };
 
   const changeName = (e) => {

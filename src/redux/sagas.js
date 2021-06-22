@@ -3,6 +3,7 @@ import { all } from 'redux-saga/effects';
 import authSagas from './auth/saga';
 import userRoleSagas from './user-role/saga';
 import userSaga from './user/saga';
+import communityAll from './community/all/saga';
 
 import innovationTypeSaga from './options/innovation-type/saga';
 import productTypeSaga from './options/product-type/saga';
@@ -14,5 +15,6 @@ export default function* rootSaga(getState) {
     userSaga(),
     innovationTypeSaga(),
     productTypeSaga(),
+    communityAll(),
   ]);
 }

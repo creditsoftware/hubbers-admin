@@ -6,11 +6,13 @@ import { useHistory } from 'react-router-dom';
 import { Row } from 'reactstrap';
 import AllProductTypes from './all_product_types';
 import * as Actions from '../../../../redux/actions';
-import { Colxx,Separator } from '../../../../components/common/CustomBootstrap';
+import {
+  Colxx,
+  Separator,
+} from '../../../../components/common/CustomBootstrap';
 import Breadcrumb from '../../../../containers/navs/Breadcrumb';
 
 const ProductType = ({ match }) => {
-
   const [visible, setVisible] = useState(false);
   const dispatch = useDispatch();
 
