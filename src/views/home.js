@@ -3,13 +3,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Nav, NavItem, TabContent, TabPane } from 'reactstrap';
 import classnames from 'classnames';
+import { scroller } from 'react-scroll';
+import Headroom from 'react-headroom';
 import GlideComponent from '../components/carousel/GlideComponent';
-import { scroller } from 'react-scroll'
-import Headroom from 'react-headroom'
-import {
-  buyUrl,
-  adminRoot
-} from '../constants/defaultValues';
+import { buyUrl, adminRoot } from '../constants/defaultValues';
 
 const slideSettings = {
   type: 'carousel',
@@ -206,11 +203,12 @@ const Home = () => {
     const homeRect = refRowHome.current.getBoundingClientRect();
 
     const homeSection = refSectionHome.current;
-    homeSection.style.backgroundPositionX = `${homeRect.x - 580  }px`;
+    homeSection.style.backgroundPositionX = `${homeRect.x - 580}px`;
 
     const footerSection = refSectionFooter.current;
-    footerSection.style.backgroundPositionX =
-      event.target.innerWidth - homeRect.x - 2000 + 'px';
+    footerSection.style.backgroundPositionX = `${
+      event.target.innerWidth - homeRect.x - 2000
+    }px`;
 
     if (event.target.innerWidth >= 992) {
       setShowMobileMenu(false);
@@ -453,7 +451,7 @@ const Home = () => {
                         <div key={`slide_${index}`} className="card">
                           <div className="card-body text-center">
                             <div>
-                              <i className={f.icon + ' large-icon'}></i>
+                              <i className={`${f.icon} large-icon`} />
                               <h5 className="mb-3 font-weight-semibold">
                                 {f.title}
                               </h5>
@@ -504,7 +502,8 @@ const Home = () => {
                           <p
                             dangerouslySetInnerHTML={{
                               __html: feature.detail,
-                            }} />
+                            }}
+                          />
                         </div>
                       </div>
                       <div className="col-12 col-md-6 col-lg-6 offset-lg-1 offset-md-0 position-relative">
@@ -531,8 +530,8 @@ const Home = () => {
                           <p
                             dangerouslySetInnerHTML={{
                               __html: feature.detail,
-                            }} />
-                          ></p>
+                            }}
+                          />
                         </div>
                       </div>
                     </div>
@@ -675,10 +674,8 @@ const Home = () => {
                       {['left', 'center', 'right'].map((align, i) => (
                         <div
                           key={`light_${index}_${i}`}
-                          className={
-                            t.class + '-light-' + (i + 1) + ' color-' + align
-                          }
-                        ></div>
+                          className={`${t.class}-light-${i + 1} color-${align}`}
+                        />
                       ))}
                     </div>
                   </div>
@@ -687,10 +684,8 @@ const Home = () => {
                       {['left', 'center', 'right'].map((align, i) => (
                         <div
                           key={`dark_${index}_${i}`}
-                          className={
-                            t.class + '-dark-' + (i + 1) + ' color-' + align
-                          }
-                        ></div>
+                          className={`${t.class}-dark-${i + 1} color-${align}`}
+                        />
                       ))}
                     </div>
                   </div>
@@ -733,7 +728,7 @@ const Home = () => {
                     href="#scroll"
                     onClick={(event) => scrollTo(event, 'home')}
                   >
-                    <i className="simple-icon-arrow-up"></i>
+                    <i className="simple-icon-arrow-up" />
                   </a>
                 </div>
                 <div className="col-12 text-center footer-content">
