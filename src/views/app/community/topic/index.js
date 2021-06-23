@@ -5,7 +5,7 @@ import {
   Separator,
 } from '../../../../components/common/CustomBootstrap';
 import Breadcrumb from '../../../../containers/navs/Breadcrumb';
-import CommunityAllList from './communityall-list';
+import CommunityAllList from './list';
 
 const CommunityAll = ({ match }) => {
   return (

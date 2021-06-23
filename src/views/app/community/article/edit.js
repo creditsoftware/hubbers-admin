@@ -8,7 +8,7 @@ import * as Actions from '../../../../redux/actions';
 
 const { Option } = Select;
 
-const EditCommunity = ({ id, data }) => {
+const EditArticle = ({ id, data }) => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
@@ -68,7 +68,7 @@ const EditCommunity = ({ id, data }) => {
     values.featuredImage = uploadedImg;
     /* eslint-enable */
     dispatch(Actions.updateCommunity(values));
-    onClose();
+    window.location.reload();
   };
   return (
     <>
@@ -209,4 +209,4 @@ const EditCommunity = ({ id, data }) => {
   );
 };
 
-export default EditCommunity;
+export default EditArticle;

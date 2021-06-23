@@ -829,7 +829,7 @@ const CreateEvent = () => {
                   userList.map((u) => {
                     return (
                       <Option key={u.id} value={u.id}>
-                        {u.name}
+                        {u.email}
                       </Option>
                     );
                   })}

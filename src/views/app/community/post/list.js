@@ -4,8 +4,8 @@ import { Card, Space, Table, Tooltip, Popconfirm, Button } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import utils from '../../../../helpers/utils/index';
 import * as Actions from '../../../../redux/actions';
-import CreateCommunity from './create-community';
-import EditCommunity from './edit-community';
+import CreateCommunity from './create';
+import EditCommunity from './edit';
 
 const CommunityAllList = () => {
   const dispatch = useDispatch();

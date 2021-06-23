@@ -133,9 +133,7 @@ const CreateCommunity = () => {
                     userList.map((item) => {
                       return (
                         <Option value={item.id} key={item.id}>
-                          {`${item.firstname ? item.firstname : ''} ${
-                            item.lastname ? item.lastname : ''
-                          }`}
+                          {item.email}
                         </Option>
                       );
                     })}

@@ -872,7 +872,7 @@ const EditEvent = ({ id, data }) => {
                   userList.map((u) => {
                     return (
                       <Option key={u.id} value={u.id}>
-                        {u.name}
+                        {u.email}
                       </Option>
                     );
                   })}

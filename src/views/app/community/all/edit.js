@@ -34,21 +34,12 @@ const EditCommunity = ({ id, data }) => {
   const showDrawer = () => {
     const filterData = data.filter((item) => item.id === id);
     if (filterData.length > 0) {
+      setImage(filterData[0].featuredImage);
       form.setFieldsValue({
-        name: filterData[0].name,
-        slug: filterData[0].slug,
-        country: filterData[0].country,
-        state: filterData[0].state,
-        city: filterData[0].city,
-        createdBy: filterData[0].createdBy,
+        ...filterData[0],
       });
       setEditData({
-        name: filterData[0].name,
-        slug: filterData[0].slug,
-        country: filterData[0].country,
-        state: filterData[0].state,
-        city: filterData[0].city,
-        createdBy: filterData[0].createdBy,
+        ...filterData[0],
       });
     }
     setVisible(true);
@@ -68,7 +59,7 @@ const EditCommunity = ({ id, data }) => {
     values.featuredImage = uploadedImg;
     /* eslint-enable */
     dispatch(Actions.updateCommunity(values));
-    window.location.reload();
+    onClose();
   };
   return (
     <>
@@ -174,9 +165,7 @@ const EditCommunity = ({ id, data }) => {
                       userList.map((item) => {
                         return (
                           <Option value={item.id} key={item.id}>
-                            {`${item.firstname ? item.firstname : ''} ${
-                              item.lastname ? item.lastname : ''
-                            }`}
+                            {item.email}
                           </Option>
                         );
                       })}
@@ -186,7 +175,10 @@ const EditCommunity = ({ id, data }) => {
             </Row>
             <Row>
               <Card title="Featured Image">
-                <AvatarUpload statusChange={onChangeAvatar} />
+                <AvatarUpload
+                  image={uploadedImg}
+                  statusChange={onChangeAvatar}
+                />
               </Card>
             </Row>
 

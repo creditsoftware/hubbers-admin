@@ -36,7 +36,7 @@ const data = [
     to: `${adminRoot}/community`,
     subs: [
       {
-        icon: 'simple-icon-briefcase',
+        icon: 'simple-icon-doc',
         label: 'menu.community',
         to: `${adminRoot}/community/all`,
       },
