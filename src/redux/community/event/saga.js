@@ -63,7 +63,7 @@ function* GetSingleEvent(payload) {
 }
 
 const createEventAsync = async ({ payload }) => {
-  await api
+  return api
     .post(`/community/event`, {
       ...payload,
     })
@@ -79,7 +79,6 @@ function* CreateEvent(payload) {
       yield put(getAllEvents());
     } else {
       yield put(createEventError('Create Event Response is not success!'));
-      yield put(getAllEvents());
     }
   } catch (error) {
     console.log(error);
