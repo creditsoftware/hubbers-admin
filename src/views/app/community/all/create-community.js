@@ -41,7 +41,7 @@ const CreateCommunity = () => {
     values.featuredImage = uploadedImg;
     /* eslint-enable */
     dispatch(Actions.createCommunity(values));
-    window.location.reload();
+    onClose();
   };
 
   return (

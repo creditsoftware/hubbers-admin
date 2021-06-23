@@ -68,7 +68,7 @@ const EditCommunity = ({ id, data }) => {
     values.featuredImage = uploadedImg;
     /* eslint-enable */
     dispatch(Actions.updateCommunity(values));
-    window.location.reload();
+    onClose();
   };
   return (
     <>

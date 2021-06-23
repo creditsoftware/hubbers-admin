@@ -2,15 +2,30 @@ import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import api from '../../../ApiConfig';
 
 import {
+  CREATE_EVENT,
+  GET_ALL_EVENT,
+  GET_SINGLE_EVENT,
+  UPDATE_EVENT,
 } from '../../types/community/event';
 
-import { getAllEventsError, getAllEventsSuccess } from './actions';
+import {
+  createEventError,
+  createEventSuccess,
+  getAllEvents,
+  getAllEventsError,
+  getAllEventsSuccess,
+  getSingleEventError,
+  getSingleEventSuccess,
+  updateEventError,
+  updateEventSuccess,
+} from './actions';
 
-const getAllEventsAsync = async () =>
-  await api
+const getAllEventsAsync = async () => {
+  return api
     .get(`/community/event`)
     .then((res) => res)
     .catch((error) => error);
+};
 
 function* GetAllEvents() {
   try {
@@ -18,99 +33,101 @@ function* GetAllEvents() {
     if (result.status === 200 && result.statusText === 'OK') {
       yield put(getAllEventsSuccess(result.data.data));
     } else {
-      yield put(
-        getAllEventsError('Get All Community Response is not success!')
-      );
+      yield put(getAllEventsError('Get All Event Response is not success!'));
     }
   } catch (error) {
-    yield put(getAllEventsError('Get All Community Error !'));
+    yield put(getAllEventsError('Get All Event Error !'));
   }
 }
 
-const getSingleCommunityAsync = async (payload) =>
+const getSingleEventAsync = async (payload) => {
   await api
-    .get(`/community/${payload.payload}`)
+    .get(`/community/event/${payload.payload}`)
     .then((res) => res)
     .catch((error) => error);
+};
 
-function* GetSingleCommunity(payload) {
+function* GetSingleEvent(payload) {
   try {
-    console.log(payload.payload);
-    const result = yield call(getSingleCommunityAsync, payload);
+    const result = yield call(getSingleEventAsync, payload);
     if (result.status === 200 && result.statusText === 'OK') {
-      yield put(getSingleCommunitySuccess(result.data.data));
+      yield put(getSingleEventSuccess(result.data.data));
     } else {
       yield put(
-        getSingleCommunityError('Get Single Community Response is not success!')
+        getSingleEventError('Get Single Event Response is not success!')
       );
     }
   } catch (error) {
-    yield put(getSingleCommunityError('Get Single Community Error !'));
+    yield put(getSingleEventError('Get Single Event Error !'));
   }
 }
 
-const createCommunityAsync = async ({ payload }) =>
+const createEventAsync = async ({ payload }) => {
   await api
-    .post(`/community`, { ...payload })
+    .post(`/community/event`, {
+      ...payload,
+    })
     .then((res) => res)
     .catch((error) => error);
+};
 
-function* CreateCommunity(payload) {
+function* CreateEvent(payload) {
   try {
-    const result = yield call(createCommunityAsync, payload);
+    const result = yield call(createEventAsync, payload);
     if (result.status === 200 && result.statusText === 'OK') {
-      yield put(createCommunitySuccess(result.data.data));
+      yield put(createEventSuccess(result.data.data));
+      yield put(getAllEvents());
     } else {
-      yield put(
-        createCommunityError('Create Community Response is not success!')
-      );
+      yield put(createEventError('Create Event Response is not success!'));
     }
   } catch (error) {
     console.log(error);
-    yield put(createCommunityError('Create Community Error !'));
+    yield put(createEventError('Create Event Error !'));
   }
 }
 
-const updateCommunityAsync = async ({ payload }) =>
-  await api
-    .put(`/community/${payload.id}`, { ...payload })
+const updateEventAsync = async ({ payload }) => {
+  return api
+    .put(`/community/event/${payload.id}`, {
+      ...payload,
+    })
     .then((res) => res)
     .catch((error) => error);
+};
 
-function* UpdateCommunity(payload) {
+function* UpdateEvent(payload) {
   try {
-    const result = yield call(updateCommunityAsync, payload);
+    const result = yield call(updateEventAsync, payload);
     if (result.status === 200 && result.statusText === 'OK') {
-      yield put(updateCommunitySuccess(result.data.data));
+      yield put(updateEventSuccess(result.data.data));
+      yield put(getAllEvents());
     } else {
-      yield put(
-        updateCommunityError('Update Community Response is not success!')
-      );
+      yield put(updateEventError('Update Event Response is not success!'));
     }
   } catch (error) {
     console.log(error);
-    yield put(updateCommunityError('Update Community Error !'));
+    yield put(updateEventError('Update Event Error !'));
   }
 }
 
-export function* watchGetAllCommunity() {
-  yield takeEvery(GET_ALL_COMMUNITY, GetAllCommunity);
+export function* watchGetAllEvents() {
+  yield takeEvery(GET_ALL_EVENT, GetAllEvents);
 }
-export function* watchCreateCommunity() {
-  yield takeEvery(CREATE_COMMUNITY, CreateCommunity);
+export function* watchCreateEvent() {
+  yield takeEvery(CREATE_EVENT, CreateEvent);
 }
-export function* watchGetSingleCommunity() {
-  yield takeEvery(GET_SINGLE_COMMUNITY, GetSingleCommunity);
+export function* watchGetSingleEvent() {
+  yield takeEvery(GET_SINGLE_EVENT, GetSingleEvent);
 }
-export function* watchUpdateCommunity() {
-  yield takeEvery(UPDATE_COMMUNITY, UpdateCommunity);
+export function* watchUpdateEvent() {
+  yield takeEvery(UPDATE_EVENT, UpdateEvent);
 }
 
 export default function* rootSaga() {
   yield all([
-    fork(watchGetAllCommunity),
-    fork(watchCreateCommunity),
-    fork(watchGetSingleCommunity),
-    fork(watchUpdateCommunity),
+    fork(watchGetAllEvents),
+    fork(watchGetSingleEvent),
+    fork(watchUpdateEvent),
+    fork(watchCreateEvent),
   ]);
 }

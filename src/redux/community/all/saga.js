@@ -3,39 +3,30 @@ import api from '../../../ApiConfig';
 
 import {
   GET_ALL_COMMUNITY,
-  GET_ALL_COMMUNITY_SUCCESS,
-  GET_ALL_COMMUNITY_ERROR,
   GET_SINGLE_COMMUNITY,
-  GET_SINGLE_COMMUNITY_SUCCESS,
-  GET_SINGLE_COMMUNITY_ERROR,
   CREATE_COMMUNITY,
-  CREATE_COMMUNITY_SUCCESS,
-  CREATE_COMMUNITY_ERROR,
   UPDATE_COMMUNITY,
-  UPDATE_COMMUNITY_SUCCESS,
-  UPDATE_COMMUNITY_ERROR,
 } from '../../types/community/community-all';
 
 import {
   getAllCommunity,
   getAllCommunitySuccess,
   getAllCommunityError,
-  getSingleCommunity,
   getSingleCommunitySuccess,
   getSingleCommunityError,
-  createCommunity,
   createCommunitySuccess,
   createCommunityError,
-  updateCommunity,
   updateCommunitySuccess,
   updateCommunityError,
 } from './actions';
 
 const getAllCommunityAsync = async () =>
+  /* eslint-disable */
   await api
     .get(`/community`)
     .then((res) => res)
     .catch((error) => error);
+    /* eslint-enable */
 
 function* GetAllCommunity() {
   try {
@@ -53,10 +44,12 @@ function* GetAllCommunity() {
 }
 
 const getSingleCommunityAsync = async (payload) =>
+  /* eslint-disable */
   await api
     .get(`/community/${payload.payload}`)
     .then((res) => res)
     .catch((error) => error);
+    /* eslint-enable */
 
 function* GetSingleCommunity(payload) {
   try {
@@ -75,16 +68,19 @@ function* GetSingleCommunity(payload) {
 }
 
 const createCommunityAsync = async ({ payload }) =>
+  /* eslint-disable */
   await api
     .post(`/community`, { ...payload })
     .then((res) => res)
     .catch((error) => error);
+    /* eslint-enable */
 
 function* CreateCommunity(payload) {
   try {
     const result = yield call(createCommunityAsync, payload);
     if (result.status === 200 && result.statusText === 'OK') {
       yield put(createCommunitySuccess(result.data.data));
+      yield put(getAllCommunity());
     } else {
       yield put(
         createCommunityError('Create Community Response is not success!')
@@ -97,16 +93,19 @@ function* CreateCommunity(payload) {
 }
 
 const updateCommunityAsync = async ({ payload }) =>
+  /* eslint-disable */
   await api
     .put(`/community/${payload.id}`, { ...payload })
     .then((res) => res)
     .catch((error) => error);
+    /* eslint-enable */
 
 function* UpdateCommunity(payload) {
   try {
     const result = yield call(updateCommunityAsync, payload);
     if (result.status === 200 && result.statusText === 'OK') {
       yield put(updateCommunitySuccess(result.data.data));
+      yield put(getAllCommunity());
     } else {
       yield put(
         updateCommunityError('Update Community Response is not success!')
