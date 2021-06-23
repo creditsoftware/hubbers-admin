@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Card, Space, Table, Tooltip, Popconfirm, Button } from 'antd';
+import { Card, Space, Table, Tooltip, Popconfirm, Button, Image } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import utils from '../../../../helpers/utils/index';
 import * as Actions from '../../../../redux/actions';
@@ -34,7 +34,7 @@ const Community = () => {
       dataIndex: 'featuredImage',
       /* eslint-disable */
       render: (_, record) => (
-        record.featuredImage && <img src={record.featuredImage} style={{width:'100px'}}></img>
+        record.featuredImage && <Image width={100} src={record.featuredImage} />
       ),
       /* eslint-enable */
     },

@@ -32,7 +32,7 @@ const { TextArea } = Input;
 const CreateEvent = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
-  const formRef = React.createRef();
+  const [form] = Form.useForm();
   const [dateTime, setDateTime] = React.useState({
     startDate: '',
     endDate: '',
@@ -101,6 +101,22 @@ const CreateEvent = () => {
       eventType,
     };
     dispatch(Actions.createEvent(data));
+    form.resetFields();
+    setDateTime({
+      startDate: '',
+      endDate: '',
+      startTime: '',
+      endTime: '',
+      customRepeatPeriod: {},
+    });
+    setSelectedCommunity(null);
+    setIsGlobal(false);
+    setIsRepeat(false);
+    setRepeatPeriod(null);
+    setEventType('online');
+    setEventOnlineType('meeting');
+    setRsvp(false);
+    setEndType('date');
     onClose();
   };
   return (
@@ -118,7 +134,7 @@ const CreateEvent = () => {
         <Form
           name="eventForm"
           onFinish={createEvent}
-          ref={formRef}
+          form={form}
           className="p-4 mt-4"
           initialValues={{
             isGlobal,
@@ -154,7 +170,7 @@ const CreateEvent = () => {
               <Switch
                 onChange={(v) => {
                   setIsGlobal(v);
-                  formRef.current.setFieldsValue({ communityId: null });
+                  form.setFieldsValue({ communityId: null });
                 }}
               />
             </Form.Item>
@@ -176,7 +192,7 @@ const CreateEvent = () => {
                     placeholder="Community"
                     onChange={(v) => {
                       setSelectedCommunity(v);
-                      formRef.current.setFieldsValue({ topicId: null });
+                      form.setFieldsValue({ topicId: null });
                     }}
                   >
                     {communityList &&
@@ -223,7 +239,7 @@ const CreateEvent = () => {
                     type="text"
                     placeholder="Add a title"
                     onChange={(v) =>
-                      formRef.current.setFieldsValue({
+                      form.setFieldsValue({
                         slug: slugify(v.target.value),
                       })
                     }

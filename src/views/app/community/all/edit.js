@@ -5,6 +5,7 @@ import { Drawer, Form, Button, Tooltip, Col, Input, Card, Select } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import AvatarUpload from '../../../../components/util-components/Upload/AvatarUpload';
 import * as Actions from '../../../../redux/actions';
+import { slugify } from '../../../../helpers/Utils';
 
 const { Option } = Select;
 
@@ -104,7 +105,12 @@ const EditCommunity = ({ id, data }) => {
                   ]}
                   className="mr-2"
                 >
-                  <Input placeholder="Please enter Community Name" />
+                  <Input
+                    placeholder="Please enter Community Name"
+                    onChange={(e) =>
+                      form.setFieldsValue({ slug: slugify(e.target.value) })
+                    }
+                  />
                 </Form.Item>
               </Col>
 
@@ -115,7 +121,7 @@ const EditCommunity = ({ id, data }) => {
                   rules={[{ required: true, message: 'Please enter Slug' }]}
                   className="ml-2"
                 >
-                  <Input placeholder="Please enter Slug" />
+                  <Input placeholder="Please enter Slug" disabled />
                 </Form.Item>
               </Col>
             </Row>
