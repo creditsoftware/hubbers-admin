@@ -6,6 +6,8 @@ import userSaga from './user/saga';
 import communitySaga from './community/all/saga';
 import eventSaga from './community/event/saga';
 import topicSaga from './community/topic/saga';
+import memberRoleSaga from './community/memberRole/saga';
+import memberSaga from './community/member/saga';
 
 import innovationTypeSaga from './options/innovation-type/saga';
 import productTypeSaga from './options/product-type/saga';
@@ -20,5 +22,7 @@ export default function* rootSaga(getState) {
     communitySaga(),
     eventSaga(),
     topicSaga(),
+    memberRoleSaga(),
+    memberSaga(),
   ]);
 }

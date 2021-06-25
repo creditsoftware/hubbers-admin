@@ -18,7 +18,7 @@ const CommunityAll = ({ match }) => {
       </Row>
       <Colxx xxs="12" className="mb-4">
         <div>
-          <div className="communityall-list" style={{ marginTop: 10 }}>
+          <div style={{ marginTop: 10 }}>
             <CommunityAllList />
           </div>
         </div>

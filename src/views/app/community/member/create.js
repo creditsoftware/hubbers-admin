@@ -1,28 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row } from 'reactstrap';
-import { Drawer, Form, Button, Col, Input, Card, Select } from 'antd';
+import { Drawer, Form, Button, Col, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import AvatarUpload from '../../../../components/util-components/Upload/AvatarUpload';
 import * as Actions from '../../../../redux/actions';
 
 const { Option } = Select;
 
-const CreateCommunity = () => {
+const Create = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
-  const [uploadedImg, setImage] = useState('');
-
   const [userList, SetUserList] = useState(null);
+  const [communityList, setCommunityList] = useState(null);
+  const [memberRoleList, setMemberRoleList] = useState(null);
   const { users } = useSelector((state) => state.users);
+  const [form] = Form.useForm();
+  const { communityAll, memberRole } = useSelector((state) => state);
 
   useEffect(() => {
     dispatch(Actions.getAllUsers());
+    dispatch(Actions.getAllCommunity());
+    dispatch(Actions.getAllMemberRoles());
   }, [dispatch]);
 
   useEffect(() => {
     SetUserList(users);
-  }, [users]);
+    setCommunityList(communityAll.community);
+    setMemberRoleList(memberRole.list);
+  }, [users, communityAll, memberRole]);
 
   const showDrawer = () => {
     setVisible(true);
@@ -32,25 +37,19 @@ const CreateCommunity = () => {
     setVisible(false);
   };
 
-  const onChangeAvatar = (imageUrl) => {
-    setImage(imageUrl);
-  };
-
   const onSubmit = (values) => {
-    /* eslint-disable */
-    values.featuredImage = uploadedImg;
-    /* eslint-enable */
-    dispatch(Actions.createCommunity(values));
-    window.location.reload();
+    dispatch(Actions.createMember(values));
+    form.resetFields();
+    onClose();
   };
 
   return (
     <>
       <Button type="primary" onClick={showDrawer}>
-        <PlusOutlined /> Create New Community
+        <PlusOutlined /> Create New Community Member
       </Button>
       <Drawer
-        title="Create a New Community"
+        title="Create a New Community Member"
         width={500}
         onClose={onClose}
         visible={visible}
@@ -59,67 +58,33 @@ const CreateCommunity = () => {
         <Form
           layout="vertical"
           hideRequiredMark
+          form={form}
           onFinish={onSubmit}
           className="p-4 mt-4"
         >
           <Row>
             <Col span={12}>
               <Form.Item
-                name="name"
-                label="Community Name"
-                rules={[
-                  { required: true, message: 'Please enter Community Name' },
-                ]}
-                className="mr-2"
+                name="communityId"
+                label="Community"
+                rules={[{ required: true, message: 'Please select!' }]}
               >
-                <Input placeholder="Please enter Community Name" />
-              </Form.Item>
-            </Col>
-
-            <Col span={12}>
-              <Form.Item
-                name="slug"
-                label="Slug"
-                rules={[{ required: true, message: 'Please enter Slug' }]}
-                className="ml-2"
-              >
-                <Input placeholder="Please enter Slug" />
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="country"
-                label="Country"
-                rules={[{ required: true, message: 'Please enter Country' }]}
-                className="mr-2"
-              >
-                <Input placeholder="Please enter Country" />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="state" label="State" className="ml-2">
-                <Input placeholder="Please enter State" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="city"
-                label="City"
-                rules={[{ required: true, message: 'Please enter City' }]}
-                className="mr-2"
-              >
-                <Input placeholder="Please enter City" />
+                <Select style={{ width: '100%' }} placeholder="Community">
+                  {communityList &&
+                    communityList.map((community) => {
+                      return (
+                        <Option key={community.id} value={community.id}>
+                          {community.name}
+                        </Option>
+                      );
+                    })}
+                </Select>
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item
-                name="createdBy"
-                label="Created By"
+                name="userId"
+                label="User"
                 rules={[
                   {
                     required: true,
@@ -133,9 +98,7 @@ const CreateCommunity = () => {
                     userList.map((item) => {
                       return (
                         <Option value={item.id} key={item.id}>
-                          {`${item.firstname ? item.firstname : ''} ${
-                            item.lastname ? item.lastname : ''
-                          }`}
+                          {item.email}
                         </Option>
                       );
                     })}
@@ -143,10 +106,31 @@ const CreateCommunity = () => {
               </Form.Item>
             </Col>
           </Row>
-          <Row>
-            <Card title="Featured Image">
-              <AvatarUpload statusChange={onChangeAvatar} />
-            </Card>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item
+                name="roleId"
+                label="Role"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please choose the role',
+                  },
+                ]}
+                className="ml-2"
+              >
+                <Select placeholder="Please choose the role">
+                  {memberRoleList &&
+                    memberRoleList.map((item) => {
+                      return (
+                        <Option value={item.id} key={item.id}>
+                          {item.name}
+                        </Option>
+                      );
+                    })}
+                </Select>
+              </Form.Item>
+            </Col>
           </Row>
           <div
             style={{
@@ -166,4 +150,4 @@ const CreateCommunity = () => {
   );
 };
 
-export default CreateCommunity;
+export default Create;

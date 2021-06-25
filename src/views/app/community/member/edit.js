@@ -1,56 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row } from 'reactstrap';
-import { Drawer, Form, Button, Tooltip, Col, Input, Card, Select } from 'antd';
+import { Drawer, Form, Button, Tooltip, Col, Select } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
-import AvatarUpload from '../../../../components/util-components/Upload/AvatarUpload';
 import * as Actions from '../../../../redux/actions';
 
 const { Option } = Select;
 
-const EditCommunity = ({ id, data }) => {
+const Edit = ({ id, data }) => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
-  const [form] = Form.useForm();
-  const [uploadedImg, setImage] = useState('');
   const [userList, SetUserList] = useState(null);
+  const [communityList, setCommunityList] = useState(null);
+  const [memberRoleList, setMemberRoleList] = useState(null);
   const { users } = useSelector((state) => state.users);
-  const [editData, setEditData] = useState({
-    name: '',
-    slug: '',
-    country: '',
-    state: '',
-    city: '',
-    createdBy: '',
-  });
+  const [form] = Form.useForm();
+  const [currentData, setCurrentData] = useState(null);
+  const { communityAll, memberRole } = useSelector((state) => state);
+
   useEffect(() => {
     dispatch(Actions.getAllUsers());
+    dispatch(Actions.getAllCommunity());
+    dispatch(Actions.getAllMemberRoles());
   }, [dispatch]);
 
   useEffect(() => {
     SetUserList(users);
-  }, [users]);
+    setCommunityList(communityAll.community);
+    setMemberRoleList(memberRole.list);
+    const editData = data.filter((d) => d.id === id)[0];
+    setCurrentData({ ...editData });
+  }, [users, communityAll, memberRole, data, id]);
 
   const showDrawer = () => {
-    const filterData = data.filter((item) => item.id === id);
-    if (filterData.length > 0) {
-      form.setFieldsValue({
-        name: filterData[0].name,
-        slug: filterData[0].slug,
-        country: filterData[0].country,
-        state: filterData[0].state,
-        city: filterData[0].city,
-        createdBy: filterData[0].createdBy,
-      });
-      setEditData({
-        name: filterData[0].name,
-        slug: filterData[0].slug,
-        country: filterData[0].country,
-        state: filterData[0].state,
-        city: filterData[0].city,
-        createdBy: filterData[0].createdBy,
-      });
-    }
     setVisible(true);
   };
 
@@ -58,17 +40,10 @@ const EditCommunity = ({ id, data }) => {
     setVisible(false);
   };
 
-  const onChangeAvatar = (imageUrl) => {
-    setImage(imageUrl);
-  };
-
   const onSubmit = (values) => {
-    /* eslint-disable */
-    values.id = id;
-    values.featuredImage = uploadedImg;
-    /* eslint-enable */
-    dispatch(Actions.updateCommunity(values));
-    window.location.reload();
+    dispatch(Actions.updateMember({ ...values, id }));
+    form.resetFields();
+    onClose();
   };
   return (
     <>
@@ -90,77 +65,35 @@ const EditCommunity = ({ id, data }) => {
         >
           <Form
             layout="vertical"
-            form={form}
             hideRequiredMark
+            form={form}
+            initialValues={{ ...currentData }}
             onFinish={onSubmit}
             className="p-4 mt-4"
-            initialValues={{
-              name: editData.name,
-              slug: editData.slug,
-              country: editData.country,
-              state: editData.state,
-              city: editData.city,
-              createdBy: editData.createdBy,
-            }}
           >
             <Row>
               <Col span={12}>
                 <Form.Item
-                  name="name"
-                  label="Community Name"
-                  rules={[
-                    { required: true, message: 'Please enter Community Name' },
-                  ]}
-                  className="mr-2"
+                  name="communityId"
+                  label="Community"
+                  rules={[{ required: true, message: 'Please select!' }]}
                 >
-                  <Input placeholder="Please enter Community Name" />
-                </Form.Item>
-              </Col>
-
-              <Col span={12}>
-                <Form.Item
-                  name="slug"
-                  label="Slug"
-                  rules={[{ required: true, message: 'Please enter Slug' }]}
-                  className="ml-2"
-                >
-                  <Input placeholder="Please enter Slug" />
-                </Form.Item>
-              </Col>
-            </Row>
-
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="country"
-                  label="Country"
-                  rules={[{ required: true, message: 'Please enter Country' }]}
-                  className="mr-2"
-                >
-                  <Input placeholder="Please enter Country" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item name="state" label="State" className="ml-2">
-                  <Input placeholder="Please enter State" />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="city"
-                  label="City"
-                  rules={[{ required: true, message: 'Please enter City' }]}
-                  className="mr-2"
-                >
-                  <Input placeholder="Please enter City" />
+                  <Select placeholder="Community" disabled>
+                    {communityList &&
+                      communityList.map((community) => {
+                        return (
+                          <Option key={community.id} value={community.id}>
+                            {community.name}
+                          </Option>
+                        );
+                      })}
+                  </Select>
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item
-                  name="createdBy"
-                  label="Created By"
+                  name="userId"
+                  label="User"
                   rules={[
                     {
                       required: true,
@@ -169,14 +102,12 @@ const EditCommunity = ({ id, data }) => {
                   ]}
                   className="ml-2"
                 >
-                  <Select placeholder="Please choose the User">
+                  <Select placeholder="Please choose the User" disabled>
                     {userList &&
                       userList.map((item) => {
                         return (
                           <Option value={item.id} key={item.id}>
-                            {`${item.firstname ? item.firstname : ''} ${
-                              item.lastname ? item.lastname : ''
-                            }`}
+                            {item.email}
                           </Option>
                         );
                       })}
@@ -184,12 +115,32 @@ const EditCommunity = ({ id, data }) => {
                 </Form.Item>
               </Col>
             </Row>
-            <Row>
-              <Card title="Featured Image">
-                <AvatarUpload statusChange={onChangeAvatar} />
-              </Card>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  name="roleId"
+                  label="Role"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please choose the role',
+                    },
+                  ]}
+                  className="ml-2"
+                >
+                  <Select placeholder="Please choose the role">
+                    {memberRoleList &&
+                      memberRoleList.map((item) => {
+                        return (
+                          <Option value={item.id} key={item.id}>
+                            {item.name}
+                          </Option>
+                        );
+                      })}
+                  </Select>
+                </Form.Item>
+              </Col>
             </Row>
-
             <div
               style={{
                 textAlign: 'right',
@@ -209,4 +160,4 @@ const EditCommunity = ({ id, data }) => {
   );
 };
 
-export default EditCommunity;
+export default Edit;
