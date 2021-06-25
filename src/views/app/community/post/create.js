@@ -1,28 +1,54 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row } from 'reactstrap';
-import { Drawer, Form, Button, Col, Input, Card, Select } from 'antd';
+import { Row, Drawer, Form, Button, Col, Select, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import AvatarUpload from '../../../../components/util-components/Upload/AvatarUpload';
 import * as Actions from '../../../../redux/actions';
+import CKEditor5 from '../../../../components/util-components/CkEditor';
 
 const { Option } = Select;
 
-const CreateCommunity = () => {
+const Create = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
-  const [uploadedImg, setImage] = useState('');
-
-  const [userList, SetUserList] = useState(null);
-  const { users } = useSelector((state) => state.users);
+  const [memberList, setMemberList] = useState(null);
+  const [topicList, setTopicList] = useState(null);
+  const [communityList, setCommunityList] = useState(null);
+  const [allMemberList, setAllMemberList] = useState(null);
+  const [allTopicList, setAllTopicList] = useState(null);
+  const [selectedCommunity, setSelectedCommunity] = useState(null);
+  const [content, setContent] = useState(null);
+  const [cate, setCate] = useState(null);
+  const [form] = Form.useForm();
+  const { communityAll, topic, member } = useSelector((state) => state);
 
   useEffect(() => {
-    dispatch(Actions.getAllUsers());
+    dispatch(Actions.getAllMember());
+    dispatch(Actions.getAllTopics());
+    dispatch(Actions.getAllCommunity());
   }, [dispatch]);
 
   useEffect(() => {
-    SetUserList(users);
-  }, [users]);
+    setAllMemberList(member.list);
+    setAllTopicList(topic.list);
+    setCommunityList(communityAll.community);
+    setMemberList(member.list);
+    setTopicList(topic.list);
+  }, [member, communityAll, topic]);
+
+  useEffect(() => {
+    if (allMemberList && selectedCommunity) {
+      const filteredMembers = allMemberList.filter(
+        (m) => Number(m.communityId) === selectedCommunity
+      );
+      setMemberList(filteredMembers);
+    }
+    if (allTopicList && selectedCommunity) {
+      const filteredTopics = allTopicList.filter(
+        (t) => Number(t.communityId) === selectedCommunity
+      );
+      setTopicList(filteredTopics);
+    }
+  }, [allMemberList, allTopicList, selectedCommunity]);
 
   const showDrawer = () => {
     setVisible(true);
@@ -32,26 +58,20 @@ const CreateCommunity = () => {
     setVisible(false);
   };
 
-  const onChangeAvatar = (imageUrl) => {
-    setImage(imageUrl);
-  };
-
   const onSubmit = (values) => {
-    /* eslint-disable */
-    values.featuredImage = uploadedImg;
-    /* eslint-enable */
-    dispatch(Actions.createCommunity(values));
-    window.location.reload();
+    dispatch(Actions.createPost({ ...values, content }));
+    form.resetFields();
+    onClose();
   };
 
   return (
     <>
       <Button type="primary" onClick={showDrawer}>
-        <PlusOutlined /> Create New Community
+        <PlusOutlined /> Create New Post / Article
       </Button>
       <Drawer
-        title="Create a New Community"
-        width={500}
+        title="Create a New Community Post / Article"
+        width={1024}
         onClose={onClose}
         visible={visible}
         bodyStyle={{ paddingBottom: 10 }}
@@ -59,83 +79,42 @@ const CreateCommunity = () => {
         <Form
           layout="vertical"
           hideRequiredMark
+          form={form}
           onFinish={onSubmit}
           className="p-4 mt-4"
         >
           <Row>
-            <Col span={12}>
+            <Col span={11}>
               <Form.Item
-                name="name"
-                label="Community Name"
-                rules={[
-                  { required: true, message: 'Please enter Community Name' },
-                ]}
-                className="mr-2"
+                name="communityId"
+                label="Community"
+                rules={[{ required: true, message: 'Please select!' }]}
               >
-                <Input placeholder="Please enter Community Name" />
-              </Form.Item>
-            </Col>
-
-            <Col span={12}>
-              <Form.Item
-                name="slug"
-                label="Slug"
-                rules={[{ required: true, message: 'Please enter Slug' }]}
-                className="ml-2"
-              >
-                <Input placeholder="Please enter Slug" />
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="country"
-                label="Country"
-                rules={[{ required: true, message: 'Please enter Country' }]}
-                className="mr-2"
-              >
-                <Input placeholder="Please enter Country" />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="state" label="State" className="ml-2">
-                <Input placeholder="Please enter State" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="city"
-                label="City"
-                rules={[{ required: true, message: 'Please enter City' }]}
-                className="mr-2"
-              >
-                <Input placeholder="Please enter City" />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                name="createdBy"
-                label="Created By"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please choose the User',
-                  },
-                ]}
-                className="ml-2"
-              >
-                <Select placeholder="Please choose the User">
-                  {userList &&
-                    userList.map((item) => {
+                <Select
+                  style={{ width: '100%' }}
+                  placeholder="Community"
+                  onChange={(e) => setSelectedCommunity(e)}
+                >
+                  {communityList &&
+                    communityList.map((community) => {
                       return (
-                        <Option value={item.id} key={item.id}>
-                          {`${item.firstname ? item.firstname : ''} ${
-                            item.lastname ? item.lastname : ''
-                          }`}
+                        <Option key={community.id} value={community.id}>
+                          {community.name}
+                        </Option>
+                      );
+                    })}
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={2} />
+            <Col span={11}>
+              <Form.Item name="topicId" label="Topic">
+                <Select style={{ width: '100%' }} placeholder="Topic">
+                  {topicList &&
+                    topicList.map((t) => {
+                      return (
+                        <Option key={t.id} value={t.id}>
+                          {`${t.community?.name} / ${t.name}`}
                         </Option>
                       );
                     })}
@@ -144,13 +123,74 @@ const CreateCommunity = () => {
             </Col>
           </Row>
           <Row>
-            <Card title="Featured Image">
-              <AvatarUpload statusChange={onChangeAvatar} />
-            </Card>
+            <Col span={11}>
+              <Form.Item
+                name="category"
+                label="Type"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please choose the Type',
+                  },
+                ]}
+              >
+                <Select
+                  placeholder="Please choose the Type"
+                  onChange={(e) => setCate(e)}
+                >
+                  <Option value="post">Post</Option>
+                  <Option value="article">Article</Option>
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={2} />
+            <Col span={11}>
+              <Form.Item
+                name="createdBy"
+                label="Creator"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please choose the creator',
+                  },
+                ]}
+              >
+                <Select placeholder="Please choose the creator">
+                  {memberList &&
+                    memberList.map((item) => {
+                      return (
+                        <Option value={item.id} key={item.id}>
+                          {`${item.community?.name} / ${item.user?.email}`}
+                        </Option>
+                      );
+                    })}
+                </Select>
+              </Form.Item>
+            </Col>
           </Row>
+          {cate === 'article' && (
+            <div>
+              <Form.Item
+                name="title"
+                label="Title"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please Enter Title',
+                  },
+                ]}
+              >
+                <Input type="text" placeholder="Title" />
+              </Form.Item>
+            </div>
+          )}
+          <div>
+            <CKEditor5 onChange={(e) => setContent(e)} />
+          </div>
           <div
             style={{
               textAlign: 'right',
+              marginTop: '1rem',
             }}
           >
             <Button onClick={onClose} style={{ marginRight: 8 }}>
@@ -166,4 +206,4 @@ const CreateCommunity = () => {
   );
 };
 
-export default CreateCommunity;
+export default Create;

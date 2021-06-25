@@ -5,6 +5,7 @@ import event from './community/event/reducer';
 import topic from './community/topic/reducer';
 import memberRole from './community/memberRole/reducer';
 import member from './community/member/reducer';
+import post from './community/post/reducer';
 import menu from './menu/reducer';
 import authUser from './auth/reducer';
 import userRole from './user-role/reducer';
@@ -23,6 +24,7 @@ const reducers = combineReducers({
   topic,
   memberRole,
   member,
+  post,
   // options
   innovationType,
   productionType,

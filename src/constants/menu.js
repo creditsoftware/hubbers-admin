@@ -57,11 +57,6 @@ const data = [
       },
       {
         icon: 'simple-icon-doc',
-        label: 'menu.article',
-        to: `${adminRoot}/community/article`,
-      },
-      {
-        icon: 'simple-icon-doc',
         label: 'menu.event',
         to: `${adminRoot}/community/event`,
       },
