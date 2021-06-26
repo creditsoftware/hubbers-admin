@@ -8,7 +8,7 @@ import * as Actions from '../../../../redux/actions';
 
 const { Option } = Select;
 
-const CreateCommunity = () => {
+const CreateArticle = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [uploadedImg, setImage] = useState('');
@@ -166,4 +166,4 @@ const CreateCommunity = () => {
   );
 };
 
-export default CreateCommunity;
+export default CreateArticle;

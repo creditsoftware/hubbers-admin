@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Card, Space, Table, Tooltip, Popconfirm, Button } from 'antd';
+import { Card, Space, Table, Tooltip, Popconfirm, Button, Image } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import utils from '../../../../helpers/utils/index';
 import * as Actions from '../../../../redux/actions';
-import CreateCommunity from './create-community';
-import EditCommunity from './edit-community';
+import CreateCommunity from './create';
+import EditCommunity from './edit';
 
-const CommunityAllList = () => {
+const Community = () => {
   const dispatch = useDispatch();
   const [communityList, SetCommunityList] = useState(null);
   const { community } = useSelector((state) => state.communityAll);
@@ -34,7 +34,7 @@ const CommunityAllList = () => {
       dataIndex: 'featuredImage',
       /* eslint-disable */
       render: (_, record) => (
-        record.featuredImage && <img src={record.featuredImage} style={{width:'100px'}}></img>
+        record.featuredImage && <Image width={100} src={record.featuredImage} />
       ),
       /* eslint-enable */
     },
@@ -129,4 +129,4 @@ const CommunityAllList = () => {
     </Card>
   );
 };
-export default CommunityAllList;
+export default Community;
