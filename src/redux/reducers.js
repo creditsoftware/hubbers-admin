@@ -1,6 +1,10 @@
 import { combineReducers } from 'redux';
 import settings from './settings/reducer';
 import communityAll from './community/all/reducer';
+import event from './community/event/reducer';
+import topic from './community/topic/reducer';
+import memberRole from './community/memberRole/reducer';
+import member from './community/member/reducer';
 import menu from './menu/reducer';
 import authUser from './auth/reducer';
 import userRole from './user-role/reducer';
@@ -15,6 +19,10 @@ const reducers = combineReducers({
   authUser,
   userRole,
   users,
+  event,
+  topic,
+  memberRole,
+  member,
   // options
   innovationType,
   productionType,

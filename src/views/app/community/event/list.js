@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Card, Space, Table, Tooltip, Popconfirm, Button } from 'antd';
+import { Card, Space, Table, Tooltip, Popconfirm, Button, Image } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import utils from '../../../../helpers/utils/index';
 import * as Actions from '../../../../redux/actions';
-import CreateCommunity from './create';
-import EditCommunity from './edit';
+import CreateEvent from './create';
+import EditEvent from './edit';
 
-const CommunityAllList = () => {
+const EventList = () => {
   const dispatch = useDispatch();
-  const [communityList, SetCommunityList] = useState(null);
-  const { community } = useSelector((state) => state.communityAll);
+  const [events, SetEvents] = useState(null);
+  const { list } = useSelector((state) => state.event);
   const [pagination, setPagenation] = React.useState({
     current: 1,
     pageSize: 5,
   });
 
   useEffect(() => {
-    dispatch(Actions.getAllCommunity());
+    dispatch(Actions.getAllEvents());
   }, [dispatch]);
 
   useEffect(() => {
-    SetCommunityList(community);
-  }, [community]);
+    SetEvents(list);
+  }, [list]);
   const tableColumns = [
     {
       title: 'ID',
@@ -30,52 +30,52 @@ const CommunityAllList = () => {
       sorter: (a, b) => utils.antdTableSorter(a, b, 'id'),
     },
     {
-      title: 'Feature Image',
-      dataIndex: 'featuredImage',
+      title: 'Header Image',
+      dataIndex: 'headerImageUrl',
       /* eslint-disable */
       render: (_, record) => (
-        record.featuredImage && <img src={record.featuredImage} style={{width:'100px'}}></img>
+        record.headerImageUrl && <Image width={100} src={record.headerImageUrl} />
       ),
       /* eslint-enable */
     },
     {
-      title: ' Name',
-      dataIndex: 'name',
+      title: 'Title',
+      dataIndex: 'title',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.name}</span>
+        <span>{record.title}</span>
       ),
       /* eslint-enable */
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'name'),
+      sorter: (a, b) => utils.antdTableSorter(a, b, 'title'),
     },
     {
-      title: 'Country',
-      dataIndex: 'country',
+      title: 'Community',
+      dataIndex: 'community',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.country}</span>
+        <span>{record.community?.name}</span>
       ),
       /* eslint-enable */
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'country'),
+      sorter: (a, b) => utils.antdTableSorter(a, b, 'community'),
     },
     {
-      title: 'State',
-      dataIndex: 'state',
+      title: 'Topic',
+      dataIndex: 'topic',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.state}</span>
+        <span>{record.topic?.name}</span>
       ),
       /* eslint-enable */
     },
     {
-      title: 'City',
-      dataIndex: 'city',
+      title: 'Timezone',
+      dataIndex: 'timezone',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.city}</span>
+        <span>{record.timezone}</span>
       ),
       /* eslint-enable */
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'city'),
+      sorter: (a, b) => utils.antdTableSorter(a, b, 'timezone'),
     },
     {
       title: 'Created By',
@@ -87,12 +87,48 @@ const CommunityAllList = () => {
       /* eslint-enable */
     },
     {
+      title: 'Published',
+      dataIndex: 'published',
+      /* eslint-disable */
+      render: (_, record) => (
+        <span>{record.published}</span>
+      ),
+      /* eslint-enable */
+    },
+    {
+      title: 'Start Date',
+      dataIndex: 'startDate',
+      /* eslint-disable */
+      render: (_, record) => (
+        <span>{record.startDate}</span>
+      ),
+      /* eslint-enable */
+    },
+    {
+      title: 'End Date',
+      dataIndex: 'endDate',
+      /* eslint-disable */
+      render: (_, record) => (
+        <span>{record.endDate}</span>
+      ),
+      /* eslint-enable */
+    },
+    {
+      title: 'Type',
+      dataIndex: 'eventType',
+      /* eslint-disable */
+      render: (_, record) => (
+        <span>{record.eventType}</span>
+      ),
+      /* eslint-enable */
+    },
+    {
       title: 'Actions',
       dataIndex: 'actions',
       /* eslint-disable */
       render: (_, elm) => (
         <Space>
-          <EditCommunity id={elm.id} data={communityList} />
+          <EditEvent id={elm.id} data={list} />
           <Tooltip title="Delete">
             <Popconfirm
               title="Are you sure delete this Item?"
@@ -115,13 +151,13 @@ const CommunityAllList = () => {
   return (
     <Card>
       <div className="text-right mb-3">
-        <CreateCommunity />
+        <CreateEvent />
       </div>
       <div className="table-responsive">
         <Table
           rowKey="id"
           columns={tableColumns}
-          dataSource={communityList}
+          dataSource={events}
           pagination={pagination}
           onChange={handleTableChange}
         />
@@ -129,4 +165,4 @@ const CommunityAllList = () => {
     </Card>
   );
 };
-export default CommunityAllList;
+export default EventList;

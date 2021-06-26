@@ -33,13 +33,13 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         loading: false,
-        community: action.payload,
+        list: action.payload,
       };
     case GET_ALL_EVENT_ERROR:
       return {
         ...state,
         loading: false,
-        community: [],
+        list: [],
         error: action.payload,
       };
     case GET_SINGLE_EVENT:

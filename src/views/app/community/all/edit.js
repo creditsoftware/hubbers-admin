@@ -5,6 +5,7 @@ import { Drawer, Form, Button, Tooltip, Col, Input, Card, Select } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import AvatarUpload from '../../../../components/util-components/Upload/AvatarUpload';
 import * as Actions from '../../../../redux/actions';
+import { slugify } from '../../../../helpers/Utils';
 
 const { Option } = Select;
 
@@ -34,21 +35,12 @@ const EditCommunity = ({ id, data }) => {
   const showDrawer = () => {
     const filterData = data.filter((item) => item.id === id);
     if (filterData.length > 0) {
+      setImage(filterData[0].featuredImage);
       form.setFieldsValue({
-        name: filterData[0].name,
-        slug: filterData[0].slug,
-        country: filterData[0].country,
-        state: filterData[0].state,
-        city: filterData[0].city,
-        createdBy: filterData[0].createdBy,
+        ...filterData[0],
       });
       setEditData({
-        name: filterData[0].name,
-        slug: filterData[0].slug,
-        country: filterData[0].country,
-        state: filterData[0].state,
-        city: filterData[0].city,
-        createdBy: filterData[0].createdBy,
+        ...filterData[0],
       });
     }
     setVisible(true);
@@ -68,7 +60,7 @@ const EditCommunity = ({ id, data }) => {
     values.featuredImage = uploadedImg;
     /* eslint-enable */
     dispatch(Actions.updateCommunity(values));
-    window.location.reload();
+    onClose();
   };
   return (
     <>
@@ -113,7 +105,12 @@ const EditCommunity = ({ id, data }) => {
                   ]}
                   className="mr-2"
                 >
-                  <Input placeholder="Please enter Community Name" />
+                  <Input
+                    placeholder="Please enter Community Name"
+                    onChange={(e) =>
+                      form.setFieldsValue({ slug: slugify(e.target.value) })
+                    }
+                  />
                 </Form.Item>
               </Col>
 
@@ -124,7 +121,7 @@ const EditCommunity = ({ id, data }) => {
                   rules={[{ required: true, message: 'Please enter Slug' }]}
                   className="ml-2"
                 >
-                  <Input placeholder="Please enter Slug" />
+                  <Input placeholder="Please enter Slug" disabled />
                 </Form.Item>
               </Col>
             </Row>
@@ -174,9 +171,7 @@ const EditCommunity = ({ id, data }) => {
                       userList.map((item) => {
                         return (
                           <Option value={item.id} key={item.id}>
-                            {`${item.firstname ? item.firstname : ''} ${
-                              item.lastname ? item.lastname : ''
-                            }`}
+                            {item.email}
                           </Option>
                         );
                       })}
@@ -186,7 +181,10 @@ const EditCommunity = ({ id, data }) => {
             </Row>
             <Row>
               <Card title="Featured Image">
-                <AvatarUpload statusChange={onChangeAvatar} />
+                <AvatarUpload
+                  image={uploadedImg}
+                  statusChange={onChangeAvatar}
+                />
               </Card>
             </Row>
 

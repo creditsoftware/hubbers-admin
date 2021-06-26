@@ -5,6 +5,7 @@ import { Drawer, Form, Button, Col, Input, Card, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import AvatarUpload from '../../../../components/util-components/Upload/AvatarUpload';
 import * as Actions from '../../../../redux/actions';
+import { slugify } from '../../../../helpers/Utils';
 
 const { Option } = Select;
 
@@ -12,9 +13,9 @@ const CreateCommunity = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [uploadedImg, setImage] = useState('');
-
   const [userList, SetUserList] = useState(null);
   const { users } = useSelector((state) => state.users);
+  const [form] = Form.useForm();
 
   useEffect(() => {
     dispatch(Actions.getAllUsers());
@@ -41,7 +42,9 @@ const CreateCommunity = () => {
     values.featuredImage = uploadedImg;
     /* eslint-enable */
     dispatch(Actions.createCommunity(values));
-    window.location.reload();
+    form.resetFields();
+    setImage(null);
+    onClose();
   };
 
   return (
@@ -59,6 +62,7 @@ const CreateCommunity = () => {
         <Form
           layout="vertical"
           hideRequiredMark
+          form={form}
           onFinish={onSubmit}
           className="p-4 mt-4"
         >
@@ -72,7 +76,12 @@ const CreateCommunity = () => {
                 ]}
                 className="mr-2"
               >
-                <Input placeholder="Please enter Community Name" />
+                <Input
+                  placeholder="Please enter Community Name"
+                  onChange={(e) =>
+                    form.setFieldsValue({ slug: slugify(e.target.value) })
+                  }
+                />
               </Form.Item>
             </Col>
 
@@ -83,7 +92,7 @@ const CreateCommunity = () => {
                 rules={[{ required: true, message: 'Please enter Slug' }]}
                 className="ml-2"
               >
-                <Input placeholder="Please enter Slug" />
+                <Input placeholder="Please enter Slug" disabled />
               </Form.Item>
             </Col>
           </Row>
@@ -133,9 +142,7 @@ const CreateCommunity = () => {
                     userList.map((item) => {
                       return (
                         <Option value={item.id} key={item.id}>
-                          {`${item.firstname ? item.firstname : ''} ${
-                            item.lastname ? item.lastname : ''
-                          }`}
+                          {item.email}
                         </Option>
                       );
                     })}
