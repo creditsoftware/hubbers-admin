@@ -14,8 +14,10 @@ const EditCommunity = ({ id, data }) => {
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
   const [uploadedImg, setImage] = useState('');
-  const [userList, SetUserList] = useState(null);
+  const [userList, setUserList] = useState(null);
+  const [countryList, setCountryList] = useState(null);
   const { users } = useSelector((state) => state.users);
+  const { country } = useSelector((state) => state);
   const [editData, setEditData] = useState({
     name: '',
     slug: '',
@@ -26,11 +28,13 @@ const EditCommunity = ({ id, data }) => {
   });
   useEffect(() => {
     dispatch(Actions.getAllUsers());
+    dispatch(Actions.getAllCountry());
   }, [dispatch]);
 
   useEffect(() => {
-    SetUserList(users);
-  }, [users]);
+    setUserList(users);
+    setCountryList(country.list);
+  }, [users, country]);
 
   const showDrawer = () => {
     const filterData = data.filter((item) => item.id === id);
@@ -129,12 +133,21 @@ const EditCommunity = ({ id, data }) => {
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Item
-                  name="country"
+                  name="countryId"
                   label="Country"
-                  rules={[{ required: true, message: 'Please enter Country' }]}
+                  rules={[{ required: true, message: 'Please select Country' }]}
                   className="mr-2"
                 >
-                  <Input placeholder="Please enter Country" />
+                  <Select placeholder="Country">
+                    {countryList &&
+                      countryList.map((item) => {
+                        return (
+                          <Option value={item.id} key={item.id}>
+                            {item.name}
+                          </Option>
+                        );
+                      })}
+                  </Select>
                 </Form.Item>
               </Col>
               <Col span={12}>
