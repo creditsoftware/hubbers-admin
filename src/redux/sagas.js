@@ -12,6 +12,7 @@ import postSaga from './community/post/saga';
 
 import innovationTypeSaga from './options/innovation-type/saga';
 import productTypeSaga from './options/product-type/saga';
+import countrySaga from './options/country/saga';
 
 export default function* rootSaga(getState) {
   yield all([
@@ -26,5 +27,6 @@ export default function* rootSaga(getState) {
     memberRoleSaga(),
     memberSaga(),
     postSaga(),
+    countrySaga(),
   ]);
 }

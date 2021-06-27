@@ -68,6 +68,8 @@ module.exports = {
 
   'menu.skills': 'Skills',
 
+  'menu.country': 'Country',
+
   /* 04.Error Page */
   'pages.error-title': 'Ooops... looks like an error occurred!',
   'pages.error-code': 'Error code',
@@ -158,4 +160,6 @@ module.exports = {
 
   // expertise category
   'expertise-category.title': 'Expertise Category',
+
+  'country.title': 'Country',
 };

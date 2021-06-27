@@ -13,6 +13,7 @@ import users from './user/reducer';
 
 import innovationType from './options/innovation-type/reducer';
 import productionType from './options/product-type/reducer';
+import country from './options/country/reducer';
 
 const reducers = combineReducers({
   menu,
@@ -28,6 +29,7 @@ const reducers = combineReducers({
   // options
   innovationType,
   productionType,
+  country,
   communityAll,
 });
 

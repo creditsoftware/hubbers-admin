@@ -13,6 +13,8 @@ const ExpertiseCategory = React.lazy(() => import('./expertise-category'));
 
 const Skills = React.lazy(() => import('./skills'));
 
+const Country = React.lazy(() => import('./country'));
+
 const Options = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -50,6 +52,11 @@ const Options = ({ match }) => (
       <Route
         path={`${match.url}/skills`}
         render={(props) => <Skills {...props} />}
+      />
+
+      <Route
+        path={`${match.url}/country`}
+        render={(props) => <Country {...props} />}
       />
 
       <Redirect to="/error" />
