@@ -36,5 +36,7 @@ export * from './community/event/actions';
 export * from './community/topic/actions';
 export * from './community/memberRole/actions';
 export * from './community/member/actions';
+export * from './community/post/actions';
 export * from './options/innovation-type/actions';
 export * from './options/product-type/actions';
+export * from './options/country/actions';

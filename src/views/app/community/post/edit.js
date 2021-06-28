@@ -1,212 +1,226 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row } from 'reactstrap';
-import { Drawer, Form, Button, Tooltip, Col, Input, Card, Select } from 'antd';
+import { Input, Row, Drawer, Form, Button, Col, Select, Tooltip } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
-import AvatarUpload from '../../../../components/util-components/Upload/AvatarUpload';
 import * as Actions from '../../../../redux/actions';
+import CKEditor5 from '../../../../components/util-components/CkEditor';
 
 const { Option } = Select;
 
-const EditCommunity = ({ id, data }) => {
+const Create = ({ id, data }) => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
+  const [memberList, setMemberList] = useState(null);
+  const [topicList, setTopicList] = useState(null);
+  const [communityList, setCommunityList] = useState(null);
+  const [allMemberList, setAllMemberList] = useState(null);
+  const [allTopicList, setAllTopicList] = useState(null);
+  const [selectedCommunity, setSelectedCommunity] = useState(null);
+  const [content, setContent] = useState(null);
   const [form] = Form.useForm();
-  const [uploadedImg, setImage] = useState('');
-  const [userList, SetUserList] = useState(null);
-  const { users } = useSelector((state) => state.users);
-  const [editData, setEditData] = useState({
-    name: '',
-    slug: '',
-    country: '',
-    state: '',
-    city: '',
-    createdBy: '',
-  });
+  const { communityAll, topic, member } = useSelector((state) => state);
+  const [editValue, setEditValue] = useState(null);
+  const [cate, setCate] = useState(null);
+
   useEffect(() => {
-    dispatch(Actions.getAllUsers());
+    dispatch(Actions.getAllMember());
+    dispatch(Actions.getAllTopics());
+    dispatch(Actions.getAllCommunity());
   }, [dispatch]);
 
   useEffect(() => {
-    SetUserList(users);
-  }, [users]);
+    setAllMemberList(member.list);
+    setAllTopicList(topic.list);
+    setCommunityList(communityAll.community);
+    setMemberList(member.list);
+    setTopicList(topic.list);
+  }, [member, communityAll, topic]);
+
+  useEffect(() => {
+    const v = data.filter((d) => d.id === id)[0];
+    setEditValue({ ...v });
+  }, [data, id, form]);
+
+  useEffect(() => {
+    if (allMemberList && selectedCommunity) {
+      const filteredMembers = allMemberList.filter(
+        (m) => Number(m.communityId) === selectedCommunity
+      );
+      setMemberList(filteredMembers);
+    }
+    if (allTopicList && selectedCommunity) {
+      const filteredTopics = allTopicList.filter(
+        (t) => Number(t.communityId) === selectedCommunity
+      );
+      setTopicList(filteredTopics);
+    }
+  }, [allMemberList, allTopicList, selectedCommunity]);
 
   const showDrawer = () => {
-    const filterData = data.filter((item) => item.id === id);
-    if (filterData.length > 0) {
-      form.setFieldsValue({
-        name: filterData[0].name,
-        slug: filterData[0].slug,
-        country: filterData[0].country,
-        state: filterData[0].state,
-        city: filterData[0].city,
-        createdBy: filterData[0].createdBy,
-      });
-      setEditData({
-        name: filterData[0].name,
-        slug: filterData[0].slug,
-        country: filterData[0].country,
-        state: filterData[0].state,
-        city: filterData[0].city,
-        createdBy: filterData[0].createdBy,
-      });
-    }
     setVisible(true);
   };
 
   const onClose = () => {
+    form.resetFields();
     setVisible(false);
   };
 
-  const onChangeAvatar = (imageUrl) => {
-    setImage(imageUrl);
+  const onSubmit = (values) => {
+    dispatch(Actions.updatePost({ ...values, content, id }));
+    onClose();
   };
 
-  const onSubmit = (values) => {
-    /* eslint-disable */
-    values.id = id;
-    values.featuredImage = uploadedImg;
-    /* eslint-enable */
-    dispatch(Actions.updateCommunity(values));
-    window.location.reload();
-  };
   return (
     <>
-      <>
-        <Tooltip title="View/Edit">
-          <Button
-            type="primary"
-            size="small"
-            icon={<EditOutlined />}
-            onClick={showDrawer}
-          />
-        </Tooltip>
-        <Drawer
-          title="View/Edit Community"
-          width={500}
-          onClose={onClose}
-          visible={visible}
-          bodyStyle={{ paddingBottom: 10 }}
+      <Tooltip title="View/Edit">
+        <Button
+          type="primary"
+          size="small"
+          icon={<EditOutlined />}
+          onClick={showDrawer}
+        />
+      </Tooltip>
+      <Drawer
+        title="Update a New Community Post / Article"
+        width={1024}
+        onClose={onClose}
+        visible={visible}
+        bodyStyle={{ paddingBottom: 10 }}
+      >
+        <Form
+          layout="vertical"
+          hideRequiredMark
+          form={form}
+          onFinish={onSubmit}
+          initialValues={{ ...editValue }}
+          className="p-4 mt-4"
         >
-          <Form
-            layout="vertical"
-            form={form}
-            hideRequiredMark
-            onFinish={onSubmit}
-            className="p-4 mt-4"
-            initialValues={{
-              name: editData.name,
-              slug: editData.slug,
-              country: editData.country,
-              state: editData.state,
-              city: editData.city,
-              createdBy: editData.createdBy,
+          <Row>
+            <Col span={11}>
+              <Form.Item
+                name="communityId"
+                label="Community"
+                rules={[{ required: true, message: 'Please select!' }]}
+              >
+                <Select
+                  style={{ width: '100%' }}
+                  disabled
+                  placeholder="Community"
+                  onChange={(e) => setSelectedCommunity(e)}
+                >
+                  {communityList &&
+                    communityList.map((community) => {
+                      return (
+                        <Option key={community.id} value={community.id}>
+                          {community.name}
+                        </Option>
+                      );
+                    })}
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={2} />
+            <Col span={11}>
+              <Form.Item name="topicId" label="Topic">
+                <Select disabled style={{ width: '100%' }} placeholder="Topic">
+                  {topicList &&
+                    topicList.map((t) => {
+                      return (
+                        <Option key={t.id} value={t.id}>
+                          {`${t.community?.name} / ${t.name}`}
+                        </Option>
+                      );
+                    })}
+                </Select>
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={11}>
+              <Form.Item
+                name="category"
+                label="Type"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please choose the Type',
+                  },
+                ]}
+              >
+                <Select
+                  disabled
+                  placeholder="Please choose the Type"
+                  onChange={(e) => setCate(e)}
+                >
+                  <Option value="post">Post</Option>
+                  <Option value="article">Article</Option>
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={2} />
+            <Col span={11}>
+              <Form.Item
+                name="createdBy"
+                label="Creator"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please choose the creator',
+                  },
+                ]}
+              >
+                <Select disabled placeholder="Please choose the creator">
+                  {memberList &&
+                    memberList.map((item) => {
+                      return (
+                        <Option value={item.id} key={item.id}>
+                          {`${item.community?.name} / ${item.user?.email}`}
+                        </Option>
+                      );
+                    })}
+                </Select>
+              </Form.Item>
+            </Col>
+          </Row>
+          {cate === 'article' && (
+            <div>
+              <Form.Item
+                name="title"
+                label="Title"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please Enter Title',
+                  },
+                ]}
+              >
+                <Input type="text" placeholder="Title" />
+              </Form.Item>
+            </div>
+          )}
+          <div>
+            <CKEditor5
+              value={editValue?.content}
+              onChange={(e) => setContent(e)}
+            />
+          </div>
+          <div
+            style={{
+              textAlign: 'right',
+              marginTop: '1rem',
             }}
           >
-            <Row>
-              <Col span={12}>
-                <Form.Item
-                  name="name"
-                  label="Community Name"
-                  rules={[
-                    { required: true, message: 'Please enter Community Name' },
-                  ]}
-                  className="mr-2"
-                >
-                  <Input placeholder="Please enter Community Name" />
-                </Form.Item>
-              </Col>
-
-              <Col span={12}>
-                <Form.Item
-                  name="slug"
-                  label="Slug"
-                  rules={[{ required: true, message: 'Please enter Slug' }]}
-                  className="ml-2"
-                >
-                  <Input placeholder="Please enter Slug" />
-                </Form.Item>
-              </Col>
-            </Row>
-
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="country"
-                  label="Country"
-                  rules={[{ required: true, message: 'Please enter Country' }]}
-                  className="mr-2"
-                >
-                  <Input placeholder="Please enter Country" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item name="state" label="State" className="ml-2">
-                  <Input placeholder="Please enter State" />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="city"
-                  label="City"
-                  rules={[{ required: true, message: 'Please enter City' }]}
-                  className="mr-2"
-                >
-                  <Input placeholder="Please enter City" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="createdBy"
-                  label="Created By"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please choose the User',
-                    },
-                  ]}
-                  className="ml-2"
-                >
-                  <Select placeholder="Please choose the User">
-                    {userList &&
-                      userList.map((item) => {
-                        return (
-                          <Option value={item.id} key={item.id}>
-                            {`${item.firstname ? item.firstname : ''} ${
-                              item.lastname ? item.lastname : ''
-                            }`}
-                          </Option>
-                        );
-                      })}
-                  </Select>
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row>
-              <Card title="Featured Image">
-                <AvatarUpload statusChange={onChangeAvatar} />
-              </Card>
-            </Row>
-
-            <div
-              style={{
-                textAlign: 'right',
-              }}
-            >
-              <Button onClick={onClose} style={{ marginRight: 8 }}>
-                Cancel
-              </Button>
-              <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </div>
-          </Form>
-        </Drawer>
-      </>
+            <Button onClick={onClose} style={{ marginRight: 8 }}>
+              Cancel
+            </Button>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </div>
+        </Form>
+      </Drawer>
     </>
   );
 };
 
-export default EditCommunity;
+export default Create;

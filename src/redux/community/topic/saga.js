@@ -1,9 +1,24 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import api from '../../../ApiConfig';
 
-import { GET_ALL_TOPIC } from '../../types/community/topic';
+import {
+  GET_ALL_TOPIC,
+  GET_SINGLE_TOPIC,
+  CREATE_TOPIC,
+  UPDATE_TOPIC,
+} from '../../types/community/topic';
 
-import { getAllTopicsError, getAllTopicsSuccess } from './actions';
+import {
+  getAllTopics,
+  getAllTopicsError,
+  getAllTopicsSuccess,
+  getSingleTopicError,
+  getSingleTopicSuccess,
+  createTopicError,
+  createTopicSuccess,
+  updateTopicError,
+  updateTopicSuccess,
+} from './actions';
 
 const getAllTopicsAsync = async () => {
   return api
@@ -25,92 +40,94 @@ function* GetAllTopics() {
   }
 }
 
-// const getSingleEventAsync = async (payload) => {
-//   await api
-//     .get(`/community/event/${payload.payload}`)
-//     .then((res) => res)
-//     .catch((error) => error);
-// };
+const getSingleTopicAsync = async (payload) => {
+  await api
+    .get(`/community/topic/${payload.payload}`)
+    .then((res) => res)
+    .catch((error) => error);
+};
 
-// function* GetSingleEvent(payload) {
-//   try {
-//     const result = yield call(getSingleEventAsync, payload);
-//     if (result.status === 200 && result.statusText === 'OK') {
-//       yield put(getSingleEventSuccess(result.data.data));
-//     } else {
-//       yield put(
-//         getSingleEventError('Get Single Event Response is not success!')
-//       );
-//     }
-//   } catch (error) {
-//     yield put(getSingleEventError('Get Single Event Error !'));
-//   }
-// }
+function* GetSingleTopic(payload) {
+  try {
+    const result = yield call(getSingleTopicAsync, payload);
+    if (result.status === 200 && result.statusText === 'OK') {
+      yield put(getSingleTopicSuccess(result.data.data));
+    } else {
+      yield put(
+        getSingleTopicError('Get Single Topic Response is not success!')
+      );
+    }
+  } catch (error) {
+    yield put(getSingleTopicError('Get Single Topic Error !'));
+  }
+}
 
-// const createEventAsync = async ({ payload }) => {
-//   await api
-//     .post(`/community/event`, {
-//       ...payload,
-//     })
-//     .then((res) => res)
-//     .catch((error) => error);
-// };
+const createTopicAsync = async ({ payload }) => {
+  return api
+    .post(`/community/Topic`, {
+      ...payload,
+    })
+    .then((res) => res)
+    .catch((error) => error);
+};
 
-// function* CreateEvent(payload) {
-//   try {
-//     const result = yield call(createEventAsync, payload);
-//     if (result.status === 200 && result.statusText === 'OK') {
-//       yield put(createEventSuccess(result.data.data));
-//     } else {
-//       yield put(createEventError('Create Event Response is not success!'));
-//     }
-//   } catch (error) {
-//     console.log(error);
-//     yield put(createEventError('Create Event Error !'));
-//   }
-// }
+function* CreateTopic(payload) {
+  try {
+    const result = yield call(createTopicAsync, payload);
+    if (result.status === 200 && result.statusText === 'OK') {
+      yield put(createTopicSuccess(result.data.data));
+      yield put(getAllTopics());
+    } else {
+      yield put(createTopicError('Create Topic Response is not success!'));
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(createTopicError('Create Topic Error !'));
+  }
+}
 
-// const updateEventAsync = async ({ payload }) => {
-//   await api
-//     .put(`/community/event/${payload.id}`, {
-//       ...payload,
-//     })
-//     .then((res) => res)
-//     .catch((error) => error);
-// };
+const updateTopicAsync = async ({ payload }) => {
+  return api
+    .put(`/community/topic/${payload.id}`, {
+      ...payload,
+    })
+    .then((res) => res)
+    .catch((error) => error);
+};
 
-// function* UpdateEvent(payload) {
-//   try {
-//     const result = yield call(updateEventAsync, payload);
-//     if (result.status === 200 && result.statusText === 'OK') {
-//       yield put(updateEventSuccess(result.data.data));
-//     } else {
-//       yield put(updateEventError('Update Event Response is not success!'));
-//     }
-//   } catch (error) {
-//     console.log(error);
-//     yield put(updateEventError('Update Event Error !'));
-//   }
-// }
+function* UpdateTopic(payload) {
+  try {
+    const result = yield call(updateTopicAsync, payload);
+    if (result.status === 200 && result.statusText === 'OK') {
+      yield put(updateTopicSuccess(result.data.data));
+      yield put(getAllTopics());
+    } else {
+      yield put(updateTopicError('Update Topic Response is not success!'));
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(updateTopicError('Update Topic Error !'));
+  }
+}
 
 export function* watchGetAllTopics() {
   yield takeEvery(GET_ALL_TOPIC, GetAllTopics);
 }
-// export function* watchCreateEvent() {
-//   yield takeEvery(CREATE_EVENT, CreateEvent);
-// }
-// export function* watchGetSingleEvent() {
-//   yield takeEvery(GET_SINGLE_EVENT, GetSingleEvent);
-// }
-// export function* watchUpdateEvent() {
-//   yield takeEvery(UPDATE_EVENT, UpdateEvent);
-// }
+export function* watchCreateTopic() {
+  yield takeEvery(CREATE_TOPIC, CreateTopic);
+}
+export function* watchGetSingleTopic() {
+  yield takeEvery(GET_SINGLE_TOPIC, GetSingleTopic);
+}
+export function* watchUpdateTopic() {
+  yield takeEvery(UPDATE_TOPIC, UpdateTopic);
+}
 
 export default function* rootSaga() {
   yield all([
     fork(watchGetAllTopics),
-    // fork(watchGetSingleEvent),
-    // fork(watchUpdateEvent),
-    // fork(watchCreateEvent),
+    fork(watchGetSingleTopic),
+    fork(watchUpdateTopic),
+    fork(watchCreateTopic),
   ]);
 }

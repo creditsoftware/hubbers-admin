@@ -5,21 +5,21 @@ import {
   Separator,
 } from '../../../../components/common/CustomBootstrap';
 import Breadcrumb from '../../../../containers/navs/Breadcrumb';
-import CommunityAllList from './list';
+import CountryList from './list';
 
-const CommunityAll = ({ match }) => {
+const Country = ({ match }) => {
   return (
     <>
       <Row>
         <Colxx xxs="12">
-          <Breadcrumb heading="community.title" match={match} />
+          <Breadcrumb heading="country.title" match={match} />
           <Separator className="mb-5" />
         </Colxx>
       </Row>
       <Colxx xxs="12" className="mb-4">
         <div>
-          <div className="communityall-list" style={{ marginTop: 10 }}>
-            <CommunityAllList />
+          <div className="country-list" style={{ marginTop: 10 }}>
+            <CountryList />
           </div>
         </div>
       </Colxx>
@@ -27,4 +27,4 @@ const CommunityAll = ({ match }) => {
   );
 };
 
-export default CommunityAll;
+export default Country;

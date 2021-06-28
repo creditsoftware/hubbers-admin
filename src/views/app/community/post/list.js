@@ -4,25 +4,25 @@ import { Card, Space, Table, Tooltip, Popconfirm, Button } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import utils from '../../../../helpers/utils/index';
 import * as Actions from '../../../../redux/actions';
-import CreateCommunity from './create';
-import EditCommunity from './edit';
+import CreatePost from './create';
+import EditPost from './edit';
 
-const CommunityAllList = () => {
+const Post = () => {
   const dispatch = useDispatch();
-  const [communityList, SetCommunityList] = useState(null);
-  const { community } = useSelector((state) => state.communityAll);
+  const [posts, setPosts] = useState(null);
+  const { list } = useSelector((state) => state.post);
   const [pagination, setPagenation] = React.useState({
     current: 1,
     pageSize: 5,
   });
 
   useEffect(() => {
-    dispatch(Actions.getAllCommunity());
+    dispatch(Actions.getAllPost());
   }, [dispatch]);
 
   useEffect(() => {
-    SetCommunityList(community);
-  }, [community]);
+    setPosts(list);
+  }, [list]);
   const tableColumns = [
     {
       title: 'ID',
@@ -30,61 +30,72 @@ const CommunityAllList = () => {
       sorter: (a, b) => utils.antdTableSorter(a, b, 'id'),
     },
     {
-      title: 'Feature Image',
-      dataIndex: 'featuredImage',
+      title: 'Community',
+      dataIndex: 'communtiy',
       /* eslint-disable */
       render: (_, record) => (
-        record.featuredImage && <img src={record.featuredImage} style={{width:'100px'}}></img>
+        <span>{record.community?.name}</span>
       ),
+      sorter: (a, b) => {
+        return a.community?.name.toLowerCase() > b.community?.name.toLowerCase()
+          ? -1
+          : b.community?.name.toLowerCase() > a.community?.name.toLowerCase()
+          ? 1
+          : 0;
+      },
       /* eslint-enable */
     },
     {
-      title: ' Name',
-      dataIndex: 'name',
+      title: 'Topic',
+      dataIndex: 'topic',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.name}</span>
+        <span>{record.topic?.name}</span>
       ),
-      /* eslint-enable */
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'name'),
-    },
-    {
-      title: 'Country',
-      dataIndex: 'country',
-      /* eslint-disable */
-      render: (_, record) => (
-        <span>{record.country}</span>
-      ),
-      /* eslint-enable */
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'country'),
-    },
-    {
-      title: 'State',
-      dataIndex: 'state',
-      /* eslint-disable */
-      render: (_, record) => (
-        <span>{record.state}</span>
-      ),
+      sorter: (a, b) => {
+        return a.topic?.name.toLowerCase() > b.topic?.name.toLowerCase()
+          ? -1
+          : b.topic?.name.toLowerCase() > a.topic?.name.toLowerCase()
+          ? 1
+          : 0;
+      },
       /* eslint-enable */
     },
     {
-      title: 'City',
-      dataIndex: 'city',
+      title: 'Type',
+      dataIndex: 'post',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.city}</span>
-      ),
-      /* eslint-enable */
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'city'),
+        <span>{record.category}</span>
+        ),
+        /* eslint-enable */
+      sorter: (a, b) => utils.antdTableSorter(a, b, 'category'),
     },
     {
-      title: 'Created By',
-      dataIndex: 'created',
+      title: 'Creator',
+      dataIndex: 'creator',
+      /* eslint-disable */
+        render: (_, record) => (
+          <span>{`${record.creator?.user?.firstname && record.creator?.user?.firstname} ${record.creator?.user?.lastname && record.creator?.user?.lastname}`}</span>
+        ),
+        sorter: (a, b) => {
+          return a.creator?.user?.firstname.toLowerCase() > b.creator?.user?.firstname.toLowerCase()
+            ? -1
+            : b.creator?.user?.firstname.toLowerCase() > a.creator?.user?.firstname.toLowerCase()
+            ? 1
+            : 0;
+        },
+        /* eslint-enable */
+    },
+    {
+      title: 'Created Date',
+      dataIndex: 'createdAt',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.creator.email}</span>
+        <span>{record.createdAt}</span>
       ),
       /* eslint-enable */
+      sorter: (a, b) => utils.antdTableSorter(a, b, 'createdAt'),
     },
     {
       title: 'Actions',
@@ -92,7 +103,7 @@ const CommunityAllList = () => {
       /* eslint-disable */
       render: (_, elm) => (
         <Space>
-          <EditCommunity id={elm.id} data={communityList} />
+          <EditPost id={elm.id} data={list} />
           <Tooltip title="Delete">
             <Popconfirm
               title="Are you sure delete this Item?"
@@ -115,13 +126,13 @@ const CommunityAllList = () => {
   return (
     <Card>
       <div className="text-right mb-3">
-        <CreateCommunity />
+        <CreatePost />
       </div>
       <div className="table-responsive">
         <Table
           rowKey="id"
           columns={tableColumns}
-          dataSource={communityList}
+          dataSource={posts}
           pagination={pagination}
           onChange={handleTableChange}
         />
@@ -129,4 +140,4 @@ const CommunityAllList = () => {
     </Card>
   );
 };
-export default CommunityAllList;
+export default Post;

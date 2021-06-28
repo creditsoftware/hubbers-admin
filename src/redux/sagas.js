@@ -8,9 +8,11 @@ import eventSaga from './community/event/saga';
 import topicSaga from './community/topic/saga';
 import memberRoleSaga from './community/memberRole/saga';
 import memberSaga from './community/member/saga';
+import postSaga from './community/post/saga';
 
 import innovationTypeSaga from './options/innovation-type/saga';
 import productTypeSaga from './options/product-type/saga';
+import countrySaga from './options/country/saga';
 
 export default function* rootSaga(getState) {
   yield all([
@@ -24,5 +26,7 @@ export default function* rootSaga(getState) {
     topicSaga(),
     memberRoleSaga(),
     memberSaga(),
+    postSaga(),
+    countrySaga(),
   ]);
 }

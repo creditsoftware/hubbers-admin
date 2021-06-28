@@ -1,56 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row } from 'reactstrap';
-import { Drawer, Form, Button, Col, Input, Card, Select } from 'antd';
+import { Drawer, Form, Button, Col, Input, Select, Switch } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import AvatarUpload from '../../../../components/util-components/Upload/AvatarUpload';
+import ColorPicker from '../../../../components/util-components/ColorPicker';
+import UploadImage from '../../../../components/UploadImage';
 import * as Actions from '../../../../redux/actions';
 
 const { Option } = Select;
+const { TextArea } = Input;
 
-const CreateCommunity = () => {
+const CreateTopic = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
-  const [uploadedImg, setImage] = useState('');
+  const [form] = Form.useForm();
 
   const [userList, SetUserList] = useState(null);
   const { users } = useSelector((state) => state.users);
+  const [communityList, SetCommunityList] = useState(null);
+  const { community } = useSelector((state) => state.communityAll);
 
   useEffect(() => {
     dispatch(Actions.getAllUsers());
+    dispatch(Actions.getAllCommunity());
   }, [dispatch]);
 
   useEffect(() => {
     SetUserList(users);
   }, [users]);
 
+  useEffect(() => {
+    SetCommunityList(community);
+  }, [community]);
+
   const showDrawer = () => {
     setVisible(true);
   };
 
   const onClose = () => {
+    form.resetFields();
     setVisible(false);
   };
 
-  const onChangeAvatar = (imageUrl) => {
-    setImage(imageUrl);
-  };
-
   const onSubmit = (values) => {
-    /* eslint-disable */
-    values.featuredImage = uploadedImg;
-    /* eslint-enable */
-    dispatch(Actions.createCommunity(values));
-    window.location.reload();
+    dispatch(Actions.createTopic(values));
+    onClose();
   };
 
   return (
     <>
       <Button type="primary" onClick={showDrawer}>
-        <PlusOutlined /> Create New Community
+        <PlusOutlined /> Create New Topic
       </Button>
       <Drawer
-        title="Create a New Community"
+        title="Create a New Topic"
         width={500}
         onClose={onClose}
         visible={visible}
@@ -59,61 +62,83 @@ const CreateCommunity = () => {
         <Form
           layout="vertical"
           hideRequiredMark
+          form={form}
           onFinish={onSubmit}
-          className="p-4 mt-4"
+          className="p-4"
         >
           <Row>
-            <Col span={12}>
+            <Col span={24} className="text-right">
+              Published
+              <Form.Item
+                name="published"
+                valuePropName="checked"
+                className="mb-0"
+              >
+                <Switch defaultChecked />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={24}>
               <Form.Item
                 name="name"
+                label="Topic Name"
+                rules={[{ required: true, message: 'Please enter Topic Name' }]}
+              >
+                <Input placeholder="Please enter Topic Name" />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item
+                name="topicType"
+                label="Topic Type"
+                rules={[{ required: true, message: 'Please choose a Type' }]}
+                className="mr-2"
+              >
+                <Select placeholder="Please choose the Type">
+                  <Option value="default">Default</Option>
+                  <Option value="featured">Featured</Option>
+                  <Option value="welcome">Welcome</Option>
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                name="communityId"
                 label="Community Name"
                 rules={[
-                  { required: true, message: 'Please enter Community Name' },
+                  { required: true, message: 'Please choose a Community' },
                 ]}
-                className="mr-2"
-              >
-                <Input placeholder="Please enter Community Name" />
-              </Form.Item>
-            </Col>
-
-            <Col span={12}>
-              <Form.Item
-                name="slug"
-                label="Slug"
-                rules={[{ required: true, message: 'Please enter Slug' }]}
                 className="ml-2"
               >
-                <Input placeholder="Please enter Slug" />
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="country"
-                label="Country"
-                rules={[{ required: true, message: 'Please enter Country' }]}
-                className="mr-2"
-              >
-                <Input placeholder="Please enter Country" />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="state" label="State" className="ml-2">
-                <Input placeholder="Please enter State" />
+                <Select placeholder="Please choose the Community">
+                  {communityList &&
+                    communityList.map((item) => {
+                      return (
+                        <Option value={item.id} key={item.id}>
+                          {item.name}
+                        </Option>
+                      );
+                    })}
+                </Select>
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item
-                name="city"
-                label="City"
-                rules={[{ required: true, message: 'Please enter City' }]}
+                name="contributorRole"
+                label="Contributor Role"
+                rules={[{ required: true, message: 'Please choose a Role' }]}
                 className="mr-2"
               >
-                <Input placeholder="Please enter City" />
+                <Select placeholder="Please choose the Role">
+                  <Option value="all_members">All Members</Option>
+                  <Option value="host_moderators">Host Moderator</Option>
+                </Select>
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -143,27 +168,43 @@ const CreateCommunity = () => {
               </Form.Item>
             </Col>
           </Row>
-          <Row>
-            <Card title="Featured Image">
-              <AvatarUpload statusChange={onChangeAvatar} />
-            </Card>
+          <Row gutter={16}>
+            <Col span={24}>
+              <Form.Item name="description" label="Description">
+                <TextArea rows={3} placeholder="Please enter Description" />
+              </Form.Item>
+            </Col>
           </Row>
-          <div
-            style={{
-              textAlign: 'right',
-            }}
-          >
-            <Button onClick={onClose} style={{ marginRight: 8 }}>
-              Cancel
-            </Button>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </div>
+          <Row>
+            <Col span={12}>
+              <Form.Item
+                name="backgroundImageUrl"
+                label="Background Image"
+                className="mr-2 mb-0"
+              >
+                <UploadImage />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item name="color" label="Color" className="ml-2 mb-0">
+                <ColorPicker />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={24} className="text-right">
+              <Button onClick={onClose} style={{ marginRight: 8 }}>
+                Cancel
+              </Button>
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Col>
+          </Row>
         </Form>
       </Drawer>
     </>
   );
 };
 
-export default CreateCommunity;
+export default CreateTopic;

@@ -57,11 +57,6 @@ const data = [
       },
       {
         icon: 'simple-icon-doc',
-        label: 'menu.article',
-        to: `${adminRoot}/community/article`,
-      },
-      {
-        icon: 'simple-icon-doc',
         label: 'menu.event',
         to: `${adminRoot}/community/event`,
       },
@@ -144,22 +139,19 @@ const data = [
         label: 'menu.skills',
         to: `${adminRoot}/options/skills`,
       },
+      {
+        icon: 'simple-icon-paper-plane',
+        label: 'menu.country',
+        to: `${adminRoot}/options/country`,
+      },
     ],
   },
-
-  {
-    id: 'blankpage',
-    icon: 'iconsminds-bucket',
-    label: 'menu.blank-page',
-    to: `${adminRoot}/blank-page`,
-  },
-
-  {
-    id: 'docs',
-    icon: 'iconsminds-library',
-    label: 'menu.docs',
-    to: 'https://gogo-react-docs.coloredstrategies.com/',
-    newWindow: true,
-  },
+  // {
+  //   id: 'docs',
+  //   icon: 'iconsminds-library',
+  //   label: 'menu.docs',
+  //   to: 'https://gogo-react-docs.coloredstrategies.com/',
+  //   newWindow: true,
+  // },
 ];
 export default data;

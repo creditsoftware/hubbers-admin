@@ -4,39 +4,35 @@ import { Card, Space, Table, Tooltip, Popconfirm, Button } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import utils from '../../../../helpers/utils/index';
 import * as Actions from '../../../../redux/actions';
-import CreateCommunity from './create';
-import EditCommunity from './edit';
+import CreateCountry from './create';
+import EditCountry from './edit';
 
-const Article = () => {
+const CountryList = () => {
   const dispatch = useDispatch();
-  const [communityList, SetCommunityList] = useState(null);
-  const { community } = useSelector((state) => state.communityAll);
+  const [countryList, SetCountryList] = useState(null);
+  const { list } = useSelector((state) => state.country);
   const [pagination, setPagenation] = React.useState({
     current: 1,
     pageSize: 5,
   });
 
   useEffect(() => {
-    dispatch(Actions.getAllCommunity());
+    dispatch(Actions.getAllCountry());
   }, [dispatch]);
 
   useEffect(() => {
-    SetCommunityList(community);
-  }, [community]);
+    SetCountryList(list);
+  }, [list]);
+
+  const deleteCountry = (id) => {
+    dispatch(Actions.deleteCountry(id));
+  };
+
   const tableColumns = [
     {
       title: 'ID',
       dataIndex: 'id',
       sorter: (a, b) => utils.antdTableSorter(a, b, 'id'),
-    },
-    {
-      title: 'Feature Image',
-      dataIndex: 'featuredImage',
-      /* eslint-disable */
-      render: (_, record) => (
-        record.featuredImage && <img src={record.featuredImage} style={{width:'100px'}}></img>
-      ),
-      /* eslint-enable */
     },
     {
       title: ' Name',
@@ -49,42 +45,24 @@ const Article = () => {
       sorter: (a, b) => utils.antdTableSorter(a, b, 'name'),
     },
     {
-      title: 'Country',
-      dataIndex: 'country',
+      title: 'Short Name',
+      dataIndex: 'shortName',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.country}</span>
+        <span>{record.shortName}</span>
       ),
       /* eslint-enable */
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'country'),
+      sorter: (a, b) => utils.antdTableSorter(a, b, 'shortName'),
     },
     {
-      title: 'State',
-      dataIndex: 'state',
+      title: 'Continent',
+      dataIndex: 'continent',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.state}</span>
+        <span>{record.continent}</span>
       ),
       /* eslint-enable */
-    },
-    {
-      title: 'City',
-      dataIndex: 'city',
-      /* eslint-disable */
-      render: (_, record) => (
-        <span>{record.city}</span>
-      ),
-      /* eslint-enable */
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'city'),
-    },
-    {
-      title: 'Created By',
-      dataIndex: 'created',
-      /* eslint-disable */
-      render: (_, record) => (
-        <span>{record.creator.email}</span>
-      ),
-      /* eslint-enable */
+      sorter: (a, b) => utils.antdTableSorter(a, b, 'contient'),
     },
     {
       title: 'Actions',
@@ -92,11 +70,11 @@ const Article = () => {
       /* eslint-disable */
       render: (_, elm) => (
         <Space>
-          <EditCommunity id={elm.id} data={communityList} />
+          <EditCountry id={elm.id} data={countryList} />
           <Tooltip title="Delete">
             <Popconfirm
               title="Are you sure delete this Item?"
-              onConfirm={() => console.log('delete')}
+              onConfirm={() => deleteCountry(elm.id)}
               onCancel={() => console.log('Canceled to delete')}
               okText="Yes"
               cancelText="No"
@@ -115,13 +93,13 @@ const Article = () => {
   return (
     <Card>
       <div className="text-right mb-3">
-        <CreateCommunity />
+        <CreateCountry />
       </div>
       <div className="table-responsive">
         <Table
           rowKey="id"
           columns={tableColumns}
-          dataSource={communityList}
+          dataSource={countryList}
           pagination={pagination}
           onChange={handleTableChange}
         />
@@ -129,4 +107,4 @@ const Article = () => {
     </Card>
   );
 };
-export default Article;
+export default CountryList;
