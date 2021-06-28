@@ -53,22 +53,22 @@ const CreateEvent = () => {
   const [endType, setEndType] = React.useState('date');
   const [eventType, setEventType] = React.useState('online');
   const [eventOnlineType, setEventOnlineType] = React.useState('meeting');
-  const [userList, SetUserList] = useState(null);
+  const [memberList, setMemberList] = useState(null);
 
-  const { users } = useSelector((state) => state.users);
-  const { communityAll, topic } = useSelector((state) => state);
+  const { communityAll, topic, member } = useSelector((state) => state);
 
   useEffect(() => {
-    dispatch(Actions.getAllUsers());
+    dispatch(Actions.getAllMember());
     dispatch(Actions.getAllCommunity());
     dispatch(Actions.getAllTopics());
   }, [dispatch]);
 
   useEffect(() => {
-    SetUserList(users);
+    setMemberList(member.list);
+    console.log(member);
     setAllTopicList(topic.list);
     setCommunityList(communityAll.community);
-  }, [users, topic, communityAll]);
+  }, [member, topic, communityAll]);
 
   React.useEffect(() => {
     if (selectedCommunity) {
@@ -841,11 +841,11 @@ const CreateEvent = () => {
               rules={[{ required: true, message: 'Please select!' }]}
             >
               <Select style={{ width: '100%' }} placeholder="Creator">
-                {userList &&
-                  userList.map((u) => {
+                {memberList &&
+                  memberList.map((u) => {
                     return (
                       <Option key={u.id} value={u.id}>
-                        {u.email}
+                        {`${u.community?.name} / ${u.user?.email}`}
                       </Option>
                     );
                   })}
