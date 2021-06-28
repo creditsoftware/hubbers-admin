@@ -23,23 +23,22 @@ const EditTopic = ({ id, data }) => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
-  const [userList, SetUserList] = useState(null);
-  const { users } = useSelector((state) => state.users);
   const [communityList, SetCommunityList] = useState(null);
-  const { community } = useSelector((state) => state.communityAll);
+  const { communityAll, member } = useSelector((state) => state);
+  const [memberList, setMemberList] = useState(null);
 
   useEffect(() => {
-    dispatch(Actions.getAllUsers());
+    dispatch(Actions.getAllMember());
     dispatch(Actions.getAllCommunity());
   }, [dispatch]);
 
   useEffect(() => {
-    SetUserList(users);
-  }, [users]);
+    setMemberList(member.list);
+  }, [member]);
 
   useEffect(() => {
-    SetCommunityList(community);
-  }, [community]);
+    SetCommunityList(communityAll.community);
+  }, [communityAll]);
 
   const showDrawer = () => {
     const filterData = data.filter((item) => item.id === id);
@@ -183,14 +182,12 @@ const EditTopic = ({ id, data }) => {
                   ]}
                   className="ml-2"
                 >
-                  <Select placeholder="Please choose the Member">
-                    {userList &&
-                      userList.map((item) => {
+                  <Select style={{ width: '100%' }} placeholder="Creator">
+                    {memberList &&
+                      memberList.map((u) => {
                         return (
-                          <Option value={item.id} key={item.id}>
-                            {`${item.firstname ? item.firstname : ''} ${
-                              item.lastname ? item.lastname : ''
-                            }`}
+                          <Option key={u.id} value={u.id}>
+                            {`${u.community?.name} / ${u.user?.email}`}
                           </Option>
                         );
                       })}

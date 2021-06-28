@@ -53,7 +53,6 @@ const getSingleCommunityAsync = async (payload) =>
 
 function* GetSingleCommunity(payload) {
   try {
-    console.log(payload.payload);
     const result = yield call(getSingleCommunityAsync, payload);
     if (result.status === 200 && result.statusText === 'OK') {
       yield put(getSingleCommunitySuccess(result.data.data));
