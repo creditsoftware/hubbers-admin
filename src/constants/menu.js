@@ -24,6 +24,12 @@ const data = [
     ],
   },
   {
+    id: 'admins',
+    icon: 'iconsminds-user',
+    label: 'menu.admins',
+    to: `${adminRoot}/admins`,
+  },
+  {
     id: 'users',
     icon: 'iconsminds-user',
     label: 'menu.users',

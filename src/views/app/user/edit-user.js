@@ -39,7 +39,7 @@ const EditUser = () => {
         firstname: singleUser.firstname,
         lastname: singleUser.lastname,
         email: singleUser.email,
-        status: singleUser.status,
+        published: singleUser.published,
         preferedRoleId: singleUser.preferedRole?.id,
         roleIds: singleUser.roles.map((role) => role.id),
         phoneNumberCountryCode: singleUser.detail?.phoneNumberCountryCode,
@@ -87,7 +87,7 @@ const EditUser = () => {
               firstname: userDetail.firstname,
               lastname: userDetail.lastname,
               email: userDetail.email,
-              status: userDetail.status,
+              published: userDetail.published,
               preferedRoleId: userDetail.preferedRole?.id,
               roleIds: userDetail.roles.map((role) => role.id),
               phoneNumberCountryCode: userDetail.detail?.phoneNumberCountryCode,
@@ -173,8 +173,8 @@ const EditUser = () => {
                     </Col>
                     <Col span={12}>
                       <Form.Item
-                        name="status"
-                        label="Status"
+                        name="published"
+                        label="Published"
                         rules={[
                           {
                             required: true,
@@ -183,9 +183,8 @@ const EditUser = () => {
                         ]}
                       >
                         <Select placeholder="Please choose the status">
-                          <Option value="PENDING">PENDING</Option>
-                          <Option value="ACTIVATED">ACTIVATED</Option>
-                          <Option value="DECLINED">DECLINED</Option>
+                          <Option value>Published</Option>
+                          <Option value={false}>Not Published</Option>
                         </Select>
                       </Form.Item>
                     </Col>

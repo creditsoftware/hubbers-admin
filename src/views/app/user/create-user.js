@@ -33,8 +33,7 @@ const CreateUserButton = () => {
 
   const onSubmit = (values) => {
     values.avatar = uploadedImg;
-    console.log('submit values =>', values);
-    // dispatch(Actions.createUser(values));
+    dispatch(Actions.createUser(values));
   };
 
   return (
@@ -114,22 +113,6 @@ const CreateUserButton = () => {
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Item
-                  name="status"
-                  label="Status"
-                  rules={[
-                    { required: true, message: 'Please choose the status' },
-                  ]}
-                  className="mr-2"
-                >
-                  <Select placeholder="Please choose the status">
-                    <Option value="PENDING">PENDING</Option>
-                    <Option value="ACTIVATED">ACTIVATED</Option>
-                    <Option value="DECLINED">DECLINED</Option>
-                  </Select>
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
                   name="preferedRole"
                   label="preferedRole"
                   rules={[
@@ -138,7 +121,7 @@ const CreateUserButton = () => {
                       message: 'Please choose the preferedRole',
                     },
                   ]}
-                  className="ml-2"
+                  className="mr-2"
                 >
                   <Select placeholder="Please choose the value">
                     {userRoleData &&
@@ -152,8 +135,6 @@ const CreateUserButton = () => {
                   </Select>
                 </Form.Item>
               </Col>
-            </Row>
-            <Row gutter={16}>
               <Col span={12}>
                 <Form.Item
                   name="role"
@@ -161,6 +142,7 @@ const CreateUserButton = () => {
                   rules={[
                     { required: true, message: 'Please choose the Role' },
                   ]}
+                  className="ml-2"
                 >
                   <Select
                     mode="multiple"

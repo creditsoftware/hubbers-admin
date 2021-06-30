@@ -1,33 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Row } from 'reactstrap';
-import { Drawer, Form, Button, Col, Input, Card, Select } from 'antd';
+import { Drawer, Form, Button, Col, Input, Card } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import AvatarUpload from '../../../../components/util-components/Upload/AvatarUpload';
 import * as Actions from '../../../../redux/actions';
 import { slugify } from '../../../../helpers/Utils';
-
-const { Option } = Select;
+import CountrySelect from '../../../../components/util-components/selector/CountrySelect';
+import UserSelect from '../../../../components/util-components/selector/UserSelect';
 
 const CreateCommunity = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [uploadedImg, setImage] = useState('');
-  const [userList, SetUserList] = useState(null);
-  const [countryList, setCountryList] = useState(null);
-  const { users } = useSelector((state) => state.users);
-  const { country } = useSelector((state) => state);
   const [form] = Form.useForm();
 
   useEffect(() => {
     dispatch(Actions.getAllUsers());
-    dispatch(Actions.getAllCountry());
   }, [dispatch]);
-
-  useEffect(() => {
-    SetUserList(users);
-    setCountryList(country.list);
-  }, [users, country]);
 
   const showDrawer = () => {
     setVisible(true);
@@ -109,16 +99,7 @@ const CreateCommunity = () => {
                 rules={[{ required: true, message: 'Please select Country' }]}
                 className="mr-2"
               >
-                <Select placeholder="Country">
-                  {countryList &&
-                    countryList.map((item) => {
-                      return (
-                        <Option value={item.id} key={item.id}>
-                          {item.name}
-                        </Option>
-                      );
-                    })}
-                </Select>
+                <CountrySelect />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -150,16 +131,7 @@ const CreateCommunity = () => {
                 ]}
                 className="ml-2"
               >
-                <Select placeholder="Please choose the User">
-                  {userList &&
-                    userList.map((item) => {
-                      return (
-                        <Option value={item.id} key={item.id}>
-                          {item.email}
-                        </Option>
-                      );
-                    })}
-                </Select>
+                <UserSelect />
               </Form.Item>
             </Col>
           </Row>

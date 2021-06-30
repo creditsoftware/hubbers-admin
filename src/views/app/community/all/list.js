@@ -84,6 +84,15 @@ const Community = () => {
       sorter: (a, b) => utils.antdTableSorter(a, b, 'city'),
     },
     {
+      title: 'Published',
+      dataIndex: 'published',
+      /* eslint-disable */
+      render: (_, record) => (
+        <span>{record.published ? 'Published' : 'Not Published'}</span>
+      ),
+      /* eslint-enable */
+    },
+    {
       title: 'Created By',
       dataIndex: 'created',
       /* eslint-disable */

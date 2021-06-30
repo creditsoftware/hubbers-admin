@@ -22,7 +22,6 @@ const Partner = React.lazy(() => import('./partner'));
 
 const Options = React.lazy(() => import('./options'));
 const BlankPage = React.lazy(() => import('./blank-page'));
-
 const App = ({ match }) => {
   return (
     <AppLayout>

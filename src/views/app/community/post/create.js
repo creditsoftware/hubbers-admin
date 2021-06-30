@@ -1,54 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Row, Drawer, Form, Button, Col, Select, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
 import CKEditor5 from '../../../../components/util-components/CkEditor';
+import CommunitySelect from '../../../../components/util-components/selector/CommunitySelect';
+import CommunityTopicSelect from '../../../../components/util-components/selector/CommunityTopicSelect';
+import CommunityMemberSelect from '../../../../components/util-components/selector/CommunityMemberSelect';
 
 const { Option } = Select;
 
 const Create = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
-  const [memberList, setMemberList] = useState(null);
-  const [topicList, setTopicList] = useState(null);
-  const [communityList, setCommunityList] = useState(null);
-  const [allMemberList, setAllMemberList] = useState(null);
-  const [allTopicList, setAllTopicList] = useState(null);
-  const [selectedCommunity, setSelectedCommunity] = useState(null);
   const [content, setContent] = useState(null);
   const [cate, setCate] = useState(null);
   const [form] = Form.useForm();
-  const { communityAll, topic, member } = useSelector((state) => state);
-
-  useEffect(() => {
-    dispatch(Actions.getAllMember());
-    dispatch(Actions.getAllTopics());
-    dispatch(Actions.getAllCommunity());
-  }, [dispatch]);
-
-  useEffect(() => {
-    setAllMemberList(member.list);
-    setAllTopicList(topic.list);
-    setCommunityList(communityAll.community);
-    setMemberList(member.list);
-    setTopicList(topic.list);
-  }, [member, communityAll, topic]);
-
-  useEffect(() => {
-    if (allMemberList && selectedCommunity) {
-      const filteredMembers = allMemberList.filter(
-        (m) => Number(m.communityId) === selectedCommunity
-      );
-      setMemberList(filteredMembers);
-    }
-    if (allTopicList && selectedCommunity) {
-      const filteredTopics = allTopicList.filter(
-        (t) => Number(t.communityId) === selectedCommunity
-      );
-      setTopicList(filteredTopics);
-    }
-  }, [allMemberList, allTopicList, selectedCommunity]);
 
   const showDrawer = () => {
     setVisible(true);
@@ -90,35 +57,15 @@ const Create = () => {
                 label="Community"
                 rules={[{ required: true, message: 'Please select!' }]}
               >
-                <Select
-                  style={{ width: '100%' }}
-                  placeholder="Community"
-                  onChange={(e) => setSelectedCommunity(e)}
-                >
-                  {communityList &&
-                    communityList.map((community) => {
-                      return (
-                        <Option key={community.id} value={community.id}>
-                          {community.name}
-                        </Option>
-                      );
-                    })}
-                </Select>
+                <CommunitySelect placeholder="Community" />
               </Form.Item>
             </Col>
             <Col span={2} />
             <Col span={11}>
               <Form.Item name="topicId" label="Topic">
-                <Select style={{ width: '100%' }} placeholder="Topic">
-                  {topicList &&
-                    topicList.map((t) => {
-                      return (
-                        <Option key={t.id} value={t.id}>
-                          {`${t.community?.name} / ${t.name}`}
-                        </Option>
-                      );
-                    })}
-                </Select>
+                <CommunityTopicSelect
+                  communityId={form.getFieldValue('communityId')}
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -155,16 +102,9 @@ const Create = () => {
                   },
                 ]}
               >
-                <Select placeholder="Please choose the creator">
-                  {memberList &&
-                    memberList.map((item) => {
-                      return (
-                        <Option value={item.id} key={item.id}>
-                          {`${item.community?.name} / ${item.user?.email}`}
-                        </Option>
-                      );
-                    })}
-                </Select>
+                <CommunityMemberSelect
+                  communityId={form.getFieldValue('communityId')}
+                />
               </Form.Item>
             </Col>
           </Row>

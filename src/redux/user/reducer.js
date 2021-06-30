@@ -14,6 +14,7 @@ const INIT_STATE = {
   loading: false,
   users: [],
   singleUser: null,
+  createUser: null,
   error: '',
 };
 
@@ -38,6 +39,12 @@ export default (state = INIT_STATE, action) => {
       return { ...state, loading: false, error: action.payload };
     case UPDATE_USER:
       return { ...state, loading: true };
+    case CREATE_USER:
+      return { ...state, loading: true };
+    case GET_USER_SUCCESS:
+      return { ...state, loading: false, createUser: action.payload };
+    case GET_USER_ERROR:
+      return { ...state, loading: false, error: action.payload };
     default:
       return { ...state };
   }

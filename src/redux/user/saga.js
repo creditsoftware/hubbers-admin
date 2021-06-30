@@ -17,6 +17,8 @@ import {
   getAllUsersError,
   getUsersSuccess,
   getUsersError,
+  createUserSuccess,
+  createUserError,
 } from './actions';
 
 const getAllUsersAsync = async () =>
@@ -87,10 +89,35 @@ function* updateUser(user) {
 export function* watchUpdateUser() {
   yield takeEvery(UPDATE_USER, updateUser);
 }
+
+const createUserAsync = async ({ payload }) =>
+  await api
+    .post(`/user`, { ...payload })
+    .then((res) => res)
+    .catch((error) => error);
+
+function* createUser(user) {
+  try {
+    const result = yield call(createUserAsync, user);
+    if (result.status === 200 && result.statusText === 'OK') {
+      yield put(createUserSuccess(result.data.result));
+    } else {
+      yield put(createUserError('Get User Response is not success!'));
+    }
+  } catch (error) {
+    yield put(createUserError('Get User Error !'));
+  }
+}
+
+export function* watchCreateUser() {
+  yield takeEvery(CREATE_USER, createUser);
+}
+
 export default function* rootSaga() {
   yield all([
     fork(watchGetAllUsers),
     fork(watchGetUser),
     fork(watchUpdateUser),
+    fork(watchCreateUser),
   ]);
 }

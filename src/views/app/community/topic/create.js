@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Row } from 'reactstrap';
-import { Drawer, Form, Button, Col, Input, Select, Switch } from 'antd';
+import { Drawer, Form, Button, Col, Input, Select, Switch, Space } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import ColorPicker from '../../../../components/util-components/ColorPicker';
 import UploadImage from '../../../../components/UploadImage';
 import * as Actions from '../../../../redux/actions';
+import CommunitySelect from '../../../../components/util-components/selector/CommunitySelect';
+import CommunityMemberSelect from '../../../../components/util-components/selector/CommunityMemberSelect';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -14,23 +16,7 @@ const CreateTopic = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
-
-  const [communityList, SetCommunityList] = useState(null);
-  const { communityAll, member } = useSelector((state) => state);
-  const [memberList, setMemberList] = useState(null);
-
-  useEffect(() => {
-    dispatch(Actions.getAllMember());
-    dispatch(Actions.getAllCommunity());
-  }, [dispatch]);
-
-  useEffect(() => {
-    setMemberList(member.list);
-  }, [member]);
-
-  useEffect(() => {
-    SetCommunityList(communityAll.community);
-  }, [communityAll]);
+  const [isGlobal, setIsGlobal] = useState(false);
 
   const showDrawer = () => {
     setVisible(true);
@@ -67,14 +53,29 @@ const CreateTopic = () => {
         >
           <Row>
             <Col span={24} className="text-right">
-              Published
-              <Form.Item
-                name="published"
-                valuePropName="checked"
-                className="mb-0"
-              >
-                <Switch defaultChecked />
-              </Form.Item>
+              <Space>
+                <Form.Item
+                  name="published"
+                  label="Published"
+                  valuePropName="checked"
+                  className="mb-0"
+                >
+                  <Switch defaultChecked />
+                </Form.Item>
+                <Form.Item
+                  name="isGlobal"
+                  label="Global"
+                  valuePropName="checked"
+                  className="mb-0"
+                >
+                  <Switch
+                    onChange={(v) => {
+                      setIsGlobal(v);
+                      form.setFieldsValue({ communityId: null });
+                    }}
+                  />
+                </Form.Item>
+              </Space>
             </Col>
           </Row>
           <Row>
@@ -108,21 +109,14 @@ const CreateTopic = () => {
               <Form.Item
                 name="communityId"
                 label="Community Name"
-                rules={[
-                  { required: true, message: 'Please choose a Community' },
-                ]}
+                rules={
+                  !isGlobal
+                    ? [{ required: true, message: 'Please choose a Community' }]
+                    : []
+                }
                 className="ml-2"
               >
-                <Select placeholder="Please choose the Community">
-                  {communityList &&
-                    communityList.map((item) => {
-                      return (
-                        <Option value={item.id} key={item.id}>
-                          {item.name}
-                        </Option>
-                      );
-                    })}
-                </Select>
+                <CommunitySelect />
               </Form.Item>
             </Col>
           </Row>
@@ -152,16 +146,9 @@ const CreateTopic = () => {
                 ]}
                 className="ml-2"
               >
-                <Select style={{ width: '100%' }} placeholder="Creator">
-                  {memberList &&
-                    memberList.map((u) => {
-                      return (
-                        <Option key={u.id} value={u.id}>
-                          {`${u.community?.name} / ${u.user?.email}`}
-                        </Option>
-                      );
-                    })}
-                </Select>
+                <CommunityMemberSelect
+                  communityId={form.getFieldValue('communityId')}
+                />
               </Form.Item>
             </Col>
           </Row>
