@@ -9,6 +9,7 @@ import topicSaga from './community/topic/saga';
 import memberRoleSaga from './community/memberRole/saga';
 import memberSaga from './community/member/saga';
 import postSaga from './community/post/saga';
+import groupSaga from './community/group/saga';
 
 import innovationTypeSaga from './options/innovation-type/saga';
 import productTypeSaga from './options/product-type/saga';
@@ -27,6 +28,7 @@ export default function* rootSaga(getState) {
     memberRoleSaga(),
     memberSaga(),
     postSaga(),
+    groupSaga(),
     countrySaga(),
   ]);
 }

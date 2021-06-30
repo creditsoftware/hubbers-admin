@@ -40,6 +40,7 @@ module.exports = {
   'menu.post': 'Post',
   'menu.article': 'Article',
   'menu.event': 'Event',
+  'menu.group': 'Group',
   'menu.default': 'Default',
   'menu.content': 'Content',
   'menu.users': 'Users',

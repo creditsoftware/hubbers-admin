@@ -6,6 +6,7 @@ import topic from './community/topic/reducer';
 import memberRole from './community/memberRole/reducer';
 import member from './community/member/reducer';
 import post from './community/post/reducer';
+import group from './community/group/reducer';
 import menu from './menu/reducer';
 import authUser from './auth/reducer';
 import userRole from './user-role/reducer';
@@ -26,6 +27,7 @@ const reducers = combineReducers({
   memberRole,
   member,
   post,
+  group,
   // options
   innovationType,
   productionType,
