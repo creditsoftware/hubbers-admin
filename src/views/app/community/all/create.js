@@ -1,29 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Row } from 'reactstrap';
-import { Drawer, Form, Button, Col, Input, Card, Select } from 'antd';
+import { Drawer, Form, Button, Col, Input, Card } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import AvatarUpload from '../../../../components/util-components/Upload/AvatarUpload';
 import * as Actions from '../../../../redux/actions';
 import { slugify } from '../../../../helpers/Utils';
-
-const { Option } = Select;
+import CountrySelect from '../../../../components/util-components/selector/CountrySelect';
+import UserSelect from '../../../../components/util-components/selector/UserSelect';
 
 const CreateCommunity = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [uploadedImg, setImage] = useState('');
-  const [userList, SetUserList] = useState(null);
-  const { users } = useSelector((state) => state.users);
   const [form] = Form.useForm();
 
   useEffect(() => {
     dispatch(Actions.getAllUsers());
   }, [dispatch]);
-
-  useEffect(() => {
-    SetUserList(users);
-  }, [users]);
 
   const showDrawer = () => {
     setVisible(true);
@@ -100,12 +94,12 @@ const CreateCommunity = () => {
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item
-                name="country"
+                name="countryId"
                 label="Country"
-                rules={[{ required: true, message: 'Please enter Country' }]}
+                rules={[{ required: true, message: 'Please select Country' }]}
                 className="mr-2"
               >
-                <Input placeholder="Please enter Country" />
+                <CountrySelect />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -137,16 +131,7 @@ const CreateCommunity = () => {
                 ]}
                 className="ml-2"
               >
-                <Select placeholder="Please choose the User">
-                  {userList &&
-                    userList.map((item) => {
-                      return (
-                        <Option value={item.id} key={item.id}>
-                          {item.email}
-                        </Option>
-                      );
-                    })}
-                </Select>
+                <UserSelect />
               </Form.Item>
             </Col>
           </Row>

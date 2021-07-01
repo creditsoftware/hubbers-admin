@@ -1,21 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Row } from 'reactstrap';
-import { Drawer, Form, Button, Tooltip, Col, Input, Card, Select } from 'antd';
+import { useDispatch } from 'react-redux';
+import {
+  Drawer,
+  Form,
+  Button,
+  Tooltip,
+  Col,
+  Input,
+  Card,
+  Row,
+  Switch,
+} from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import AvatarUpload from '../../../../components/util-components/Upload/AvatarUpload';
 import * as Actions from '../../../../redux/actions';
 import { slugify } from '../../../../helpers/Utils';
-
-const { Option } = Select;
+import CountrySelect from '../../../../components/util-components/selector/CountrySelect';
+import UserSelect from '../../../../components/util-components/selector/UserSelect';
 
 const EditCommunity = ({ id, data }) => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
   const [uploadedImg, setImage] = useState('');
-  const [userList, SetUserList] = useState(null);
-  const { users } = useSelector((state) => state.users);
   const [editData, setEditData] = useState({
     name: '',
     slug: '',
@@ -27,10 +34,6 @@ const EditCommunity = ({ id, data }) => {
   useEffect(() => {
     dispatch(Actions.getAllUsers());
   }, [dispatch]);
-
-  useEffect(() => {
-    SetUserList(users);
-  }, [users]);
 
   const showDrawer = () => {
     const filterData = data.filter((item) => item.id === id);
@@ -129,12 +132,22 @@ const EditCommunity = ({ id, data }) => {
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Item
-                  name="country"
+                  name="countryId"
                   label="Country"
-                  rules={[{ required: true, message: 'Please enter Country' }]}
+                  rules={[{ required: true, message: 'Please select Country' }]}
                   className="mr-2"
                 >
-                  <Input placeholder="Please enter Country" />
+                  {/* <Select placeholder="Country">
+                    {countryList &&
+                      countryList.map((item) => {
+                        return (
+                          <Option value={item.id} key={item.id}>
+                            {item.name}
+                          </Option>
+                        );
+                      })}
+                  </Select> */}
+                  <CountrySelect />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -166,16 +179,7 @@ const EditCommunity = ({ id, data }) => {
                   ]}
                   className="ml-2"
                 >
-                  <Select placeholder="Please choose the User">
-                    {userList &&
-                      userList.map((item) => {
-                        return (
-                          <Option value={item.id} key={item.id}>
-                            {item.email}
-                          </Option>
-                        );
-                      })}
-                  </Select>
+                  <UserSelect />
                 </Form.Item>
               </Col>
             </Row>
@@ -187,7 +191,17 @@ const EditCommunity = ({ id, data }) => {
                 />
               </Card>
             </Row>
-
+            <Row>
+              <Col span={12}>
+                <Form.Item
+                  name="published"
+                  valuePropName="checked"
+                  label="Published"
+                >
+                  <Switch />
+                </Form.Item>
+              </Col>
+            </Row>
             <div
               style={{
                 textAlign: 'right',

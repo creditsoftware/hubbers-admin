@@ -1,28 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Row } from 'reactstrap';
-import { Drawer, Form, Button, Col, Input, Card, Select } from 'antd';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Row, Drawer, Form, Button, Col, Select, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import AvatarUpload from '../../../../components/util-components/Upload/AvatarUpload';
 import * as Actions from '../../../../redux/actions';
+import CKEditor5 from '../../../../components/util-components/CkEditor';
+import CommunitySelect from '../../../../components/util-components/selector/CommunitySelect';
+import CommunityTopicSelect from '../../../../components/util-components/selector/CommunityTopicSelect';
+import CommunityMemberSelect from '../../../../components/util-components/selector/CommunityMemberSelect';
 
 const { Option } = Select;
 
-const CreateCommunity = () => {
+const Create = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
-  const [uploadedImg, setImage] = useState('');
-
-  const [userList, SetUserList] = useState(null);
-  const { users } = useSelector((state) => state.users);
-
-  useEffect(() => {
-    dispatch(Actions.getAllUsers());
-  }, [dispatch]);
-
-  useEffect(() => {
-    SetUserList(users);
-  }, [users]);
+  const [content, setContent] = useState(null);
+  const [cate, setCate] = useState(null);
+  const [form] = Form.useForm();
 
   const showDrawer = () => {
     setVisible(true);
@@ -32,26 +25,20 @@ const CreateCommunity = () => {
     setVisible(false);
   };
 
-  const onChangeAvatar = (imageUrl) => {
-    setImage(imageUrl);
-  };
-
   const onSubmit = (values) => {
-    /* eslint-disable */
-    values.featuredImage = uploadedImg;
-    /* eslint-enable */
-    dispatch(Actions.createCommunity(values));
-    window.location.reload();
+    dispatch(Actions.createPost({ ...values, content }));
+    form.resetFields();
+    onClose();
   };
 
   return (
     <>
       <Button type="primary" onClick={showDrawer}>
-        <PlusOutlined /> Create New Community
+        <PlusOutlined /> Create New Post / Article
       </Button>
       <Drawer
-        title="Create a New Community"
-        width={500}
+        title="Create a New Community Post / Article"
+        width={1024}
         onClose={onClose}
         visible={visible}
         bodyStyle={{ paddingBottom: 10 }}
@@ -59,98 +46,91 @@ const CreateCommunity = () => {
         <Form
           layout="vertical"
           hideRequiredMark
+          form={form}
           onFinish={onSubmit}
           className="p-4 mt-4"
         >
           <Row>
-            <Col span={12}>
+            <Col span={11}>
               <Form.Item
-                name="name"
-                label="Community Name"
-                rules={[
-                  { required: true, message: 'Please enter Community Name' },
-                ]}
-                className="mr-2"
+                name="communityId"
+                label="Community"
+                rules={[{ required: true, message: 'Please select!' }]}
               >
-                <Input placeholder="Please enter Community Name" />
+                <CommunitySelect placeholder="Community" />
               </Form.Item>
             </Col>
-
-            <Col span={12}>
-              <Form.Item
-                name="slug"
-                label="Slug"
-                rules={[{ required: true, message: 'Please enter Slug' }]}
-                className="ml-2"
-              >
-                <Input placeholder="Please enter Slug" />
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="country"
-                label="Country"
-                rules={[{ required: true, message: 'Please enter Country' }]}
-                className="mr-2"
-              >
-                <Input placeholder="Please enter Country" />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="state" label="State" className="ml-2">
-                <Input placeholder="Please enter State" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="city"
-                label="City"
-                rules={[{ required: true, message: 'Please enter City' }]}
-                className="mr-2"
-              >
-                <Input placeholder="Please enter City" />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                name="createdBy"
-                label="Created By"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please choose the User',
-                  },
-                ]}
-                className="ml-2"
-              >
-                <Select placeholder="Please choose the User">
-                  {userList &&
-                    userList.map((item) => {
-                      return (
-                        <Option value={item.id} key={item.id}>
-                          {`${item.firstname ? item.firstname : ''} ${
-                            item.lastname ? item.lastname : ''
-                          }`}
-                        </Option>
-                      );
-                    })}
-                </Select>
+            <Col span={2} />
+            <Col span={11}>
+              <Form.Item name="topicId" label="Topic">
+                <CommunityTopicSelect
+                  communityId={form.getFieldValue('communityId')}
+                />
               </Form.Item>
             </Col>
           </Row>
           <Row>
-            <Card title="Featured Image">
-              <AvatarUpload statusChange={onChangeAvatar} />
-            </Card>
+            <Col span={11}>
+              <Form.Item
+                name="category"
+                label="Type"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please choose the Type',
+                  },
+                ]}
+              >
+                <Select
+                  placeholder="Please choose the Type"
+                  onChange={(e) => setCate(e)}
+                >
+                  <Option value="post">Post</Option>
+                  <Option value="article">Article</Option>
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={2} />
+            <Col span={11}>
+              <Form.Item
+                name="createdBy"
+                label="Creator"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please choose the creator',
+                  },
+                ]}
+              >
+                <CommunityMemberSelect
+                  communityId={form.getFieldValue('communityId')}
+                />
+              </Form.Item>
+            </Col>
           </Row>
+          {cate === 'article' && (
+            <div>
+              <Form.Item
+                name="title"
+                label="Title"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please Enter Title',
+                  },
+                ]}
+              >
+                <Input type="text" placeholder="Title" />
+              </Form.Item>
+            </div>
+          )}
+          <div>
+            <CKEditor5 onChange={(e) => setContent(e)} />
+          </div>
           <div
             style={{
               textAlign: 'right',
+              marginTop: '1rem',
             }}
           >
             <Button onClick={onClose} style={{ marginRight: 8 }}>
@@ -166,4 +146,4 @@ const CreateCommunity = () => {
   );
 };
 
-export default CreateCommunity;
+export default Create;

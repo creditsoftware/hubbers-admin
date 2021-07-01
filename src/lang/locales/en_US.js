@@ -32,6 +32,7 @@ module.exports = {
   'menu.app': 'Home',
   'menu.dashboards': 'Dashboards',
   'menu.dashboard': 'Dashboard',
+  'menu.admins': 'Admins',
   'menu.community': 'Community',
   'menu.all': 'All',
   'menu.member': 'Member',
@@ -39,6 +40,7 @@ module.exports = {
   'menu.post': 'Post',
   'menu.article': 'Article',
   'menu.event': 'Event',
+  'menu.group': 'Group',
   'menu.default': 'Default',
   'menu.content': 'Content',
   'menu.users': 'Users',
@@ -67,6 +69,8 @@ module.exports = {
   'menu.expertise-category': 'Expertise Category',
 
   'menu.skills': 'Skills',
+
+  'menu.country': 'Country',
 
   /* 04.Error Page */
   'pages.error-title': 'Ooops... looks like an error occurred!',
@@ -126,6 +130,9 @@ module.exports = {
   'dashboards.search': 'Search',
   'dashboards.top-rated-items': 'Top Rated Items',
 
+  // admins
+  'admins.title': 'Admins',
+
   // users
   'users.title': 'Users',
 
@@ -158,4 +165,6 @@ module.exports = {
 
   // expertise category
   'expertise-category.title': 'Expertise Category',
+
+  'country.title': 'Country',
 };

@@ -4,39 +4,31 @@ import { Card, Space, Table, Tooltip, Popconfirm, Button } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import utils from '../../../../helpers/utils/index';
 import * as Actions from '../../../../redux/actions';
-import CreateCommunity from './create';
-import EditCommunity from './edit';
+import CreateTopic from './create';
+import EditTopic from './edit';
 
-const CommunityAllList = () => {
+const TopicsAllList = () => {
   const dispatch = useDispatch();
-  const [communityList, SetCommunityList] = useState(null);
-  const { community } = useSelector((state) => state.communityAll);
+  const [TopicList, SetTopicList] = useState(null);
+  const { list } = useSelector((state) => state.topic);
   const [pagination, setPagenation] = React.useState({
     current: 1,
     pageSize: 5,
   });
 
   useEffect(() => {
-    dispatch(Actions.getAllCommunity());
+    dispatch(Actions.getAllTopics());
   }, [dispatch]);
 
   useEffect(() => {
-    SetCommunityList(community);
-  }, [community]);
+    SetTopicList(list);
+    console.log(list);
+  }, [list]);
   const tableColumns = [
     {
       title: 'ID',
       dataIndex: 'id',
       sorter: (a, b) => utils.antdTableSorter(a, b, 'id'),
-    },
-    {
-      title: 'Feature Image',
-      dataIndex: 'featuredImage',
-      /* eslint-disable */
-      render: (_, record) => (
-        record.featuredImage && <img src={record.featuredImage} style={{width:'100px'}}></img>
-      ),
-      /* eslint-enable */
     },
     {
       title: ' Name',
@@ -49,40 +41,68 @@ const CommunityAllList = () => {
       sorter: (a, b) => utils.antdTableSorter(a, b, 'name'),
     },
     {
-      title: 'Country',
-      dataIndex: 'country',
+      title: 'Contributor Role',
+      dataIndex: 'contributorRole',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.country}</span>
+        <span>{`${record.contributorRole === 'all_members' ? 'All Members' : ''}${record.contributorRole === 'host_moderators' ? 'Host Moderators' : ''}`}</span>
       ),
       /* eslint-enable */
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'country'),
+      sorter: (a, b) => utils.antdTableSorter(a, b, 'contributorRole'),
     },
     {
-      title: 'State',
-      dataIndex: 'state',
+      title: 'Community Name',
+      dataIndex: 'community',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.state}</span>
+        <span>{record.community.name}</span>
       ),
       /* eslint-enable */
+      sorter: (a, b) => utils.antdTableSorter(a, b, 'community'),
     },
     {
-      title: 'City',
-      dataIndex: 'city',
+      title: 'Topic Type',
+      dataIndex: 'type',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.city}</span>
+        <span>{record.topicType}</span>
       ),
       /* eslint-enable */
       sorter: (a, b) => utils.antdTableSorter(a, b, 'city'),
     },
     {
       title: 'Created By',
-      dataIndex: 'created',
+      dataIndex: 'createdBy',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.creator.email}</span>
+        <span>{record.creator.user.email}</span>
+      ),
+      /* eslint-enable */
+    },
+    {
+      title: 'IsGlobal',
+      dataIndex: 'isGlobal',
+      /* eslint-disable */
+      render: (_, record) => (
+        <span>{record.isGlobal ? 'True' : 'False'}</span>
+      ),
+      /* eslint-enable */
+    },
+    {
+      title: 'Published',
+      dataIndex: 'published',
+      /* eslint-disable */
+      render: (_, record) => (
+        <span>{record.published ? 'Published' : 'Not Published'}</span>
+      ),
+      /* eslint-enable */
+    },
+    {
+      title: 'Created At',
+      dataIndex: 'createdAt',
+      /* eslint-disable */
+      render: (_, record) => (
+        <span>{record.createdAt}</span>
       ),
       /* eslint-enable */
     },
@@ -92,7 +112,7 @@ const CommunityAllList = () => {
       /* eslint-disable */
       render: (_, elm) => (
         <Space>
-          <EditCommunity id={elm.id} data={communityList} />
+          <EditTopic id={elm.id} data={TopicList} />
           <Tooltip title="Delete">
             <Popconfirm
               title="Are you sure delete this Item?"
@@ -115,13 +135,13 @@ const CommunityAllList = () => {
   return (
     <Card>
       <div className="text-right mb-3">
-        <CreateCommunity />
+        <CreateTopic />
       </div>
       <div className="table-responsive">
         <Table
           rowKey="id"
           columns={tableColumns}
-          dataSource={communityList}
+          dataSource={TopicList}
           pagination={pagination}
           onChange={handleTableChange}
         />
@@ -129,4 +149,4 @@ const CommunityAllList = () => {
     </Card>
   );
 };
-export default CommunityAllList;
+export default TopicsAllList;

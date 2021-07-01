@@ -103,66 +103,58 @@ const AllUsers = () => {
       sorter: (a, b) => utils.antdTableSorter(a, b, 'joinedDate'),
     },
     {
-      title: 'Status',
-      dataIndex: 'status',
-      /* eslint-disable */
-      render: (_, record) => (
-        <span
-        style={{
-          color: `${record.status === STATUS_LIST.PENDING ? 'orange' : ''}${
-            record.status === STATUS_LIST.ACTIVATED ? '#75ac2a' : ''
-          }${
-            record.status === STATUS_LIST.DECLINED ? 'red' : ''
-          }`,
-        }}
-        >
-        {record.status}
-        </span>
-      ),
-      /* eslint-enable */
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'status'),
-    },
-    {
       title: 'preferedRole',
       dataIndex: 'preferedRole',
       /* eslint-disable */
       render: (_, record) => (
         <span>{record.preferedRole?.name}</span>
-      ),
-      /* eslint-enable */
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'preferedRoleId'),
-    },
-    {
-      title: 'Email Verify',
-      dataIndex: 'emailVerified',
-      /* eslint-disable */
-      render: (_, record) => <span>{record.detail?.emailVerified}</span>,
-      /* eslint-enable */
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'emailVerified'),
-    },
-    {
-      title: 'Phone Verify',
-      dataIndex: 'phoneVerified',
-      /* eslint-disable */
-      render: (_, record) => <span>{record.detail?.phoneVerified}</span>,
-      /* eslint-enable */
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'phoneVerified'),
-    },
-    {
-      title: 'Linkedin Login',
-      dataIndex: 'isLoginWithLinkedin',
-      /* eslint-disable */
-      render: (_, record) => (
-        <span>{record.isLoginWithLinkedin}</span>
-      ),
-      /* eslint-enable */
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'isLoginWithLinkedin'),
-    },
-    {
-      title: 'Actions',
-      dataIndex: 'actions',
-      /* eslint-disable */
-      render: (_, elm) => (
+        ),
+        /* eslint-enable */
+        sorter: (a, b) => utils.antdTableSorter(a, b, 'preferedRoleId'),
+      },
+      {
+        title: 'Email Verify',
+        dataIndex: 'emailVerified',
+        /* eslint-disable */
+        render: (_, record) => <span>{record.detail?.emailVerified}</span>,
+        /* eslint-enable */
+        sorter: (a, b) => utils.antdTableSorter(a, b, 'emailVerified'),
+      },
+      {
+        title: 'Phone Verify',
+        dataIndex: 'phoneVerified',
+        /* eslint-disable */
+        render: (_, record) => <span>{record.detail?.phoneVerified}</span>,
+        /* eslint-enable */
+        sorter: (a, b) => utils.antdTableSorter(a, b, 'phoneVerified'),
+      },
+      {
+        title: 'Linkedin Login',
+        dataIndex: 'isLoginWithLinkedin',
+        /* eslint-disable */
+        render: (_, record) => (
+          <span>{record.isLoginWithLinkedin}</span>
+          ),
+          /* eslint-enable */
+          sorter: (a, b) => utils.antdTableSorter(a, b, 'isLoginWithLinkedin'),
+        },
+        {
+          title: 'Published',
+          dataIndex: 'published',
+          /* eslint-disable */
+          render: (_, record) => (
+            <span>
+              {record.published ? 'Published' : 'Not Published'}
+            </span>
+          ),
+          /* eslint-enable */
+          sorter: (a, b) => utils.antdTableSorter(a, b, 'published'),
+        },
+        {
+          title: 'Actions',
+          dataIndex: 'actions',
+          /* eslint-disable */
+          render: (_, elm) => (
         <Space>
           <Tooltip title="View/Edit">
             <Button

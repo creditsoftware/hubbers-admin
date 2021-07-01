@@ -53,10 +53,16 @@ const Community = () => {
       dataIndex: 'country',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.country}</span>
+        <span>{record.country?.name}</span>
       ),
+      sorter: (a, b) => {
+        return a.country?.name.toLowerCase() > b.country?.name.toLowerCase()
+          ? -1
+          : b.country?.name.toLowerCase() > a.country?.name.toLowerCase()
+          ? 1
+          : 0;
+      },
       /* eslint-enable */
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'country'),
     },
     {
       title: 'State',
@@ -76,6 +82,15 @@ const Community = () => {
       ),
       /* eslint-enable */
       sorter: (a, b) => utils.antdTableSorter(a, b, 'city'),
+    },
+    {
+      title: 'Published',
+      dataIndex: 'published',
+      /* eslint-disable */
+      render: (_, record) => (
+        <span>{record.published ? 'Published' : 'Not Published'}</span>
+      ),
+      /* eslint-enable */
     },
     {
       title: 'Created By',
