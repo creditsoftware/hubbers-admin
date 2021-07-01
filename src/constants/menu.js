@@ -66,6 +66,11 @@ const data = [
         label: 'menu.event',
         to: `${adminRoot}/community/event`,
       },
+      {
+        icon: 'simple-icon-doc',
+        label: 'menu.group',
+        to: `${adminRoot}/community/group`,
+      },
     ],
   },
   {

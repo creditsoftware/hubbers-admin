@@ -45,10 +45,10 @@ const TopicsAllList = () => {
       dataIndex: 'contributorRole',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.contributorRole}</span>
+        <span>{`${record.contributorRole === 'all_members' ? 'All Members' : ''}${record.contributorRole === 'host_moderators' ? 'Host Moderators' : ''}`}</span>
       ),
       /* eslint-enable */
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'community'),
+      sorter: (a, b) => utils.antdTableSorter(a, b, 'contributorRole'),
     },
     {
       title: 'Community Name',
@@ -76,6 +76,24 @@ const TopicsAllList = () => {
       /* eslint-disable */
       render: (_, record) => (
         <span>{record.creator.user.email}</span>
+      ),
+      /* eslint-enable */
+    },
+    {
+      title: 'IsGlobal',
+      dataIndex: 'isGlobal',
+      /* eslint-disable */
+      render: (_, record) => (
+        <span>{record.isGlobal ? 'True' : 'False'}</span>
+      ),
+      /* eslint-enable */
+    },
+    {
+      title: 'Published',
+      dataIndex: 'published',
+      /* eslint-disable */
+      render: (_, record) => (
+        <span>{record.published ? 'Published' : 'Not Published'}</span>
       ),
       /* eslint-enable */
     },

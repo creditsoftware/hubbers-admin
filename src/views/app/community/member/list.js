@@ -121,16 +121,6 @@ const Member = () => {
       sorter: (a, b) => utils.antdTableSorter(a, b, 'joinedDate'),
     },
     {
-      title: 'Published',
-      dataIndex: 'pubished',
-      /* eslint-disable */
-      render: (_, record) => (
-        <span>{record.published ? 'Published' : 'Not Published'}</span>
-      ),
-      /* eslint-enable */
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'published'),
-    },
-    {
       title: 'Status',
       dataIndex: 'status',
       /* eslint-disable */
@@ -139,6 +129,16 @@ const Member = () => {
       ),
       /* eslint-enable */
       sorter: (a, b) => utils.antdTableSorter(a, b, 'status'),
+    },
+    {
+      title: 'Published',
+      dataIndex: 'pubished',
+      /* eslint-disable */
+      render: (_, record) => (
+        <span>{record.published ? 'Published' : 'Not Published'}</span>
+      ),
+      /* eslint-enable */
+      sorter: (a, b) => utils.antdTableSorter(a, b, 'published'),
     },
     {
       title: 'Actions',

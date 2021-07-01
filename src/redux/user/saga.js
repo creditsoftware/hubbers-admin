@@ -92,7 +92,7 @@ export function* watchUpdateUser() {
   yield takeEvery(UPDATE_USER, updateUser);
 }
 
-const createUserAsync = async ({payload}) =>
+const createUserAsync = async ({ payload }) =>
   await api
     .post(`/user`, { ...payload })
     .then((res) => res)

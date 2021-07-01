@@ -8,15 +8,15 @@ import UploadImage from '../../../../components/UploadImage';
 import * as Actions from '../../../../redux/actions';
 import CommunitySelect from '../../../../components/util-components/selector/CommunitySelect';
 import CommunityMemberSelect from '../../../../components/util-components/selector/CommunityMemberSelect';
+import UserSelect from '../../../../components/util-components/selector/UserSelect';
 
 const { Option } = Select;
 const { TextArea } = Input;
 
-const CreateTopic = () => {
+const Create = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
-  const [isGlobal, setIsGlobal] = useState(false);
 
   const showDrawer = () => {
     setVisible(true);
@@ -28,7 +28,7 @@ const CreateTopic = () => {
   };
 
   const onSubmit = (values) => {
-    dispatch(Actions.createTopic(values));
+    dispatch(Actions.createGroup(values));
     onClose();
   };
 
@@ -62,76 +62,31 @@ const CreateTopic = () => {
                 >
                   <Switch defaultChecked />
                 </Form.Item>
-                <Form.Item
-                  name="isGlobal"
-                  label="Global"
-                  valuePropName="checked"
-                  className="mb-0"
-                >
-                  <Switch
-                    onChange={(v) => {
-                      setIsGlobal(v);
-                      form.setFieldsValue({ communityId: null });
-                    }}
-                  />
-                </Form.Item>
               </Space>
             </Col>
           </Row>
           <Row>
             <Col span={24}>
               <Form.Item
-                name="name"
-                label="Topic Name"
-                rules={[{ required: true, message: 'Please enter Topic Name' }]}
+                name="title"
+                label="Title"
+                rules={[{ required: true, message: 'Please enter Title' }]}
               >
-                <Input placeholder="Please enter Topic Name" />
+                <Input placeholder="Please enter Title" />
               </Form.Item>
             </Col>
           </Row>
-
           <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="topicType"
-                label="Topic Type"
-                rules={[{ required: true, message: 'Please choose a Type' }]}
-                className="mr-2"
-              >
-                <Select placeholder="Please choose the Type">
-                  <Option value="default">Default</Option>
-                  <Option value="featured">Featured</Option>
-                  <Option value="welcome">Welcome</Option>
-                </Select>
-              </Form.Item>
-            </Col>
             <Col span={12}>
               <Form.Item
                 name="communityId"
                 label="Community Name"
-                rules={
-                  !isGlobal
-                    ? [{ required: true, message: 'Please choose a Community' }]
-                    : []
-                }
+                rules={[
+                  { required: true, message: 'Please choose a Community' },
+                ]}
                 className="ml-2"
               >
                 <CommunitySelect />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="contributorRole"
-                label="Contributor Role"
-                rules={[{ required: true, message: 'Please choose a Role' }]}
-                className="mr-2"
-              >
-                <Select placeholder="Please choose the Role">
-                  <Option value="all_members">All Members</Option>
-                  <Option value="host_moderators">Host Moderator</Option>
-                </Select>
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -146,9 +101,7 @@ const CreateTopic = () => {
                 ]}
                 className="ml-2"
               >
-                <CommunityMemberSelect
-                  communityId={form.getFieldValue('communityId')}
-                />
+                <UserSelect />
               </Form.Item>
             </Col>
           </Row>
@@ -191,4 +144,4 @@ const CreateTopic = () => {
   );
 };
 
-export default CreateTopic;
+export default Create;

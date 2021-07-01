@@ -53,10 +53,10 @@ export const createUser = (data) => ({
 
 export const createUserSuccess = (data) => ({
   type: CREATE_USER_SUCCESS,
-  payload: data
-})
+  payload: data,
+});
 
 export const createUserError = (data) => ({
   type: CREATE_USER_ERROR,
-  payload: data
-})
+  payload: data,
+});

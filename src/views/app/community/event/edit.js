@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import { FormGroup, Label, Input as RInput } from 'reactstrap';
 import {
@@ -11,7 +11,6 @@ import {
   Input,
   Select,
   Switch,
-  // Radio,
   DatePicker,
   Divider,
   TimePicker,
@@ -21,12 +20,15 @@ import {
 import { EditOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
 import { slugify } from '../../../../helpers/Utils';
-import { timezoneList } from '../../../../constants/timezone';
 import { EventRepeatPeriod } from '../../../../constants/eventRepeatPeriod';
 import { EventRepeatPeriodCustomUnit } from '../../../../constants/eventRepeatPeriodCustomUnit';
 import { WeekDays } from '../../../../constants/weekDays';
 import { EventOnlineType } from '../../../../constants/eventOnlineType';
 import UploadImage from '../../../../components/UploadImage';
+import CommunitySelect from '../../../../components/util-components/selector/CommunitySelect';
+import CommunityTopicSelect from '../../../../components/util-components/selector/CommunityTopicSelect';
+import CommunityMemberSelect from '../../../../components/util-components/selector/CommunityMemberSelect';
+import TimezoneSelect from '../../../../components/util-components/selector/TimezoneSelect';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -44,10 +46,6 @@ const EditEvent = ({ id, data }) => {
       // date: ''
     },
   });
-  const [communityList, setCommunityList] = React.useState(null);
-  const [topicList, setTopicList] = React.useState(null);
-  const [allTopicList, setAllTopicList] = React.useState(null);
-  const [selectedCommunity, setSelectedCommunity] = React.useState(null);
   const [isRepeat, setIsRepeat] = React.useState(false);
   const [isGlobal, setIsGlobal] = React.useState(false);
   const [rsvp, setRsvp] = React.useState(false);
@@ -55,34 +53,7 @@ const EditEvent = ({ id, data }) => {
   const [endType, setEndType] = React.useState('date');
   const [eventType, setEventType] = React.useState('online');
   const [eventOnlineType, setEventOnlineType] = React.useState('meeting');
-  const [memberList, setMemberList] = useState(null);
-
   const [form] = Form.useForm();
-
-  const { communityAll, topic, member } = useSelector((state) => state);
-
-  useEffect(() => {
-    dispatch(Actions.getAllMember());
-    dispatch(Actions.getAllCommunity());
-    dispatch(Actions.getAllTopics());
-  }, [dispatch]);
-
-  useEffect(() => {
-    setMemberList(member.list);
-    setAllTopicList(topic.list);
-    setCommunityList(communityAll.community);
-  }, [member, topic, communityAll]);
-
-  useEffect(() => {
-    if (selectedCommunity) {
-      const t = allTopicList.filter(
-        (tp) => tp.communityId === selectedCommunity
-      );
-      setTopicList(t);
-    } else {
-      setTopicList(allTopicList);
-    }
-  }, [allTopicList, selectedCommunity]);
 
   const showDrawer = () => {
     const ed = { ...data.filter((d) => d.id === id)[0] };
@@ -99,7 +70,6 @@ const EditEvent = ({ id, data }) => {
         : {},
     };
     setDateTime({ ...dT });
-    setSelectedCommunity(ed.communityId);
     setIsGlobal(ed.isGlobal);
     setIsRepeat(ed.isRepeat);
     setRepeatPeriod(ed.repeatPeriod);
@@ -211,44 +181,23 @@ const EditEvent = ({ id, data }) => {
                       : []
                   }
                 >
-                  <Select
+                  <CommunitySelect
                     allowClear
                     disabled={isGlobal}
-                    style={{ width: '100%' }}
                     placeholder="Community"
-                    onChange={(v) => {
-                      setSelectedCommunity(v);
-                      formRef.current.setFieldsValue({ topicId: null });
+                    onChange={() => {
+                      form.setFieldsValue({ topicId: null });
                     }}
-                  >
-                    {communityList &&
-                      communityList.map((community) => {
-                        return (
-                          <Option key={community.id} value={community.id}>
-                            {community.name}
-                          </Option>
-                        );
-                      })}
-                  </Select>
+                  />
                 </Form.Item>
               </Col>
               <Col lg={2} md={2} sm={2} />
               <Col lg={11} md={11} sm={11}>
                 <Form.Item name="topicId">
-                  <Select
-                    style={{ width: '100%' }}
+                  <CommunityTopicSelect
+                    communityId={form.getFieldValue('communityId')}
                     placeholder="Topic"
-                    allowClear
-                  >
-                    {topicList &&
-                      topicList.map((tp) => {
-                        return (
-                          <Option key={tp.id} value={tp.id}>
-                            {tp.name}
-                          </Option>
-                        );
-                      })}
-                  </Select>
+                  />
                 </Form.Item>
               </Col>
             </Row>
@@ -294,15 +243,7 @@ const EditEvent = ({ id, data }) => {
                   name="timezone"
                   rules={[{ required: true, message: 'Please set timezone!' }]}
                 >
-                  <Select placeholder="Timezone" allowClear>
-                    {timezoneList.map((zone) => {
-                      return (
-                        <Option value={zone.value} key={zone.value}>
-                          {zone.abbr}({zone.value})
-                        </Option>
-                      );
-                    })}
-                  </Select>
+                  <TimezoneSelect />
                 </Form.Item>
               </Col>
             </Row>
@@ -866,16 +807,10 @@ const EditEvent = ({ id, data }) => {
               name="createdBy"
               rules={[{ required: true, message: 'Please select!' }]}
             >
-              <Select style={{ width: '100%' }} placeholder="Creator">
-                {memberList &&
-                  memberList.map((u) => {
-                    return (
-                      <Option key={u.id} value={u.id}>
-                        {`${u.community?.name} / ${u.user?.email}`}
-                      </Option>
-                    );
-                  })}
-              </Select>
+              <CommunityMemberSelect
+                communityId={form.getFieldValue('communityId')}
+                placeholder="Creator"
+              />
             </Form.Item>
             <Row style={{ flexDirection: 'row-reverse' }}>
               <Form.Item>
