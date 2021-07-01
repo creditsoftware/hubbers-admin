@@ -28,6 +28,17 @@ const EditUser = () => {
   const { singleUser } = useSelector((state) => state.users);
   const { userRoleData } = useSelector((state) => state.userRole);
   const dispatch = useDispatch();
+
+  const [passwordUp, setPasswordUp] = useState(false);
+  const handlePassword = (e) =>{
+    if(e.target.value){
+      setPasswordUp(true);
+    }
+    else{
+      setPasswordUp(false);
+    }
+  }
+
   useEffect(() => {
     dispatch(Actions.getSingleUser(params.id));
     dispatch(Actions.getAllUserRoles());
@@ -39,7 +50,7 @@ const EditUser = () => {
         firstname: singleUser.firstname,
         lastname: singleUser.lastname,
         email: singleUser.email,
-        status: singleUser.status,
+        published: singleUser.published,
         preferedRoleId: singleUser.preferedRole?.id,
         roleIds: singleUser.roles.map((role) => role.id),
         phoneNumberCountryCode: singleUser.detail?.phoneNumberCountryCode,
@@ -87,7 +98,7 @@ const EditUser = () => {
               firstname: userDetail.firstname,
               lastname: userDetail.lastname,
               email: userDetail.email,
-              status: userDetail.status,
+              published: userDetail.published,
               preferedRoleId: userDetail.preferedRole?.id,
               roleIds: userDetail.roles.map((role) => role.id),
               phoneNumberCountryCode: userDetail.detail?.phoneNumberCountryCode,
@@ -173,8 +184,8 @@ const EditUser = () => {
                     </Col>
                     <Col span={12}>
                       <Form.Item
-                        name="status"
-                        label="Status"
+                        name="published"
+                        label="Published"
                         rules={[
                           {
                             required: true,
@@ -183,9 +194,8 @@ const EditUser = () => {
                         ]}
                       >
                         <Select placeholder="Please choose the status">
-                          <Option value="PENDING">PENDING</Option>
-                          <Option value="ACTIVATED">ACTIVATED</Option>
-                          <Option value="DECLINED">DECLINED</Option>
+                          <Option value={true}>Published</Option>
+                          <Option value={false}>Not Published</Option>
                         </Select>
                       </Form.Item>
                     </Col>
@@ -244,6 +254,39 @@ const EditUser = () => {
                             );
                           })}
                         </Select>
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col style={{ width: '50%', paddingRight: '8px' }}>
+                      <Form.Item
+                        name="password"
+                        label="Password"
+                      >
+                        <Input placeholder="Please enter Password" type="password" onChange={handlePassword} />
+                      </Form.Item>
+                    </Col>
+                    <Col style={{ width: '50%', paddingLeft: '8px' }}>
+                      <Form.Item
+                        name="confirmPassword"
+                        label="Confirm Password"
+                        dependencies={['password']}
+                        rules={[
+                          {
+                            required: passwordUp && true,
+                            message: 'Please confirm'
+                          },
+                          ({ getFieldValue }) => ({
+                            validator(rule, value) {
+                              if (!value || getFieldValue('password') === value) {
+                                return Promise.resolve();
+                              }
+                              return Promise.reject('Confirm Error');
+                            },
+                          }),
+                        ]}
+                      >
+                        <Input placeholder="Please enter Confirm Password" type="password" />
                       </Form.Item>
                     </Col>
                   </Row>
@@ -488,52 +531,6 @@ const EditUser = () => {
             </Card>
           </Form>
         )}
-
-        <Card title="Reset Password" className="mt-2">
-          <Form layout="vertical" onFinish={onChangePassword}>
-            <Row gutter={16}>
-              <Col span={24}>
-                <Form.Item
-                  name="old_password"
-                  label="Old Password"
-                  rules={[
-                    { required: true, message: 'Please Enter old password' },
-                  ]}
-                >
-                  <Input placeholder="old password" type="password" />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="new_password"
-                  label="New Password"
-                  rules={[{ required: true, message: 'Please enter Password' }]}
-                >
-                  <Input placeholder="New Password" type="password" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="confirm_password"
-                  label="Confirm New Password"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please enter Confirm New Password',
-                    },
-                  ]}
-                >
-                  <Input placeholder="Confirm New Password" type="password" />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Button type="primary" htmlType="submit">
-              Rest Password
-            </Button>
-          </Form>
-        </Card>
 
         <Card
           title="Transactions"

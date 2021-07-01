@@ -28,7 +28,8 @@ export const MENU_CHANGE_HAS_SUB_ITEM_STATUS =
 export * from './menu/actions';
 export * from './settings/actions';
 export * from './auth/actions';
-
+export * from './admin/actions';
+export * from './admin-role/actions';
 export * from './user-role/actions';
 export * from './user/actions';
 export * from './community/all/actions';

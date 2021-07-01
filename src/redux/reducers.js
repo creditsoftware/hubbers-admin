@@ -10,7 +10,8 @@ import menu from './menu/reducer';
 import authUser from './auth/reducer';
 import userRole from './user-role/reducer';
 import users from './user/reducer';
-
+import admins from './admin/reducer';
+import adminRole from './admin-role/reducer';
 import innovationType from './options/innovation-type/reducer';
 import productionType from './options/product-type/reducer';
 import country from './options/country/reducer';
@@ -18,6 +19,8 @@ import country from './options/country/reducer';
 const reducers = combineReducers({
   menu,
   settings,
+  admins,
+  adminRole,
   authUser,
   userRole,
   users,

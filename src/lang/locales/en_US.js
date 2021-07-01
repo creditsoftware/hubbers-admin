@@ -32,6 +32,7 @@ module.exports = {
   'menu.app': 'Home',
   'menu.dashboards': 'Dashboards',
   'menu.dashboard': 'Dashboard',
+  'menu.admins': 'Admins',
   'menu.community': 'Community',
   'menu.all': 'All',
   'menu.member': 'Member',
@@ -127,6 +128,9 @@ module.exports = {
   'dashboards.keyword': 'Keyword',
   'dashboards.search': 'Search',
   'dashboards.top-rated-items': 'Top Rated Items',
+
+  // admins
+  'admins.title': 'Admins',
 
   // users
   'users.title': 'Users',

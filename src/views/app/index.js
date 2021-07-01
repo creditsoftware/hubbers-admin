@@ -7,6 +7,7 @@ import AppLayout from '../../layout/AppLayout';
 import { ProtectedRoute, UserRole } from '../../helpers/authHelper';
 
 const Dashboard = React.lazy(() => import('./dashboard'));
+const Admins = React.lazy(() => import('./admin/'))
 const Users = React.lazy(() => import('./user'));
 const EditUser = React.lazy(() => import('./user/edit-user'));
 
@@ -22,7 +23,6 @@ const Partner = React.lazy(() => import('./partner'));
 
 const Options = React.lazy(() => import('./options'));
 const BlankPage = React.lazy(() => import('./blank-page'));
-
 const App = ({ match }) => {
   return (
     <AppLayout>
@@ -37,6 +37,11 @@ const App = ({ match }) => {
             <Route
               path={`${match.url}/dashboard`}
               render={(props) => <Dashboard {...props} />}
+            />
+            <Route
+              exact
+              path={`${match.url}/admins`}
+              render={(props) => <Admins {...props} />}
             />
             <Route
               exact

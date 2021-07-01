@@ -1,5 +1,4 @@
 import {
-  CREATE_USER,
   GET_ALL_USER,
   GET_USER,
   UPDATE_USER,
@@ -8,6 +7,9 @@ import {
   GET_ALL_USER_ERROR,
   GET_USER_SUCCESS,
   GET_USER_ERROR,
+  CREATE_USER,
+  CREATE_USER_SUCCESS,
+  CREATE_USER_ERROR,
 } from '../types/user';
 
 export const getAllUsers = () => ({
@@ -43,3 +45,18 @@ export const getUsersError = (data) => ({
   type: GET_USER_ERROR,
   payload: data,
 });
+
+export const createUser = (data) => ({
+  type: CREATE_USER,
+  payload: data,
+});
+
+export const createUserSuccess = (data) => ({
+  type: CREATE_USER_SUCCESS,
+  payload: data
+})
+
+export const createUserError = (data) => ({
+  type: CREATE_USER_ERROR,
+  payload: data
+})
