@@ -4,6 +4,7 @@ import {
   CREATE_GROUP,
   GET_ALL_GROUP,
   UPDATE_GROUP,
+  DELETE_GROUP,
 } from '../../types/community/group';
 
 import {
@@ -14,6 +15,8 @@ import {
   getAllGroupsSuccess,
   updateGroupError,
   updateGroupSuccess,
+  deleteGroupError,
+  deleteGroupSuccess,
 } from './actions';
 
 const getAllGroupsAsync = async () => {
@@ -82,6 +85,27 @@ function* UpdateGroup(payload) {
   }
 }
 
+const deleteGroupAsync = async ({ payload }) => {
+  return api
+    .delete(`/community/group/${payload}`)
+    .then((res) => res)
+    .catch((error) => error);
+};
+
+function* DeleteGroup(payload) {
+  try {
+    const result = yield call(deleteGroupAsync, payload);
+    if (result.status === 200 && result.statusText === 'OK') {
+      yield put(deleteGroupSuccess(result.data.data));
+      yield put(getAllGroups());
+    } else {
+      yield put(deleteGroupError('Delete Group Response is not success!'));
+    }
+  } catch (error) {
+    yield put(deleteGroupError('Delete Group Error !'));
+  }
+}
+
 export function* watchGetAllGroups() {
   yield takeEvery(GET_ALL_GROUP, GetAllGroups);
 }
@@ -91,11 +115,15 @@ export function* watchCreateGroup() {
 export function* watchUpdateGroup() {
   yield takeEvery(UPDATE_GROUP, UpdateGroup);
 }
+export function* watchDeleteGroup() {
+  yield takeEvery(DELETE_GROUP, DeleteGroup);
+}
 
 export default function* rootSaga() {
   yield all([
     fork(watchGetAllGroups),
     fork(watchUpdateGroup),
     fork(watchCreateGroup),
+    fork(watchDeleteGroup),
   ]);
 }

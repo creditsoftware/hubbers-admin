@@ -30,7 +30,7 @@ const UserSelect = ({ ...props }) => {
     }
   };
   return (
-    <Select filterOption={false} showSearch onSearch={onSearchUser} {...props}>
+    <Select filterOption={false} showSearch onSearch={onSearchUser} {...props} placeholder="Please choose the user">
       {list &&
         list.map((item) => {
           return (
