@@ -90,16 +90,19 @@ const AllInnovationTypes = () => {
     {
       title: 'Name',
       dataIndex: 'name',
+      /* eslint-disable */
       render: (_, record) => (
         <div className="d-flex">
           <span>{record.name}</span>
         </div>
       ),
+      /* eslint-enable */
       sorter: (a, b) => utils.antdTableSorter(a, b, 'name'),
     },
     {
       title: '',
       dataIndex: 'actions',
+      /* eslint-disable */
       render: (_, elm) => (
         <div className="text-right">
           <Tooltip title="Up">
@@ -145,6 +148,7 @@ const AllInnovationTypes = () => {
           </Tooltip>
         </div>
       ),
+      /* eslint-enable */
     },
   ];
 

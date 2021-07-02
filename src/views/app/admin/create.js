@@ -95,24 +95,28 @@ const AdminCreate = () => {
               },
             ]}
           >
-            <Select style={{ width: '100%' }} placeholder="Please choose the Role">
+            <Select
+              style={{ width: '100%' }}
+              placeholder="Please choose the Role"
+            >
               {roleList &&
-                roleList.map((item, index) => {
+                roleList.map((item) => {
                   return (
-                    <Option key={index} value={item.id}>
+                    <Option key={item.id} value={item.id}>
                       {item.name}
                     </Option>
                   );
-                })
-              }
+                })}
             </Select>
           </Form.Item>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-            <Form.Item
-              name="avatar"
-              label="Avatar"
-              className="mb-0"
-            >
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'flex-end',
+            }}
+          >
+            <Form.Item name="avatar" label="Avatar" className="mb-0">
               <UploadImage />
             </Form.Item>
             <div className="pb-2">

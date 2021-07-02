@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row } from 'reactstrap';
-import { Drawer, Form, Button, Col, Input, Switch, Space } from 'antd';
+import { Drawer, Form, Button, Col, Input, Switch, Space, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
 import CommunitySelect from '../../../../components/util-components/selector/CommunitySelect';
 import UserSelect from '../../../../components/util-components/selector/UserSelect';
 
 const { TextArea } = Input;
+const { Option } = Select;
 
 const GroupCreate = () => {
-  
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
   const [published, setPublished] = useState(true);
   const [privacyOption, setPrivacyOption] = useState(null);
-  const { groupPrivacyOptionList } = useSelector((state) => state.groupPrivacyOption);
+  const { groupPrivacyOptionList } = useSelector(
+    (state) => state.groupPrivacyOption
+  );
 
   useEffect(() => {
     dispatch(Actions.getAllGroupPrivacyOption());
@@ -36,8 +38,7 @@ const GroupCreate = () => {
   };
 
   const onSubmit = (values) => {
-    values.published = published;
-    dispatch(Actions.createGroup(values));
+    dispatch(Actions.createGroup({ ...values, published }));
     onClose();
   };
 
@@ -63,11 +64,7 @@ const GroupCreate = () => {
           <Row>
             <Col span={24} className="text-right">
               <Space>
-                <label className="mb-0 mt-1">Published</label>
-                <Form.Item
-                  name="published"
-                  className="mb-0"
-                >
+                <Form.Item label="Published" name="published" className="mb-0">
                   <Switch checked={published} onChange={setPublished} />
                 </Form.Item>
               </Space>
@@ -78,7 +75,9 @@ const GroupCreate = () => {
               <Form.Item
                 name="title"
                 label="Group Title"
-                rules={[{ required: true, message: 'Please enter Group Title' }]}
+                rules={[
+                  { required: true, message: 'Please enter Group Title' },
+                ]}
               >
                 <Input placeholder="Please enter Group Title" />
               </Form.Item>
@@ -99,7 +98,7 @@ const GroupCreate = () => {
             </Col>
             <Col span={12}>
               <Form.Item
-                name="privacyOptionId"  
+                name="privacyOptionId"
                 label="Privacy Option"
                 rules={[
                   {
@@ -109,16 +108,18 @@ const GroupCreate = () => {
                 ]}
                 className="ml-2"
               >
-                <Select style={{ width: '100%' }} placeholder="Please choose the Option">
+                <Select
+                  style={{ width: '100%' }}
+                  placeholder="Please choose the Option"
+                >
                   {privacyOption &&
-                    privacyOption.map((item, index) => {
+                    privacyOption.map((item) => {
                       return (
-                        <Option key={index} value={item.id}>
+                        <Option key={item.id} value={item.id}>
                           {item.name}
                         </Option>
                       );
-                    })
-                  }
+                    })}
                 </Select>
               </Form.Item>
             </Col>

@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Drawer, Form, Button, Col, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { Row } from 'reactstrap';
 import AllInnovationTypes from './all_innovation';
 import * as Actions from '../../../../redux/actions';
@@ -25,8 +24,7 @@ const InnovationType = ({ match }) => {
   };
 
   const onSubmit = (values) => {
-    values.index = 0;
-    dispatch(Actions.createInnovationType(values));
+    dispatch(Actions.createInnovationType({ ...values, index: 0 }));
     setVisible(false);
   };
 

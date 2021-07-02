@@ -43,23 +43,22 @@ const AdminCreate = ({ id, data }) => {
   };
 
   const onSubmit = (values) => {
-    values['id'] = id;
+    values.id = id;
     delete values.confirmPassword;
-    if(!values['password']){
+    if (!values.password) {
       delete values.password;
     }
     dispatch(Actions.updateAdmin(values));
     onClose();
   };
 
-  const handlePassword = (e) =>{
-    if(e.target.value){
+  const handlePassword = (e) => {
+    if (e.target.value) {
       setPasswordUp(true);
-    }
-    else{
+    } else {
       setPasswordUp(false);
     }
-  }
+  };
 
   return (
     <>
@@ -109,11 +108,12 @@ const AdminCreate = ({ id, data }) => {
           </Form.Item>
           <Row>
             <Col style={{ width: '50%', paddingRight: '8px' }}>
-              <Form.Item
-                name="password"
-                label="Password"
-              >
-                <Input placeholder="Please enter Password" type="password" onChange={handlePassword} />
+              <Form.Item name="password" label="Password">
+                <Input
+                  placeholder="Please enter Password"
+                  type="password"
+                  onChange={handlePassword}
+                />
               </Form.Item>
             </Col>
             <Col style={{ width: '50%', paddingLeft: '8px' }}>
@@ -124,7 +124,7 @@ const AdminCreate = ({ id, data }) => {
                 rules={[
                   {
                     required: passwordUp && true,
-                    message: 'Please confirm'
+                    message: 'Please confirm',
                   },
                   ({ getFieldValue }) => ({
                     validator(rule, value) {
@@ -136,7 +136,10 @@ const AdminCreate = ({ id, data }) => {
                   }),
                 ]}
               >
-                <Input placeholder="Please enter Confirm Password" type="password" />
+                <Input
+                  placeholder="Please enter Confirm Password"
+                  type="password"
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -160,8 +163,7 @@ const AdminCreate = ({ id, data }) => {
                           {item.name}
                         </Option>
                       );
-                    })
-                  }
+                    })}
                 </Select>
               </Form.Item>
             </Col>
@@ -177,18 +179,20 @@ const AdminCreate = ({ id, data }) => {
                 ]}
               >
                 <Select placeholder="Please choose the Published">
-                  <Option value={true}>Published</Option>
+                  <Option value>Published</Option>
                   <Option value={false}>Not Published</Option>
                 </Select>
               </Form.Item>
             </Col>
           </Row>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-            <Form.Item
-              name="avatar"
-              label="Avatar"
-              className="mb-0"
-            >
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'flex-end',
+            }}
+          >
+            <Form.Item name="avatar" label="Avatar" className="mb-0">
               <UploadImage />
             </Form.Item>
             <div className="pb-2">

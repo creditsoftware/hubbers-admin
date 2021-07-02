@@ -6,7 +6,7 @@ import {
   CREATE_GROUP_PRIVACY_OPTION,
   UPDATE_GROUP_PRIVACY_OPTION,
   DELETE_GROUP_PRIVACY_OPTION,
-} from '../../types/community/group-privacy-option';
+} from '../../types/community/groupPrivacyOption';
 
 import {
   getAllGroupPrivacyOption,
@@ -32,20 +32,26 @@ function* GetAllGroupPrivacyOption() {
     if (result.status === 200 && result.statusText === 'OK') {
       yield put(getAllGroupPrivacyOptionSuccess(result.data.data));
     } else {
-      yield put(getAllGroupPrivacyOptionError('Get All GroupPrivacyOption Response is not success!'));
+      yield put(
+        getAllGroupPrivacyOptionError(
+          'Get All GroupPrivacyOption Response is not success!'
+        )
+      );
     }
   } catch (error) {
-    yield put(getAllGroupPrivacyOptionError('Get All GroupPrivacyOption Error !'));
+    yield put(
+      getAllGroupPrivacyOptionError('Get All GroupPrivacyOption Error !')
+    );
   }
 }
 
 const createGroupPrivacyOptionAsync = async ({ payload }) => {
   return api
-  .post(`/community/group-privacy-option`, {
-    ...payload,
-  })
-  .then((res) => res)
-  .catch((error) => error);
+    .post(`/community/group-privacy-option`, {
+      ...payload,
+    })
+    .then((res) => res)
+    .catch((error) => error);
 };
 function* CreateGroupPrivacyOption(payload) {
   try {
@@ -54,20 +60,26 @@ function* CreateGroupPrivacyOption(payload) {
       yield put(createGroupPrivacyOptionSuccess(result.data.data));
       yield put(getAllGroupPrivacyOption());
     } else {
-      yield put(createGroupPrivacyOptionError('Create GroupPrivacyOption Response is not success!'));
+      yield put(
+        createGroupPrivacyOptionError(
+          'Create GroupPrivacyOption Response is not success!'
+        )
+      );
     }
   } catch (error) {
-    yield put(createGroupPrivacyOptionError('Create GroupPrivacyOption Error !'));
+    yield put(
+      createGroupPrivacyOptionError('Create GroupPrivacyOption Error !')
+    );
   }
 }
 
 const updateGroupPrivacyOptionAsync = async ({ payload }) => {
   return api
-  .put(`/community/group-privacy-option/${payload.id}`, {
-    ...payload,
-  })
-  .then((res) => res)
-  .catch((error) => error);
+    .put(`/community/group-privacy-option/${payload.id}`, {
+      ...payload,
+    })
+    .then((res) => res)
+    .catch((error) => error);
 };
 function* UpdateGroupPrivacyOption(payload) {
   try {
@@ -76,10 +88,16 @@ function* UpdateGroupPrivacyOption(payload) {
       yield put(updateGroupPrivacyOptionSuccess(result.data.data));
       yield put(getAllGroupPrivacyOption());
     } else {
-      yield put(updateGroupPrivacyOptionError('Update GroupPrivacyOption Response is not success!'));
+      yield put(
+        updateGroupPrivacyOptionError(
+          'Update GroupPrivacyOption Response is not success!'
+        )
+      );
     }
   } catch (error) {
-    yield put(updateGroupPrivacyOptionError('Update GroupPrivacyOption Error !'));
+    yield put(
+      updateGroupPrivacyOptionError('Update GroupPrivacyOption Error !')
+    );
   }
 }
 
@@ -97,11 +115,15 @@ function* DeleteGroupPrivacyOption(payload) {
       yield put(getAllGroupPrivacyOption());
     } else {
       yield put(
-        deleteGroupPrivacyOptionError('Delete GroupPrivacyOption Response is not success!')
+        deleteGroupPrivacyOptionError(
+          'Delete GroupPrivacyOption Response is not success!'
+        )
       );
     }
   } catch (error) {
-    yield put(deleteGroupPrivacyOptionError('Delete GroupPrivacyOption Error !'));
+    yield put(
+      deleteGroupPrivacyOptionError('Delete GroupPrivacyOption Error !')
+    );
   }
 }
 

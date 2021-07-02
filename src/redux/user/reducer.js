@@ -44,8 +44,8 @@ export default (state = INIT_STATE, action) => {
     case GET_USER_SUCCESS:
       return { ...state, loading: false, createUser: action.payload };
     case GET_USER_ERROR:
-        return { ...state, loading: false, error: action.payload };
-      default:
+      return { ...state, loading: false, error: action.payload };
+    default:
       return { ...state };
   }
 };

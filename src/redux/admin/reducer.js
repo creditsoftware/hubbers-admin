@@ -10,9 +10,9 @@ import {
   UPDATE_ADMIN_ERROR,
   DELETE_ADMIN,
   DELETE_ADMIN_SUCCESS,
-  DELETE_ADMIN_ERROR
+  DELETE_ADMIN_ERROR,
 } from '../types/admin';
-  
+
 const INIT_STATE = {
   loading: false,
   list: [],
@@ -43,15 +43,15 @@ export default (state = INIT_STATE, action) => {
       };
     case CREATE_ADMIN:
       return {
-      ...state,
-      loading: true,
-    };
+        ...state,
+        loading: true,
+      };
     case CREATE_ADMIN_SUCCESS:
       return {
         ...state,
         loading: false,
-      newAdmin: action.payload,
-    };
+        newAdmin: action.payload,
+      };
     case CREATE_ADMIN_ERROR:
       return {
         ...state,

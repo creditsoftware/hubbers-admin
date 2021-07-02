@@ -104,7 +104,7 @@ function* createUser(user) {
     if (result.status === 200 && result.statusText === 'OK') {
       yield put(createUserSuccess(result.data.result));
       yield put(getAllUsers());
-    } else{
+    } else {
       yield put(createUserError('Get User Response is not success!'));
     }
   } catch (error) {

@@ -35,8 +35,7 @@ const Teams = ({ match }) => {
   };
 
   const onSubmit = (values) => {
-    values.avatar = uploadedImg;
-    console.log('submit values =>', values);
+    console.log('submit values =>', { ...values, avatar: uploadedImg });
     // dispatch(Actions.createUser(values));
   };
 
@@ -154,9 +153,9 @@ const Teams = ({ match }) => {
                   >
                     <Select placeholder="Please choose the value">
                       {userRoleData &&
-                        userRoleData.map((item, index) => {
+                        userRoleData.map((item) => {
                           return (
-                            <Option value={item.id} key={index}>
+                            <Option value={item.id} key={item.id}>
                               {item.name}
                             </Option>
                           );
@@ -182,9 +181,13 @@ const Teams = ({ match }) => {
                       onChange={() => {}}
                       optionLabelProp="label"
                     >
-                      {userRoleData.map((item, i) => {
+                      {userRoleData.map((item) => {
                         return (
-                          <Option value={item.id} label={item.name} key={i}>
+                          <Option
+                            value={item.id}
+                            label={item.name}
+                            key={item.id}
+                          >
                             <span>{item.name}</span>
                           </Option>
                         );

@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Drawer, Form, Button, Col, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { Row } from 'reactstrap';
 import AllProductTypes from './all_product_types';
 import * as Actions from '../../../../redux/actions';
@@ -25,8 +24,7 @@ const ProductType = ({ match }) => {
   };
 
   const onSubmit = (values) => {
-    values.index = 0;
-    dispatch(Actions.createProductionType(values));
+    dispatch(Actions.createProductionType({ ...values, index: 0 }));
     setVisible(false);
   };
 

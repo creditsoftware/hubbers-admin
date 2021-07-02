@@ -9,8 +9,6 @@ import {
   Form,
   Button,
   Select,
-  Upload,
-  Checkbox,
   DatePicker,
   Space,
 } from 'antd';
@@ -30,14 +28,13 @@ const EditUser = () => {
   const dispatch = useDispatch();
 
   const [passwordUp, setPasswordUp] = useState(false);
-  const handlePassword = (e) =>{
-    if(e.target.value){
+  const handlePassword = (e) => {
+    if (e.target.value) {
       setPasswordUp(true);
-    }
-    else{
+    } else {
       setPasswordUp(false);
     }
-  }
+  };
 
   useEffect(() => {
     dispatch(Actions.getSingleUser(params.id));
@@ -81,9 +78,6 @@ const EditUser = () => {
   };
   const onChangeAvatar = (imageUrl) => {
     setUserDetail({ ...userDetail, avatar: imageUrl });
-  };
-  const onChangePassword = () => {
-    console.log('change password');
   };
   return (
     <Row gutter={16}>
@@ -194,7 +188,7 @@ const EditUser = () => {
                         ]}
                       >
                         <Select placeholder="Please choose the status">
-                          <Option value={true}>Published</Option>
+                          <Option value>Published</Option>
                           <Option value={false}>Not Published</Option>
                         </Select>
                       </Form.Item>
@@ -259,11 +253,12 @@ const EditUser = () => {
                   </Row>
                   <Row>
                     <Col style={{ width: '50%', paddingRight: '8px' }}>
-                      <Form.Item
-                        name="password"
-                        label="Password"
-                      >
-                        <Input placeholder="Please enter Password" type="password" onChange={handlePassword} />
+                      <Form.Item name="password" label="Password">
+                        <Input
+                          placeholder="Please enter Password"
+                          type="password"
+                          onChange={handlePassword}
+                        />
                       </Form.Item>
                     </Col>
                     <Col style={{ width: '50%', paddingLeft: '8px' }}>
@@ -274,19 +269,27 @@ const EditUser = () => {
                         rules={[
                           {
                             required: passwordUp && true,
-                            message: 'Please confirm'
+                            message: 'Please confirm',
                           },
                           ({ getFieldValue }) => ({
                             validator(rule, value) {
-                              if (!value || getFieldValue('password') === value) {
+                              if (
+                                !value ||
+                                getFieldValue('password') === value
+                              ) {
                                 return Promise.resolve();
                               }
+                              /* eslint-disable */
                               return Promise.reject('Confirm Error');
+                              /* eslint-enable */
                             },
                           }),
                         ]}
                       >
-                        <Input placeholder="Please enter Confirm Password" type="password" />
+                        <Input
+                          placeholder="Please enter Confirm Password"
+                          type="password"
+                        />
                       </Form.Item>
                     </Col>
                   </Row>

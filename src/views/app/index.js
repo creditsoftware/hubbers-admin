@@ -7,7 +7,7 @@ import AppLayout from '../../layout/AppLayout';
 import { ProtectedRoute, UserRole } from '../../helpers/authHelper';
 
 const Dashboard = React.lazy(() => import('./dashboard'));
-const Admins = React.lazy(() => import('./admin/'))
+const Admins = React.lazy(() => import('./admin'));
 const Users = React.lazy(() => import('./user'));
 const EditUser = React.lazy(() => import('./user/edit-user'));
 

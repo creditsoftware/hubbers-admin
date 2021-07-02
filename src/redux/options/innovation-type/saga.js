@@ -4,7 +4,6 @@ import api from '../../../ApiConfig';
 import {
   CREATE_INNOVATION_TYPE,
   GET_ALL_INNOVATION_TYPES,
-  GET_INNOVATION_TYPE,
   UPDATE_INNOVATION_TYPE,
   DELETE_INNOVATION_TYPE,
 } from '../../types/options/innovation-type';
@@ -20,13 +19,8 @@ import {
   updateInnovationTypeError,
 } from './actions';
 
-// get all
-export function* watchGetAllInnovationTypes() {
-  yield takeEvery(GET_ALL_INNOVATION_TYPES, getAllInnovationTypes);
-}
-
 const getAllInnovationTypesAsync = async () =>
-  await api
+  api
     .get(`/innovation-types`)
     .then((res) => res.data)
     .catch((error) => error);
@@ -47,14 +41,9 @@ function* getAllInnovationTypes() {
   }
 }
 
-// create
-export function* watchCreateInnovationType() {
-  yield takeEvery(CREATE_INNOVATION_TYPE, createInnovationType);
-}
-
 const createInnovationTypeAsync = async ({ payload }) => {
   console.log('data =>', payload);
-  return await api
+  return api
     .post(`/innovation-types`, payload)
     .then((res) => res.data)
     .catch((error) => error);
@@ -75,10 +64,12 @@ function* createInnovationType(data) {
   }
 }
 
-// delete
-export function* watchDeleteInnovationType() {
-  yield takeEvery(DELETE_INNOVATION_TYPE, deleteInnovationType);
-}
+const deleteInnovationTypeAsync = async ({ payload }) => {
+  return api
+    .delete(`/innovation-types/${payload}`)
+    .then((res) => res.data)
+    .catch((error) => error);
+};
 
 function* deleteInnovationType(id) {
   try {
@@ -94,18 +85,14 @@ function* deleteInnovationType(id) {
   }
 }
 
-const deleteInnovationTypeAsync = async ({ payload }) => {
-  return await api
-    .delete(`/innovation-types/${payload}`)
+const updateInnovationTypeAsync = async ({ payload }) => {
+  console.log('data =>', payload);
+
+  return api
+    .put(`/innovation-types/${payload.id}`, payload)
     .then((res) => res.data)
     .catch((error) => error);
 };
-
-// update
-
-export function* watchUpdateInnovationType() {
-  yield takeEvery(UPDATE_INNOVATION_TYPE, updateInnovationType);
-}
 
 function* updateInnovationType(data) {
   try {
@@ -121,14 +108,26 @@ function* updateInnovationType(data) {
   }
 }
 
-const updateInnovationTypeAsync = async ({ payload }) => {
-  console.log('data =>', payload);
+// get all
+export function* watchGetAllInnovationTypes() {
+  yield takeEvery(GET_ALL_INNOVATION_TYPES, getAllInnovationTypes);
+}
 
-  return await api
-    .put(`/innovation-types/${payload.id}`, payload)
-    .then((res) => res.data)
-    .catch((error) => error);
-};
+// create
+export function* watchCreateInnovationType() {
+  yield takeEvery(CREATE_INNOVATION_TYPE, createInnovationType);
+}
+
+// delete
+export function* watchDeleteInnovationType() {
+  yield takeEvery(DELETE_INNOVATION_TYPE, deleteInnovationType);
+}
+
+// update
+
+export function* watchUpdateInnovationType() {
+  yield takeEvery(UPDATE_INNOVATION_TYPE, updateInnovationType);
+}
 
 export default function* rootSaga() {
   yield all([

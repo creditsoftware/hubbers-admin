@@ -13,12 +13,8 @@ import {
   getAllProductTypesError,
 } from './actions';
 
-export function* watchGetAllProductionType() {
-  yield takeEvery(GET_ALL_PRODUCT_TYPES, getAllProductTypes);
-}
-
 const getAllProductTypesAsync = async () =>
-  await api
+  api
     .get(`/product-types`)
     .then((res) => res.data)
     .catch((error) => error);
@@ -39,13 +35,8 @@ function* getAllProductTypes() {
   }
 }
 
-// create
-export function* watchCreateProductionType() {
-  yield takeEvery(CREATE_PRODUCT_TYPE, createProductType);
-}
-
 const createProductTypeAsync = async ({ payload }) => {
-  return await api
+  return api
     .post(`/product-types`, payload)
     .then((res) => res.data)
     .catch((error) => error);
@@ -65,6 +56,15 @@ function* createProductType(data) {
   } catch (error) {
     console.log('error =>', error);
   }
+}
+
+export function* watchGetAllProductionType() {
+  yield takeEvery(GET_ALL_PRODUCT_TYPES, getAllProductTypes);
+}
+
+// create
+export function* watchCreateProductionType() {
+  yield takeEvery(CREATE_PRODUCT_TYPE, createProductType);
 }
 
 export default function* rootSaga() {

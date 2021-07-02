@@ -185,19 +185,9 @@ const Home = () => {
   const refSectionFooter = useRef(null);
   const [activeTab, setActiveTab] = useState(0);
 
-  useEffect(() => {
-    window.addEventListener('scroll', onWindowScroll);
-    window.addEventListener('resize', onWindowResize);
-    window.addEventListener('click', onWindowClick);
-
-    document.body.classList.add('no-footer');
-    return () => {
-      window.removeEventListener('scroll', onWindowScroll);
-      window.removeEventListener('resize', onWindowResize);
-      window.removeEventListener('click', onWindowClick);
-      document.body.classList.remove('no-footer');
-    };
-  }, []);
+  const onWindowScroll = () => {
+    setShowMobileMenu(false);
+  };
 
   const onWindowResize = (event) => {
     const homeRect = refRowHome.current.getBoundingClientRect();
@@ -219,10 +209,6 @@ const Home = () => {
     setShowMobileMenu(false);
   };
 
-  const onWindowScroll = () => {
-    setShowMobileMenu(false);
-  };
-
   const scrollTo = (event, target) => {
     event.preventDefault();
     scroller.scrollTo(target, {
@@ -238,13 +224,29 @@ const Home = () => {
     if (activeTab !== tab) setActiveTab(tab);
   };
 
+  useEffect(() => {
+    window.addEventListener('scroll', onWindowScroll);
+    window.addEventListener('resize', onWindowResize);
+    window.addEventListener('click', onWindowClick);
+
+    document.body.classList.add('no-footer');
+    return () => {
+      window.removeEventListener('scroll', onWindowScroll);
+      window.removeEventListener('resize', onWindowResize);
+      window.removeEventListener('click', onWindowClick);
+      document.body.classList.remove('no-footer');
+    };
+  }, []);
+
   return (
     <div
       className={classnames('landing-page', {
         'show-mobile-menu': showMobileMenu,
       })}
     >
+      {/* eslint-disable */}
       <div className="mobile-menu" onClick={(event) => event.stopPropagation()}>
+        {/* eslint-enable */}
         <a
           className="logo-mobile c-pointer"
           href="#scroll"
@@ -383,6 +385,7 @@ const Home = () => {
                   </a>
                 </li>
               </ul>
+              {/* eslint-disable */}
               <span
                 className="mobile-menu-button"
                 onClick={(event) => {
@@ -390,6 +393,7 @@ const Home = () => {
                   event.stopPropagation();
                 }}
               >
+                {/* eslint-enable */}
                 <i className="simple-icon-menu" />
               </span>
             </div>
@@ -447,8 +451,8 @@ const Home = () => {
                 <div className="col-12 p-0">
                   <div className="home-carousel">
                     <GlideComponent settings={slideSettings}>
-                      {slideItems.map((f, index) => (
-                        <div key={`slide_${index}`} className="card">
+                      {slideItems.map((f) => (
+                        <div key={`slide_${f.title}`} className="card">
                           <div className="card-body text-center">
                             <div>
                               <i className={`${f.icon} large-icon`} />
@@ -493,7 +497,7 @@ const Home = () => {
                 </div>
               </div>
               {features.map((feature, i) => (
-                <div key={`feature_${i}`}>
+                <div key={`feature_${feature.title}`}>
                   {i % 2 === 0 && (
                     <div className="row feature-row">
                       <div className="col-12 col-md-6 col-lg-5 d-flex align-items-center">
@@ -557,9 +561,9 @@ const Home = () => {
               </div>
 
               <div className="row pt-5">
-                {layouts.map((l, index) => (
+                {layouts.map((l) => (
                   <div
-                    key={`layout_${index}`}
+                    key={`layout_${l.title}`}
                     className="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 mb-5"
                   >
                     <img
@@ -616,7 +620,7 @@ const Home = () => {
                 <div className="col-12 text-center mb-4">
                   <Nav tabs className="justify-content-center">
                     {applications.map((app, index) => (
-                      <NavItem key={`app_nav_${index}`}>
+                      <NavItem key={`app_nav_${app.title}`}>
                         <a
                           href="#tab"
                           className={classnames({
@@ -635,7 +639,7 @@ const Home = () => {
                   </Nav>
                   <TabContent activeTab={activeTab}>
                     {applications.map((app, index) => (
-                      <TabPane key={`app_tab_${index}`} tabId={index}>
+                      <TabPane key={`app_tab_${app.title}`} tabId={index}>
                         <NavLink to={app.path}>
                           <img
                             alt={app.title}
@@ -664,8 +668,8 @@ const Home = () => {
                   </p>
                 </div>
               </div>
-              {themes.map((t, index) => (
-                <div key={`theme_${index}`} className="row mb-5">
+              {themes.map((t) => (
+                <div key={`theme_${t.title}`} className="row mb-5">
                   <div className="col-12 text-center mb-3">
                     <h4 className="text-center">{t.title}</h4>
                   </div>
@@ -673,7 +677,7 @@ const Home = () => {
                     <div className="depth-2 color-container">
                       {['left', 'center', 'right'].map((align, i) => (
                         <div
-                          key={`light_${index}_${i}`}
+                          key={`light_${t.title}_${align}`}
                           className={`${t.class}-light-${i + 1} color-${align}`}
                         />
                       ))}
@@ -683,7 +687,7 @@ const Home = () => {
                     <div className="depth-2 color-container">
                       {['left', 'center', 'right'].map((align, i) => (
                         <div
-                          key={`dark_${index}_${i}`}
+                          key={`dark_${t.title}_${align}`}
                           className={`${t.class}-dark-${i + 1} color-${align}`}
                         />
                       ))}

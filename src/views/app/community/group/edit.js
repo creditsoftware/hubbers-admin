@@ -11,13 +11,14 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const GroupEdit = ({ id, data }) => {
-
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
   const [published, setPublished] = useState(true);
   const [privacyOption, setPrivacyOption] = useState(null);
-  const { groupPrivacyOptionList } = useSelector((state) => state.groupPrivacyOption);
+  const { groupPrivacyOptionList } = useSelector(
+    (state) => state.groupPrivacyOption
+  );
 
   useEffect(() => {
     dispatch(Actions.getAllGroupPrivacyOption());
@@ -58,7 +59,12 @@ const GroupEdit = ({ id, data }) => {
 
   return (
     <>
-      <Button type="primary" onClick={showDrawer} icon={<EditOutlined />} size="small"/>
+      <Button
+        type="primary"
+        onClick={showDrawer}
+        icon={<EditOutlined />}
+        size="small"
+      />
       <Drawer
         title="Update a Group"
         width={542}
@@ -77,10 +83,7 @@ const GroupEdit = ({ id, data }) => {
             <Col span={24} className="text-right">
               <Space>
                 <label className="mb-0 mt-1">Published</label>
-                <Form.Item
-                  name="published"
-                  className="mb-0"
-                >
+                <Form.Item name="published" className="mb-0">
                   <Switch checked={published} onChange={setPublished} />
                 </Form.Item>
               </Space>
@@ -91,7 +94,9 @@ const GroupEdit = ({ id, data }) => {
               <Form.Item
                 name="title"
                 label="Group Title"
-                rules={[{ required: true, message: 'Please enter Group Title' }]}
+                rules={[
+                  { required: true, message: 'Please enter Group Title' },
+                ]}
               >
                 <Input placeholder="Please enter Group Title" />
               </Form.Item>
@@ -112,7 +117,7 @@ const GroupEdit = ({ id, data }) => {
             </Col>
             <Col span={12}>
               <Form.Item
-                name="privacyOptionId"  
+                name="privacyOptionId"
                 label="Privacy Option"
                 rules={[
                   {
@@ -122,7 +127,10 @@ const GroupEdit = ({ id, data }) => {
                 ]}
                 className="ml-2"
               >
-                <Select style={{ width: '100%' }} placeholder="Please choose the Option">
+                <Select
+                  style={{ width: '100%' }}
+                  placeholder="Please choose the Option"
+                >
                   {privacyOption &&
                     privacyOption.map((item, index) => {
                       return (
@@ -130,8 +138,7 @@ const GroupEdit = ({ id, data }) => {
                           {item.name}
                         </Option>
                       );
-                    })
-                  }
+                    })}
                 </Select>
               </Form.Item>
             </Col>

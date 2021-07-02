@@ -32,7 +32,9 @@ function* GetAllAdminRole() {
     if (result.status === 200 && result.statusText === 'OK') {
       yield put(getAllAdminRoleSuccess(result.data));
     } else {
-      yield put(getAllAdminRoleError('Get All AdminRole Response is not success!'));
+      yield put(
+        getAllAdminRoleError('Get All AdminRole Response is not success!')
+      );
     }
   } catch (error) {
     yield put(getAllAdminRoleError('Get All AdminRole Error !'));
@@ -41,11 +43,11 @@ function* GetAllAdminRole() {
 
 const createAdminRoleAsync = async ({ payload }) => {
   return api
-  .post(`/admin-role`, {
-    ...payload,
-  })
-  .then((res) => res)
-  .catch((error) => error);
+    .post(`/admin-role`, {
+      ...payload,
+    })
+    .then((res) => res)
+    .catch((error) => error);
 };
 function* CreateAdminRole(payload) {
   try {
@@ -54,7 +56,9 @@ function* CreateAdminRole(payload) {
       yield put(createAdminRoleSuccess(result.data.data));
       yield put(getAllAdminRole());
     } else {
-      yield put(createAdminRoleError('Create AdminRole Response is not success!'));
+      yield put(
+        createAdminRoleError('Create AdminRole Response is not success!')
+      );
     }
   } catch (error) {
     yield put(createAdminRoleError('Create AdminRole Error !'));
@@ -63,11 +67,11 @@ function* CreateAdminRole(payload) {
 
 const updateAdminRoleAsync = async ({ payload }) => {
   return api
-  .put(`/admin-role/${payload.id}`, {
-    ...payload,
-  })
-  .then((res) => res)
-  .catch((error) => error);
+    .put(`/admin-role/${payload.id}`, {
+      ...payload,
+    })
+    .then((res) => res)
+    .catch((error) => error);
 };
 function* UpdateAdminRole(payload) {
   try {
@@ -76,7 +80,9 @@ function* UpdateAdminRole(payload) {
       yield put(updateAdminRoleSuccess(result.data.data));
       yield put(getAllAdminRole());
     } else {
-      yield put(updateAdminRoleError('Update AdminRole Response is not success!'));
+      yield put(
+        updateAdminRoleError('Update AdminRole Response is not success!')
+      );
     }
   } catch (error) {
     yield put(updateAdminRoleError('Update AdminRole Error !'));

@@ -12,7 +12,7 @@ import {
   RESET_PASSWORD,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_ERROR,
-} from '../actions';
+} from '../types/auth';
 import { getCurrentUser } from '../../helpers/Utils';
 import { isAuthGuardActive } from '../../constants/defaultValues';
 

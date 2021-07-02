@@ -1,35 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Card,
-  Table,
-  Select,
-  Input,
-  Button,
-  Popconfirm,
-  Tooltip,
-  // Spin,
-  Avatar,
-  Upload,
-  Space,
-} from 'antd';
-import {
-  DeleteOutlined,
-  EditOutlined,
-  PlusOutlined,
-  SearchOutlined,
-} from '@ant-design/icons';
+import { Card, Table, Button, Popconfirm, Avatar, Space } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import Flex from '../../../components/shared-components/Flex';
 import utils from '../../../helpers/utils/index';
 import * as Actions from '../../../redux/actions';
 // import CreateUserButton from './create-user';
-import { statusList, STATUS_LIST } from '../../../constants/userStatus';
-import { API_BASE_URL } from '../../../constants/defaultValues';
 import CreateAdmin from './create';
 import EditAdmin from './edit';
-
-const { Option } = Select;
 
 const AdminList = () => {
   // const history = useHistory();
@@ -45,9 +22,9 @@ const AdminList = () => {
     setAdminList(list);
   }, [list]);
 
-  const handleDelete = (id) =>{
+  const handleDelete = (id) => {
     dispatch(Actions.deleteAdmin(id));
-  }
+  };
 
   // const handleShowStatus = (value) => {
   //   if (value !== 'All') {

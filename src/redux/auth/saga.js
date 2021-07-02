@@ -2,7 +2,6 @@ import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import jwtDecode from 'jwt-decode';
 import { auth } from '../../helpers/Firebase';
 import api from '../../ApiConfig';
-import history from '../../history';
 
 import {
   LOGIN_USER,
@@ -10,7 +9,7 @@ import {
   LOGOUT_USER,
   FORGOT_PASSWORD,
   RESET_PASSWORD,
-} from '../actions';
+} from '../types/auth';
 
 import {
   loginUserSuccess,
@@ -26,18 +25,14 @@ import {
 import { adminRoot, currentUser } from '../../constants/defaultValues';
 import { setCurrentUser, setSession, removeSession } from '../../helpers/Utils';
 
-export function* watchLoginUser() {
-  yield takeEvery(LOGIN_USER, loginWithEmailPassword);
-}
-
 const loginWithEmailPasswordAsync = async (userInfo) =>
-  await api
+  api
     .post(`/auth/admin/signin`, userInfo)
     .then((res) => res)
     .catch((error) => error);
 
 function* loginWithEmailPassword({ payload }) {
-  const { history } = payload;
+  const { history: h } = payload;
   try {
     const loginResult = yield call(loginWithEmailPasswordAsync, payload.user);
     if (loginResult.data.success) {
@@ -48,7 +43,7 @@ function* loginWithEmailPassword({ payload }) {
       const authUser = jwtDecode(loginResult.data.result.refreshToken);
       setCurrentUser(authUser.data);
       yield put(loginUserSuccess(authUser.data));
-      history.push(adminRoot);
+      h.push(adminRoot);
     } else {
       yield put(loginUserError(loginResult.data.message));
     }
@@ -57,19 +52,15 @@ function* loginWithEmailPassword({ payload }) {
   }
 }
 
-export function* watchRegisterUser() {
-  yield takeEvery(REGISTER_USER, registerWithEmailPassword);
-}
-
 const registerWithEmailPasswordAsync = async (email, password) =>
-  await auth
+  auth
     .createUserWithEmailAndPassword(email, password)
     .then((user) => user)
     .catch((error) => error);
 
 function* registerWithEmailPassword({ payload }) {
   const { email, password } = payload.user;
-  const { history } = payload;
+  const { history: h } = payload;
   try {
     const registerUser = yield call(
       registerWithEmailPasswordAsync,
@@ -80,7 +71,7 @@ function* registerWithEmailPassword({ payload }) {
       const item = { uid: registerUser.user.uid, ...currentUser };
       setCurrentUser(item);
       yield put(registerUserSuccess(item));
-      history.push(adminRoot);
+      h.push(adminRoot);
     } else {
       yield put(registerUserError(registerUser.message));
     }
@@ -89,19 +80,13 @@ function* registerWithEmailPassword({ payload }) {
   }
 }
 
-export function* watchLogoutUser() {
-  yield takeEvery(LOGOUT_USER, logout);
-}
-
 const logoutAsync = async () => {
-  await api
+  return api
     .post(`/auth/admin/signout`)
     .then((res) => {
       console.log('logout result =>', res);
     })
     .catch((error) => error);
-
-  history.push(adminRoot);
 };
 
 function* logout() {
@@ -110,12 +95,8 @@ function* logout() {
   yield call(logoutAsync);
 }
 
-export function* watchForgotPassword() {
-  yield takeEvery(FORGOT_PASSWORD, forgotPassword);
-}
-
 const forgotPasswordAsync = async (email) => {
-  return await auth
+  return auth
     .sendPasswordResetEmail(email)
     .then((user) => user)
     .catch((error) => error);
@@ -135,12 +116,8 @@ function* forgotPassword({ payload }) {
   }
 }
 
-export function* watchResetPassword() {
-  yield takeEvery(RESET_PASSWORD, resetPassword);
-}
-
 const resetPasswordAsync = async (resetPasswordCode, newPassword) => {
-  return await auth
+  return auth
     .confirmPasswordReset(resetPasswordCode, newPassword)
     .then((user) => user)
     .catch((error) => error);
@@ -162,6 +139,26 @@ function* resetPassword({ payload }) {
   } catch (error) {
     yield put(resetPasswordError(error));
   }
+}
+
+export function* watchLoginUser() {
+  yield takeEvery(LOGIN_USER, loginWithEmailPassword);
+}
+
+export function* watchRegisterUser() {
+  yield takeEvery(REGISTER_USER, registerWithEmailPassword);
+}
+
+export function* watchLogoutUser() {
+  yield takeEvery(LOGOUT_USER, logout);
+}
+
+export function* watchForgotPassword() {
+  yield takeEvery(FORGOT_PASSWORD, forgotPassword);
+}
+
+export function* watchResetPassword() {
+  yield takeEvery(RESET_PASSWORD, resetPassword);
 }
 
 export default function* rootSaga() {

@@ -10,9 +10,9 @@ import {
   UPDATE_ADMIN_ERROR,
   DELETE_ADMIN,
   DELETE_ADMIN_SUCCESS,
-  DELETE_ADMIN_ERROR
+  DELETE_ADMIN_ERROR,
 } from '../types/admin';
-  
+
 export const getAllAdmin = () => ({
   type: GET_ALL_ADMIN,
 });
@@ -51,15 +51,15 @@ export const updateAdminError = (data) => ({
   payload: data,
 });
 
-export const deleteAdmin = (data) =>({
+export const deleteAdmin = (data) => ({
   type: DELETE_ADMIN,
   payload: data,
 });
-export const deleteAdminSuccess = (data) =>({
+export const deleteAdminSuccess = (data) => ({
   type: DELETE_ADMIN_SUCCESS,
   payload: data,
 });
-export const deleteAdminError = (data) =>({
+export const deleteAdminError = (data) => ({
   type: DELETE_ADMIN_ERROR,
   payload: data,
 });

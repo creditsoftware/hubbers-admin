@@ -5,13 +5,11 @@ import {
   GET_ALL_INNOVATION_TYPES,
   GET_ALL_INNOVATION_TYPES_SUCCESS,
   GET_ALL_INNOVATION_TYPES_ERROR,
-  GET_INNOVATION_TYPE,
   UPDATE_INNOVATION_TYPE,
   UPDATE_INNOVATION_TYPE_SUCCESS,
   UPDATE_INNOVATION_TYPE_ERROR,
   DELETE_INNOVATION_TYPE,
   DELETE_INNOVATION_TYPE_SUCCESS,
-  DELETE_INNOVATION_TYPE_ERROR,
 } from '../../types/options/innovation-type';
 
 const INIT_STATE = {
@@ -56,9 +54,6 @@ export default (state = INIT_STATE, action) => {
           (item) => item.id !== action.payload.payload
         ),
       };
-
-    case GET_ALL_INNOVATION_TYPES_ERROR:
-      return { ...state, loading: false, error: action.payload };
 
     case UPDATE_INNOVATION_TYPE:
       return { ...state, loading: true };

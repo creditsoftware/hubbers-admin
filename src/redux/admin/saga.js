@@ -41,11 +41,11 @@ function* GetAllAdmin() {
 
 const createAdminAsync = async ({ payload }) => {
   return api
-  .post(`/admin`, {
-    ...payload,
-  })
-  .then((res) => res)
-  .catch((error) => error);
+    .post(`/admin`, {
+      ...payload,
+    })
+    .then((res) => res)
+    .catch((error) => error);
 };
 function* CreateAdmin(payload) {
   try {
@@ -63,11 +63,11 @@ function* CreateAdmin(payload) {
 
 const updateAdminAsync = async ({ payload }) => {
   return api
-  .put(`/admin/${payload.id}`, {
-    ...payload,
-  })
-  .then((res) => res)
-  .catch((error) => error);
+    .put(`/admin/${payload.id}`, {
+      ...payload,
+    })
+    .then((res) => res)
+    .catch((error) => error);
 };
 function* UpdateAdmin(payload) {
   try {
@@ -96,9 +96,7 @@ function* DeleteAdmin(payload) {
       yield put(deleteAdminSuccess(result.data.data));
       yield put(getAllAdmin());
     } else {
-      yield put(
-        deleteAdminError('Delete Admin Response is not success!')
-      );
+      yield put(deleteAdminError('Delete Admin Response is not success!'));
     }
   } catch (error) {
     yield put(deleteAdminError('Delete Admin Error !'));
