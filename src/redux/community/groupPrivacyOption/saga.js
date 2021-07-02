@@ -6,7 +6,7 @@ import {
   CREATE_GROUP_PRIVACY_OPTION,
   UPDATE_GROUP_PRIVACY_OPTION,
   DELETE_GROUP_PRIVACY_OPTION,
-} from '../../types/community/groupPrivacyOption';
+} from '../../types/community/group-privacy-option';
 
 import {
   getAllGroupPrivacyOption,
@@ -22,7 +22,7 @@ import {
 
 const getAllGroupPrivacyOptionAsync = async () => {
   return api
-    .get(`/community/groupPrivacyOption`)
+    .get(`/community/group-privacy-option`)
     .then((res) => res)
     .catch((error) => error);
 };
@@ -41,7 +41,7 @@ function* GetAllGroupPrivacyOption() {
 
 const createGroupPrivacyOptionAsync = async ({ payload }) => {
   return api
-  .post(`/community/groupPrivacyOption`, {
+  .post(`/community/group-privacy-option`, {
     ...payload,
   })
   .then((res) => res)
@@ -63,7 +63,7 @@ function* CreateGroupPrivacyOption(payload) {
 
 const updateGroupPrivacyOptionAsync = async ({ payload }) => {
   return api
-  .put(`/community/groupPrivacyOption/${payload.id}`, {
+  .put(`/community/group-privacy-option/${payload.id}`, {
     ...payload,
   })
   .then((res) => res)
@@ -85,7 +85,7 @@ function* UpdateGroupPrivacyOption(payload) {
 
 const deleteGroupPrivacyOptionAsync = async (payload) => {
   return api
-    .delete(`/community/groupPrivacyOption/${payload.payload}`)
+    .delete(`/community/group-privacy-option/${payload.payload}`)
     .then((res) => res)
     .catch((error) => error);
 };
