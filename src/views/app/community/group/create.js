@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Row } from 'reactstrap';
-import { Drawer, Form, Button, Col, Input, Select, Switch, Space } from 'antd';
+import { Drawer, Form, Button, Col, Input, Switch, Space } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import ColorPicker from '../../../../components/util-components/ColorPicker';
 import UploadImage from '../../../../components/UploadImage';
 import * as Actions from '../../../../redux/actions';
 import CommunitySelect from '../../../../components/util-components/selector/CommunitySelect';
-import CommunityMemberSelect from '../../../../components/util-components/selector/CommunityMemberSelect';
 import UserSelect from '../../../../components/util-components/selector/UserSelect';
 
-const { Option } = Select;
 const { TextArea } = Input;
 
 const Create = () => {
