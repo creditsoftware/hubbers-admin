@@ -5,9 +5,9 @@ import {
   Separator,
 } from '../../../../components/common/CustomBootstrap';
 import Breadcrumb from '../../../../containers/navs/Breadcrumb';
-import TopicAllList from './list';
+import GroupList from './list';
 
-const TopicAll = ({ match }) => {
+const CommunityGroup = ({ match }) => {
   return (
     <>
       <Row>
@@ -18,8 +18,8 @@ const TopicAll = ({ match }) => {
       </Row>
       <Colxx xxs="12" className="mb-4">
         <div>
-          <div className="topicall-list" style={{ marginTop: 10 }}>
-            <TopicAllList />
+          <div style={{ marginTop: 10 }}>
+            <GroupList />
           </div>
         </div>
       </Colxx>
@@ -27,4 +27,4 @@ const TopicAll = ({ match }) => {
   );
 };
 
-export default TopicAll;
+export default CommunityGroup;

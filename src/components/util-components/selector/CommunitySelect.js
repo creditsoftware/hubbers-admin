@@ -35,6 +35,7 @@ const CommunitySelect = ({ ...props }) => {
       showSearch
       onSearch={onSearchCommunity}
       {...props}
+      placeholder="Please choose the community"
     >
       {list &&
         list.map((item) => {

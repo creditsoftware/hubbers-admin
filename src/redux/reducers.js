@@ -7,6 +7,7 @@ import memberRole from './community/memberRole/reducer';
 import member from './community/member/reducer';
 import post from './community/post/reducer';
 import group from './community/group/reducer';
+import groupPrivacyOption from './community/groupPrivacyOption/reducer';
 import menu from './menu/reducer';
 import authUser from './auth/reducer';
 import userRole from './user-role/reducer';
@@ -31,6 +32,7 @@ const reducers = combineReducers({
   member,
   post,
   group,
+  groupPrivacyOption,
   // options
   innovationType,
   productionType,

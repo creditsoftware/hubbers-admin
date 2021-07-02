@@ -8,6 +8,9 @@ import {
   UPDATE_GROUP,
   UPDATE_GROUP_ERROR,
   UPDATE_GROUP_SUCCESS,
+  DELETE_GROUP,
+  DELETE_GROUP_ERROR,
+  DELETE_GROUP_SUCCESS,
 } from '../../types/community/group';
 
 export const getAllGroups = () => ({
@@ -48,5 +51,19 @@ export const updateGroupSuccess = (data) => ({
 
 export const updateGroupError = (data) => ({
   type: UPDATE_GROUP_ERROR,
+  payload: data,
+});
+
+export const deleteGroup = (data) => ({
+  type: DELETE_GROUP,
+  payload: data,
+});
+export const deleteGroupSuccess = (data) => ({
+  type: DELETE_GROUP_SUCCESS,
+  payload: data,
+});
+
+export const deleteGroupError = (data) => ({
+  type: DELETE_GROUP_ERROR,
   payload: data,
 });
