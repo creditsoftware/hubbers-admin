@@ -72,6 +72,15 @@ const GroupList = () => {
       /* eslint-enable */
     },
     {
+      title: 'Global',
+      dataIndex: 'isGlobal',
+      /* eslint-disable */
+      render: (_, record) => (
+        <span>{record.isGlobal ? 'Global' : 'Not Global'}</span>
+      ),
+      /* eslint-enable */
+    },
+    {
       title: 'Created By',
       dataIndex: 'createdBy',
       /* eslint-disable */

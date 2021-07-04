@@ -15,6 +15,7 @@ const GroupEdit = ({ id, data }) => {
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
   const [published, setPublished] = useState(true);
+  const [isGlobal, setIsGlobal] = useState(false);
   const [privacyOption, setPrivacyOption] = useState(null);
   const { groupPrivacyOptionList } = useSelector(
     (state) => state.groupPrivacyOption
@@ -32,13 +33,7 @@ const GroupEdit = ({ id, data }) => {
     const filterData = data.filter((item) => item.id === id);
     if (filterData.length > 0) {
       form.setFieldsValue({
-        title: filterData[0].title,
-        communityId: filterData[0].communityId,
-        privacyOptionId: filterData[0].privacyOptionId,
-        createdBy: filterData[0].createdBy,
-        tagLine: filterData[0].tagLine,
-        description: filterData[0].description,
-        published: filterData[0].published,
+        ...filterData[0],
       });
     }
     setPublished(filterData[0].published);
@@ -51,9 +46,7 @@ const GroupEdit = ({ id, data }) => {
   };
 
   const onSubmit = (values) => {
-    values.id = id;
-    values.published = published;
-    dispatch(Actions.updateGroup(values));
+    dispatch(Actions.updateGroup({ ...values, id, published, isGlobal }));
     onClose();
   };
 
@@ -82,9 +75,11 @@ const GroupEdit = ({ id, data }) => {
           <Row>
             <Col span={24} className="text-right">
               <Space>
-                <label className="mb-0 mt-1">Published</label>
-                <Form.Item name="published" className="mb-0">
+                <Form.Item label="Published" name="published" className="mb-0">
                   <Switch checked={published} onChange={setPublished} />
+                </Form.Item>
+                <Form.Item label="Global" name="isGlobal" className="mb-0">
+                  <Switch checked={isGlobal} onChange={setIsGlobal} />
                 </Form.Item>
               </Space>
             </Col>
@@ -107,12 +102,14 @@ const GroupEdit = ({ id, data }) => {
               <Form.Item
                 name="communityId"
                 label="Community Name"
-                rules={[
-                  { required: true, message: 'Please choose a community' },
-                ]}
+                rules={
+                  isGlobal
+                    ? [{ required: true, message: 'Please choose a community' }]
+                    : []
+                }
                 className="mr-2"
               >
-                <CommunitySelect />
+                <CommunitySelect disabled={isGlobal} />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -132,9 +129,9 @@ const GroupEdit = ({ id, data }) => {
                   placeholder="Please choose the Option"
                 >
                   {privacyOption &&
-                    privacyOption.map((item, index) => {
+                    privacyOption.map((item) => {
                       return (
-                        <Option key={index} value={item.id}>
+                        <Option key={item.id} value={item.id}>
                           {item.name}
                         </Option>
                       );

@@ -15,6 +15,7 @@ const GroupCreate = () => {
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
   const [published, setPublished] = useState(true);
+  const [isGlobal, setIsGlobal] = useState(false);
   const [privacyOption, setPrivacyOption] = useState(null);
   const { groupPrivacyOptionList } = useSelector(
     (state) => state.groupPrivacyOption
@@ -38,7 +39,7 @@ const GroupCreate = () => {
   };
 
   const onSubmit = (values) => {
-    dispatch(Actions.createGroup({ ...values, published }));
+    dispatch(Actions.createGroup({ ...values, published, isGlobal }));
     onClose();
   };
 
@@ -67,6 +68,9 @@ const GroupCreate = () => {
                 <Form.Item label="Published" name="published" className="mb-0">
                   <Switch checked={published} onChange={setPublished} />
                 </Form.Item>
+                <Form.Item label="Global" name="isGlobal" className="mb-0">
+                  <Switch checked={isGlobal} onChange={setIsGlobal} />
+                </Form.Item>
               </Space>
             </Col>
           </Row>
@@ -88,12 +92,14 @@ const GroupCreate = () => {
               <Form.Item
                 name="communityId"
                 label="Community Name"
-                rules={[
-                  { required: true, message: 'Please choose a community' },
-                ]}
+                rules={
+                  isGlobal
+                    ? [{ required: true, message: 'Please choose a community' }]
+                    : []
+                }
                 className="mr-2"
               >
-                <CommunitySelect />
+                <CommunitySelect disabled={isGlobal} />
               </Form.Item>
             </Col>
             <Col span={12}>
