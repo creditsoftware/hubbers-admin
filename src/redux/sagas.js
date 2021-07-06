@@ -18,6 +18,7 @@ import groupPrivacyOptionSaga from './community/groupPrivacyOption/saga';
 import innovationTypeSaga from './options/innovation-type/saga';
 import productTypeSaga from './options/product-type/saga';
 import countrySaga from './options/country/saga';
+import hubbersTeam from './hubbers-team/saga';
 
 export default function* rootSaga(getState) {
   yield all([
@@ -37,5 +38,6 @@ export default function* rootSaga(getState) {
     groupSaga(),
     groupPrivacyOptionSaga(),
     countrySaga(),
+    hubbersTeam(),
   ]);
 }

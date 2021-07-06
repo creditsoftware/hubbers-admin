@@ -16,6 +16,7 @@ import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import * as Actions from '../../../redux/actions';
 import AvatarUpload from '../../../components/util-components/Upload/AvatarUpload';
+import CountrySelect from '../../../components/util-components/selector/CountrySelect';
 
 const { Option } = Select;
 const EditUser = () => {
@@ -44,6 +45,7 @@ const EditUser = () => {
     if (singleUser) {
       setUserDetail(singleUser);
       form.setFieldsValue({
+        avatar: singleUser.avatar,
         firstname: singleUser.firstname,
         lastname: singleUser.lastname,
         email: singleUser.email,
@@ -55,7 +57,10 @@ const EditUser = () => {
         phoneVerified: singleUser.detail?.phoneVerified,
         emailVerified: singleUser.detail?.emailVerified,
         gender: singleUser.detail?.gender,
-        birthday: moment(singleUser.detail?.birthday),
+        birthday:
+          singleUser.detail.birthday === null
+            ? ''
+            : moment(singleUser.detail.birthday),
         bio: singleUser.detail?.bio,
         headLine: singleUser.detail?.headLine,
         industry: singleUser.detail?.industry,
@@ -70,6 +75,7 @@ const EditUser = () => {
     }
   }, [form, singleUser]);
   const onUpdateItem = (values) => {
+    values.avatar = userDetail.avatar;
     dispatch(Actions.updateUser(params.id, values));
     history.push('/app/users');
   };
@@ -88,30 +94,6 @@ const EditUser = () => {
             layout="vertical"
             name="permission-form"
             onFinish={onUpdateItem}
-            initialValues={{
-              firstname: userDetail.firstname,
-              lastname: userDetail.lastname,
-              email: userDetail.email,
-              published: userDetail.published,
-              preferedRoleId: userDetail.preferedRole?.id,
-              roleIds: userDetail.roles.map((role) => role.id),
-              phoneNumberCountryCode: userDetail.detail?.phoneNumberCountryCode,
-              phoneNumber: userDetail.detail?.phoneNumber,
-              phoneVerified: userDetail.detail?.phoneVerified,
-              emailVerified: userDetail.detail?.emailVerified,
-              gender: userDetail.detail?.gender,
-              birthday: moment(userDetail.detail?.birthday),
-              bio: userDetail.detail?.bio,
-              headLine: userDetail.detail?.headLine,
-              industry: userDetail.detail?.industry,
-              workingContactTime: userDetail.detail?.workingContactTime,
-              contactTime: userDetail.detail?.contactTime,
-              doingWork: userDetail.detail?.doingWork,
-              address: userDetail.detail?.address,
-              nationality: userDetail.detail?.nationality,
-              joinedDate: moment(userDetail.detail?.joinedDate),
-              education: userDetail.detail?.education,
-            }}
           >
             <Card
               title={
@@ -232,7 +214,6 @@ const EditUser = () => {
                           mode="multiple"
                           style={{ width: '100%' }}
                           placeholder="Enter Role"
-                          defaultValue={[]}
                           onChange={() => {}}
                           optionLabelProp="label"
                         >
@@ -435,7 +416,7 @@ const EditUser = () => {
                       { required: true, message: 'Please choose nationality' },
                     ]}
                   >
-                    <Input placeholder="Please enter nationality." />
+                    <CountrySelect idValue={false} />
                   </Form.Item>
                 </Col>
                 <Col span={6}>

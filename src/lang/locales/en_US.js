@@ -166,5 +166,8 @@ module.exports = {
   // expertise category
   'expertise-category.title': 'Expertise Category',
 
+  // hubbers team
+  'hubbers-team.title': 'Hubbers Team',
+
   'country.title': 'Country',
 };

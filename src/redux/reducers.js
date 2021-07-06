@@ -17,6 +17,7 @@ import adminRole from './admin-role/reducer';
 import innovationType from './options/innovation-type/reducer';
 import productionType from './options/product-type/reducer';
 import country from './options/country/reducer';
+import hubbersTeam from './hubbers-team/reducer';
 
 const reducers = combineReducers({
   menu,
@@ -38,6 +39,7 @@ const reducers = combineReducers({
   productionType,
   country,
   communityAll,
+  hubbersTeam,
 });
 
 export default reducers;
