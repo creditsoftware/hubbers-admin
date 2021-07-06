@@ -55,7 +55,7 @@ const TopicsAllList = () => {
       dataIndex: 'community',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.community.name}</span>
+        <span>{record.community?.name}</span>
       ),
       /* eslint-enable */
       sorter: (a, b) => utils.antdTableSorter(a, b, 'community'),
@@ -75,7 +75,7 @@ const TopicsAllList = () => {
       dataIndex: 'createdBy',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.creator.user.email}</span>
+        <span>{record.creator?.user?.email}</span>
       ),
       /* eslint-enable */
     },
