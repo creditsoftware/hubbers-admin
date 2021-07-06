@@ -70,7 +70,7 @@ export const colors = [
 ];
 
 export const API_BASE_URL =
-  process.env.NODE_ENV === 'development'
+  process.env.NODE_ENV === 'production'
     ? 'https://api.hubbers.io/api/v1'
     : process.env.NODE_ENV === 'development'
     ? 'http://localhost:8888/api/v1'
