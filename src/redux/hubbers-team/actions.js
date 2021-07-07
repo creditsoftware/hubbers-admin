@@ -69,7 +69,7 @@ export const deleteHubbersTeamError = (data) => ({
 
 export const orderHubbersTeam = (id, flag) => ({
   type: ORDER_HUBBERS_TEAM,
-  payload: {id, flag},
+  payload: { id, flag },
 });
 export const orderHubbersTeamSuccess = (data) => ({
   type: ORDER_HUBBERS_TEAM_SUCCESS,

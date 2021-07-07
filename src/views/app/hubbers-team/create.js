@@ -73,10 +73,7 @@ const MemberCreate = () => {
           >
             <Input placeholder="Please enter the Title" />
           </Form.Item>
-          <Form.Item
-            name="description"
-            label="Description"
-          >
+          <Form.Item name="description" label="Description">
             <TextArea rows={3} placeholder="Please enter the Description" />
           </Form.Item>
           <Row>
@@ -85,6 +82,12 @@ const MemberCreate = () => {
                 name="joinedDate"
                 label="Join Date"
                 className="mr-2"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please choose the Join Date',
+                  },
+                ]}
               >
                 <DatePicker style={{ width: '100%' }} />
               </Form.Item>
@@ -97,8 +100,8 @@ const MemberCreate = () => {
                 dependencies={['joinedDate']}
                 rules={[
                   ({ getFieldValue }) => ({
-                    validator(value) {
-                      if (!value || value > getFieldValue('joinedData')) {
+                    validator(rule, value) {
+                      if (!value || value > getFieldValue('joinedDate')) {
                         return Promise.resolve();
                       }
                       return Promise.reject('Date Error');
@@ -122,7 +125,7 @@ const MemberCreate = () => {
             </Button>
             <Button type="primary" htmlType="submit">
               Submit
-            </Button> 
+            </Button>
           </div>
         </Form>
       </Drawer>

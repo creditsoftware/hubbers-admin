@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Space, Table, Popconfirm, Button } from 'antd';
+import { Card, Space, Table, Popconfirm, Button, Avatar } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
+import {
+  ArrowDownOutlined,
+  ArrowUpOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons';
 import * as Actions from '../../../redux/actions';
-import { ArrowDownOutlined, ArrowUpOutlined, DeleteOutlined } from '@ant-design/icons';
 import MemberCreate from './create';
 import MemberEdit from './edit';
 
@@ -30,16 +34,21 @@ const MemberList = () => {
     },
     {
       title: 'Avatar',
-      dataIndex: avatar,
+      dataIndex: 'avatar',
       /* eslint-disable */
       render: (_, record) => (
-        <Avatar size={30} src={record.user.avatar}/>
+        <Avatar size={50} src={record.user?.avatar}/>
       ),
       /* eslint-enable */
     },
     {
       title: 'Email',
       dataIndex: 'email',
+      /* eslint-disable */
+      render: (_, record) => (
+        <span>{record.user?.email}</span>
+      ),
+      /* eslint-enable */
     },
     {
       title: 'Title',
@@ -56,6 +65,17 @@ const MemberList = () => {
     {
       title: 'Terminate Date',
       dataIndex: 'terminatedDate',
+    },
+    {
+      title: 'Terminated',
+      dataIndex: 'isTerminated',
+      /* eslint-disable */
+      render: (_, record) => (
+        <span>
+          {record.isTerminated ? 'Terminated' : 'Not Terminated'}
+        </span>
+      ),
+      /* eslint-enable */
     },
     {
       title: 'Published',

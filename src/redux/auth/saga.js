@@ -5,7 +5,7 @@ import api from '../../ApiConfig';
 
 import {
   LOGIN_USER,
-  REGISTER_USER,
+  // REGISTER_USER,
   LOGOUT_USER,
   FORGOT_PASSWORD,
   RESET_PASSWORD,
@@ -14,15 +14,15 @@ import {
 import {
   loginUserSuccess,
   loginUserError,
-  registerUserSuccess,
-  registerUserError,
+  // registerUserSuccess,
+  // registerUserError,
   forgotPasswordSuccess,
   forgotPasswordError,
   resetPasswordSuccess,
   resetPasswordError,
 } from './actions';
 
-import { adminRoot, currentUser } from '../../constants/defaultValues';
+import { adminRoot } from '../../constants/defaultValues';
 import { setCurrentUser, setSession, removeSession } from '../../helpers/Utils';
 
 const loginWithEmailPasswordAsync = async (userInfo) =>
@@ -52,33 +52,33 @@ function* loginWithEmailPassword({ payload }) {
   }
 }
 
-const registerWithEmailPasswordAsync = async (email, password) =>
-  auth
-    .createUserWithEmailAndPassword(email, password)
-    .then((user) => user)
-    .catch((error) => error);
+// const registerWithEmailPasswordAsync = async (email, password) =>
+//   auth
+//     .createUserWithEmailAndPassword(email, password)
+//     .then((user) => user)
+//     .catch((error) => error);
 
-function* registerWithEmailPassword({ payload }) {
-  const { email, password } = payload.user;
-  const { history: h } = payload;
-  try {
-    const registerUser = yield call(
-      registerWithEmailPasswordAsync,
-      email,
-      password
-    );
-    if (!registerUser.message) {
-      const item = { uid: registerUser.user.uid, ...currentUser };
-      setCurrentUser(item);
-      yield put(registerUserSuccess(item));
-      h.push(adminRoot);
-    } else {
-      yield put(registerUserError(registerUser.message));
-    }
-  } catch (error) {
-    yield put(registerUserError(error));
-  }
-}
+// function* registerWithEmailPassword({ payload }) {
+//   const { email, password } = payload.user;
+//   const { history: h } = payload;
+//   try {
+//     const registerUser = yield call(
+//       registerWithEmailPasswordAsync,
+//       email,
+//       password
+//     );
+//     if (!registerUser.message) {
+//       const item = { uid: registerUser.user.uid, ...currentUser };
+//       setCurrentUser(item);
+//       yield put(registerUserSuccess(item));
+//       h.push(adminRoot);
+//     } else {
+//       yield put(registerUserError(registerUser.message));
+//     }
+//   } catch (error) {
+//     yield put(registerUserError(error));
+//   }
+// }
 
 const logoutAsync = async () => {
   return api
@@ -145,9 +145,9 @@ export function* watchLoginUser() {
   yield takeEvery(LOGIN_USER, loginWithEmailPassword);
 }
 
-export function* watchRegisterUser() {
-  yield takeEvery(REGISTER_USER, registerWithEmailPassword);
-}
+// export function* watchRegisterUser() {
+//   yield takeEvery(REGISTER_USER, registerWithEmailPassword);
+// }
 
 export function* watchLogoutUser() {
   yield takeEvery(LOGOUT_USER, logout);
@@ -165,7 +165,7 @@ export default function* rootSaga() {
   yield all([
     fork(watchLoginUser),
     fork(watchLogoutUser),
-    fork(watchRegisterUser),
+    // fork(watchRegisterUser),
     fork(watchForgotPassword),
     fork(watchResetPassword),
   ]);

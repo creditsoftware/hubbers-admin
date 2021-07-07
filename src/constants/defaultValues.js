@@ -1,4 +1,4 @@
-import { UserRole } from '../helpers/authHelper';
+// import { UserRole } from '../helpers/authHelper';
 
 /*
 Menu Types:
@@ -41,13 +41,13 @@ export const buyUrl = 'https://1.envato.market/k4z0';
 export const searchPath = `${adminRoot}/#`;
 export const servicePath = 'https://api.coloredstrategies.com';
 
-export const currentUser = {
-  id: 1,
-  title: 'Sarah Kortney',
-  img: '/assets/img/profiles/l-1.jpg',
-  date: 'Last seen today 15:24',
-  role: UserRole.Admin,
-};
+// export const currentUser = {
+//   id: 1,
+//   title: 'Sarah Kortney',
+//   img: '/assets/img/profiles/l-1.jpg',
+//   date: 'Last seen today 15:24',
+//   role: UserRole.Admin,
+// };
 
 export const themeColorStorageKey = '__theme_selected_color';
 export const isMultiColorActive = true;
@@ -68,7 +68,7 @@ export const colors = [
   'yellowgranola',
   'greysteel',
 ];
-
+/* eslint-disable */
 export const API_BASE_URL =
   process.env.NODE_ENV === 'production'
     ? 'https://api.hubbers.io/api/v1'
@@ -82,3 +82,4 @@ export const API_UPLOAD_URL =
     : process.env.NODE_ENV === 'development'
     ? 'http://localhost:8888/api/v1/upload'
     : 'https://api.hubbers.io/api/v1/upload';
+/* eslint-enable */

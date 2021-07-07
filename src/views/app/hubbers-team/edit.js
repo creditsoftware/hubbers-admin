@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Form, Drawer, Row, Col, Button, DatePicker, Input, Select } from 'antd';
+import {
+  Form,
+  Drawer,
+  Row,
+  Col,
+  Button,
+  DatePicker,
+  Input,
+  Select,
+} from 'antd';
 import { EditOutlined } from '@ant-design/icons';
+import moment from 'moment';
 import UserSelect from '../../../components/util-components/selector/UserSelect';
 import * as Actions from '../../../redux/actions';
-import moment from 'moment';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -21,8 +30,12 @@ const MemberEdit = ({ id, data }) => {
         userId: filterData[0].userId,
         title: filterData[0].title,
         description: filterData[0].description,
-        joinedDate: filterData[0].joinedDate ? moment(filterData[0].joinedDate) : '',
-        terminatedDate: filterData[0].terminatedDate ? moment(filterData[0].terminatedDate) : '',
+        joinedDate: filterData[0].joinedDate
+          ? moment(filterData[0].joinedDate)
+          : '',
+        terminatedDate: filterData[0].terminatedDate
+          ? moment(filterData[0].terminatedDate)
+          : '',
         published: filterData[0].published,
       });
     }
@@ -34,19 +47,24 @@ const MemberEdit = ({ id, data }) => {
   };
 
   const onSubmit = (values) => {
-    values.id = id;
+    let v = { ...values };
     if (values.terminatedDate) {
-      values.isTerminated = true;
+      v = { ...v, id, isTerminated: true };
     } else {
-      values.isTerminated = false;
+      v = { ...v, id, terminatedDate: null, isTerminated: false };
     }
-    dispatch(Actions.updateHubbersTeam(values));
+    dispatch(Actions.updateHubbersTeam(v));
     onClose();
   };
 
   return (
     <>
-      <Button type="primary" size="small" onClick={showDrawer} icon={<EditOutlined />} />
+      <Button
+        type="primary"
+        size="small"
+        onClick={showDrawer}
+        icon={<EditOutlined />}
+      />
       <Drawer
         title="Edit a New Member"
         width={500}
@@ -89,7 +107,7 @@ const MemberEdit = ({ id, data }) => {
                 className="ml-2"
               >
                 <Select placeholder="Please choose the Published">
-                  <Option value={true}>Published</Option>
+                  <Option value>Published</Option>
                   <Option value={false}>Not Published</Option>
                 </Select>
               </Form.Item>
@@ -107,10 +125,7 @@ const MemberEdit = ({ id, data }) => {
           >
             <Input placeholder="Please enter the Title" />
           </Form.Item>
-          <Form.Item
-            name="description"
-            label="Description"
-          >
+          <Form.Item name="description" label="Description">
             <TextArea rows={3} placeholder="Please enter the Description" />
           </Form.Item>
           <Row>
@@ -119,6 +134,12 @@ const MemberEdit = ({ id, data }) => {
                 name="joinedDate"
                 label="Join Date"
                 className="mr-2"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please choose the Join Date',
+                  },
+                ]}
               >
                 <DatePicker style={{ width: '100%' }} />
               </Form.Item>
@@ -127,10 +148,12 @@ const MemberEdit = ({ id, data }) => {
               <Form.Item
                 name="terminatedDate"
                 label="Terminate Date"
-                rules={[                                                                                                                                                          
+                className="ml-2"
+                dependencies={['joinedDate']}
+                rules={[
                   ({ getFieldValue }) => ({
-                    validator(rule,value) {
-                      if (!value || !getFieldValue('joinedDate') || value._i > getFieldValue('joinedDate')._i) {
+                    validator(rule, value) {
+                      if (!value || value > getFieldValue('joinedDate')) {
                         return Promise.resolve();
                       }
                       return Promise.reject('Date Error');
