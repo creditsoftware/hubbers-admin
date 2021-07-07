@@ -22,16 +22,10 @@ const MemberCreate = () => {
   };
 
   const onSubmit = (values) => {
-    if (!values.joinedDate) {
-      delete values.joinedDate;
-      delete values.terminatedDate;
-    } else if (!values.terminatedDate) {
-      delete values.terminatedDate;
-    } else if (values.joinedDate>values.terminatedDate) {
-      delete values.joinedDate;
-      delete values.terminatedDate;
-    } else {
+    if (values.terminatedDate) {
       values.isTerminated = true;
+    } else {
+      values.isTerminated = false;
     }
     dispatch(Actions.createHubbersTeam(values));
     onClose();
@@ -82,12 +76,6 @@ const MemberCreate = () => {
           <Form.Item
             name="description"
             label="Description"
-            rules={[
-              {
-                required: true,
-                message: 'Please enter the Description',
-              },
-            ]}
           >
             <TextArea rows={3} placeholder="Please enter the Description" />
           </Form.Item>
@@ -106,6 +94,17 @@ const MemberCreate = () => {
                 name="terminatedDate"
                 label="Terminate Date"
                 className="ml-2"
+                dependencies={['joinedDate']}
+                rules={[
+                  ({ getFieldValue }) => ({
+                    validator(value) {
+                      if (!value || value > getFieldValue('joinedData')) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject('Date Error');
+                    },
+                  }),
+                ]}
               >
                 <DatePicker style={{ width: '100%' }} />
               </Form.Item>

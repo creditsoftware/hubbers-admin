@@ -29,6 +29,19 @@ const MemberList = () => {
       dataIndex: 'id',
     },
     {
+      title: 'Avatar',
+      dataIndex: avatar,
+      /* eslint-disable */
+      render: (_, record) => (
+        <Avatar size={30} src={record.user.avatar}/>
+      ),
+      /* eslint-enable */
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+    },
+    {
       title: 'Title',
       dataIndex: 'title',
     },
