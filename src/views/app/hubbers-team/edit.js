@@ -35,16 +35,10 @@ const MemberEdit = ({ id, data }) => {
 
   const onSubmit = (values) => {
     values.id = id;
-    if (!values.joinedDate) {
-      delete values.joinedDate;
-      delete values.terminatedDate;
-    } else if (!values.terminatedDate) {
-      delete values.terminatedDate;
-    } else if (values.joinedDate>values.terminatedDate) {
-      delete values.joinedDate;
-      delete values.terminatedDate;
-    } else {
+    if (values.terminatedDate) {
       values.isTerminated = true;
+    } else {
+      values.isTerminated = false;
     }
     dispatch(Actions.updateHubbersTeam(values));
     onClose();
@@ -73,8 +67,8 @@ const MemberEdit = ({ id, data }) => {
                 label="User"
                 rules={[
                   {
-                      required: true,
-                      message: 'Please choose the User',
+                    required: true,
+                    message: 'Please choose the User',
                   },
                 ]}
                 className="mr-2"
@@ -116,12 +110,6 @@ const MemberEdit = ({ id, data }) => {
           <Form.Item
             name="description"
             label="Description"
-            rules={[
-              {
-                required: true,
-                message: 'Please enter the Description',
-              },
-            ]}
           >
             <TextArea rows={3} placeholder="Please enter the Description" />
           </Form.Item>
@@ -139,7 +127,16 @@ const MemberEdit = ({ id, data }) => {
               <Form.Item
                 name="terminatedDate"
                 label="Terminate Date"
-                className="ml-2"
+                rules={[                                                                                                                                                          
+                  ({ getFieldValue }) => ({
+                    validator(rule,value) {
+                      if (!value || !getFieldValue('joinedDate') || value._i > getFieldValue('joinedDate')._i) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject('Date Error');
+                    },
+                  }),
+                ]}
               >
                 <DatePicker style={{ width: '100%' }} />
               </Form.Item>
