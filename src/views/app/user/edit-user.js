@@ -75,8 +75,9 @@ const EditUser = () => {
     }
   }, [form, singleUser]);
   const onUpdateItem = (values) => {
-    values.avatar = userDetail.avatar;
-    dispatch(Actions.updateUser(params.id, values));
+    dispatch(
+      Actions.updateUser(params.id, { ...values, avatar: userDetail.avatar })
+    );
     history.push('/app/users');
   };
   const onClose = () => {
@@ -110,10 +111,12 @@ const EditUser = () => {
             >
               <Row gutter={16}>
                 <Col xs={24} sm={12} md={6}>
-                  <AvatarUpload
-                    statusChange={onChangeAvatar}
-                    image={userDetail.avatar}
-                  />
+                  <Form.Item name="avatar">
+                    <AvatarUpload
+                      statusChange={onChangeAvatar}
+                      image={userDetail.avatar}
+                    />
+                  </Form.Item>
                 </Col>
                 <Col xs={24} sm={12} md={2} />
                 <Col xs={24} sm={12} md={16}>

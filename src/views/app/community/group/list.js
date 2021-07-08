@@ -34,13 +34,13 @@ const GroupList = () => {
     },
     {
       title: 'Title',
-      dataIndex: 'title',
+      dataIndex: 'name',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.title}</span>
+        <span>{record.name}</span>
       ),
       /* eslint-enable */
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'title'),
+      sorter: (a, b) => utils.antdTableSorter(a, b, 'name'),
     },
     {
       title: 'Community Name',

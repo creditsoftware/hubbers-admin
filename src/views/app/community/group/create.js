@@ -6,6 +6,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
 import CommunitySelect from '../../../../components/util-components/selector/CommunitySelect';
 import UserSelect from '../../../../components/util-components/selector/UserSelect';
+import { slugify } from '../../../../helpers/Utils';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -75,15 +76,31 @@ const GroupCreate = () => {
             </Col>
           </Row>
           <Row>
-            <Col span={24}>
+            <Col span={12}>
               <Form.Item
-                name="title"
+                name="name"
                 label="Group Title"
                 rules={[
                   { required: true, message: 'Please enter Group Title' },
                 ]}
+                className="mr-2"
               >
-                <Input placeholder="Please enter Group Title" />
+                <Input
+                  placeholder="Please enter Group Title"
+                  onChange={(e) =>
+                    form.setFieldsValue({ slug: slugify(e.target.value) })
+                  }
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                name="slug"
+                label="Group Slug"
+                rules={[{ required: true, message: 'Please enter Group Slug' }]}
+                className="ml-2"
+              >
+                <Input disabled placeholder="Please enter Group Slug" />
               </Form.Item>
             </Col>
           </Row>

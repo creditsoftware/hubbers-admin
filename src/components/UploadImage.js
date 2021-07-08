@@ -3,7 +3,7 @@ import { Image as Img, Upload, message } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { API_UPLOAD_URL } from '../constants/defaultValues';
 
-const UploadImage = ({ name, onChange, value }) => {
+const UploadImage = ({ name, onChange, value, ...props }) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [url, setUrl] = React.useState('');
   React.useEffect(() => {
@@ -45,6 +45,7 @@ const UploadImage = ({ name, onChange, value }) => {
         action={`${API_UPLOAD_URL}/image`}
         beforeUpload={beforeHandle}
         onChange={changeHandle}
+        {...props}
       >
         {url ? (
           <Img src={url} />
