@@ -110,7 +110,7 @@ const GroupCreate = () => {
                 name="communityId"
                 label="Community Name"
                 rules={
-                  isGlobal
+                  !isGlobal
                     ? [{ required: true, message: 'Please choose a community' }]
                     : []
                 }

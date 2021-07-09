@@ -120,7 +120,7 @@ const GroupEdit = ({ id, data }) => {
                 name="communityId"
                 label="Community Name"
                 rules={
-                  isGlobal
+                  !isGlobal
                     ? [{ required: true, message: 'Please choose a community' }]
                     : []
                 }
