@@ -58,9 +58,9 @@ const EditUser = () => {
         emailVerified: singleUser.detail?.emailVerified,
         gender: singleUser.detail?.gender,
         birthday:
-          singleUser.detail.birthday === null
+          singleUser.detail?.birthday === null
             ? ''
-            : moment(singleUser.detail.birthday),
+            : moment(singleUser.detail?.birthday),
         bio: singleUser.detail?.bio,
         headLine: singleUser.detail?.headLine,
         industry: singleUser.detail?.industry,
