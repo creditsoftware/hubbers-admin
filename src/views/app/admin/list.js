@@ -119,12 +119,6 @@ const AdminList = () => {
       /* eslint-enable */
     },
   ];
-  // const onSearch = (e) => {
-  //   const { value } = e.currentTarget;
-  //   const searchArray = e.currentTarget.value ? userList : users;
-  //   const data = utils.wildCardSearch(searchArray, value);
-  //   SetUserList(data);
-  // };
   return (
     <Card>
       <div className="w-100 text-right mb-3">

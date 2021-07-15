@@ -56,6 +56,11 @@ const AllUsers = () => {
   const editItem = (id) => {
     history.push(`/app/users/${id}`);
   };
+
+  const deleteUser = (id) => {
+    dispatch(Actions.deleteUser(id));
+  };
+
   const tableColumns = [
     {
       title: 'ID',
@@ -163,17 +168,15 @@ const AllUsers = () => {
               size="small"
             />
           </Tooltip>
-          <Tooltip title="Delete">
-            <Popconfirm
-              title="Are you sure delete this Item?"
-              onConfirm={() => console.log('delete')}
-              onCancel={() => console.log('Canceled to delete')}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Button danger icon={<DeleteOutlined />} size="small" />
-            </Popconfirm>
-          </Tooltip>
+          <Popconfirm
+            title="Are you sure delete this Item?"
+            onConfirm={() => deleteUser(elm.id)}
+            onCancel={() => console.log('Canceled to delete')}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button danger icon={<DeleteOutlined />} size="small" />
+          </Popconfirm>
         </Space>
       ),
       /* eslint-enable */

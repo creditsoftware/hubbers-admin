@@ -4,6 +4,8 @@ import {
   GET_USER,
   UPDATE_USER,
   DELETE_USER,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_ERROR,
   GET_ALL_USER_SUCCESS,
   GET_ALL_USER_ERROR,
   GET_USER_SUCCESS,
@@ -45,6 +47,22 @@ export default (state = INIT_STATE, action) => {
       return { ...state, loading: false, createUser: action.payload };
     case GET_USER_ERROR:
       return { ...state, loading: false, error: action.payload };
+    case DELETE_USER:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DELETE_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case DELETE_USER_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
     default:
       return { ...state };
   }

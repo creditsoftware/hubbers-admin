@@ -90,6 +90,15 @@ const GroupList = () => {
       /* eslint-enable */
     },
     {
+      title: 'Created At',
+      dataIndex: 'createdAt',
+      /* eslint-disable */
+      render: (_, record) => (
+        <span>{record.createdAt.split("T")[0]}</span>
+      ),
+      /* eslint-enable */
+    },
+    {
       title: 'Actions',
       dataIndex: 'actions',
       /* eslint-disable */
