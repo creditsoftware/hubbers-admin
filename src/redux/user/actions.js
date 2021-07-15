@@ -3,6 +3,8 @@ import {
   GET_USER,
   UPDATE_USER,
   DELETE_USER,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_ERROR,
   GET_ALL_USER_SUCCESS,
   GET_ALL_USER_ERROR,
   GET_USER_SUCCESS,
@@ -58,5 +60,18 @@ export const createUserSuccess = (data) => ({
 
 export const createUserError = (data) => ({
   type: CREATE_USER_ERROR,
+  payload: data,
+});
+
+export const deleteUser = (data) => ({
+  type: DELETE_USER,
+  payload: data,
+});
+export const deleteUserSuccess = (data) => ({
+  type: DELETE_USER_SUCCESS,
+  payload: data,
+});
+export const deleteUserError = (data) => ({
+  type: DELETE_USER_ERROR,
   payload: data,
 });

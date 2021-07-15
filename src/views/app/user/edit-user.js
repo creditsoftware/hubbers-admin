@@ -70,6 +70,9 @@ const EditUser = () => {
         address: singleUser.detail?.address,
         nationality: singleUser.detail?.nationality,
         joinedDate: moment(singleUser.detail?.joinedDate),
+        country: singleUser.detail?.location.country,
+        state: singleUser.detail?.location.state,
+        city: singleUser.detail?.location.city,
         education: singleUser.detail?.education,
       });
     }
@@ -442,6 +445,37 @@ const EditUser = () => {
                   Update
                 </Button>
               </div>
+            </Card>
+            <Card title="Location" className="mt-2">
+              <Row>
+                <Col className="px-2" sm={8} xs={24}>
+                  <Form.Item
+                    name="country"
+                    label="Country"
+                    rules={[
+                      { required: true, message: 'Please choose country' },
+                    ]}
+                  >
+                    <CountrySelect idValue={false} />
+                  </Form.Item>
+                </Col>
+                <Col className="px-2" sm={8} xs={24}>
+                  <Form.Item
+                    name="state"
+                    label="State"
+                  >
+                    <Input type="text" placeholder='Please enter state' />
+                  </Form.Item>
+                </Col>
+                <Col className="px-2" sm={8} xs={24}>
+                  <Form.Item
+                    name="city"
+                    label="City"
+                  >
+                    <Input type="text" placeholder='Please enter city' />
+                  </Form.Item>
+                </Col>
+              </Row>
             </Card>
             <Card title="Education" className="mt-2">
               <Form.List name="education">

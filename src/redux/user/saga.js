@@ -20,6 +20,8 @@ import {
   createUserSuccess,
   createUserError,
   getAllUsers,
+  deleteUserSuccess,
+  deleteUserError,
 } from './actions';
 
 const getAllUsersAsync = async () =>
@@ -116,11 +118,38 @@ export function* watchCreateUser() {
   yield takeEvery(CREATE_USER, createUser);
 }
 
+
+const deleteUserAsync = async (payload) => {
+  return api
+    .delete(`/user/${payload.payload }`)
+    .then((res) => res)
+    .catch((error) => error);
+};
+function* DeleteUser(payload) {
+  try {
+    const result = yield call(deleteUserAsync, payload);
+    if (result.status === 200 && result.statusText === 'OK') {
+      console.log(result.data);
+      yield put(deleteUserSuccess(result.data.result));
+      yield put(getAllUsers());
+    } else {
+      yield put(deleteUserError('Delete User Response is not success!'));
+    }
+  } catch (error) {
+    yield put(deleteUserError('Delete User Error !'));
+  }
+}
+
+export function* watchdeleteUser() {
+  yield takeEvery(DELETE_USER, DeleteUser);
+}
+
 export default function* rootSaga() {
   yield all([
     fork(watchGetAllUsers),
     fork(watchGetUser),
     fork(watchUpdateUser),
     fork(watchCreateUser),
+    fork(watchdeleteUser),
   ]);
 }
