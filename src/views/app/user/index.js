@@ -15,7 +15,7 @@ const Users = ({ match }) => {
       </Row>
       <Colxx xxs="12" className="mb-4">
         <div>
-          <div className="all-users" style={{ marginTop: 10 }}>
+          <div className="all-users" style={{ marginTop: 10, paddingBottom: '42px' }}>
             <AllUsers />
           </div>
         </div>
