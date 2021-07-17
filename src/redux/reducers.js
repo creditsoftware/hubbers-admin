@@ -14,8 +14,8 @@ import userRole from './user-role/reducer';
 import users from './user/reducer';
 import admins from './admin/reducer';
 import adminRole from './admin-role/reducer';
-import innovationType from './options/innovation-type/reducer';
-import productionType from './options/product-type/reducer';
+import basicTypeCategory from './options/basic-type-category/reducer';
+import basicType from './options/basic-type/reducer';
 import country from './options/country/reducer';
 import hubbersTeam from './hubbers-team/reducer';
 
@@ -35,8 +35,8 @@ const reducers = combineReducers({
   group,
   groupPrivacyOption,
   // options
-  innovationType,
-  productionType,
+  basicTypeCategory,
+  basicType,
   country,
   communityAll,
   hubbersTeam,

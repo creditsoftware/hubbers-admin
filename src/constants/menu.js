@@ -122,23 +122,13 @@ const data = [
     subs: [
       {
         icon: 'simple-icon-paper-plane',
-        label: 'menu.innovationType',
-        to: `${adminRoot}/options/innovation-type`,
+        label: 'menu.basicTypeCategory',
+        to: `${adminRoot}/options/basic-type-category`,
       },
       {
         icon: 'simple-icon-paper-plane',
-        label: 'menu.productType',
-        to: `${adminRoot}/options/product-type`,
-      },
-      {
-        icon: 'simple-icon-paper-plane',
-        label: 'menu.techType',
-        to: `${adminRoot}/options/tech-type`,
-      },
-      {
-        icon: 'simple-icon-paper-plane',
-        label: 'menu.contestType',
-        to: `${adminRoot}/options/contest-type`,
+        label: 'menu.basicType',
+        to: `${adminRoot}/options/basic-type`,
       },
       {
         icon: 'simple-icon-paper-plane',

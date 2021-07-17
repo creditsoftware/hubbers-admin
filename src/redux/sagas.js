@@ -15,8 +15,8 @@ import adminRoleSaga from './admin-role/saga';
 import groupSaga from './community/group/saga';
 import groupPrivacyOptionSaga from './community/groupPrivacyOption/saga';
 
-import innovationTypeSaga from './options/innovation-type/saga';
-import productTypeSaga from './options/product-type/saga';
+import basicTypeCategorySaga from './options/basic-type-category/saga';
+import basicTypeSaga from './options/basic-type/saga';
 import countrySaga from './options/country/saga';
 import hubbersTeam from './hubbers-team/saga';
 
@@ -27,8 +27,8 @@ export default function* rootSaga(getState) {
     authSagas(),
     userRoleSagas(),
     userSaga(),
-    innovationTypeSaga(),
-    productTypeSaga(),
+    basicTypeCategorySaga(),
+    basicTypeSaga(),
     communitySaga(),
     eventSaga(),
     topicSaga(),
