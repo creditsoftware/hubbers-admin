@@ -7,7 +7,7 @@ import * as Actions from '../../../../redux/actions';
 
 const { Option } = Select;
 
-const CreateBasicType = ({categoryList}) => {
+const CreateBasicType = ({ categoryList }) => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [visible, setVisible] = useState(false);
@@ -64,17 +64,20 @@ const CreateBasicType = ({categoryList}) => {
                 name="categoryId"
                 label="BasicType Category"
                 rules={[
-                  { required: true, message: 'Please choose BasicType Category' },
+                  {
+                    required: true,
+                    message: 'Please choose BasicType Category',
+                  },
                 ]}
               >
                 <Select style={{ width: '100%' }} placeholder="Type Category">
-                  {
-                    categoryList?.map((item,index)=>{
-                      return(
-                        <Option key={index} value={item.id}>{item.name}</Option>
-                      );
-                    })
-                  }
+                  {categoryList?.map((item, index) => {
+                    return (
+                      <Option key={index} value={item.id}>
+                        {item.name}
+                      </Option>
+                    );
+                  })}
                 </Select>
               </Form.Item>
             </Col>

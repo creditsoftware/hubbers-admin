@@ -55,11 +55,15 @@ function* createBasicTypeCategory(data) {
       yield put(getAllBasicTypeCategory());
     } else {
       yield put(
-        createBasicTypeCategoryError('Create Basic TypCategorye is not success!')
+        createBasicTypeCategoryError(
+          'Create Basic TypCategorye is not success!'
+        )
       );
     }
   } catch (error) {
-    yield put(createBasicTypeCategoryError('Create Basic TypCategorye is Error!'));
+    yield put(
+      createBasicTypeCategoryError('Create Basic TypCategorye is Error!')
+    );
   }
 }
 

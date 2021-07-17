@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card, Space, Table, Popconfirm, Button, Select } from 'antd';
-import { DeleteOutlined, ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
+import {
+  DeleteOutlined,
+  ArrowDownOutlined,
+  ArrowUpOutlined,
+} from '@ant-design/icons';
 import utils from '../../../../helpers/utils/index';
 import * as Actions from '../../../../redux/actions';
 import CreateBasicType from './create';
@@ -39,11 +43,11 @@ const BasicTypeList = () => {
 
   const handleCategory = (value) => {
     dispatch(Actions.getAllBasicType(value));
-  }
-
-  const handleOrder = (id, flag) => {
-    dispatch(Actions.orderBasicType(id, flag));
   };
+
+  // const handleOrder = (id, flag) => {
+  //   dispatch(Actions.orderBasicType(id, flag));
+  // };
 
   const tableColumns = [
     {
@@ -70,8 +74,8 @@ const BasicTypeList = () => {
           >
             <Button danger icon={<DeleteOutlined />} size="small" />
           </Popconfirm>
-          <Button size="small" type="default" icon={<ArrowUpOutlined />} onClick={()=>handleOrder(elm.id, 'true')} />
-          <Button size="small" type="default" icon={<ArrowDownOutlined />} onClick={()=>handleOrder(elm.id, 'false')} />
+          {/* <Button size="small" type="default" icon={<ArrowUpOutlined />} onClick={()=>handleOrder(elm.id, 'true')} /> */}
+          {/* <Button size="small" type="default" icon={<ArrowDownOutlined />} onClick={()=>handleOrder(elm.id, 'false')} /> */}
         </Space>
       ),
       /* eslint-enable */
@@ -83,15 +87,21 @@ const BasicTypeList = () => {
   return (
     <Card>
       <div className="d-flex mb-3" style={{ justifyContent: 'space-between' }}>
-        <Select style={{ width: 200 }} onChange={handleCategory} placeholder="Type Category">
-          <Option key={0} value={0}>All</Option>
-          {
-            categoryList?.map((item,index)=>{
-              return(
-                <Option key={index+1} value={item.id}>{item.name}</Option>
-              );
-            })
-          }
+        <Select
+          style={{ width: 200 }}
+          onChange={handleCategory}
+          placeholder="Type Category"
+        >
+          <Option key={0} value={0}>
+            All
+          </Option>
+          {categoryList?.map((item, index) => {
+            return (
+              <Option key={index + 1} value={item.id}>
+                {item.name}
+              </Option>
+            );
+          })}
         </Select>
         <CreateBasicType categoryList={categoryList} />
       </div>

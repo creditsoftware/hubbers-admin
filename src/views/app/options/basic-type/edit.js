@@ -78,13 +78,13 @@ const EditCountry = ({ id, data, category }) => {
                 ]}
               >
                 <Select placeholder="Please choose the Type Category">
-                  {
-                    category.map((item,index)=>{
-                      return(
-                        <Option key={index} value={item.id}>{item.name}</Option>
-                      );
-                    })
-                  }
+                  {category.map((item, index) => {
+                    return (
+                      <Option key={index} value={item.id}>
+                        {item.name}
+                      </Option>
+                    );
+                  })}
                 </Select>
               </Form.Item>
             </Col>

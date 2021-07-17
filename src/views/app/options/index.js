@@ -14,11 +14,7 @@ const Country = React.lazy(() => import('./country'));
 const Options = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
-      <Redirect
-        exact
-        from={`${match.url}/`}
-        to={`${match.url}/basic-type`}
-      />
+      <Redirect exact from={`${match.url}/`} to={`${match.url}/basic-type`} />
 
       <Route
         path={`${match.url}/basic-type-category`}

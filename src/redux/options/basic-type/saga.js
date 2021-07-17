@@ -31,9 +31,7 @@ function* getAllBasicType(payload) {
     if (result.success) {
       yield put(getAllBasicTypeSuccess(result.data));
     } else {
-      yield put(
-        getAllBasicTypeError('Get All Users Response is not success!')
-      );
+      yield put(getAllBasicTypeError('Get All Users Response is not success!'));
     }
   } catch (error) {
     yield put(getAllBasicTypeError('Get All Users Error !'));
@@ -50,13 +48,11 @@ const createBasicTypeAsync = async ({ payload }) => {
 function* createBasicType(data) {
   try {
     const result = yield call(createBasicTypeAsync, data);
-    if (result.success==true) {
+    if (result.success == true) {
       yield put(createBasicTypeSuccess(result.data));
       yield put(getAllBasicType(0));
     } else {
-      yield put(
-        createBasicTypeError('Create Basic Type is not success!')
-      );
+      yield put(createBasicTypeError('Create Basic Type is not success!'));
     }
   } catch (error) {
     console.log('error =>', error);
@@ -73,13 +69,11 @@ const updateBasicTypeAsync = async ({ payload }) => {
 function* updateBasicType(data) {
   try {
     const result = yield call(updateBasicTypeAsync, data);
-    if (result.success==true) {
+    if (result.success == true) {
       yield put(updateBasicTypeSuccess(result.data));
       yield put(getAllBasicType(0));
     } else {
-      yield put(
-        updateBasicTypeError('Update Basic Type is not success!')
-      );
+      yield put(updateBasicTypeError('Update Basic Type is not success!'));
     }
   } catch (error) {
     console.log('error =>', error);
@@ -97,13 +91,11 @@ function* deleteBasicType(data) {
   try {
     const result = yield call(deleteBasicTypeAsync, data);
     console.log('result =>', result);
-    if (result.success==true) {
+    if (result.success == true) {
       yield put(deleteBasicTypeSuccess(result.data));
       yield put(getAllBasicType(0));
     } else {
-      yield put(
-        deleteBasicTypeError('Delete Basic Type is not success!')
-      );
+      yield put(deleteBasicTypeError('Delete Basic Type is not success!'));
     }
   } catch (error) {
     console.log('error =>', error);

@@ -50,9 +50,7 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         loading: false,
-        list: state.list.filter(
-          (item) => item.id !== action.payload.payload
-        ),
+        list: state.list.filter((item) => item.id !== action.payload.payload),
       };
 
     case UPDATE_BASIC_TYPE:

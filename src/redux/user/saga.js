@@ -118,10 +118,9 @@ export function* watchCreateUser() {
   yield takeEvery(CREATE_USER, createUser);
 }
 
-
 const deleteUserAsync = async (payload) => {
   return api
-    .delete(`/user/${payload.payload }`)
+    .delete(`/user/${payload.payload}`)
     .then((res) => res)
     .catch((error) => error);
 };

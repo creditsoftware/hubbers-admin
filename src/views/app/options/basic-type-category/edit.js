@@ -61,7 +61,10 @@ const EditBasicTypeCategory = ({ id, data }) => {
                 name="name"
                 label="BasicTypeCategory Name"
                 rules={[
-                  { required: true, message: 'Please enter BasicTypeCategory Name' },
+                  {
+                    required: true,
+                    message: 'Please enter BasicTypeCategory Name',
+                  },
                 ]}
               >
                 <Input placeholder="Please enter BasicTypeCategory Name" />
@@ -75,7 +78,10 @@ const EditBasicTypeCategory = ({ id, data }) => {
                 name="description"
                 label="BasicTypeCategory Description"
               >
-                <TextArea rows={3} placeholder="Please enter BasicTypeCategory Description" />
+                <TextArea
+                  rows={3}
+                  placeholder="Please enter BasicTypeCategory Description"
+                />
               </Form.Item>
             </Col>
           </Row>

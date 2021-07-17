@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { injectIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
+import { useDispatch, connect } from 'react-redux';
 import {
   UncontrolledDropdown,
   DropdownItem,
@@ -8,10 +8,9 @@ import {
   DropdownMenu,
 } from 'reactstrap';
 
-import {Form, Input, Button, Drawer} from 'antd';
+import { Form, Input, Button, Drawer } from 'antd';
 
 import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 import {
   setContainerClassnames,
@@ -179,7 +178,7 @@ const TopNav = ({
     logoutUser();
   };
 
-  ////////////////////////////////////////
+  /// /////////////////////////////////////
   const dispatch = useDispatch();
   const [resetPasswordVisible, setResetPasswordVisible] = useState(false);
   const resetPassword = () => {
@@ -197,7 +196,7 @@ const TopNav = ({
     onCloseResetPassword();
   };
 
-  ////////////////////////////////////////
+  /// /////////////////////////////////////
   const menuButtonClick = (e, _clickCount, _conClassnames) => {
     e.preventDefault();
 
@@ -322,7 +321,9 @@ const TopNav = ({
               )}
             </DropdownToggle>
             <DropdownMenu className="mt-3" right>
-              <DropdownItem onClick={resetPassword}>Reset Password</DropdownItem>
+              <DropdownItem onClick={resetPassword}>
+                Reset Password
+              </DropdownItem>
               <Drawer
                 title="Reset Password"
                 width={500}
@@ -338,9 +339,14 @@ const TopNav = ({
                   <Form.Item
                     name="newpass"
                     label="New Password"
-                    rules={[{ required: true, message: 'Please enter New Password' }]}
+                    rules={[
+                      { required: true, message: 'Please enter New Password' },
+                    ]}
                   >
-                    <Input type="password" placeholder="Please enter New Password" />
+                    <Input
+                      type="password"
+                      placeholder="Please enter New Password"
+                    />
                   </Form.Item>
                   <Form.Item
                     name="conpass"
@@ -361,10 +367,16 @@ const TopNav = ({
                       }),
                     ]}
                   >
-                    <Input type="password" placeholder="Please enter Confirm Password" />
+                    <Input
+                      type="password"
+                      placeholder="Please enter Confirm Password"
+                    />
                   </Form.Item>
                   <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <Button onClick={onCloseResetPassword} style={{ marginRight: 12 }}>
+                    <Button
+                      onClick={onCloseResetPassword}
+                      style={{ marginRight: 12 }}
+                    >
                       Cancel
                     </Button>
                     <Button type="primary" htmlType="submit">

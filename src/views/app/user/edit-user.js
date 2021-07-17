@@ -457,22 +457,17 @@ const EditUser = () => {
                   </Form.Item>
                 </Col>
                 <Col className="px-2" sm={8} xs={24}>
-                  <Form.Item
-                    name={['location', 'state']}
-                    label="State"
-                  >
-                    <Input type="text" placeholder='Please enter state' />
+                  <Form.Item name={['location', 'state']} label="State">
+                    <Input type="text" placeholder="Please enter state" />
                   </Form.Item>
                 </Col>
                 <Col className="px-2" sm={8} xs={24}>
                   <Form.Item
                     name={['location', 'city']}
                     label="City"
-                    rules={[
-                      { required: true, message: 'Please enter city' }
-                    ]}
+                    rules={[{ required: true, message: 'Please enter city' }]}
                   >
-                    <Input type="text" placeholder='Please enter city' />
+                    <Input type="text" placeholder="Please enter city" />
                   </Form.Item>
                 </Col>
               </Row>
@@ -563,30 +558,23 @@ const EditUser = () => {
               <Form.Item
                 name={['roles', 'communityRole']}
                 label="Country"
-                rules={[
-                  { required: true, message: 'Please choose country' },
-                ]}
+                rules={[{ required: true, message: 'Please choose country' }]}
               >
                 <CountrySelect idValue={false} />
               </Form.Item>
             </Col>
             <Col className="px-2" sm={8} xs={24}>
-              <Form.Item
-                name={['roles', 'state']}
-                label="State"
-              >
-                <Input type="text" placeholder='Please enter state' />
+              <Form.Item name={['roles', 'state']} label="State">
+                <Input type="text" placeholder="Please enter state" />
               </Form.Item>
             </Col>
             <Col className="px-2" sm={8} xs={24}>
               <Form.Item
                 name={['roles', 'city']}
                 label="City"
-                rules={[
-                  { required: true, message: 'Please enter city' }
-                ]}
+                rules={[{ required: true, message: 'Please enter city' }]}
               >
-                <Input type="text" placeholder='Please enter city' />
+                <Input type="text" placeholder="Please enter city" />
               </Form.Item>
             </Col>
           </Row>
