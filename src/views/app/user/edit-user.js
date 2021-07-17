@@ -70,9 +70,11 @@ const EditUser = () => {
         address: singleUser.detail?.address,
         nationality: singleUser.detail?.nationality,
         joinedDate: moment(singleUser.detail?.joinedDate),
-        country: singleUser.detail?.location.country,
-        state: singleUser.detail?.location.state,
-        city: singleUser.detail?.location.city,
+        location: {
+          country: singleUser.detail?.location.country,
+          state: singleUser.detail?.location.state,
+          city: singleUser.detail?.location.city,
+        },
         education: singleUser.detail?.education,
       });
     }
@@ -90,7 +92,7 @@ const EditUser = () => {
     setUserDetail({ ...userDetail, avatar: imageUrl });
   };
   return (
-    <Row gutter={16}>
+    <Row gutter={16} className="pb-5">
       <Col xs={24} sm={24} md={24}>
         {userDetail && (
           <Form
@@ -440,17 +442,12 @@ const EditUser = () => {
                   </Form.Item>
                 </Col>
               </Row>
-              <div style={{ textAlign: 'right' }}>
-                <Button type="primary" htmlType="submit">
-                  Update
-                </Button>
-              </div>
             </Card>
             <Card title="Location" className="mt-2">
               <Row>
                 <Col className="px-2" sm={8} xs={24}>
                   <Form.Item
-                    name="country"
+                    name={['location', 'country']}
                     label="Country"
                     rules={[
                       { required: true, message: 'Please choose country' },
@@ -460,22 +457,25 @@ const EditUser = () => {
                   </Form.Item>
                 </Col>
                 <Col className="px-2" sm={8} xs={24}>
-                  <Form.Item
-                    name="state"
-                    label="State"
-                  >
-                    <Input type="text" placeholder='Please enter state' />
+                  <Form.Item name={['location', 'state']} label="State">
+                    <Input type="text" placeholder="Please enter state" />
                   </Form.Item>
                 </Col>
                 <Col className="px-2" sm={8} xs={24}>
                   <Form.Item
-                    name="city"
+                    name={['location', 'city']}
                     label="City"
+                    rules={[{ required: true, message: 'Please enter city' }]}
                   >
-                    <Input type="text" placeholder='Please enter city' />
+                    <Input type="text" placeholder="Please enter city" />
                   </Form.Item>
                 </Col>
               </Row>
+              <div style={{ textAlign: 'right' }}>
+                <Button type="primary" htmlType="submit">
+                  Update
+                </Button>
+              </div>
             </Card>
             <Card title="Education" className="mt-2">
               <Form.List name="education">
@@ -552,7 +552,38 @@ const EditUser = () => {
             </Card>
           </Form>
         )}
-
+        <Card title="Roles" className="mt-2">
+          <Row>
+            <Col className="px-2" sm={8} xs={24}>
+              <Form.Item
+                name={['roles', 'communityRole']}
+                label="Country"
+                rules={[{ required: true, message: 'Please choose country' }]}
+              >
+                <CountrySelect idValue={false} />
+              </Form.Item>
+            </Col>
+            <Col className="px-2" sm={8} xs={24}>
+              <Form.Item name={['roles', 'state']} label="State">
+                <Input type="text" placeholder="Please enter state" />
+              </Form.Item>
+            </Col>
+            <Col className="px-2" sm={8} xs={24}>
+              <Form.Item
+                name={['roles', 'city']}
+                label="City"
+                rules={[{ required: true, message: 'Please enter city' }]}
+              >
+                <Input type="text" placeholder="Please enter city" />
+              </Form.Item>
+            </Col>
+          </Row>
+          <div style={{ textAlign: 'right' }}>
+            <Button type="primary" htmlType="submit">
+              Update
+            </Button>
+          </div>
+        </Card>
         <Card
           title="Transactions"
           className="mt-2"

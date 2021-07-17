@@ -53,8 +53,12 @@ module.exports = {
 
   'menu.blank-page': 'Blank Page',
   'menu.options': 'Options',
-  'menu.innovationType': 'Innovation Type',
-  'menu.innovation-type': 'Innovation Type',
+
+  'menu.basicTypeCategory': 'Basic Type Category',
+  'menu.basic-type-category': 'Basic Type Category',
+
+  'menu.basicType': 'Basic Type',
+  'menu.basic-type': 'Basic Type',
 
   'menu.product-type': 'Product Type',
   'menu.productType': 'Product Type',
@@ -152,16 +156,10 @@ module.exports = {
   'partner.title': 'Partner',
 
   // innovation type
-  'innovationtype.title': 'Innovation Type',
+  'basic-type-category.title': 'Basic Type Category',
 
   // product type
-  'product-type.title': 'Product Type',
-
-  // tech type
-  'techtype.title': 'Tech Type',
-
-  // contest type
-  'contestType.title': 'Contest Type',
+  'basic-type.title': 'Basic Type',
 
   // expertise category
   'expertise-category.title': 'Expertise Category',

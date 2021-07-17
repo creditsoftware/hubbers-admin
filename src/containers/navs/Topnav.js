@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { injectIntl } from 'react-intl';
-
+import { useDispatch, connect } from 'react-redux';
 import {
   UncontrolledDropdown,
   DropdownItem,
   DropdownToggle,
   DropdownMenu,
-  Input,
 } from 'reactstrap';
 
+import { Form, Input, Button, Drawer } from 'antd';
+
 import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 import {
   setContainerClassnames,
@@ -33,6 +33,7 @@ import TopnavNotifications from './Topnav.Notifications';
 import TopnavDarkSwitch from './Topnav.DarkSwitch';
 
 import { getDirection, setDirection } from '../../helpers/Utils';
+import * as Actions from '../../redux/actions';
 
 const TopNav = ({
   intl,
@@ -177,6 +178,25 @@ const TopNav = ({
     logoutUser();
   };
 
+  /// /////////////////////////////////////
+  const dispatch = useDispatch();
+  const [resetPasswordVisible, setResetPasswordVisible] = useState(false);
+  const resetPassword = () => {
+    setResetPasswordVisible(true);
+  };
+  const onCloseResetPassword = () => {
+    // form.resetFields();
+    setResetPasswordVisible(false);
+  };
+  const passwordData = {};
+  const onSubmitResetPassword = (values) => {
+    passwordData.id = currentUser.id;
+    passwordData.password = values.newpass;
+    dispatch(Actions.updateAdmin(passwordData));
+    onCloseResetPassword();
+  };
+
+  /// /////////////////////////////////////
   const menuButtonClick = (e, _clickCount, _conClassnames) => {
     e.preventDefault();
 
@@ -301,7 +321,70 @@ const TopNav = ({
               )}
             </DropdownToggle>
             <DropdownMenu className="mt-3" right>
-              <DropdownItem>Account</DropdownItem>
+              <DropdownItem onClick={resetPassword}>
+                Reset Password
+              </DropdownItem>
+              <Drawer
+                title="Reset Password"
+                width={500}
+                onClose={onCloseResetPassword}
+                visible={resetPasswordVisible}
+              >
+                <Form
+                  layout="vertical"
+                  hideRequiredMark
+                  onFinish={onSubmitResetPassword}
+                  className="px-4 py-5"
+                >
+                  <Form.Item
+                    name="newpass"
+                    label="New Password"
+                    rules={[
+                      { required: true, message: 'Please enter New Password' },
+                    ]}
+                  >
+                    <Input
+                      type="password"
+                      placeholder="Please enter New Password"
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    name="conpass"
+                    label="Confirm Password"
+                    dependencies={['newpass']}
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please enter confirm password',
+                      },
+                      ({ getFieldValue }) => ({
+                        validator(rule, value) {
+                          if (getFieldValue('newpass') === value) {
+                            return Promise.resolve();
+                          }
+                          return Promise.reject('Confirm Error');
+                        },
+                      }),
+                    ]}
+                  >
+                    <Input
+                      type="password"
+                      placeholder="Please enter Confirm Password"
+                    />
+                  </Form.Item>
+                  <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Button
+                      onClick={onCloseResetPassword}
+                      style={{ marginRight: 12 }}
+                    >
+                      Cancel
+                    </Button>
+                    <Button type="primary" htmlType="submit">
+                      Submit
+                    </Button>
+                  </div>
+                </Form>
+              </Drawer>
               <DropdownItem divider />
               <DropdownItem onClick={() => handleLogout()}>
                 Sign out

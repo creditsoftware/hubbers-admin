@@ -1,13 +1,9 @@
 import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-const InnovationType = React.lazy(() => import('./innovation-type'));
+const BasicType = React.lazy(() => import('./basic-type'));
 
-const ProductType = React.lazy(() => import('./product-type'));
-
-const TechType = React.lazy(() => import('./tech-type'));
-
-const ContestType = React.lazy(() => import('./contest-type'));
+const BasicTypeCategory = React.lazy(() => import('./basic-type-category'));
 
 const ExpertiseCategory = React.lazy(() => import('./expertise-category'));
 
@@ -18,30 +14,16 @@ const Country = React.lazy(() => import('./country'));
 const Options = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
-      <Redirect
-        exact
-        from={`${match.url}/`}
-        to={`${match.url}/innovation-type`}
+      <Redirect exact from={`${match.url}/`} to={`${match.url}/basic-type`} />
+
+      <Route
+        path={`${match.url}/basic-type-category`}
+        render={(props) => <BasicTypeCategory {...props} />}
       />
 
       <Route
-        path={`${match.url}/innovation-type`}
-        render={(props) => <InnovationType {...props} />}
-      />
-
-      <Route
-        path={`${match.url}/product-type`}
-        render={(props) => <ProductType {...props} />}
-      />
-
-      <Route
-        path={`${match.url}/tech-type`}
-        render={(props) => <TechType {...props} />}
-      />
-
-      <Route
-        path={`${match.url}/contest-type`}
-        render={(props) => <ContestType {...props} />}
+        path={`${match.url}/basic-type`}
+        render={(props) => <BasicType {...props} />}
       />
 
       <Route
