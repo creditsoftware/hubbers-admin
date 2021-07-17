@@ -59,14 +59,9 @@ export default (state = INIT_STATE, action) => {
       return { ...state, loading: true };
 
     case UPDATE_BASIC_TYPE_CATEGORY_SUCCESS:
-      const foundIndex = state.typeList.findIndex(
-        (x) => x.id === action.payload.id
-      );
-      state.typeList[foundIndex] = action.payload;
       return {
         ...state,
         loading: false,
-        typeList: state.typeList,
       };
 
     case UPDATE_BASIC_TYPE_CATEGORY_ERROR:

@@ -17,6 +17,7 @@ import {
   updateBasicTypeError,
   deleteBasicTypeSuccess,
   deleteBasicTypeError,
+  getAllBasicType,
 } from './actions';
 
 const getAllBasicTypeAsync = async (payload) =>
@@ -25,7 +26,7 @@ const getAllBasicTypeAsync = async (payload) =>
     .then((res) => res.data)
     .catch((error) => error);
 
-function* getAllBasicType(payload) {
+function* GetAllBasicType(payload) {
   try {
     const result = yield call(getAllBasicTypeAsync, payload);
     if (result.success) {
@@ -45,10 +46,10 @@ const createBasicTypeAsync = async ({ payload }) => {
     .catch((error) => error);
 };
 
-function* createBasicType(data) {
+function* CreateBasicType(data) {
   try {
     const result = yield call(createBasicTypeAsync, data);
-    if (result.success == true) {
+    if (result.success) {
       yield put(createBasicTypeSuccess(result.data));
       yield put(getAllBasicType(0));
     } else {
@@ -66,10 +67,10 @@ const updateBasicTypeAsync = async ({ payload }) => {
     .catch((error) => error);
 };
 
-function* updateBasicType(data) {
+function* UpdateBasicType(data) {
   try {
     const result = yield call(updateBasicTypeAsync, data);
-    if (result.success == true) {
+    if (result.success) {
       yield put(updateBasicTypeSuccess(result.data));
       yield put(getAllBasicType(0));
     } else {
@@ -87,12 +88,12 @@ const deleteBasicTypeAsync = async ({ payload }) => {
     .catch((error) => error);
 };
 
-function* deleteBasicType(data) {
+function* DeleteBasicType(data) {
   try {
     const result = yield call(deleteBasicTypeAsync, data);
     console.log('result =>', result);
-    if (result.success == true) {
-      yield put(deleteBasicTypeSuccess(result.data));
+    if (result.success) {
+      yield put(deleteBasicTypeSuccess(result));
       yield put(getAllBasicType(0));
     } else {
       yield put(deleteBasicTypeError('Delete Basic Type is not success!'));
@@ -103,19 +104,19 @@ function* deleteBasicType(data) {
 }
 
 export function* watchGetAllBasicType() {
-  yield takeEvery(GET_ALL_BASIC_TYPE, getAllBasicType);
+  yield takeEvery(GET_ALL_BASIC_TYPE, GetAllBasicType);
 }
 
 export function* watchCreateBasicType() {
-  yield takeEvery(CREATE_BASIC_TYPE, createBasicType);
+  yield takeEvery(CREATE_BASIC_TYPE, CreateBasicType);
 }
 
 export function* watchUpdateBasicType() {
-  yield takeEvery(UPDATE_BASIC_TYPE, updateBasicType);
+  yield takeEvery(UPDATE_BASIC_TYPE, UpdateBasicType);
 }
 
 export function* watchDeleteBasicType() {
-  yield takeEvery(DELETE_BASIC_TYPE, deleteBasicType);
+  yield takeEvery(DELETE_BASIC_TYPE, DeleteBasicType);
 }
 
 export default function* rootSaga() {

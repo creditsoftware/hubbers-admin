@@ -11,6 +11,7 @@ import {
 import {
   createBasicTypeCategorySuccess,
   createBasicTypeCategoryError,
+  getAllBasicTypeCategory,
   getAllBasicTypeCategorySuccess,
   getAllBasicTypeCategoryError,
   deleteBasicTypeCategorySuccess,
@@ -25,7 +26,7 @@ const getAllBasicTypeCategoryAsync = async () =>
     .then((res) => res.data)
     .catch((error) => error);
 
-function* getAllBasicTypeCategory() {
+function* GetAllBasicTypeCategory() {
   try {
     const result = yield call(getAllBasicTypeCategoryAsync);
     if (result.success) {
@@ -47,7 +48,7 @@ const createBasicTypeCategoryAsync = async ({ payload }) => {
     .catch((error) => error);
 };
 
-function* createBasicTypeCategory(data) {
+function* CreateBasicTypeCategory(data) {
   try {
     const result = yield call(createBasicTypeCategoryAsync, data);
     if (result.success) {
@@ -74,7 +75,7 @@ const deleteBasicTypeCategoryAsync = async ({ payload }) => {
     .catch((error) => error);
 };
 
-function* deleteBasicTypeCategory(id) {
+function* DeleteBasicTypeCategory(id) {
   try {
     const result = yield call(deleteBasicTypeCategoryAsync, id);
     if (result.success) {
@@ -95,7 +96,7 @@ const updateBasicTypeCategoryAsync = async ({ payload }) => {
     .catch((error) => error);
 };
 
-function* updateBasicTypeCategory(data) {
+function* UpdateBasicTypeCategory(data) {
   try {
     const result = yield call(updateBasicTypeCategoryAsync, data);
     if (result.success) {
@@ -111,23 +112,22 @@ function* updateBasicTypeCategory(data) {
 
 // get all
 export function* watchGetAllBasicTypeCategory() {
-  yield takeEvery(GET_ALL_BASIC_TYPE_CATEGORY, getAllBasicTypeCategory);
+  yield takeEvery(GET_ALL_BASIC_TYPE_CATEGORY, GetAllBasicTypeCategory);
 }
 
 // create
 export function* watchCreateBasicTypeCategory() {
-  yield takeEvery(CREATE_BASIC_TYPE_CATEGORY, createBasicTypeCategory);
+  yield takeEvery(CREATE_BASIC_TYPE_CATEGORY, CreateBasicTypeCategory);
 }
 
 // delete
 export function* watchDeleteBasicTypeCategory() {
-  yield takeEvery(DELETE_BASIC_TYPE_CATEGORY, deleteBasicTypeCategory);
+  yield takeEvery(DELETE_BASIC_TYPE_CATEGORY, DeleteBasicTypeCategory);
 }
 
 // update
-
 export function* watchUpdateBasicTypeCategory() {
-  yield takeEvery(UPDATE_BASIC_TYPE_CATEGORY, updateBasicTypeCategory);
+  yield takeEvery(UPDATE_BASIC_TYPE_CATEGORY, UpdateBasicTypeCategory);
 }
 
 export default function* rootSaga() {

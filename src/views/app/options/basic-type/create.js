@@ -21,7 +21,6 @@ const CreateBasicType = ({ categoryList }) => {
   };
 
   const onSubmit = (values) => {
-    values.categoryId = 1;
     dispatch(Actions.createBasicType(values));
     onClose();
   };
@@ -71,9 +70,9 @@ const CreateBasicType = ({ categoryList }) => {
                 ]}
               >
                 <Select style={{ width: '100%' }} placeholder="Type Category">
-                  {categoryList?.map((item, index) => {
+                  {categoryList?.map((item) => {
                     return (
-                      <Option key={index} value={item.id}>
+                      <Option key={item.id} value={item.id}>
                         {item.name}
                       </Option>
                     );
