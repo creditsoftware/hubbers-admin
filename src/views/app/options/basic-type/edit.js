@@ -78,9 +78,9 @@ const EditCountry = ({ id, data, category }) => {
                 ]}
               >
                 <Select placeholder="Please choose the Type Category">
-                  {category.map((item, index) => {
+                  {category.map((item) => {
                     return (
-                      <Option key={index} value={item.id}>
+                      <Option key={item.id} value={item.id}>
                         {item.name}
                       </Option>
                     );

@@ -10,6 +10,10 @@ import {
   UPDATE_BASIC_TYPE_ERROR,
   DELETE_BASIC_TYPE,
   DELETE_BASIC_TYPE_SUCCESS,
+  DELETE_BASIC_TYPE_ERROR,
+  ORDER_BASIC_TYPE,
+  ORDER_BASIC_TYPE_SUCCESS,
+  ORDER_BASIC_TYPE_ERROR,
 } from '../../types/options/basic-type';
 
 const INIT_STATE = {
@@ -52,6 +56,8 @@ export default (state = INIT_STATE, action) => {
         loading: false,
         list: state.list.filter((item) => item.id !== action.payload.payload),
       };
+    case DELETE_BASIC_TYPE_ERROR:
+      return { ...state, loading: false, error: action.payload };
 
     case UPDATE_BASIC_TYPE:
       return { ...state, loading: true };
@@ -68,6 +74,15 @@ export default (state = INIT_STATE, action) => {
       };
 
     case UPDATE_BASIC_TYPE_ERROR:
+      return { ...state, loading: false, error: action.payload };
+
+    case ORDER_BASIC_TYPE:
+      return { ...state, loading: true };
+
+    case ORDER_BASIC_TYPE_SUCCESS:
+      return { ...state, loading: false, list: action.payload.data };
+
+    case ORDER_BASIC_TYPE_ERROR:
       return { ...state, loading: false, error: action.payload };
 
     default:

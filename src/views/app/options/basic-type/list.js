@@ -6,7 +6,6 @@ import {
   ArrowDownOutlined,
   ArrowUpOutlined,
 } from '@ant-design/icons';
-import utils from '../../../../helpers/utils/index';
 import * as Actions from '../../../../redux/actions';
 import CreateBasicType from './create';
 import EditBasicType from './edit';
@@ -17,6 +16,7 @@ const BasicTypeList = () => {
   const dispatch = useDispatch();
   const [basicTypeList, setBasicTypeList] = useState(null);
   const [categoryList, setCategoryList] = useState(null);
+  const [currentCategory, setCurrentCategory] = useState(null);
   const { list } = useSelector((state) => state.basicType);
   const { typeList } = useSelector((state) => state.basicTypeCategory);
   const [pagination, setPagenation] = React.useState({
@@ -26,7 +26,6 @@ const BasicTypeList = () => {
 
   useEffect(() => {
     dispatch(Actions.getAllBasicTypeCategory());
-    dispatch(Actions.getAllBasicType(0));
   }, [dispatch]);
 
   useEffect(() => {
@@ -34,20 +33,34 @@ const BasicTypeList = () => {
   }, [typeList]);
 
   useEffect(() => {
+    setCurrentCategory(typeList[0]?.id);
+  }, [categoryList, typeList]);
+
+  useEffect(() => {
+    dispatch(Actions.getAllBasicType(currentCategory));
+  }, [currentCategory, dispatch]);
+
+  useEffect(() => {
     setBasicTypeList(list);
   }, [list]);
 
+  useEffect(() => {
+    if (basicTypeList?.length > 0) {
+      setCurrentCategory(basicTypeList[0].categoryId);
+    }
+  }, [basicTypeList]);
+
   const deleteBasicType = (id) => {
-    dispatch(Actions.deleteBasicType(id));
+    dispatch(Actions.deleteBasicType({ id, currentCategory }));
   };
 
   const handleCategory = (value) => {
-    dispatch(Actions.getAllBasicType(value));
+    setCurrentCategory(value);
   };
 
-  // const handleOrder = (id, flag) => {
-  //   dispatch(Actions.orderBasicType(id, flag));
-  // };
+  const handleOrder = (id, flag) => {
+    dispatch(Actions.orderBasicType({ id, flag, currentCategory }));
+  };
 
   const tableColumns = [
     {
@@ -74,8 +87,8 @@ const BasicTypeList = () => {
           >
             <Button danger icon={<DeleteOutlined />} size="small" />
           </Popconfirm>
-          {/* <Button size="small" type="default" icon={<ArrowUpOutlined />} onClick={()=>handleOrder(elm.id, 'true')} /> */}
-          {/* <Button size="small" type="default" icon={<ArrowDownOutlined />} onClick={()=>handleOrder(elm.id, 'false')} /> */}
+          <Button size="small" type="default" icon={<ArrowUpOutlined />} onClick={()=>handleOrder(elm.id, 'true')} />
+          <Button size="small" type="default" icon={<ArrowDownOutlined />} onClick={()=>handleOrder(elm.id, 'false')} />
         </Space>
       ),
       /* eslint-enable */
@@ -91,13 +104,11 @@ const BasicTypeList = () => {
           style={{ width: 200 }}
           onChange={handleCategory}
           placeholder="Type Category"
+          value={currentCategory}
         >
-          <Option key={0} value={0}>
-            All
-          </Option>
-          {categoryList?.map((item, index) => {
+          {categoryList?.map((item) => {
             return (
-              <Option key={index + 1} value={item.id}>
+              <Option key={item.id} value={item.id}>
                 {item.name}
               </Option>
             );

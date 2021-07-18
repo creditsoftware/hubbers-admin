@@ -6,9 +6,11 @@ import {
   GET_ALL_BASIC_TYPE,
   UPDATE_BASIC_TYPE,
   DELETE_BASIC_TYPE,
+  ORDER_BASIC_TYPE,
 } from '../../types/options/basic-type';
 
 import {
+  getAllBasicType,
   createBasicTypeSuccess,
   createBasicTypeError,
   getAllBasicTypeSuccess,
@@ -17,7 +19,8 @@ import {
   updateBasicTypeError,
   deleteBasicTypeSuccess,
   deleteBasicTypeError,
-  getAllBasicType,
+  orderBasicTypeSuccess,
+  orderBasicTypeError,
 } from './actions';
 
 const getAllBasicTypeAsync = async (payload) =>
@@ -51,7 +54,7 @@ function* CreateBasicType(data) {
     const result = yield call(createBasicTypeAsync, data);
     if (result.success) {
       yield put(createBasicTypeSuccess(result.data));
-      yield put(getAllBasicType(0));
+      yield put(getAllBasicType(data.payload.categoryId));
     } else {
       yield put(createBasicTypeError('Create Basic Type is not success!'));
     }
@@ -72,7 +75,7 @@ function* UpdateBasicType(data) {
     const result = yield call(updateBasicTypeAsync, data);
     if (result.success) {
       yield put(updateBasicTypeSuccess(result.data));
-      yield put(getAllBasicType(0));
+      yield put(getAllBasicType(data.payload.categoryId));
     } else {
       yield put(updateBasicTypeError('Update Basic Type is not success!'));
     }
@@ -83,7 +86,7 @@ function* UpdateBasicType(data) {
 
 const deleteBasicTypeAsync = async ({ payload }) => {
   return api
-    .delete(`/basic-type/${payload}`)
+    .delete(`/basic-type/${payload.id}`)
     .then((res) => res.data)
     .catch((error) => error);
 };
@@ -91,12 +94,32 @@ const deleteBasicTypeAsync = async ({ payload }) => {
 function* DeleteBasicType(data) {
   try {
     const result = yield call(deleteBasicTypeAsync, data);
-    console.log('result =>', result);
     if (result.success) {
       yield put(deleteBasicTypeSuccess(result));
-      yield put(getAllBasicType(0));
+      yield put(getAllBasicType(data.payload.currentCategory));
     } else {
       yield put(deleteBasicTypeError('Delete Basic Type is not success!'));
+    }
+  } catch (error) {
+    console.log('error =>', error);
+  }
+}
+
+const orderBasicTypeAsync = async ({ payload }) => {
+  return api
+    .get(`/basic-type/${payload.id}/${payload.flag}`)
+    .then((res) => res.data)
+    .catch((error) => error);
+};
+
+function* OrderBasicType(data) {
+  try {
+    const result = yield call(orderBasicTypeAsync, data);
+    if (result.success) {
+      yield put(orderBasicTypeSuccess(result));
+      yield put(getAllBasicType(data.payload.currentCategory));
+    } else {
+      yield put(orderBasicTypeError('Order Basic Type is not success!'));
     }
   } catch (error) {
     console.log('error =>', error);
@@ -106,17 +129,17 @@ function* DeleteBasicType(data) {
 export function* watchGetAllBasicType() {
   yield takeEvery(GET_ALL_BASIC_TYPE, GetAllBasicType);
 }
-
 export function* watchCreateBasicType() {
   yield takeEvery(CREATE_BASIC_TYPE, CreateBasicType);
 }
-
 export function* watchUpdateBasicType() {
   yield takeEvery(UPDATE_BASIC_TYPE, UpdateBasicType);
 }
-
 export function* watchDeleteBasicType() {
   yield takeEvery(DELETE_BASIC_TYPE, DeleteBasicType);
+}
+export function* watchOrderBasicType() {
+  yield takeEvery(ORDER_BASIC_TYPE, OrderBasicType);
 }
 
 export default function* rootSaga() {
@@ -125,5 +148,6 @@ export default function* rootSaga() {
     fork(watchCreateBasicType),
     fork(watchUpdateBasicType),
     fork(watchDeleteBasicType),
+    fork(watchOrderBasicType),
   ]);
 }

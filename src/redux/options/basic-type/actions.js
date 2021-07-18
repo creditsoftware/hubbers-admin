@@ -11,6 +11,9 @@ import {
   DELETE_BASIC_TYPE,
   DELETE_BASIC_TYPE_SUCCESS,
   DELETE_BASIC_TYPE_ERROR,
+  ORDER_BASIC_TYPE,
+  ORDER_BASIC_TYPE_SUCCESS,
+  ORDER_BASIC_TYPE_ERROR,
 } from '../../types/options/basic-type';
 
 // getAll
@@ -46,9 +49,9 @@ export const createBasicTypeError = (message) => ({
 });
 
 // delete
-export const deleteBasicType = (id) => ({
+export const deleteBasicType = (data) => ({
   type: DELETE_BASIC_TYPE,
-  payload: id,
+  payload: data,
 });
 
 export const deleteBasicTypeSuccess = (data) => ({
@@ -74,5 +77,21 @@ export const updateBasicTypeSuccess = (data) => ({
 
 export const updateBasicTypeError = (data) => ({
   type: UPDATE_BASIC_TYPE_ERROR,
+  payload: data,
+});
+
+// order
+export const orderBasicType = (data) => ({
+  type: ORDER_BASIC_TYPE,
+  payload: data,
+});
+
+export const orderBasicTypeSuccess = (data) => ({
+  type: ORDER_BASIC_TYPE_SUCCESS,
+  payload: data,
+});
+
+export const orderBasicTypeError = (data) => ({
+  type: ORDER_BASIC_TYPE_ERROR,
   payload: data,
 });

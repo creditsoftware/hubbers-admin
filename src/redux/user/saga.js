@@ -1,15 +1,12 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import api from '../../ApiConfig';
-import history from '../../history';
 
 import {
-  CREATE_USER,
   GET_ALL_USER,
   GET_USER,
+  CREATE_USER,
   UPDATE_USER,
   DELETE_USER,
-  GET_ALL_USER_SUCCESS,
-  GET_ALL_USER_ERROR,
 } from '../types/user';
 
 import {
