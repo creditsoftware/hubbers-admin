@@ -19,6 +19,8 @@ import basicTypeCategorySaga from './options/basic-type-category/saga';
 import basicTypeSaga from './options/basic-type/saga';
 import expertiseCategorySaga from './options/expertise-category/saga';
 import countrySaga from './options/country/saga';
+import languageSaga from './options/language/saga';
+import languageLevelSaga from './options/language-level/saga';
 import hubbersTeam from './hubbers-team/saga';
 
 export default function* rootSaga(getState) {

@@ -18,6 +18,8 @@ import basicTypeCategory from './options/basic-type-category/reducer';
 import basicType from './options/basic-type/reducer';
 import expertiseCategory from './options/expertise-category/reducer';
 import country from './options/country/reducer';
+import language from './options/language/reducer';
+import languageLevel from './options/language-level/reducer';
 import hubbersTeam from './hubbers-team/reducer';
 
 const reducers = combineReducers({
@@ -40,6 +42,8 @@ const reducers = combineReducers({
   basicType,
   expertiseCategory,
   country,
+  language,
+  languageLevel,
   communityAll,
   hubbersTeam,
 });

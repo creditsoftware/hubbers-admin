@@ -29,4 +29,6 @@ export * from './options/basic-type-category/actions';
 export * from './options/basic-type/actions';
 export * from './options/expertise-category/actions';
 export * from './options/country/actions';
+export * from './options/language/actions';
+export * from './options/language-level/actions';
 export * from './hubbers-team/actions';

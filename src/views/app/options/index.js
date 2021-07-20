@@ -7,7 +7,9 @@ const BasicTypeCategory = React.lazy(() => import('./basic-type-category'));
 
 const ExpertiseCategory = React.lazy(() => import('./expertise-category'));
 
-const Skills = React.lazy(() => import('./skills'));
+const Language = React.lazy(() => import('./language'));
+
+const LanguageLevel = React.lazy(() => import('./language-level'));
 
 const Country = React.lazy(() => import('./country'));
 
@@ -32,8 +34,13 @@ const Options = ({ match }) => (
       />
 
       <Route
-        path={`${match.url}/skills`}
-        render={(props) => <Skills {...props} />}
+        path={`${match.url}/language`}
+        render={(props) => <Language {...props} />}
+      />
+
+      <Route
+        path={`${match.url}/language-level`}
+        render={(props) => <LanguageLevel {...props} />}
       />
 
       <Route

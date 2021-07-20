@@ -137,8 +137,13 @@ const data = [
       },
       {
         icon: 'simple-icon-paper-plane',
-        label: 'menu.skills',
-        to: `${adminRoot}/options/skills`,
+        label: 'menu.language',
+        to: `${adminRoot}/options/language`,
+      },
+      {
+        icon: 'simple-icon-paper-plane',
+        label: 'menu.language-level',
+        to: `${adminRoot}/options/language-level`,
       },
       {
         icon: 'simple-icon-paper-plane',

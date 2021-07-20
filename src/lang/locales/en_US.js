@@ -72,7 +72,8 @@ module.exports = {
   'menu.expertiseCategory': 'Expertise Category',
   'menu.expertise-category': 'Expertise Category',
 
-  'menu.skills': 'Skills',
+  'menu.language': 'language',
+  'menu.language-level': 'language-level',
 
   'menu.country': 'Country',
 
@@ -168,4 +169,8 @@ module.exports = {
   'hubbers-team.title': 'Hubbers Team',
 
   'country.title': 'Country',
+
+  'language.title': 'Language',
+
+  'language-level.title': 'Language Level',
 };

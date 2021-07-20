@@ -25,7 +25,7 @@ import {
 
 const getAllCountryAsync = async () => {
   return api
-    .get(`country`)
+    .get(`/country/`)
     .then((res) => res)
     .catch((error) => error);
 };
@@ -45,7 +45,7 @@ function* GetAllCountry() {
 
 const getSingleCountryAsync = async (payload) => {
   await api
-    .get(`country/${payload.payload}`)
+    .get(`/country/${payload.payload}`)
     .then((res) => res)
     .catch((error) => error);
 };
