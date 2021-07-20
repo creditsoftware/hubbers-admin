@@ -5,6 +5,7 @@ import {
   Separator,
 } from '../../../../components/common/CustomBootstrap';
 import Breadcrumb from '../../../../containers/navs/Breadcrumb';
+import ExpertiseCategoryList from './list';
 
 const ExpertiseCategory = ({ match }) => (
   <>
@@ -15,7 +16,13 @@ const ExpertiseCategory = ({ match }) => (
       </Colxx>
     </Row>
     <Row>
-      <Colxx xxs="12" className="mb-4" />
+      <Colxx xxs="12" className="mb-4">
+        <div>
+          <div className="country-list" style={{ marginTop: 10 }}>
+            <ExpertiseCategoryList />
+          </div>
+        </div>
+      </Colxx>
     </Row>
   </>
 );

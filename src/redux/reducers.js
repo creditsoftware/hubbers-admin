@@ -16,6 +16,7 @@ import admins from './admin/reducer';
 import adminRole from './admin-role/reducer';
 import basicTypeCategory from './options/basic-type-category/reducer';
 import basicType from './options/basic-type/reducer';
+import expertiseCategory from './options/expertise-category/reducer';
 import country from './options/country/reducer';
 import hubbersTeam from './hubbers-team/reducer';
 
@@ -37,6 +38,7 @@ const reducers = combineReducers({
   // options
   basicTypeCategory,
   basicType,
+  expertiseCategory,
   country,
   communityAll,
   hubbersTeam,

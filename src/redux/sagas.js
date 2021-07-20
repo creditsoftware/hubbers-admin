@@ -17,6 +17,7 @@ import groupPrivacyOptionSaga from './community/groupPrivacyOption/saga';
 
 import basicTypeCategorySaga from './options/basic-type-category/saga';
 import basicTypeSaga from './options/basic-type/saga';
+import expertiseCategorySaga from './options/expertise-category/saga';
 import countrySaga from './options/country/saga';
 import hubbersTeam from './hubbers-team/saga';
 
@@ -29,6 +30,7 @@ export default function* rootSaga(getState) {
     userSaga(),
     basicTypeCategorySaga(),
     basicTypeSaga(),
+    expertiseCategorySaga(),
     communitySaga(),
     eventSaga(),
     topicSaga(),
