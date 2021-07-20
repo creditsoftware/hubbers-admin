@@ -42,6 +42,8 @@ export default function* rootSaga(getState) {
     groupSaga(),
     groupPrivacyOptionSaga(),
     countrySaga(),
+    languageSaga(),
+    languageLevelSaga(),
     hubbersTeam(),
   ]);
 }

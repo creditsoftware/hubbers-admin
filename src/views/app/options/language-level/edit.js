@@ -5,6 +5,8 @@ import { Drawer, Form, Button, Col, Input, Select, Tooltip } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
 
+const { TextArea } = Input;
+
 const EditLanguageLevel = ({ id, data }) => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
@@ -75,7 +77,7 @@ const EditLanguageLevel = ({ id, data }) => {
                 name="description"
                 label="Description"
               >
-                <Input placeholder="Please choose the Description" />
+                <TextArea placeholder="Please choose the Description" />
               </Form.Item>
             </Col>
           </Row>

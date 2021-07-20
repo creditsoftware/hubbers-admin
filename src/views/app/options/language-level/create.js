@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Row } from 'reactstrap';
-import { Drawer, Form, Button, Col, Input, Select } from 'antd';
+import { Drawer, Form, Button, Col, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
 
-const { Option } = Select;
+const { TextArea } = Input;
 
 const CreateLanguage = () => {
+  const [form] = Form.useForm();
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const showDrawer = () => {
@@ -16,20 +17,21 @@ const CreateLanguage = () => {
 
   const onClose = () => {
     setVisible(false);
+    form.resetFields();
   };
 
   const onSubmit = (values) => {
-    dispatch(Actions.createLanguage(values));
+    dispatch(Actions.createLanguageLevel(values));
     onClose();
   };
 
   return (
     <>
       <Button type="primary" onClick={showDrawer}>
-        <PlusOutlined /> Create New Language
+        <PlusOutlined /> Create New Language Level
       </Button>
       <Drawer
-        title="Create a New Language"
+        title="Create a New Language Level"
         width={500}
         onClose={onClose}
         visible={visible}
@@ -37,50 +39,34 @@ const CreateLanguage = () => {
       >
         <Form
           layout="vertical"
+          form={form}
           hideRequiredMark
           onFinish={onSubmit}
-          className="p-4 mt-4"
+          className="px-4 py-5 mt-5"
         >
-          <Row>
-            <Col span={24}>
-              <Form.Item
-                name="code"
-                label="Language Code"
-                rules={[
-                  { required: true, message: 'Please enter Language Code' },
-                ]}
-              >
-                <Input placeholder="Please enter Language Code" />
-              </Form.Item>
-            </Col>
-          </Row>
-
           <Row gutter={16}>
             <Col span={24}>
               <Form.Item
                 name="name"
-                label="Language Name"
+                label="Language Level Name"
                 rules={[
                   {
                     required: true,
-                    message: 'Please enter Language Name',
+                    message: 'Please enter Language Level Name',
                   },
                 ]}
               >
-                <Input placeholder="Please enter Language Name" />
+                <Input placeholder="Please enter Language Level Name" />
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={16}>
             <Col span={24}>
               <Form.Item
-                name="nativeName"
-                label="Native Name"
-                rules={[
-                  { required: true, message: 'Please enter a Native Name' },
-                ]}
+                name="description"
+                label="Description"
               >
-                <Input placeholder="Please enter the Native Name" />
+                <TextArea rows={3} placeholder="Please enter the Description" />
               </Form.Item>
             </Col>
           </Row>

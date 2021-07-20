@@ -12,7 +12,7 @@ const Language = ({ match }) => {
     <>
       <Row>
         <Colxx xxs="12">
-          <Breadcrumb heading="language.title" match={match} />
+          <Breadcrumb heading="language-level.title" match={match} />
           <Separator className="mb-5" />
         </Colxx>
       </Row>

@@ -8,6 +8,7 @@ import * as Actions from '../../../../redux/actions';
 const { Option } = Select;
 
 const CreateLanguage = () => {
+  const [form] = Form.useForm();
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const showDrawer = () => {
@@ -16,6 +17,7 @@ const CreateLanguage = () => {
 
   const onClose = () => {
     setVisible(false);
+    form.resetFields();
   };
 
   const onSubmit = (values) => {
@@ -38,6 +40,7 @@ const CreateLanguage = () => {
         <Form
           layout="vertical"
           hideRequiredMark
+          form={form}
           onFinish={onSubmit}
           className="p-4 mt-4"
         >
