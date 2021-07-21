@@ -4,6 +4,7 @@ import { Row } from 'reactstrap';
 import { Drawer, Form, Button, Col, Input, Select, Tooltip } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
+import basicTypeCategory from '../../../../constants/basicTypeCategory';
 
 const { Option } = Select;
 
@@ -16,7 +17,7 @@ const EditCountry = ({ id, data, category }) => {
     if (filterData.length > 0) {
       form.setFieldsValue({
         name: filterData[0].name,
-        categoryId: filterData[0].categoryId,
+        category: filterData[0].category,
       });
     }
     setVisible(true);
@@ -71,17 +72,17 @@ const EditCountry = ({ id, data, category }) => {
           <Row gutter={16}>
             <Col span={24}>
               <Form.Item
-                name="categoryId"
+                name="category"
                 label="Type Category"
                 rules={[
                   { required: true, message: 'Please choose a Type Category' },
                 ]}
               >
                 <Select placeholder="Please choose the Type Category">
-                  {category.map((item) => {
+                  {basicTypeCategory.map((item) => {
                     return (
-                      <Option key={item.id} value={item.id}>
-                        {item.name}
+                      <Option key={item} value={item}>
+                        {item}
                       </Option>
                     );
                   })}

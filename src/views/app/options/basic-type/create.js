@@ -4,6 +4,7 @@ import { Row } from 'reactstrap';
 import { Drawer, Form, Button, Col, Input, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
+import basicTypeCategory from '../../../../constants/basicTypeCategory';
 
 const { Option } = Select;
 
@@ -60,7 +61,7 @@ const CreateBasicType = ({ categoryList }) => {
           <Row>
             <Col span={24}>
               <Form.Item
-                name="categoryId"
+                name="category"
                 label="BasicType Category"
                 rules={[
                   {
@@ -70,10 +71,10 @@ const CreateBasicType = ({ categoryList }) => {
                 ]}
               >
                 <Select style={{ width: '100%' }} placeholder="Type Category">
-                  {categoryList?.map((item) => {
+                  {basicTypeCategory?.map((item) => {
                     return (
-                      <Option key={item.id} value={item.id}>
-                        {item.name}
+                      <Option key={item} value={item}>
+                        {item}
                       </Option>
                     );
                   })}

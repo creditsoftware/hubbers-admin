@@ -9,6 +9,7 @@ import {
 import * as Actions from '../../../../redux/actions';
 import CreateBasicType from './create';
 import EditBasicType from './edit';
+import basicTypeCategory from '../../../../constants/basicTypeCategory';
 
 const { Option } = Select;
 
@@ -16,7 +17,7 @@ const BasicTypeList = () => {
   const dispatch = useDispatch();
   const [basicTypeList, setBasicTypeList] = useState(null);
   const [categoryList, setCategoryList] = useState(null);
-  const [currentCategory, setCurrentCategory] = useState(null);
+  const [currentCategory, setCurrentCategory] = useState('product');
   const { list } = useSelector((state) => state.basicType);
   const { typeList } = useSelector((state) => state.basicTypeCategory);
   const [pagination, setPagenation] = React.useState({
@@ -33,7 +34,7 @@ const BasicTypeList = () => {
   }, [typeList]);
 
   useEffect(() => {
-    setCurrentCategory(typeList[0]?.id);
+    setCurrentCategory(typeList[0]);
   }, [categoryList, typeList]);
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const BasicTypeList = () => {
 
   useEffect(() => {
     if (basicTypeList?.length > 0) {
-      setCurrentCategory(basicTypeList[0].categoryId);
+      setCurrentCategory(basicTypeList[0].category);
     }
   }, [basicTypeList]);
 
@@ -106,10 +107,10 @@ const BasicTypeList = () => {
           placeholder="Type Category"
           value={currentCategory}
         >
-          {categoryList?.map((item) => {
+          {basicTypeCategory?.map((item) => {
             return (
-              <Option key={item.id} value={item.id}>
-                {item.name}
+              <Option key={item} value={item}>
+                {item}
               </Option>
             );
           })}

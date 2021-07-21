@@ -54,7 +54,7 @@ function* CreateBasicType(data) {
     const result = yield call(createBasicTypeAsync, data);
     if (result.success) {
       yield put(createBasicTypeSuccess(result.data));
-      yield put(getAllBasicType(data.payload.categoryId));
+      yield put(getAllBasicType(data.payload.category));
     } else {
       yield put(createBasicTypeError('Create Basic Type is not success!'));
     }
@@ -75,7 +75,7 @@ function* UpdateBasicType(data) {
     const result = yield call(updateBasicTypeAsync, data);
     if (result.success) {
       yield put(updateBasicTypeSuccess(result.data));
-      yield put(getAllBasicType(data.payload.categoryId));
+      yield put(getAllBasicType(data.payload.category));
     } else {
       yield put(updateBasicTypeError('Update Basic Type is not success!'));
     }

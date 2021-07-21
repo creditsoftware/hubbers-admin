@@ -3,7 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 const BasicType = React.lazy(() => import('./basic-type'));
 
-const BasicTypeCategory = React.lazy(() => import('./basic-type-category'));
+// const BasicTypeCategory = React.lazy(() => import('./basic-type-category'));
 
 const ExpertiseCategory = React.lazy(() => import('./expertise-category'));
 
@@ -18,10 +18,10 @@ const Options = ({ match }) => (
     <Switch>
       <Redirect exact from={`${match.url}/`} to={`${match.url}/basic-type`} />
 
-      <Route
+      {/* <Route
         path={`${match.url}/basic-type-category`}
         render={(props) => <BasicTypeCategory {...props} />}
-      />
+      /> */}
 
       <Route
         path={`${match.url}/basic-type`}

@@ -120,11 +120,11 @@ const data = [
     to: `${adminRoot}/options`,
     roles: [UserRole.Admin, UserRole.Editor],
     subs: [
-      {
-        icon: 'simple-icon-paper-plane',
-        label: 'menu.basicTypeCategory',
-        to: `${adminRoot}/options/basic-type-category`,
-      },
+      // {
+      //   icon: 'simple-icon-paper-plane',
+      //   label: 'menu.basicTypeCategory',
+      //   to: `${adminRoot}/options/basic-type-category`,
+      // },
       {
         icon: 'simple-icon-paper-plane',
         label: 'menu.basicType',
