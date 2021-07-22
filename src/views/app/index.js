@@ -42,6 +42,7 @@ const App = ({ match }) => {
               exact
               path={`${match.url}/admins`}
               render={(props) => <Admins {...props} />}
+              roles={[UserRole.Admin]}
             />
             <Route
               exact
@@ -80,11 +81,7 @@ const App = ({ match }) => {
               render={(props) => <Partner {...props} />}
             />
 
-            <ProtectedRoute
-              path={`${match.url}/options`}
-              component={Options}
-              roles={[UserRole.Admin]}
-            />
+            <ProtectedRoute path={`${match.url}/options`} component={Options} />
             <Route
               path={`${match.url}/blank-page`}
               render={(props) => <BlankPage {...props} />}

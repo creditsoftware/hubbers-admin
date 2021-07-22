@@ -27,6 +27,7 @@ const data = [
     id: 'admins',
     icon: 'iconsminds-user',
     label: 'menu.admins',
+    roles: [UserRole.Admin],
     to: `${adminRoot}/admins`,
   },
   {
@@ -118,7 +119,7 @@ const data = [
     icon: 'iconsminds-three-arrow-fork',
     label: 'menu.options',
     to: `${adminRoot}/options`,
-    roles: [UserRole.Admin, UserRole.Editor],
+    // roles: [UserRole.Admin, UserRole.Editor],
     subs: [
       // {
       //   icon: 'simple-icon-paper-plane',
