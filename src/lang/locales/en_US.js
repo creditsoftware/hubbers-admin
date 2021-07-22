@@ -72,8 +72,8 @@ module.exports = {
   'menu.expertiseCategory': 'Expertise Category',
   'menu.expertise-category': 'Expertise Category',
 
-  'menu.language': 'language',
-  'menu.language-level': 'language-level',
+  'menu.language': 'Language',
+  'menu.language-level': 'Language Level',
 
   'menu.country': 'Country',
 

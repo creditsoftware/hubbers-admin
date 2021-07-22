@@ -84,7 +84,7 @@ const logoutAsync = async () => {
   return api
     .post(`/auth/admin/signout`)
     .then((res) => {
-      console.log('logout result =>', res);
+      // console.log('logout result =>', res);
     })
     .catch((error) => error);
 };
