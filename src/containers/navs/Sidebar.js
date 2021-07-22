@@ -323,13 +323,11 @@ class Sidebar extends Component {
     return false;
   };
 
-  filteredList = (menuItems) => {
+  filteredList = (mi) => {
     const {
       currentUser: { role },
     } = this.props;
-    return menuItems.filter(
-      (x) => (x.roles && x.roles.includes(role)) || !x.roles
-    );
+    return mi.filter((x) => (x.roles && x.roles.includes(role)) || !x.roles);
   };
 
   render() {

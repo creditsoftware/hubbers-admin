@@ -76,7 +76,9 @@ const EditExpertiseCategory = ({ id, data, type }) => {
                 <Input
                   placeholder="Please enter Name"
                   onChange={(e) =>
-                    form.setFieldsValue({ slug: slugify(e.target.value + ` ${type}`) })
+                    form.setFieldsValue({
+                      slug: slugify(`${e.target.value} ${type}`),
+                    })
                   }
                 />
               </Form.Item>
@@ -111,14 +113,8 @@ const EditExpertiseCategory = ({ id, data, type }) => {
           </Row>
           <Row gutter={16}>
             <Col span={24}>
-              <Form.Item
-                name="description"
-                label="Description"
-              >
-                <TextArea
-                  rows={3}
-                  placeholder="Please enter Description"
-                />
+              <Form.Item name="description" label="Description">
+                <TextArea rows={3} placeholder="Please enter Description" />
               </Form.Item>
             </Col>
           </Row>

@@ -22,12 +22,13 @@ const MemberCreate = () => {
   };
 
   const onSubmit = (values) => {
+    let v = { ...values };
     if (values.terminatedDate) {
-      values.isTerminated = true;
+      v = { ...v, isTerminated: true };
     } else {
-      values.isTerminated = false;
+      v = { ...v, isTerminated: false };
     }
-    dispatch(Actions.createHubbersTeam(values));
+    dispatch(Actions.createHubbersTeam(v));
     onClose();
   };
 

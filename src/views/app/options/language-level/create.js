@@ -62,10 +62,7 @@ const CreateLanguage = () => {
           </Row>
           <Row gutter={16}>
             <Col span={24}>
-              <Form.Item
-                name="description"
-                label="Description"
-              >
+              <Form.Item name="description" label="Description">
                 <TextArea rows={3} placeholder="Please enter the Description" />
               </Form.Item>
             </Col>

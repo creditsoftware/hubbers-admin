@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Row } from 'reactstrap';
-import { Drawer, Form, Button, Col, Input, Select, Tooltip } from 'antd';
+import { Drawer, Form, Button, Col, Input, Tooltip } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
 

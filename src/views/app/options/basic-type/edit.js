@@ -8,7 +8,7 @@ import basicTypeCategory from '../../../../constants/basicTypeCategory';
 
 const { Option } = Select;
 
-const EditCountry = ({ id, data, category }) => {
+const EditCountry = ({ id, data }) => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();

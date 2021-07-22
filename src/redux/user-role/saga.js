@@ -1,13 +1,6 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import api from '../../ApiConfig';
-import history from '../../history';
-import {
-  CREATE_USER_ROLE,
-  GET_ALL_USER_ROLES,
-  GET_USER_ROLE,
-  UPDATE_USER_ROLE,
-  DELETE_USER_ROLE,
-} from '../types/user-role';
+import { GET_ALL_USER_ROLES } from '../types/user-role';
 
 import { getAllUserRolesSuccess, getAllUserRolesError } from './actions';
 

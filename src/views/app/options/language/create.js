@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Row } from 'reactstrap';
-import { Drawer, Form, Button, Col, Input, Select } from 'antd';
+import { Drawer, Form, Button, Col, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
-
-const { Option } = Select;
 
 const CreateLanguage = () => {
   const [form] = Form.useForm();

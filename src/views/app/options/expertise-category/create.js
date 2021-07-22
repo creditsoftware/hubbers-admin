@@ -10,7 +10,13 @@ import * as Actions from '../../../../redux/actions';
 
 const { TextArea } = Input;
 
-const CreateExpertiseCategory = ({ type, parentId, size, buttonContent, tooltip }) => {
+const CreateExpertiseCategory = ({
+  type,
+  parentId,
+  size,
+  buttonContent,
+  tooltip,
+}) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
@@ -24,7 +30,13 @@ const CreateExpertiseCategory = ({ type, parentId, size, buttonContent, tooltip 
   };
 
   const onSubmit = (values) => {
-    dispatch(Actions.createExpertiseCategory({...values, parentId, categoryType: type}));
+    dispatch(
+      Actions.createExpertiseCategory({
+        ...values,
+        parentId,
+        categoryType: type,
+      })
+    );
     onClose();
   };
 
@@ -32,7 +44,8 @@ const CreateExpertiseCategory = ({ type, parentId, size, buttonContent, tooltip 
     <>
       <Tooltip title={tooltip}>
         <Button type="primary" onClick={showDrawer} size={size}>
-          <PlusOutlined />{buttonContent}
+          <PlusOutlined />
+          {buttonContent}
         </Button>
       </Tooltip>
       <Drawer
@@ -64,7 +77,9 @@ const CreateExpertiseCategory = ({ type, parentId, size, buttonContent, tooltip 
                 <Input
                   placeholder="Please enter Name"
                   onChange={(e) =>
-                    form.setFieldsValue({ slug: slugify(e.target.value + ` ${type}`) })
+                    form.setFieldsValue({
+                      slug: slugify(`${e.target.value} ${type}`),
+                    })
                   }
                 />
               </Form.Item>
@@ -99,14 +114,8 @@ const CreateExpertiseCategory = ({ type, parentId, size, buttonContent, tooltip 
           </Row>
           <Row gutter={16}>
             <Col span={24}>
-              <Form.Item
-                name="description"
-                label="Description"
-              >
-                <TextArea
-                  rows={3}
-                  placeholder="Please enter Description"
-                />
+              <Form.Item name="description" label="Description">
+                <TextArea rows={3} placeholder="Please enter Description" />
               </Form.Item>
             </Col>
           </Row>

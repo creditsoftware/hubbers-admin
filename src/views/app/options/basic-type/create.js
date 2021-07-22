@@ -8,7 +8,7 @@ import basicTypeCategory from '../../../../constants/basicTypeCategory';
 
 const { Option } = Select;
 
-const CreateBasicType = ({ categoryList }) => {
+const CreateBasicType = () => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [visible, setVisible] = useState(false);

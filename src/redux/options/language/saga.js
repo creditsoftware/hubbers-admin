@@ -36,7 +36,9 @@ function* GetAllLanguage() {
     if (result.status === 200 && result.statusText === 'OK') {
       yield put(getAllLanguageSuccess(result.data.data));
     } else {
-      yield put(getAllLanguageError('Get All Language Response is not success!'));
+      yield put(
+        getAllLanguageError('Get All Language Response is not success!')
+      );
     }
   } catch (error) {
     yield put(getAllLanguageError('Get All Language Error !'));
@@ -81,7 +83,9 @@ function* CreateLanguage(payload) {
       yield put(createLanguageSuccess(result.data.data));
       yield put(getAllLanguage());
     } else {
-      yield put(createLanguageError('Create Language Response is not success!'));
+      yield put(
+        createLanguageError('Create Language Response is not success!')
+      );
     }
   } catch (error) {
     console.log(error);
@@ -106,7 +110,9 @@ function* UpdateLanguage(payload) {
       yield put(updateLanguageSuccess(result.data.data));
       yield put(getAllLanguage());
     } else {
-      yield put(updateLanguageError('Update Language Response is not success!'));
+      yield put(
+        updateLanguageError('Update Language Response is not success!')
+      );
     }
   } catch (error) {
     console.log(error);
@@ -130,7 +136,9 @@ function* DeleteLanguage(payload) {
       yield put(deleteLanguageSuccess());
       yield put(getAllLanguage());
     } else {
-      yield put(deleteLanguageError('Delete Language Response is not success!'));
+      yield put(
+        deleteLanguageError('Delete Language Response is not success!')
+      );
     }
   } catch (error) {
     console.log(error);

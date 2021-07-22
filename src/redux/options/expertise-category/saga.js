@@ -35,7 +35,9 @@ function* GetAllExpertiseCategory() {
     if (result.success) {
       yield put(getAllExpertiseCategorySuccess(result.data));
     } else {
-      yield put(getAllExpertiseCategoryError('Get All Users Response is not success!'));
+      yield put(
+        getAllExpertiseCategoryError('Get All Users Response is not success!')
+      );
     }
   } catch (error) {
     yield put(getAllExpertiseCategoryError('Get All Users Error !'));
@@ -56,7 +58,11 @@ function* CreateExpertiseCategory(data) {
       yield put(createExpertiseCategorySuccess(result.data));
       yield put(getAllExpertiseCategory());
     } else {
-      yield put(createExpertiseCategoryError('Create Expertise Category is not success!'));
+      yield put(
+        createExpertiseCategoryError(
+          'Create Expertise Category is not success!'
+        )
+      );
     }
   } catch (error) {
     console.log('error =>', error);
@@ -77,7 +83,11 @@ function* UpdateExpertiseCategory(data) {
       yield put(updateExpertiseCategorySuccess(result.data));
       yield put(getAllExpertiseCategory());
     } else {
-      yield put(updateExpertiseCategoryError('Update Expertise Category is not success!'));
+      yield put(
+        updateExpertiseCategoryError(
+          'Update Expertise Category is not success!'
+        )
+      );
     }
   } catch (error) {
     console.log('error =>', error);
@@ -98,7 +108,11 @@ function* DeleteExpertiseCategory(data) {
       yield put(deleteExpertiseCategorySuccess(result));
       yield put(getAllExpertiseCategory());
     } else {
-      yield put(deleteExpertiseCategoryError('Delete Expertise Category is not success!'));
+      yield put(
+        deleteExpertiseCategoryError(
+          'Delete Expertise Category is not success!'
+        )
+      );
     }
   } catch (error) {
     console.log('error =>', error);
@@ -119,7 +133,9 @@ function* OrderExpertiseCategory(data) {
       yield put(orderExpertiseCategorySuccess(result));
       yield put(getAllExpertiseCategory());
     } else {
-      yield put(orderExpertiseCategoryError('Order Expertise Category is not success!'));
+      yield put(
+        orderExpertiseCategoryError('Order Expertise Category is not success!')
+      );
     }
   } catch (error) {
     console.log('error =>', error);

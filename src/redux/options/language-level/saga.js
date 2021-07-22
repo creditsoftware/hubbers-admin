@@ -36,7 +36,11 @@ function* GetAllLanguageLevel() {
     if (result.status === 200 && result.statusText === 'OK') {
       yield put(getAllLanguageLevelSuccess(result.data.data));
     } else {
-      yield put(getAllLanguageLevelError('Get All LanguageLevel Response is not success!'));
+      yield put(
+        getAllLanguageLevelError(
+          'Get All LanguageLevel Response is not success!'
+        )
+      );
     }
   } catch (error) {
     yield put(getAllLanguageLevelError('Get All LanguageLevel Error !'));
@@ -57,7 +61,9 @@ function* GetSingleLanguageLevel(payload) {
       yield put(getSingleLanguageLevelSuccess(result.data.data));
     } else {
       yield put(
-        getSingleLanguageLevelError('Get Single LanguageLevel Response is not success!')
+        getSingleLanguageLevelError(
+          'Get Single LanguageLevel Response is not success!'
+        )
       );
     }
   } catch (error) {
@@ -81,7 +87,11 @@ function* CreateLanguageLevel(payload) {
       yield put(createLanguageLevelSuccess(result.data.data));
       yield put(getAllLanguageLevel());
     } else {
-      yield put(createLanguageLevelError('Create LanguageLevel Response is not success!'));
+      yield put(
+        createLanguageLevelError(
+          'Create LanguageLevel Response is not success!'
+        )
+      );
     }
   } catch (error) {
     console.log(error);
@@ -106,7 +116,11 @@ function* UpdateLanguageLevel(payload) {
       yield put(updateLanguageLevelSuccess(result.data.data));
       yield put(getAllLanguageLevel());
     } else {
-      yield put(updateLanguageLevelError('Update LanguageLevel Response is not success!'));
+      yield put(
+        updateLanguageLevelError(
+          'Update LanguageLevel Response is not success!'
+        )
+      );
     }
   } catch (error) {
     console.log(error);
@@ -130,7 +144,11 @@ function* DeleteLanguageLevel(payload) {
       yield put(deleteLanguageLevelSuccess());
       yield put(getAllLanguageLevel());
     } else {
-      yield put(deleteLanguageLevelError('Delete LanguageLevel Response is not success!'));
+      yield put(
+        deleteLanguageLevelError(
+          'Delete LanguageLevel Response is not success!'
+        )
+      );
     }
   } catch (error) {
     console.log(error);
