@@ -17,7 +17,7 @@ import {
   Space,
   Tooltip,
 } from 'antd';
-import { EditOutlined } from '@ant-design/icons';
+import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
 import { slugify } from '../../../../helpers/Utils';
 import { EventRepeatPeriod } from '../../../../constants/eventRepeatPeriod';
@@ -97,7 +97,15 @@ const EditEvent = ({ id, data }) => {
         date: moment(ed.customRepeatPeriod.date),
       };
     }
-    form.setFieldsValue({ ...ed });
+    let schedules = [];
+    if (ed.schedules) {
+      schedules = [...ed.schedules];
+      schedules = schedules.map((s) => {
+        return { ...s, time: s.time ? moment(s.time, 'HH:mm:ss') : '' };
+      });
+      delete ed.schedules;
+    }
+    form.setFieldsValue({ ...ed, schedules: [...schedules] });
   };
 
   const onClose = () => {
@@ -106,7 +114,7 @@ const EditEvent = ({ id, data }) => {
   };
 
   const updateEvent = (values) => {
-    const uData = {
+    let uData = {
       id,
       ...values,
       ...dateTime,
@@ -117,6 +125,14 @@ const EditEvent = ({ id, data }) => {
       },
       eventType,
     };
+    if (uData.schedules) {
+      let schedules = [...uData.schedules];
+      schedules = schedules.map((s) => {
+        return { ...s, time: s.time.format('HH:mm:ss') };
+      });
+      delete uData.schedules;
+      uData = { ...uData, schedules: [...schedules] };
+    }
     dispatch(Actions.updateEvent(uData));
     onClose();
   };
@@ -812,6 +828,138 @@ const EditEvent = ({ id, data }) => {
                 placeholder="Creator"
               />
             </Form.Item>
+            <Form.List name="speakers">
+              {(fields, { add, remove }) => (
+                <>
+                  {fields.map((field) => (
+                    <React.Fragment key={field.key}>
+                      <Row>
+                        <Col md={11}>
+                          <p className="mb-2 mt-4 fw-6">Name</p>
+                          <Form.Item
+                            {...field}
+                            name={[field.name, 'name']}
+                            fieldKey={[field.fieldKey, 'name']}
+                            rules={[
+                              { required: true, message: 'Name is required' },
+                            ]}
+                          >
+                            <Input type="text" placeholder="Name" />
+                          </Form.Item>
+                        </Col>
+                        <Col lg={2} md={2} sm={2} />
+                        <Col md={11}>
+                          <p className="mb-2 mt-4 fw-6">Position</p>
+                          <Form.Item
+                            {...field}
+                            name={[field.name, 'position']}
+                            fieldKey={[field.fieldKey, 'position']}
+                            rules={[
+                              {
+                                required: true,
+                                message: 'Position is required',
+                              },
+                            ]}
+                          >
+                            <Input type="text" placeholder="position" />
+                          </Form.Item>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col md={11}>
+                          <p className="mb-2 mt-4 fw-6">Bio</p>
+                          <Form.Item
+                            {...field}
+                            name={[field.name, 'bio']}
+                            fieldKey={[field.fieldKey, 'bio']}
+                          >
+                            <TextArea placeholder="bio" />
+                          </Form.Item>
+                        </Col>
+                        <Col lg={2} md={2} sm={2} />
+                        <Col md={11}>
+                          <Form.Item
+                            {...field}
+                            name={[field.name, 'imageUrl']}
+                            fieldKey={[field.fieldKey, 'imageUrl']}
+                          >
+                            <UploadImage />
+                          </Form.Item>
+                        </Col>
+                      </Row>
+                      <div className="text-right mb-3">
+                        <Button danger onClick={() => remove(field.name)}>
+                          Remove
+                        </Button>
+                      </div>
+                    </React.Fragment>
+                  ))}
+
+                  <Form.Item>
+                    <Button
+                      type="dashed"
+                      onClick={() => add()}
+                      block
+                      icon={<PlusOutlined />}
+                    >
+                      Add Speaker
+                    </Button>
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
+            <Form.List name="schedules">
+              {(fields, { add, remove }) => (
+                <>
+                  {fields.map((field) => (
+                    <React.Fragment key={field.key}>
+                      <Row>
+                        <Col md={11}>
+                          <p className="mb-2 mt-4 fw-6">Time</p>
+                          <Form.Item
+                            {...field}
+                            name={[field.name, 'time']}
+                            fieldKey={[field.fieldKey, 'time']}
+                            rules={[
+                              { required: true, message: 'Name is required' },
+                            ]}
+                          >
+                            <TimePicker style={{ width: '100%' }} />
+                          </Form.Item>
+                        </Col>
+                        <Col lg={2} md={2} sm={2} />
+                        <Col md={11}>
+                          <p className="mb-2 mt-4 fw-6">Description</p>
+                          <Form.Item
+                            {...field}
+                            name={[field.name, 'description']}
+                            fieldKey={[field.fieldKey, 'description']}
+                          >
+                            <TextArea placeholder="description" />
+                          </Form.Item>
+                        </Col>
+                      </Row>
+                      <div className="text-right mb-3">
+                        <Button danger onClick={() => remove(field.name)}>
+                          Remove
+                        </Button>
+                      </div>
+                    </React.Fragment>
+                  ))}
+
+                  <Form.Item>
+                    <Button
+                      type="dashed"
+                      onClick={() => add()}
+                      block
+                      icon={<PlusOutlined />}
+                    >
+                      Add Schedule
+                    </Button>
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
             <Row style={{ flexDirection: 'row-reverse' }}>
               <Form.Item>
                 <Button type="primary" htmlType="submit">
