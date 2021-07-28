@@ -71,9 +71,9 @@ const EditUser = () => {
         nationality: singleUser.detail?.nationality,
         joinedDate: moment(singleUser.detail?.joinedDate),
         location: {
-          country: singleUser.detail?.location.country,
-          state: singleUser.detail?.location.state,
-          city: singleUser.detail?.location.city,
+          country: singleUser.detail?.location?.country,
+          state: singleUser.detail?.location?.state,
+          city: singleUser.detail?.location?.city,
         },
         education: singleUser.detail?.education,
       });
