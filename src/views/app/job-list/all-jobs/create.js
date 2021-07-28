@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Drawer, Form, Button, Input, Select, DatePicker } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { slugify } from '../../../../helpers/Utils';
@@ -8,14 +8,22 @@ import CountrySelect from '../../../../components/util-components/selector/Count
 import UserSelect from '../../../../components/util-components/selector/UserSelect';
 import CKEditor5 from '../../../../components/util-components/CkEditor';
 
-const { TextArea } = Input;
 const { Option } = Select;
 
 const JobCreate = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
+  const [skillList, setSkillList] = useState(null);
+  const { skills } = useSelector((state) => state.expertiseCategory);
 
+  useEffect(() => {
+    dispatch(Actions.getAllSkill());
+  }, [dispatch]);
+
+  useEffect(() => {
+    setSkillList(skills);
+  }, [skills]);
   const showDrawer = () => {
     setVisible(true);
   };
@@ -119,6 +127,36 @@ const JobCreate = () => {
           </Form.Item>
           <Form.Item name="companyName" label="Company Name">
             <Input placeholder="please enter Company Name" />
+          </Form.Item>
+          <Form.Item
+            name="neededSkill"
+            label="Needed Skills"
+            rules={[{ required: true, message: 'Please select needed skills' }]}
+          >
+            <Select mode="multiple">
+              {skillList?.map((item) => {
+                return (
+                  <Option key={item.id} value={item.id}>
+                    {item.name}
+                  </Option>
+                );
+              })}
+            </Select>
+          </Form.Item>
+          <Form.Item
+            name="skill"
+            label="Skills you will learn"
+            rules={[{ required: true, message: 'Please select needed skills' }]}
+          >
+            <Select mode="multiple">
+              {skillList?.map((item) => {
+                return (
+                  <Option key={item.id} value={item.id}>
+                    {item.name}
+                  </Option>
+                );
+              })}
+            </Select>
           </Form.Item>
           <Form.Item
             name="postedBy"
