@@ -21,7 +21,9 @@ import expertiseCategorySaga from './options/expertise-category/saga';
 import countrySaga from './options/country/saga';
 import languageSaga from './options/language/saga';
 import languageLevelSaga from './options/language-level/saga';
-import hubbersTeam from './hubbers-team/saga';
+import hubbersTeamSaga from './hubbers-team/saga';
+import jobSaga from './job/job/saga';
+import jobCategorySaga from './job/job-category/saga';
 
 export default function* rootSaga(getState) {
   yield all([
@@ -44,6 +46,8 @@ export default function* rootSaga(getState) {
     countrySaga(),
     languageSaga(),
     languageLevelSaga(),
-    hubbersTeam(),
+    hubbersTeamSaga(),
+    jobSaga(),
+    jobCategorySaga(),
   ]);
 }

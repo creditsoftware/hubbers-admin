@@ -109,7 +109,7 @@ const data = [
       {
         icon: 'simple-icon-paper-plane',
         label: 'menu.all-jobs',
-        to: `${adminRoot}/job-list/all`,
+        to: `${adminRoot}/job-list/all-jobs`,
       },
     ],
   },

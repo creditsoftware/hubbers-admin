@@ -4,6 +4,7 @@ import api from '../../../ApiConfig';
 import {
   CREATE_EXPERTISE_CATEGORY,
   GET_ALL_EXPERTISE_CATEGORY,
+  GET_ALL_SKILL,
   UPDATE_EXPERTISE_CATEGORY,
   DELETE_EXPERTISE_CATEGORY,
   ORDER_EXPERTISE_CATEGORY,
@@ -11,10 +12,12 @@ import {
 
 import {
   getAllExpertiseCategory,
-  createExpertiseCategorySuccess,
-  createExpertiseCategoryError,
   getAllExpertiseCategorySuccess,
   getAllExpertiseCategoryError,
+  getAllSkillSuccess,
+  getAllSkillError,
+  createExpertiseCategorySuccess,
+  createExpertiseCategoryError,
   updateExpertiseCategorySuccess,
   updateExpertiseCategoryError,
   deleteExpertiseCategorySuccess,
@@ -41,6 +44,25 @@ function* GetAllExpertiseCategory() {
     }
   } catch (error) {
     yield put(getAllExpertiseCategoryError('Get All Users Error !'));
+  }
+}
+
+const getAllSkillAsync = async () =>
+  api
+    .get(`/expertise-category/skill`)
+    .then((res) => res.data)
+    .catch((error) => error);
+
+function* GetAllSkill() {
+  try {
+    const result = yield call(getAllSkillAsync);
+    if (result.success) {
+      yield put(getAllSkillSuccess(result.data));
+    } else {
+      yield put(getAllSkillError('Get All Skills Response is not success!'));
+    }
+  } catch (error) {
+    yield put(getAllSkillError('Get All Skills Error !'));
   }
 }
 
@@ -145,6 +167,9 @@ function* OrderExpertiseCategory(data) {
 export function* watchGetAllExpertiseCategory() {
   yield takeEvery(GET_ALL_EXPERTISE_CATEGORY, GetAllExpertiseCategory);
 }
+export function* watchGetAllSkill() {
+  yield takeEvery(GET_ALL_SKILL, GetAllSkill);
+}
 export function* watchCreateExpertiseCategory() {
   yield takeEvery(CREATE_EXPERTISE_CATEGORY, CreateExpertiseCategory);
 }
@@ -161,6 +186,7 @@ export function* watchOrderExpertiseCategory() {
 export default function* rootSaga() {
   yield all([
     fork(watchGetAllExpertiseCategory),
+    fork(watchGetAllSkill),
     fork(watchCreateExpertiseCategory),
     fork(watchUpdateExpertiseCategory),
     fork(watchDeleteExpertiseCategory),

@@ -22,6 +22,7 @@ const Teams = React.lazy(() => import('./teams'));
 const Partner = React.lazy(() => import('./partner'));
 
 const Options = React.lazy(() => import('./options'));
+const JobList = React.lazy(() => import('./job-list'));
 const BlankPage = React.lazy(() => import('./blank-page'));
 const App = ({ match }) => {
   return (
@@ -82,6 +83,12 @@ const App = ({ match }) => {
             />
 
             <ProtectedRoute path={`${match.url}/options`} component={Options} />
+
+            <Route
+              path={`${match.url}/job-list`}
+              render={(props) => <JobList {...props} />}
+            />
+
             <Route
               path={`${match.url}/blank-page`}
               render={(props) => <BlankPage {...props} />}

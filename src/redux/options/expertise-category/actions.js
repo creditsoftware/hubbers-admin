@@ -5,6 +5,9 @@ import {
   GET_ALL_EXPERTISE_CATEGORY,
   GET_ALL_EXPERTISE_CATEGORY_SUCCESS,
   GET_ALL_EXPERTISE_CATEGORY_ERROR,
+  GET_ALL_SKILL,
+  GET_ALL_SKILL_SUCCESS,
+  GET_ALL_SKILL_ERROR,
   UPDATE_EXPERTISE_CATEGORY,
   UPDATE_EXPERTISE_CATEGORY_SUCCESS,
   UPDATE_EXPERTISE_CATEGORY_ERROR,
@@ -28,6 +31,21 @@ export const getAllExpertiseCategorySuccess = (data) => ({
 
 export const getAllExpertiseCategoryError = (data) => ({
   type: GET_ALL_EXPERTISE_CATEGORY_ERROR,
+  payload: data,
+});
+
+// skill
+export const getAllSkill = () => ({
+  type: GET_ALL_SKILL,
+});
+
+export const getAllSkillSuccess = (data) => ({
+  type: GET_ALL_SKILL_SUCCESS,
+  payload: data,
+});
+
+export const getAllSkillError = (data) => ({
+  type: GET_ALL_SKILL_ERROR,
   payload: data,
 });
 
