@@ -21,6 +21,8 @@ import country from './options/country/reducer';
 import language from './options/language/reducer';
 import languageLevel from './options/language-level/reducer';
 import hubbersTeam from './hubbers-team/reducer';
+import job from './job/job/reducer';
+import jobCategory from './job/job-category/reducer';
 
 const reducers = combineReducers({
   menu,
@@ -46,6 +48,8 @@ const reducers = combineReducers({
   languageLevel,
   communityAll,
   hubbersTeam,
+  job,
+  jobCategory,
 });
 
 export default reducers;

@@ -2,6 +2,9 @@ import {
   GET_ALL_EXPERTISE_CATEGORY,
   GET_ALL_EXPERTISE_CATEGORY_SUCCESS,
   GET_ALL_EXPERTISE_CATEGORY_ERROR,
+  GET_ALL_SKILL,
+  GET_ALL_SKILL_SUCCESS,
+  GET_ALL_SKILL_ERROR,
   CREATE_EXPERTISE_CATEGORY,
   CREATE_EXPERTISE_CATEGORY_SUCCESS,
   CREATE_EXPERTISE_CATEGORY_ERROR,
@@ -19,6 +22,7 @@ import {
 const INIT_STATE = {
   loading: false,
   list: [],
+  skills: [],
   error: '',
 };
 
@@ -44,6 +48,15 @@ export default (state = INIT_STATE, action) => {
       return { ...state, loading: false, list: action.payload };
 
     case GET_ALL_EXPERTISE_CATEGORY_ERROR:
+      return { ...state, loading: false, error: action.payload };
+
+    case GET_ALL_SKILL:
+      return { ...state, loading: true };
+
+    case GET_ALL_SKILL_SUCCESS:
+      return { ...state, loading: false, skills: action.payload };
+
+    case GET_ALL_SKILL_ERROR:
       return { ...state, loading: false, error: action.payload };
 
     case DELETE_EXPERTISE_CATEGORY:

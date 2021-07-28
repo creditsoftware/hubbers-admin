@@ -32,3 +32,5 @@ export * from './options/country/actions';
 export * from './options/language/actions';
 export * from './options/language-level/actions';
 export * from './hubbers-team/actions';
+export * from './job/job/actions';
+export * from './job/job-category/actions';

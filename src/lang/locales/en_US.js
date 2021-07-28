@@ -173,4 +173,8 @@ module.exports = {
   'language.title': 'Language',
 
   'language-level.title': 'Language Level',
+
+  'job-list.title': 'Job List',
+
+  'all-jobs.title': 'All Jobs',
 };
