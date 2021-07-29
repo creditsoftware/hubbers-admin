@@ -124,7 +124,7 @@ const deleteCommunityAsync = async (payload) => {
     .delete(`/community/${payload.payload}`)
     .then((res) => res)
     .catch((error) => error);
-}
+};
 
 function* DeleteCommunity(payload) {
   try {

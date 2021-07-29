@@ -14,13 +14,13 @@ class MyUploadAdapter {
     return this.loader.file.then(async (file) => {
       return new Promise((resolve, reject) => {
         this.onUpload(true);
-        this._initRequest();
+        this.initRequest();
         if (file.size > 2000000) {
           this.onUpload(false);
           reject();
         } else {
-          this._initListeners(resolve, reject, file);
-          this._sendRequest(file);
+          this.initListeners(resolve, reject, file);
+          this.sendRequest(file);
         }
       });
     });
@@ -32,13 +32,13 @@ class MyUploadAdapter {
     }
   }
 
-  _initRequest() {
+  initRequest() {
     const xhr = (this.xhr = new XMLHttpRequest());
     xhr.open('POST', this.url, true);
     xhr.responseType = 'json';
   }
 
-  _initListeners(resolve, reject, file) {
+  initListeners(resolve, reject, file) {
     const { xhr } = this;
     const { loader } = this;
     const genericErrorText = `Couldn't upload file: ${file.name}.`;
@@ -58,7 +58,7 @@ class MyUploadAdapter {
           response && response.error ? response.error.message : genericErrorText
         );
       }
-      resolve({
+      return resolve({
         default: response.location,
       });
     });
@@ -72,7 +72,7 @@ class MyUploadAdapter {
     }
   }
 
-  _sendRequest(file) {
+  sendRequest(file) {
     const data = new FormData();
     data.append('image', file);
     this.xhr.send(data);

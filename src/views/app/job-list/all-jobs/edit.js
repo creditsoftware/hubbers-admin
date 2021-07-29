@@ -36,10 +36,16 @@ const JobEdit = ({ id, data }) => {
         skill,
         neededSkill,
         neededSkill,
-        startDate: filterData[0].startDate?moment(filterData[0].startDate):'',
-        endDate: filterData[0].endDate?moment(filterData[0].endDate):'',
-        publishedFrom: filterData[0].publishedFrom?moment(filterData[0].publishedFrom):'',
-        publishedTo: filterData[0].publishedTo?moment(filterData[0].publishedTo):'',
+        startDate: filterData[0].startDate
+          ? moment(filterData[0].startDate)
+          : '',
+        endDate: filterData[0].endDate ? moment(filterData[0].endDate) : '',
+        publishedFrom: filterData[0].publishedFrom
+          ? moment(filterData[0].publishedFrom)
+          : '',
+        publishedTo: filterData[0].publishedTo
+          ? moment(filterData[0].publishedTo)
+          : '',
       });
     }
     setVisible(true);
@@ -93,13 +99,27 @@ const JobEdit = ({ id, data }) => {
           >
             <Input placeholder="Please enter Slug" disabled />
           </Form.Item>
-          <Form.Item name="description" label="Description" rules={[{ required: true, message: 'Please enter Description' }]}>
+          <Form.Item
+            name="description"
+            label="Description"
+            rules={[{ required: true, message: 'Please enter Description' }]}
+          >
             <CKEditor5 />
           </Form.Item>
-          <Form.Item name="responsibilities" label="Responsibilities" rules={[{ required: true, message: 'Please enter Responsibilities' }]}>
-            <CKEditor5/>
+          <Form.Item
+            name="responsibilities"
+            label="Responsibilities"
+            rules={[
+              { required: true, message: 'Please enter Responsibilities' },
+            ]}
+          >
+            <CKEditor5 />
           </Form.Item>
-          <Form.Item name="requirements" label="Requirements" rules={[{ required: true, message: 'Please enter Requirements' }]}>
+          <Form.Item
+            name="requirements"
+            label="Requirements"
+            rules={[{ required: true, message: 'Please enter Requirements' }]}
+          >
             <CKEditor5 />
           </Form.Item>
           <Form.Item
@@ -109,16 +129,32 @@ const JobEdit = ({ id, data }) => {
           >
             <CountrySelect />
           </Form.Item>
-          <Form.Item name="city" label="City" rules={[{ required: true, message: 'City required' }]}>
+          <Form.Item
+            name="city"
+            label="City"
+            rules={[{ required: true, message: 'City required' }]}
+          >
             <Input placeholder="Please enter City" />
           </Form.Item>
-          <Form.Item name="remote" label="Remote" rules={[{ required: true, message: 'Remote required' }]}>
+          <Form.Item
+            name="remote"
+            label="Remote"
+            rules={[{ required: true, message: 'Remote required' }]}
+          >
             <Input placeholder="Please enter Remote" />
           </Form.Item>
-          <Form.Item name="startDate" label="Start Date" rules={[{ required: true, message: 'Start Date required' }]}>
+          <Form.Item
+            name="startDate"
+            label="Start Date"
+            rules={[{ required: true, message: 'Start Date required' }]}
+          >
             <DatePicker style={{ width: '100%' }} />
           </Form.Item>
-          <Form.Item name="endDate" label="End Date" rules={[{ required: true, message: 'End Date required' }]}>
+          <Form.Item
+            name="endDate"
+            label="End Date"
+            rules={[{ required: true, message: 'End Date required' }]}
+          >
             <DatePicker style={{ width: '100%' }} />
           </Form.Item>
           <Form.Item
@@ -134,16 +170,32 @@ const JobEdit = ({ id, data }) => {
               <Option value="internship">Internship</Option>
             </Select>
           </Form.Item>
-          <Form.Item name="compensation" label="Compensation" rules={[{ required: true, message: 'Compensation required' }]}>
+          <Form.Item
+            name="compensation"
+            label="Compensation"
+            rules={[{ required: true, message: 'Compensation required' }]}
+          >
             <CKEditor5 />
           </Form.Item>
-          <Form.Item name="publishedFrom" label="Published From" rules={[{ required: true, message: 'Published From required' }]}>
+          <Form.Item
+            name="publishedFrom"
+            label="Published From"
+            rules={[{ required: true, message: 'Published From required' }]}
+          >
             <DatePicker style={{ width: '100%' }} />
           </Form.Item>
-          <Form.Item name="publishedTo" label="Published To" rules={[{ required: true, message: 'Published To required' }]}>
+          <Form.Item
+            name="publishedTo"
+            label="Published To"
+            rules={[{ required: true, message: 'Published To required' }]}
+          >
             <DatePicker style={{ width: '100%' }} />
           </Form.Item>
-          <Form.Item name="companyName" label="Company Name" rules={[{ required: true, message: 'Company required' }]}>
+          <Form.Item
+            name="companyName"
+            label="Company Name"
+            rules={[{ required: true, message: 'Company required' }]}
+          >
             <Input placeholder="please enter Company Name" />
           </Form.Item>
           <Form.Item
