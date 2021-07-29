@@ -34,6 +34,7 @@ const CountrySelect = ({ idValue = true, ...props }) => {
       filterOption={false}
       showSearch
       onSearch={onSearchCountry}
+      placeholder="Please choose the country"
       {...props}
     >
       {list &&
