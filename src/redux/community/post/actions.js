@@ -8,6 +8,9 @@ import {
   UPDATE_POST,
   UPDATE_POST_ERROR,
   UPDATE_POST_SUCCESS,
+  DELETE_POST,
+  DELETE_POST_ERROR,
+  DELETE_POST_SUCCESS,
 } from '../../types/community/post';
 
 export const getAllPost = () => ({
@@ -62,5 +65,19 @@ export const updatePostSuccess = (data) => ({
 
 export const updatePostError = (data) => ({
   type: UPDATE_POST_ERROR,
+  payload: data,
+});
+
+export const deletePost = (data) => ({
+  type: DELETE_POST,
+  payload: data,
+});
+export const deletePostSuccess = (data) => ({
+  type: DELETE_POST_SUCCESS,
+  payload: data,
+});
+
+export const deletePostError = (data) => ({
+  type: DELETE_POST_ERROR,
   payload: data,
 });

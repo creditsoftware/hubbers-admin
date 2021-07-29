@@ -8,6 +8,9 @@ import {
   UPDATE_MEMBER,
   UPDATE_MEMBER_ERROR,
   UPDATE_MEMBER_SUCCESS,
+  DELETE_MEMBER,
+  DELETE_MEMBER_ERROR,
+  DELETE_MEMBER_SUCCESS,
 } from '../../types/community/member';
 
 export const getAllMember = () => ({
@@ -55,6 +58,7 @@ export const updateMember = (data) => ({
   type: UPDATE_MEMBER,
   payload: data,
 });
+
 export const updateMemberSuccess = (data) => ({
   type: UPDATE_MEMBER_SUCCESS,
   payload: data,
@@ -62,5 +66,20 @@ export const updateMemberSuccess = (data) => ({
 
 export const updateMemberError = (data) => ({
   type: UPDATE_MEMBER_ERROR,
+  payload: data,
+});
+
+export const deleteMember = (data) => ({
+  type: DELETE_MEMBER,
+  payload: data,
+});
+
+export const deleteMemberSuccess = (data) => ({
+  type: DELETE_MEMBER_SUCCESS,
+  payload: data,
+});
+
+export const deleteMemberError = (data) => ({
+  type: DELETE_MEMBER_ERROR,
   payload: data,
 });

@@ -4,6 +4,7 @@ import {
   GET_ALL_POST,
   CREATE_POST,
   UPDATE_POST,
+  DELETE_POST,
 } from '../../types/community/post';
 
 import {
@@ -14,6 +15,8 @@ import {
   createPostError,
   updatePostSuccess,
   updatePostError,
+  deletePostSuccess,
+  deletePostError,
 } from './actions';
 
 const getAllPostAsync = async () => {
@@ -84,6 +87,28 @@ function* UpdatePost(payload) {
   }
 }
 
+const deletePostAsync = async (payload) => {
+  return api
+    .delete(`/community/post/${payload.payload}`)
+    .then((res) => res)
+    .catch((error) => error);
+};
+
+function* DeletePost(payload) {
+  try {
+    const result = yield call(deletePostAsync, payload);
+    if (result.status === 200 && result.statusText === 'OK') {
+      yield put(deletePostSuccess(result.data.data));
+      yield put(getAllPost());
+    } else {
+      yield put(deletePostError('Delete Post Response is not success!'));
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(deletePostError('Delete Post Error !'));
+  }
+}
+
 export function* watchGetAllPost() {
   yield takeEvery(GET_ALL_POST, GetAllPost);
 }
@@ -93,11 +118,15 @@ export function* watchCreatePost() {
 export function* watchUpdatePost() {
   yield takeEvery(UPDATE_POST, UpdatePost);
 }
+export function* watchDeletePost() {
+  yield takeEvery(DELETE_POST, DeletePost);
+}
 
 export default function* rootSaga() {
   yield all([
     fork(watchGetAllPost),
     fork(watchCreatePost),
     fork(watchUpdatePost),
+    fork(watchDeletePost),
   ]);
 }

@@ -6,6 +6,9 @@ import {
   GET_ALL_POST_SUCCESS,
   UPDATE_POST,
   UPDATE_POST_ERROR,
+  DELETE_POST,
+  DELETE_POST_ERROR,
+  DELETE_POST_SUCCESS,
 } from '../../types/community/post';
 
 const INIT_STATE = {
@@ -51,6 +54,22 @@ export default (state = INIT_STATE, action) => {
         loading: true,
       };
     case UPDATE_POST_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case DELETE_POST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DELETE_POST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case DELETE_POST_ERROR:
       return {
         ...state,
         loading: false,

@@ -11,6 +11,9 @@ import {
   UPDATE_TOPIC,
   UPDATE_TOPIC_SUCCESS,
   UPDATE_TOPIC_ERROR,
+  DELETE_TOPIC,
+  DELETE_TOPIC_SUCCESS,
+  DELETE_TOPIC_ERROR,
 } from '../../types/community/topic';
 
 export const getAllTopics = () => ({
@@ -58,6 +61,7 @@ export const updateTopic = (data) => ({
   type: UPDATE_TOPIC,
   payload: data,
 });
+
 export const updateTopicSuccess = (data) => ({
   type: UPDATE_TOPIC_SUCCESS,
   payload: data,
@@ -65,5 +69,20 @@ export const updateTopicSuccess = (data) => ({
 
 export const updateTopicError = (data) => ({
   type: UPDATE_TOPIC_ERROR,
+  payload: data,
+});
+
+export const deleteTopic = (data) => ({
+  type: DELETE_TOPIC,
+  payload: data,
+});
+
+export const deleteTopicSuccess = (data) => ({
+  type: DELETE_TOPIC_SUCCESS,
+  payload: data,
+});
+
+export const deleteTopicError = (data) => ({
+  type: DELETE_TOPIC_ERROR,
   payload: data,
 });
