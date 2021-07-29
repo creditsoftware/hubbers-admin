@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Drawer, Form, Button, Input, Select, DatePicker } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import moment from 'moment';
@@ -15,22 +15,27 @@ const JobEdit = ({ id, data }) => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
-  // const [skillList, setSkillList] = useState(null);
-  // const { skills } = useSelector((state) => state.expertiseCategory);
+  const [skillList, setSkillList] = useState(null);
+  const { skills } = useSelector((state) => state.expertiseCategory);
 
-  // useEffect(() => {
-  //   dispatch(Actions.getAllSkill());
-  // }, []);
+  useEffect(() => {
+    dispatch(Actions.getAllSkill());
+  }, [dispatch]);
 
-  // useEffect(() => {
-  //   setSkillList(skills);
-  // }, [skills]);
+  useEffect(() => {
+    setSkillList(skills);
+  }, [skills]);
   const showDrawer = () => {
     const filterData = data.filter((item) => item.id === id);
-    // for(filterData)
+    const skill = filterData[0].skill?.map((item) => item.id);
+    const neededSkill = filterData[0].neededSkill?.map((item) => item.id);
+    console.log(skill, neededSkill);
     if (filterData.length > 0) {
       form.setFieldsValue({
         ...filterData[0],
+        skill,
+        neededSkill,
+        neededSkill,
         startDate: moment(filterData[0].startDate),
         endDate: moment(filterData[0].endDate),
         publishFrom: moment(filterData[0].publishFrom),
@@ -143,21 +148,42 @@ const JobEdit = ({ id, data }) => {
             <Input placeholder="please enter Company Name" />
           </Form.Item>
           <Form.Item
+            name="neededSkill"
+            label="Needed Skills"
+            rules={[{ required: true, message: 'Please select needed skills' }]}
+          >
+            <Select mode="multiple">
+              {skillList?.map((item) => {
+                return (
+                  <Option key={item.id} value={item.id}>
+                    {item.name}
+                  </Option>
+                );
+              })}
+            </Select>
+          </Form.Item>
+          <Form.Item
+            name="skill"
+            label="Skills you will learn"
+            rules={[{ required: true, message: 'Please select needed skills' }]}
+          >
+            <Select mode="multiple">
+              {skillList?.map((item) => {
+                return (
+                  <Option key={item.id} value={item.id}>
+                    {item.name}
+                  </Option>
+                );
+              })}
+            </Select>
+          </Form.Item>
+          <Form.Item
             name="postedBy"
             label="Posted By"
             rules={[{ required: true, message: 'Please select poster' }]}
           >
             <UserSelect />
           </Form.Item>
-          {/* <Form.Item
-            name="skill"
-            label="Needed Skills"
-            rules={[{ required: true, message: 'Please select skills' }]}
-          >
-            <Select mode="multiple">
-
-            </Select>
-          </Form.Item> */}
           <div className="w-100 text-right">
             <Button onClick={onClose} style={{ marginRight: 12 }}>
               Cancel
