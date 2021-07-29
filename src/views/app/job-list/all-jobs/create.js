@@ -105,7 +105,7 @@ const JobCreate = () => {
           <Form.Item
             name="employmentType"
             label="Employment Type"
-            required="Type Required"
+            rules={[{ required: true, message: 'Type required' }]}
           >
             <Select placeholder="Please choose the type">
               <Option value="full time">Full Time</Option>

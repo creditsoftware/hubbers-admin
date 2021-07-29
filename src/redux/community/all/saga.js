@@ -6,6 +6,7 @@ import {
   GET_SINGLE_COMMUNITY,
   CREATE_COMMUNITY,
   UPDATE_COMMUNITY,
+  DELETE_COMMUNITY,
 } from '../../types/community/community-all';
 
 import {
@@ -18,6 +19,8 @@ import {
   createCommunityError,
   updateCommunitySuccess,
   updateCommunityError,
+  deleteCommunitySuccess,
+  deleteCommunityError,
 } from './actions';
 
 const getAllCommunityAsync = async () =>
@@ -116,6 +119,30 @@ function* UpdateCommunity(payload) {
   }
 }
 
+const deleteCommunityAsync = async (payload) => {
+  return api
+    .delete(`/community/${payload.payload}`)
+    .then((res) => res)
+    .catch((error) => error);
+}
+
+function* DeleteCommunity(payload) {
+  try {
+    const result = yield call(deleteCommunityAsync, payload);
+    if (result.status === 200 && result.statusText === 'OK') {
+      yield put(deleteCommunitySuccess(result.data.data));
+      yield put(getAllCommunity());
+    } else {
+      yield put(
+        deleteCommunityError('Delete Community Response is not success!')
+      );
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(deleteCommunityError('Delete Community Error !'));
+  }
+}
+
 export function* watchGetAllCommunity() {
   yield takeEvery(GET_ALL_COMMUNITY, GetAllCommunity);
 }
@@ -128,6 +155,9 @@ export function* watchGetSingleCommunity() {
 export function* watchUpdateCommunity() {
   yield takeEvery(UPDATE_COMMUNITY, UpdateCommunity);
 }
+export function* watchDeleteCommunity() {
+  yield takeEvery(DELETE_COMMUNITY, DeleteCommunity);
+}
 
 export default function* rootSaga() {
   yield all([
@@ -135,5 +165,6 @@ export default function* rootSaga() {
     fork(watchCreateCommunity),
     fork(watchGetSingleCommunity),
     fork(watchUpdateCommunity),
+    fork(watchDeleteCommunity),
   ]);
 }

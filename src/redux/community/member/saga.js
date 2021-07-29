@@ -4,16 +4,19 @@ import {
   CREATE_MEMBER,
   GET_ALL_MEMBER,
   UPDATE_MEMBER,
+  DELETE_MEMBER,
 } from '../../types/community/member';
 
 import {
+  getAllMember,
   getAllMemberSuccess,
   getAllMemberError,
-  createMemberError,
-  getAllMember,
-  updateMemberError,
-  updateMemberSuccess,
   createMemberSuccess,
+  createMemberError,
+  updateMemberSuccess,
+  updateMemberError,
+  deleteMemberSuccess,
+  deleteMemberError,
 } from './actions';
 
 const getAllMemberAsync = async () => {
@@ -84,6 +87,28 @@ function* UpdateMember(payload) {
   }
 }
 
+const deleteMemberAsync = async (payload) => {
+  return api
+    .delete(`/community/member/${payload.payload}`)
+    .then((res) => res)
+    .catch((error) => error);
+};
+
+function* DeleteMember(payload) {
+  try {
+    const result = yield call(deleteMemberAsync, payload);
+    if (result.status === 200 && result.statusText === 'OK') {
+      yield put(deleteMemberSuccess(result.data.data));
+      yield put(getAllMember());
+    } else {
+      yield put(deleteMemberError('Delete Member Response is not success!'));
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(deleteMemberError('Delete Member Error !'));
+  }
+}
+
 export function* watchGetAllMember() {
   yield takeEvery(GET_ALL_MEMBER, GetAllMember);
 }
@@ -93,11 +118,15 @@ export function* watchCreateMember() {
 export function* watchUpdateMember() {
   yield takeEvery(UPDATE_MEMBER, UpdateMember);
 }
+export function* watchDeleteMember() {
+  yield takeEvery(DELETE_MEMBER, DeleteMember);
+}
 
 export default function* rootSaga() {
   yield all([
     fork(watchGetAllMember),
     fork(watchCreateMember),
     fork(watchUpdateMember),
+    fork(watchDeleteMember),
   ]);
 }

@@ -11,6 +11,9 @@ import {
   UPDATE_TOPIC,
   UPDATE_TOPIC_SUCCESS,
   UPDATE_TOPIC_ERROR,
+  DELETE_TOPIC,
+  DELETE_TOPIC_SUCCESS,
+  DELETE_TOPIC_ERROR,
 } from '../../types/community/topic';
 
 const INIT_STATE = {
@@ -88,6 +91,22 @@ export default (state = INIT_STATE, action) => {
         updateCommunity: action.payload,
       };
     case UPDATE_TOPIC_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case DELETE_TOPIC:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DELETE_TOPIC_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case DELETE_TOPIC_ERROR:
       return {
         ...state,
         loading: false,

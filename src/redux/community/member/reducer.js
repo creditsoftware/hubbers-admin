@@ -6,6 +6,9 @@ import {
   GET_ALL_MEMBER_SUCCESS,
   UPDATE_MEMBER,
   UPDATE_MEMBER_ERROR,
+  DELETE_MEMBER,
+  DELETE_MEMBER_ERROR,
+  DELETE_MEMBER_SUCCESS,
 } from '../../types/community/member';
 
 const INIT_STATE = {
@@ -51,6 +54,22 @@ export default (state = INIT_STATE, action) => {
         loading: true,
       };
     case UPDATE_MEMBER_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case DELETE_MEMBER:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DELETE_MEMBER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case DELETE_MEMBER_ERROR:
       return {
         ...state,
         loading: false,

@@ -20,6 +20,10 @@ const Community = () => {
     dispatch(Actions.getAllCommunity());
   }, [dispatch]);
 
+  const handleDelete = (id) => {
+    dispatch(Actions.deleteCommunity(id));
+  };
+
   useEffect(() => {
     SetCommunityList(community);
   }, [community]);
@@ -108,17 +112,15 @@ const Community = () => {
       render: (_, elm) => (
         <Space>
           <EditCommunity id={elm.id} data={communityList} />
-          <Tooltip title="Delete">
-            <Popconfirm
-              title="Are you sure delete this Item?"
-              onConfirm={() => console.log('delete')}
-              onCancel={() => console.log('Canceled to delete')}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Button danger icon={<DeleteOutlined />} size="small" />
-            </Popconfirm>
-          </Tooltip>
+          <Popconfirm
+            title="Are you sure delete this Community?"
+            onConfirm={() => handleDelete(elm.id)}
+            onCancel={() => console.log('Canceled to delete')}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button danger icon={<DeleteOutlined />} size="small" />
+          </Popconfirm>
         </Space>
       ),
       /* eslint-enable */

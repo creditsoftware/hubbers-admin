@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Card, Space, Table, Tooltip, Popconfirm, Button } from 'antd';
+import { Card, Space, Table, Popconfirm, Button } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import utils from '../../../../helpers/utils/index';
 import * as Actions from '../../../../redux/actions';
@@ -22,8 +22,12 @@ const TopicsAllList = () => {
 
   useEffect(() => {
     SetTopicList(list);
-    console.log(list);
   }, [list]);
+
+  const handleDelete = (id) => {
+    dispatch(Actions.deleteMember(id));
+  };
+
   const tableColumns = [
     {
       title: 'ID',
@@ -113,17 +117,15 @@ const TopicsAllList = () => {
       render: (_, elm) => (
         <Space>
           <EditTopic id={elm.id} data={TopicList} />
-          <Tooltip title="Delete">
-            <Popconfirm
-              title="Are you sure delete this Item?"
-              onConfirm={() => console.log('delete')}
-              onCancel={() => console.log('Canceled to delete')}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Button danger icon={<DeleteOutlined />} size="small" />
-            </Popconfirm>
-          </Tooltip>
+          <Popconfirm
+            title="Are you sure delete this Topic?"
+            onConfirm={() => handleDelete(elm.id)}
+            onCancel={() => console.log('Canceled to delete')}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button danger icon={<DeleteOutlined />} size="small" />
+          </Popconfirm>
         </Space>
       ),
       /* eslint-enable */

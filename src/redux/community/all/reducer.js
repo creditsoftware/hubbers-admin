@@ -11,6 +11,9 @@ import {
   UPDATE_COMMUNITY,
   UPDATE_COMMUNITY_SUCCESS,
   UPDATE_COMMUNITY_ERROR,
+  DELETE_COMMUNITY,
+  DELETE_COMMUNITY_SUCCESS,
+  DELETE_COMMUNITY_ERROR,
 } from '../../types/community/community-all';
 
 const INIT_STATE = {
@@ -60,6 +63,16 @@ export default (state = INIT_STATE, action) => {
     case UPDATE_COMMUNITY_SUCCESS:
       return { ...state, loading: false, updateCommunity: action.payload };
     case UPDATE_COMMUNITY_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case DELETE_COMMUNITY:
+      return { ...state, loading: true };
+    case DELETE_COMMUNITY_SUCCESS:
+      return { ...state, loading: false, deleteCommunity: action.payload };
+    case DELETE_COMMUNITY_ERROR:
       return {
         ...state,
         loading: false,

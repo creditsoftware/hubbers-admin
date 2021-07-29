@@ -45,6 +45,7 @@ const CreateTopic = () => {
         bodyStyle={{ paddingBottom: 10 }}
       >
         <Form
+          form={form}
           layout="vertical"
           hideRequiredMark
           form={form}

@@ -6,6 +6,7 @@ import {
   GET_SINGLE_TOPIC,
   CREATE_TOPIC,
   UPDATE_TOPIC,
+  DELETE_TOPIC,
 } from '../../types/community/topic';
 
 import {
@@ -18,6 +19,8 @@ import {
   createTopicSuccess,
   updateTopicError,
   updateTopicSuccess,
+  deleteTopicError,
+  deleteTopicSuccess,
 } from './actions';
 
 const getAllTopicsAsync = async () => {
@@ -110,6 +113,28 @@ function* UpdateTopic(payload) {
   }
 }
 
+const deleteTopicAsync = async (payload) => {
+  return api
+    .delete(`/community/topic/${payload.payload}`)
+    .then((res) => res)
+    .catch((error) => error);
+};
+
+function* DeleteTopic(payload) {
+  try {
+    const result = yield call(deleteTopicAsync, payload);
+    if (result.status === 200 && result.statusText === 'OK') {
+      yield put(deleteTopicSuccess(result.data.data));
+      yield put(getAllTopics());
+    } else {
+      yield put(deleteTopicError('Delete Topic Response is not success!'));
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(deleteTopicError('Delete Topic Error !'));
+  }
+}
+
 export function* watchGetAllTopics() {
   yield takeEvery(GET_ALL_TOPIC, GetAllTopics);
 }
@@ -122,6 +147,9 @@ export function* watchGetSingleTopic() {
 export function* watchUpdateTopic() {
   yield takeEvery(UPDATE_TOPIC, UpdateTopic);
 }
+export function* watchDeleteTopic() {
+  yield takeEvery(DELETE_TOPIC, DeleteTopic);
+}
 
 export default function* rootSaga() {
   yield all([
@@ -129,5 +157,6 @@ export default function* rootSaga() {
     fork(watchGetSingleTopic),
     fork(watchUpdateTopic),
     fork(watchCreateTopic),
+    fork(watchDeleteTopic),
   ]);
 }

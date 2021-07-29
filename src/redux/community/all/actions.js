@@ -11,6 +11,9 @@ import {
   UPDATE_COMMUNITY,
   UPDATE_COMMUNITY_SUCCESS,
   UPDATE_COMMUNITY_ERROR,
+  DELETE_COMMUNITY,
+  DELETE_COMMUNITY_SUCCESS,
+  DELETE_COMMUNITY_ERROR,
 } from '../../types/community/community-all';
 
 export const getAllCommunity = () => ({
@@ -65,5 +68,19 @@ export const updateCommunitySuccess = (data) => ({
 
 export const updateCommunityError = (data) => ({
   type: UPDATE_COMMUNITY_ERROR,
+  payload: data,
+});
+
+export const deleteCommunity = (data) => ({
+  type: DELETE_COMMUNITY,
+  payload: data,
+});
+export const deleteCommunitySuccess = (data) => ({
+  type: DELETE_COMMUNITY_SUCCESS,
+  payload: data,
+});
+
+export const deleteCommunityError = (data) => ({
+  type: DELETE_COMMUNITY_ERROR,
   payload: data,
 });
