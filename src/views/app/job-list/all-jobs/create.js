@@ -25,10 +25,10 @@ const JobCreate = () => {
     setSkillList(skills);
   }, [skills]);
   const showDrawer = () => {
+    form.resetFields();
     setVisible(true);
   };
   const onClose = () => {
-    form.resetFields();
     setVisible(false);
   };
 
