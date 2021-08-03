@@ -46,7 +46,10 @@ module.exports = {
   'menu.users': 'Users',
   'menu.investors': 'Investors',
   'menu.hubbers-team': 'Hubbers Team',
-  'menu.teams': 'Teams',
+  'menu.team': 'Team',
+  'menu.all-teams': 'All Teams',
+  'menu.team-member': 'Team Member',
+  'menu.team-member-role': 'Team Member Role',
   'menu.partner': 'Partner',
   'menu.job-list': 'Job List',
   'menu.all-jobs': 'All Jobs',
@@ -151,7 +154,10 @@ module.exports = {
   'hubbersteam.title': 'Hubbers Team',
 
   // teams
-  'team.title': 'Teams',
+  'team.title': 'Team',
+  'all-teams.title': 'All Teams',
+  'team-member.title': 'Team Member',
+  'team-member-role.title': 'Team Member Role',
 
   // partners
   'partner.title': 'Partner',

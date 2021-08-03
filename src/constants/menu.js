@@ -87,10 +87,28 @@ const data = [
     to: `${adminRoot}/hubbers-team`,
   },
   {
-    id: 'teams',
+    id: 'team',
     icon: 'iconsminds-user',
-    label: 'menu.teams',
-    to: `${adminRoot}/teams`,
+    label: 'menu.team',
+    roles: [UserRole.Admin, UserRole.Editor],
+    to: `${adminRoot}/team`,
+    subs: [
+      {
+        icon: 'simple-icon-paper-plane',
+        label: 'menu.all-teams',
+        to: `${adminRoot}/team/all-teams`,
+      },
+      {
+        icon: 'simple-icon-paper-plane',
+        label: 'menu.team-member',
+        to: `${adminRoot}/team/team-member`,
+      },
+      {
+        icon: 'simple-icon-paper-plane',
+        label: 'menu.team-member-role',
+        to: `${adminRoot}/team/team-member-role`,
+      },
+    ],
   },
   {
     id: 'partner',

@@ -23,6 +23,9 @@ import languageLevel from './options/language-level/reducer';
 import hubbersTeam from './hubbers-team/reducer';
 import job from './job/job/reducer';
 import jobCategory from './job/job-category/reducer';
+import team from './team/all-teams/reducer';
+import teamMember from './team/team-member/reducer';
+import teamMemberRole from './team/team-member-role/reducer';
 
 const reducers = combineReducers({
   menu,
@@ -50,6 +53,9 @@ const reducers = combineReducers({
   hubbersTeam,
   job,
   jobCategory,
+  team,
+  teamMember,
+  teamMemberRole,
 });
 
 export default reducers;

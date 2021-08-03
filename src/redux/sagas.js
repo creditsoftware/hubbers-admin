@@ -24,6 +24,9 @@ import languageLevelSaga from './options/language-level/saga';
 import hubbersTeamSaga from './hubbers-team/saga';
 import jobSaga from './job/job/saga';
 import jobCategorySaga from './job/job-category/saga';
+import teamSaga from './team/all-teams/saga';
+import teamMemberSaga from './team/team-member/saga';
+import teamMemberRoleSaga from './team/team-member-role/saga';
 
 export default function* rootSaga(getState) {
   yield all([
@@ -49,5 +52,8 @@ export default function* rootSaga(getState) {
     hubbersTeamSaga(),
     jobSaga(),
     jobCategorySaga(),
+    teamSaga(),
+    teamMemberSaga(),
+    teamMemberRoleSaga(),
   ]);
 }
