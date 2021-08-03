@@ -3,7 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 const AllTeams = React.lazy(() => import('./all-teams'));
 const TeamMember = React.lazy(() => import('./team-member'));
-const TeamMemberRole = React.lazy(() => import('./team-member-role'));
+// const TeamMemberRole = React.lazy(() => import('./team-member-role'));
 
 const Team = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
@@ -16,12 +16,12 @@ const Team = ({ match }) => (
         path={`${match.url}/team-member`}
         render={(props) => <TeamMember {...props} />}
       />
-      <Route
+      {/* <Route
         path={`${match.url}/team-member-role`}
         render={(props) => <TeamMemberRole {...props} />}
-      />
+      /> */}
       <Redirect to="/error" />
     </Switch>
   </Suspense>
 );
-export default Team; 
+export default Team;

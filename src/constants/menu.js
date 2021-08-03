@@ -103,11 +103,11 @@ const data = [
         label: 'menu.team-member',
         to: `${adminRoot}/team/team-member`,
       },
-      {
-        icon: 'simple-icon-paper-plane',
-        label: 'menu.team-member-role',
-        to: `${adminRoot}/team/team-member-role`,
-      },
+      // {
+      //   icon: 'simple-icon-paper-plane',
+      //   label: 'menu.team-member-role',
+      //   to: `${adminRoot}/team/team-member-role`,
+      // },
     ],
   },
   {
