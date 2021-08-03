@@ -87,15 +87,6 @@ const EventList = () => {
       /* eslint-enable */
     },
     {
-      title: 'Published',
-      dataIndex: 'published',
-      /* eslint-disable */
-      render: (_, record) => (
-        <span>{record.published}</span>
-      ),
-      /* eslint-enable */
-    },
-    {
       title: 'Start Date',
       dataIndex: 'startDate',
       /* eslint-disable */
@@ -119,6 +110,24 @@ const EventList = () => {
       /* eslint-disable */
       render: (_, record) => (
         <span>{record.eventType}</span>
+      ),
+      /* eslint-enable */
+    },
+    {
+      title: 'Gobal',
+      dataIndex: 'isGlobal',
+      /* eslint-disable */
+      render: (_, record) => (
+        <span>{record.isGlobal ? 'Global' : 'Local'}</span>
+      ),
+      /* eslint-enable */
+    },
+    {
+      title: 'Published',
+      dataIndex: 'published',
+      /* eslint-disable */
+      render: (_, record) => (
+        <span>{record.published ? 'Published' : 'Not Published'}</span>
       ),
       /* eslint-enable */
     },
