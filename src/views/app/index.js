@@ -17,7 +17,7 @@ const Investor = React.lazy(() => import('./investor'));
 
 const HubbersTeam = React.lazy(() => import('./hubbers-team'));
 
-const Teams = React.lazy(() => import('./teams'));
+const Team = React.lazy(() => import('./team'));
 
 const Partner = React.lazy(() => import('./partner'));
 
@@ -71,9 +71,9 @@ const App = ({ match }) => {
             />
 
             <Route
-              exact
-              path={`${match.url}/teams`}
-              render={(props) => <Teams {...props} />}
+              // exact
+              path={`${match.url}/team`}
+              render={(props) => <Team {...props} />}
             />
 
             <Route
