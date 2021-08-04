@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Space, Table, Popconfirm, Button, Avatar, Select } from 'antd';
+import { Card, Space, Table, Button, Avatar, Select, notification } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  ArrowDownOutlined,
-  ArrowUpOutlined,
-  DeleteOutlined,
-} from '@ant-design/icons';
+import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
 import TeamMemberCreate from './create';
 import TeamMemberEdit from './edit';
@@ -18,7 +14,7 @@ const TeamMemberList = () => {
   const [teamList, setTeamList] = useState([]);
   const [teamMemberList, setTeamMemberList] = useState([]);
   const { list } = useSelector((state) => state.team);
-  const { memberList } = useSelector((state) => state.teamMember);
+  const { memberList, error } = useSelector((state) => state.teamMember);
   const [searchTeamList, setSearchTeamList] = useState();
 
   useEffect(() => {
@@ -30,13 +26,28 @@ const TeamMemberList = () => {
     setSearchTeamList(list);
     setCurrentTeam(list[0]?.id);
     list[0]?.id && dispatch(Actions.getAllTeamMember(list[0]?.id));
-  }, [list]);
-  
+  }, [dispatch, list]);
+
   useEffect(() => {
     setTeamMemberList(memberList);
-    setCurrentTeam(memberList[0]?.teamId)
+    memberList[0]?.teamId && setCurrentTeam(memberList[0]?.teamId);
   }, [memberList]);
-  
+
+  useEffect(() => {
+    error && errorNotification(error);
+  }, [error]);
+
+  const errorNotification = (error) => {
+    if (!error.data.success) {
+      notification.error({
+        message: 'Error',
+        description: error.data.message,
+        placement: 'bottomRight',
+        duration: 0,
+      });
+    }
+  };
+
   const getMemberList = (teamId) => {
     setCurrentTeam(teamId);
     dispatch(Actions.getAllTeamMember(teamId));
@@ -159,7 +170,7 @@ const TeamMemberList = () => {
           value={currentTeam}
         >
           {searchTeamList?.map((item) => {
-             return (
+            return (
               <Option key={item.id} value={item.id}>
                 {item.name}
               </Option>

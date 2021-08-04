@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Drawer, Button, DatePicker, Select } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
+import moment from 'moment';
 import UserSelect from '../../../../components/util-components/selector/UserSelect';
 import * as Actions from '../../../../redux/actions';
-import moment from 'moment';
 
 const { Option } = Select;
 
@@ -31,7 +31,9 @@ const TeamMemberEdit = ({ id, memberList, teamList }) => {
         userId: filterData[0].userId,
         teamId: filterData[0].teamId,
         roleId: filterData[0].roleId,
-        joinedDate: filterData[0].joinedDate ? moment(filterData[0].joinedDate) : '',
+        joinedDate: filterData[0].joinedDate
+          ? moment(filterData[0].joinedDate)
+          : '',
       });
     }
     setVisible(true);
@@ -61,7 +63,12 @@ const TeamMemberEdit = ({ id, memberList, teamList }) => {
 
   return (
     <>
-      <Button type="primary" size="small" icon={<EditOutlined />} onClick={showDrawer} />
+      <Button
+        type="primary"
+        size="small"
+        icon={<EditOutlined />}
+        onClick={showDrawer}
+      />
       <Drawer
         title="Edit a New Member"
         width={500}
@@ -123,11 +130,13 @@ const TeamMemberEdit = ({ id, memberList, teamList }) => {
             ]}
           >
             <Select placeholder="Please select the role">
-              {
-                roleList?.map((item) => {
-                  return <Option key={item.id} value={item.id}>{item.name}</Option>;
-                })
-              }
+              {roleList?.map((item) => {
+                return (
+                  <Option key={item.id} value={item.id}>
+                    {item.name}
+                  </Option>
+                );
+              })}
             </Select>
           </Form.Item>
           <Form.Item

@@ -4,7 +4,7 @@ import { Drawer, Form, Button, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
 
-const {TextArea} = Input;
+const { TextArea } = Input;
 
 const CreateTeamMemberRole = () => {
   const dispatch = useDispatch();

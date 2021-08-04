@@ -4,7 +4,7 @@ import { Drawer, Form, Button, Input, Tooltip } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
 
-const {TextArea} = Input;
+const { TextArea } = Input;
 
 const EditTeam = ({ id, data }) => {
   const dispatch = useDispatch();

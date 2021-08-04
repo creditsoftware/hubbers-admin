@@ -24,4 +24,4 @@ const Team = ({ match }) => (
     </Switch>
   </Suspense>
 );
-export default Team; 
+export default Team;

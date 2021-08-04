@@ -4,7 +4,7 @@ import { Drawer, Form, Button, Input, Tooltip } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
 
-const {TextArea} = Input;
+const { TextArea } = Input;
 
 const EditTeamMemberRole = ({ id, data }) => {
   const dispatch = useDispatch();
@@ -27,8 +27,7 @@ const EditTeamMemberRole = ({ id, data }) => {
   };
 
   const onSubmit = (values) => {
-    values.id = id;
-    dispatch(Actions.updateTeamMemberRole(values));
+    dispatch(Actions.updateTeamMemberRole({...values,id}));
     onClose();
   };
 
