@@ -33,7 +33,9 @@ function* GetAllTeamMemberRole() {
       yield put(getAllTeamMemberRoleSuccess(result.data));
     } else {
       yield put(
-        getAllTeamMemberRoleError('Get All Team Member Role Response is not success!')
+        getAllTeamMemberRoleError(
+          'Get All Team Member Role Response is not success!'
+        )
       );
     }
   } catch (error) {
@@ -57,7 +59,9 @@ function* CreateTeamMemberRole(payload) {
       yield put(getAllTeamMemberRole());
     } else {
       yield put(
-        createTeamMemberRoleError('Create Team Member Role Response is not success!')
+        createTeamMemberRoleError(
+          'Create Team Member Role Response is not success!'
+        )
       );
     }
   } catch (error) {
@@ -81,7 +85,9 @@ function* UpdateTeamMemberRole(payload) {
       yield put(getAllTeamMemberRole());
     } else {
       yield put(
-        updateTeamMemberRoleError('Update Team Member Role Response is not success!')
+        updateTeamMemberRoleError(
+          'Update Team Member Role Response is not success!'
+        )
       );
     }
   } catch (error) {
@@ -103,7 +109,9 @@ function* DeleteTeamMemberRole(payload) {
       yield put(getAllTeamMemberRole());
     } else {
       yield put(
-        deleteTeamMemberRoleError('Delete Team Member Role Response is not success!')
+        deleteTeamMemberRoleError(
+          'Delete Team Member Role Response is not success!'
+        )
       );
     }
   } catch (error) {

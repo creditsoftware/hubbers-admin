@@ -26,7 +26,7 @@ import {
   deleteTeamMemberError,
 } from './actions';
 
-const getAllTeamMemberAsync = async ({payload}) => {
+const getAllTeamMemberAsync = async ({ payload }) => {
   return api
     .get(`/team-member/${payload}`)
     .then((res) => res)
@@ -80,13 +80,11 @@ const createTeamMemberAsync = async ({ payload }) => {
 function* CreateTeamMember(payload) {
   try {
     const result = yield call(createTeamMemberAsync, payload);
-    if (result.status === 200 && result.statusText === 'OK') {
+    if (result.status === 200 && result.succeess) {
       yield put(createTeamMemberSuccess(result.data.data));
       yield put(getAllTeamMember(payload.payload.teamId));
     } else {
-      yield put(
-        createTeamMemberError('Create Team Member Response is not success!')
-      );
+      yield put(createTeamMemberError(result));
     }
   } catch (error) {
     yield put(createTeamMemberError('Create Team Member Error !'));
@@ -104,13 +102,11 @@ const updateTeamMemberAsync = async ({ payload }) => {
 function* UpdateTeamMember(payload) {
   try {
     const result = yield call(updateTeamMemberAsync, payload);
-    if (result.status === 200 && result.statusText === 'OK') {
+    if (result.status === 200 && result.succeess) {
       yield put(updateTeamMemberSuccess(result.data.data));
       yield put(getAllTeamMember(payload.payload.teamId));
     } else {
-      yield put(
-        updateTeamMemberError('Update Team Member Response is not success!')
-      );
+      yield put(updateTeamMemberError(result));
     }
   } catch (error) {
     yield put(updateTeamMemberError('Update Team Member Error !'));
@@ -118,28 +114,28 @@ function* UpdateTeamMember(payload) {
 }
 
 const changeTeamMemberAsync = async ({ payload }) => {
-    return api
-      .put(`/team-member/${payload.id}/${payload.flag}`)
-      .then((res) => res)
-      .catch((error) => error);
-  };
-  function* ChangeTeamMember(payload) {
-    try {
-      const result = yield call(changeTeamMemberAsync, payload);
-      if (result.status === 200 && result.statusText === 'OK') {
-        yield put(changeTeamMemberSuccess(result.data.data)); 
-        yield put(getAllTeamMember(payload.payload.currentTeam));
-      } else {
-        yield put(
-          changeTeamMemberError('Change Team Member Response is not success!')
-        );
-      }
-    } catch (error) {
-      yield put(changeTeamMemberError('Change Team Member Error !'));
+  return api
+    .put(`/team-member/${payload.id}/${payload.flag}`)
+    .then((res) => res)
+    .catch((error) => error);
+};
+function* ChangeTeamMember(payload) {
+  try {
+    const result = yield call(changeTeamMemberAsync, payload);
+    if (result.status === 200 && result.statusText === 'OK') {
+      yield put(changeTeamMemberSuccess(result.data.data));
+      yield put(getAllTeamMember(payload.payload.currentTeam));
+    } else {
+      yield put(
+        changeTeamMemberError('Change Team Member Response is not success!')
+      );
     }
+  } catch (error) {
+    yield put(changeTeamMemberError('Change Team Member Error !'));
   }
+}
 
-const deleteTeamMemberAsync = async ({payload}) => {
+const deleteTeamMemberAsync = async ({ payload }) => {
   return api
     .delete(`/team-member/${payload.id}`)
     .then((res) => res)
@@ -174,8 +170,8 @@ export function* watchUpdateTeamMember() {
   yield takeEvery(UPDATE_TEAM_MEMBER, UpdateTeamMember);
 }
 export function* watchChangeTeamMember() {
-    yield takeEvery(CHANGE_TEAM_MEMBER, ChangeTeamMember);
-  }
+  yield takeEvery(CHANGE_TEAM_MEMBER, ChangeTeamMember);
+}
 export function* watchDeleteTeamMember() {
   yield takeEvery(DELETE_TEAM_MEMBER, DeleteTeamMember);
 }

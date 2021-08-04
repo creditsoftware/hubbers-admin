@@ -32,9 +32,7 @@ function* GetAllTeam() {
     if (result.status === 200 && result.statusText === 'OK') {
       yield put(getAllTeamSuccess(result.data));
     } else {
-      yield put(
-        getAllTeamError('Get All Team Response is not success!')
-      );
+      yield put(getAllTeamError('Get All Team Response is not success!'));
     }
   } catch (error) {
     yield put(getAllTeamError('Get All Team Error !'));
@@ -56,9 +54,7 @@ function* CreateTeam(payload) {
       yield put(createTeamSuccess(result.data.data));
       yield put(getAllTeam());
     } else {
-      yield put(
-        createTeamError('Create Team Response is not success!')
-      );
+      yield put(createTeamError('Create Team Response is not success!'));
     }
   } catch (error) {
     yield put(createTeamError('Create Team Error !'));
@@ -80,9 +76,7 @@ function* UpdateTeam(payload) {
       yield put(updateTeamSuccess(result.data.data));
       yield put(getAllTeam());
     } else {
-      yield put(
-        updateTeamError('Update Team Response is not success!')
-      );
+      yield put(updateTeamError('Update Team Response is not success!'));
     }
   } catch (error) {
     yield put(updateTeamError('Update Team Error !'));
@@ -102,9 +96,7 @@ function* DeleteTeam(payload) {
       yield put(deleteTeamSuccess(result.data.data));
       yield put(getAllTeam());
     } else {
-      yield put(
-        deleteTeamError('Delete Team Response is not success!')
-      );
+      yield put(deleteTeamError('Delete Team Response is not success!'));
     }
   } catch (error) {
     yield put(deleteTeamError('Delete Team Error !'));

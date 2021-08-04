@@ -5,22 +5,21 @@ import { PlusOutlined } from '@ant-design/icons';
 import UserSelect from '../../../../components/util-components/selector/UserSelect';
 import * as Actions from '../../../../redux/actions';
 
-const {Option} = Select;
+const { Option } = Select;
 
-const TeamMemberCreate = ({teamList}) => {
+const TeamMemberCreate = ({ teamList }) => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
   const [roleList, setRoleList] = useState([]);
   const { list } = useSelector((state) => state.teamMemberRole);
   const [searchTeamList, setSearchTeamList] = useState([]);
-  console.log(searchTeamList);
   useEffect(() => {
     dispatch(Actions.getAllTeamMemberRole());
   }, [dispatch]);
-  useEffect(()=>{
-    setSearchTeamList([...teamList])
-  },[teamList])
+  useEffect(() => {
+    setSearchTeamList([...teamList]);
+  }, [teamList]);
   useEffect(() => {
     setRoleList(list);
   }, [list]);
@@ -51,7 +50,7 @@ const TeamMemberCreate = ({teamList}) => {
       setSearchTeamList(u);
     }
   };
-  
+
   return (
     <>
       <Button type="primary" onClick={showDrawer}>
@@ -118,11 +117,13 @@ const TeamMemberCreate = ({teamList}) => {
             ]}
           >
             <Select placeholder="Please select the role">
-              {
-                roleList?.map((item)=>{
-                  return <Option key={item.id} value={item.id}>{item.name}</Option>;
-                })
-              }
+              {roleList?.map((item) => {
+                return (
+                  <Option key={item.id} value={item.id}>
+                    {item.name}
+                  </Option>
+                );
+              })}
             </Select>
           </Form.Item>
           <Form.Item

@@ -66,7 +66,11 @@ const TeamMemberRoleList = () => {
         <CreateTeamMemberRole />
       </div>
       <div className="table-responsive">
-        <Table rowKey="id" columns={tableColumns} dataSource={teamMemberRoleList} />
+        <Table
+          rowKey="id"
+          columns={tableColumns}
+          dataSource={teamMemberRoleList}
+        />
       </div>
     </Card>
   );
