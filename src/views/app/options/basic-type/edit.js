@@ -5,19 +5,25 @@ import { Drawer, Form, Button, Col, Input, Select, Tooltip } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
 import basicTypeCategory from '../../../../constants/basicTypeCategory';
+import UploadImage from '../../../../components/UploadImage';
 
 const { Option } = Select;
+const { TextArea } = Input;
 
 const EditCountry = ({ id, data }) => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
+  const [isContest, setIsContest] = useState(false);
   const [form] = Form.useForm();
   const showDrawer = () => {
     const filterData = data.filter((item) => item.id === id);
     if (filterData.length > 0) {
+      setIsContest(filterData[0].category === 'contest');
       form.setFieldsValue({
         name: filterData[0].name,
         category: filterData[0].category,
+        featuredImg: filterData[0].featuredImg,
+        description: filterData[0].description,
       });
     }
     setVisible(true);
@@ -78,7 +84,7 @@ const EditCountry = ({ id, data }) => {
                   { required: true, message: 'Please choose a Type Category' },
                 ]}
               >
-                <Select placeholder="Please choose the Type Category">
+                <Select placeholder="Please choose the Type Category" onChange={(e) => setIsContest(e === 'contest')}>
                   {basicTypeCategory.map((item) => {
                     return (
                       <Option key={item} value={item}>
@@ -90,6 +96,41 @@ const EditCountry = ({ id, data }) => {
               </Form.Item>
             </Col>
           </Row>
+          {
+            isContest &&
+            <React.Fragment>
+              <Row>
+            <Col span={24}>
+              <Form.Item
+                name="description"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please enter description',
+                  },
+                ]}
+              >
+                <TextArea type="text" placeholder="description" />
+              </Form.Item>
+            </Col>
+          </Row>
+            <Row>
+              <Col span={24}>
+                <Form.Item
+                  name="featuredImg"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please upload image',
+                    },
+                  ]}
+                >
+                  <UploadImage />
+                </Form.Item>
+              </Col>
+            </Row>
+            </React.Fragment>
+          }
           <Row>
             <Col span={24} className="text-right">
               <Button onClick={onClose} style={{ marginRight: 8 }}>

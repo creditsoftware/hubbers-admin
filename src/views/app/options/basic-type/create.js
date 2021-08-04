@@ -5,13 +5,16 @@ import { Drawer, Form, Button, Col, Input, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
 import basicTypeCategory from '../../../../constants/basicTypeCategory';
+import UploadImage from '../../../../components/UploadImage';
 
 const { Option } = Select;
+const { TextArea } = Input;
 
 const CreateBasicType = () => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [visible, setVisible] = useState(false);
+  const [isContest, setIsContest] = useState(false);
   const showDrawer = () => {
     setVisible(true);
   };
@@ -70,7 +73,7 @@ const CreateBasicType = () => {
                   },
                 ]}
               >
-                <Select style={{ width: '100%' }} placeholder="Type Category">
+                <Select style={{ width: '100%' }} placeholder="Type Category" onChange={(e) => setIsContest(e === 'contest')}>
                   {basicTypeCategory?.map((item) => {
                     return (
                       <Option key={item} value={item}>
@@ -82,6 +85,42 @@ const CreateBasicType = () => {
               </Form.Item>
             </Col>
           </Row>
+          
+          {
+            isContest &&
+            <React.Fragment>
+              <Row>
+            <Col span={24}>
+              <Form.Item
+                name="description"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please enter description',
+                  },
+                ]}
+              >
+                <TextArea type="text" placeholder="description" />
+              </Form.Item>
+            </Col>
+          </Row>
+            <Row>
+              <Col span={24}>
+                <Form.Item
+                  name="featuredImg"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please upload image',
+                    },
+                  ]}
+                >
+                  <UploadImage />
+                </Form.Item>
+              </Col>
+            </Row>
+            </React.Fragment>
+          }
           <Row>
             <Col span={24} className="text-right">
               <Button onClick={onClose} style={{ marginRight: 8 }}>
