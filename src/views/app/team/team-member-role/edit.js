@@ -27,7 +27,7 @@ const EditTeamMemberRole = ({ id, data }) => {
   };
 
   const onSubmit = (values) => {
-    dispatch(Actions.updateTeamMemberRole({...values,id}));
+    dispatch(Actions.updateTeamMemberRole({ ...values, id }));
     onClose();
   };
 

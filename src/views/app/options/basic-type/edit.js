@@ -84,7 +84,10 @@ const EditCountry = ({ id, data }) => {
                   { required: true, message: 'Please choose a Type Category' },
                 ]}
               >
-                <Select placeholder="Please choose the Type Category" onChange={(e) => setIsContest(e === 'contest')}>
+                <Select
+                  placeholder="Please choose the Type Category"
+                  onChange={(e) => setIsContest(e === 'contest')}
+                >
                   {basicTypeCategory.map((item) => {
                     return (
                       <Option key={item} value={item}>
@@ -96,41 +99,40 @@ const EditCountry = ({ id, data }) => {
               </Form.Item>
             </Col>
           </Row>
-          {
-            isContest &&
-            <React.Fragment>
+          {isContest && (
+            <>
               <Row>
-            <Col span={24}>
-              <Form.Item
-                name="description"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please enter description',
-                  },
-                ]}
-              >
-                <TextArea type="text" placeholder="description" />
-              </Form.Item>
-            </Col>
-          </Row>
-            <Row>
-              <Col span={24}>
-                <Form.Item
-                  name="featuredImg"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please upload image',
-                    },
-                  ]}
-                >
-                  <UploadImage />
-                </Form.Item>
-              </Col>
-            </Row>
-            </React.Fragment>
-          }
+                <Col span={24}>
+                  <Form.Item
+                    name="description"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please enter description',
+                      },
+                    ]}
+                  >
+                    <TextArea type="text" placeholder="description" />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={24}>
+                  <Form.Item
+                    name="featuredImg"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please upload image',
+                      },
+                    ]}
+                  >
+                    <UploadImage />
+                  </Form.Item>
+                </Col>
+              </Row>
+            </>
+          )}
           <Row>
             <Col span={24} className="text-right">
               <Button onClick={onClose} style={{ marginRight: 8 }}>

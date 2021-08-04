@@ -73,7 +73,11 @@ const CreateBasicType = () => {
                   },
                 ]}
               >
-                <Select style={{ width: '100%' }} placeholder="Type Category" onChange={(e) => setIsContest(e === 'contest')}>
+                <Select
+                  style={{ width: '100%' }}
+                  placeholder="Type Category"
+                  onChange={(e) => setIsContest(e === 'contest')}
+                >
                   {basicTypeCategory?.map((item) => {
                     return (
                       <Option key={item} value={item}>
@@ -85,42 +89,41 @@ const CreateBasicType = () => {
               </Form.Item>
             </Col>
           </Row>
-          
-          {
-            isContest &&
-            <React.Fragment>
+
+          {isContest && (
+            <>
               <Row>
-            <Col span={24}>
-              <Form.Item
-                name="description"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please enter description',
-                  },
-                ]}
-              >
-                <TextArea type="text" placeholder="description" />
-              </Form.Item>
-            </Col>
-          </Row>
-            <Row>
-              <Col span={24}>
-                <Form.Item
-                  name="featuredImg"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please upload image',
-                    },
-                  ]}
-                >
-                  <UploadImage />
-                </Form.Item>
-              </Col>
-            </Row>
-            </React.Fragment>
-          }
+                <Col span={24}>
+                  <Form.Item
+                    name="description"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please enter description',
+                      },
+                    ]}
+                  >
+                    <TextArea type="text" placeholder="description" />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={24}>
+                  <Form.Item
+                    name="featuredImg"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please upload image',
+                      },
+                    ]}
+                  >
+                    <UploadImage />
+                  </Form.Item>
+                </Col>
+              </Row>
+            </>
+          )}
           <Row>
             <Col span={24} className="text-right">
               <Button onClick={onClose} style={{ marginRight: 8 }}>
