@@ -14,6 +14,7 @@ import adminSaga from './admin/saga';
 import adminRoleSaga from './admin-role/saga';
 import groupSaga from './community/group/saga';
 import groupPrivacyOptionSaga from './community/groupPrivacyOption/saga';
+import courseStructureSaga from './community/course/courseStructure/saga';
 
 import basicTypeCategorySaga from './options/basic-type-category/saga';
 import basicTypeSaga from './options/basic-type/saga';
@@ -46,6 +47,7 @@ export default function* rootSaga(getState) {
     postSaga(),
     groupSaga(),
     groupPrivacyOptionSaga(),
+    courseStructureSaga(),
     countrySaga(),
     languageSaga(),
     languageLevelSaga(),

@@ -7,6 +7,7 @@ const CommunityMember = React.lazy(() => import('./member'));
 const CommunityTopic = React.lazy(() => import('./topic'));
 const CommunityPost = React.lazy(() => import('./post'));
 const CommunityGroup = React.lazy(() => import('./group'));
+const Course = React.lazy(() => import('./course'));
 
 const Community = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
@@ -34,6 +35,10 @@ const Community = ({ match }) => (
       <Route
         path={`${match.url}/group`}
         render={(props) => <CommunityGroup {...props} />}
+      />
+      <Route
+        path={`${match.url}/course`}
+        render={(props) => <Course {...props} />}
       />
       <Redirect to="/error" />
     </Switch>

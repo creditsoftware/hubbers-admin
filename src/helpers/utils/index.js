@@ -229,6 +229,7 @@ class Utils {
     }
     return breakpoints;
   }
+
 }
 
 export default Utils;

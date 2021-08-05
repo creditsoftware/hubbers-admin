@@ -25,6 +25,7 @@ export * from './community/member/actions';
 export * from './community/post/actions';
 export * from './community/group/actions';
 export * from './community/groupPrivacyOption/actions';
+export * from './community/course/courseStructure/actions';
 export * from './options/basic-type-category/actions';
 export * from './options/basic-type/actions';
 export * from './options/expertise-category/actions';

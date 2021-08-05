@@ -7,6 +7,7 @@ import memberRole from './community/memberRole/reducer';
 import member from './community/member/reducer';
 import post from './community/post/reducer';
 import group from './community/group/reducer';
+import courseStructure from './community/course/courseStructure/reducer';
 import groupPrivacyOption from './community/groupPrivacyOption/reducer';
 import menu from './menu/reducer';
 import authUser from './auth/reducer';
@@ -42,6 +43,7 @@ const reducers = combineReducers({
   post,
   group,
   groupPrivacyOption,
+  courseStructure,
   // options
   basicTypeCategory,
   basicType,

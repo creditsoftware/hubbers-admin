@@ -72,6 +72,16 @@ const data = [
         label: 'menu.group',
         to: `${adminRoot}/community/group`,
       },
+      // {
+      //   icon: 'simple-icon-doc',
+      //   label: 'menu.course',
+      //   to: `${adminRoot}/community/course`,
+      // },
+      {
+        icon: 'simple-icon-doc',
+        label: 'menu.course-structure',
+        to: `${adminRoot}/community/course/structure`,
+      },
     ],
   },
   {
