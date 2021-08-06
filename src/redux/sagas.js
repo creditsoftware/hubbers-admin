@@ -27,6 +27,9 @@ import jobCategorySaga from './job/job-category/saga';
 import teamSaga from './team/all-teams/saga';
 import teamMemberSaga from './team/team-member/saga';
 import teamMemberRoleSaga from './team/team-member-role/saga';
+import partnerSaga from './partner/partner/saga';
+import partnerTypeSaga from './partner/partner-type/saga';
+import partnerContactSaga from './partner/partner-contact/saga';
 
 export default function* rootSaga(getState) {
   yield all([
@@ -55,5 +58,8 @@ export default function* rootSaga(getState) {
     teamSaga(),
     teamMemberSaga(),
     teamMemberRoleSaga(),
+    partnerSaga(),
+    partnerTypeSaga(),
+    partnerContactSaga(),
   ]);
 }

@@ -6,7 +6,7 @@ import * as Actions from '../../../../redux/actions';
 
 const { TextArea } = Input;
 
-const EditTeamMemberRole = ({ id, data }) => {
+const EditPartnerType = ({ id, data }) => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
@@ -27,7 +27,7 @@ const EditTeamMemberRole = ({ id, data }) => {
   };
 
   const onSubmit = (values) => {
-    dispatch(Actions.updateTeamMemberRole({ ...values, id }));
+    dispatch(Actions.updatePartnerType({ ...values, id }));
     onClose();
   };
 
@@ -42,7 +42,7 @@ const EditTeamMemberRole = ({ id, data }) => {
         />
       </Tooltip>
       <Drawer
-        title="Edit a Team Member Role"
+        title="Edit a Partner Type"
         width={500}
         onClose={onClose}
         visible={visible}
@@ -56,10 +56,10 @@ const EditTeamMemberRole = ({ id, data }) => {
         >
           <Form.Item
             name="name"
-            label="Role Name"
-            rules={[{ required: true, message: 'Please enter Role Name' }]}
+            label="Type Name"
+            rules={[{ required: true, message: 'Please enter Type Name' }]}
           >
-            <Input placeholder="Please enter TeamMemberRole Name" />
+            <Input placeholder="Please enter PartnerType Name" />
           </Form.Item>
           <Form.Item
             name="description"
@@ -82,4 +82,4 @@ const EditTeamMemberRole = ({ id, data }) => {
   );
 };
 
-export default EditTeamMemberRole;
+export default EditPartnerType;

@@ -1,14 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Card,
-  Space,
-  Table,
-  Popconfirm,
-  Button,
-  Avatar,
-  Image,
-} from 'antd';
+import { Card, Space, Table, Popconfirm, Button, Avatar, Image } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import utils from '../../../../helpers/utils/index';
 import * as Actions from '../../../../redux/actions';

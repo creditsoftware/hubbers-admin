@@ -5,7 +5,7 @@ import * as Actions from '../../../redux/actions';
 
 const { Option } = Select;
 
-const CommunitySelect = ({ ...props }) => {
+const CommunitySelect = ({ idValue = true, ...props }) => {
   const dispatch = useDispatch();
   const [communityList, setCommunityList] = React.useState([]);
   const [list, setlist] = React.useState([]);
@@ -34,13 +34,13 @@ const CommunitySelect = ({ ...props }) => {
       filterOption={false}
       showSearch
       onSearch={onSearchCommunity}
-      {...props}
       placeholder="Please choose the community"
+      {...props}
     >
       {list &&
         list.map((item) => {
           return (
-            <Option value={item.id} key={item.id}>
+            <Option value={idValue ? item.id : item.name} key={item.id}>
               {item.name}
             </Option>
           );

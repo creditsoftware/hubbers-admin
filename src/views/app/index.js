@@ -77,7 +77,7 @@ const App = ({ match }) => {
             />
 
             <Route
-              exact
+              // exact
               path={`${match.url}/partner`}
               render={(props) => <Partner {...props} />}
             />

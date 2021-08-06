@@ -1,48 +1,37 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Drawer, Form, Button, Input, Tooltip } from 'antd';
-import { EditOutlined } from '@ant-design/icons';
+import { Drawer, Form, Button, Input } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
 
 const { TextArea } = Input;
 
-const EditTeamMemberRole = ({ id, data }) => {
+const CreatePartnerType = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
 
   const showDrawer = () => {
-    const filterData = data.filter((item) => item.id === id);
-    if (filterData.length > 0) {
-      form.setFieldsValue({
-        name: filterData[0].name,
-        description: filterData[0].description,
-      });
-    }
     setVisible(true);
   };
 
   const onClose = () => {
+    form.resetFields();
     setVisible(false);
   };
 
   const onSubmit = (values) => {
-    dispatch(Actions.updateTeamMemberRole({ ...values, id }));
+    dispatch(Actions.createPartnerType(values));
     onClose();
   };
 
   return (
     <>
-      <Tooltip title="View / Edit">
-        <Button
-          type="primary"
-          icon={<EditOutlined />}
-          onClick={showDrawer}
-          size="small"
-        />
-      </Tooltip>
+      <Button type="primary" onClick={showDrawer}>
+        <PlusOutlined /> Create New Partner Type
+      </Button>
       <Drawer
-        title="Edit a Team Member Role"
+        title="Create a New Partner Type"
         width={500}
         onClose={onClose}
         visible={visible}
@@ -56,10 +45,10 @@ const EditTeamMemberRole = ({ id, data }) => {
         >
           <Form.Item
             name="name"
-            label="Role Name"
-            rules={[{ required: true, message: 'Please enter Role Name' }]}
+            label="Type Name"
+            rules={[{ required: true, message: 'Please enter Type Name' }]}
           >
-            <Input placeholder="Please enter TeamMemberRole Name" />
+            <Input placeholder="Please enter Type Name" />
           </Form.Item>
           <Form.Item
             name="description"
@@ -82,4 +71,4 @@ const EditTeamMemberRole = ({ id, data }) => {
   );
 };
 
-export default EditTeamMemberRole;
+export default CreatePartnerType;

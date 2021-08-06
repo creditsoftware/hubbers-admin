@@ -51,6 +51,8 @@ module.exports = {
   'menu.team-member': 'Team Member',
   'menu.team-member-role': 'Team Member Role',
   'menu.partner': 'Partner',
+  'menu.partner-list': 'Partner List',
+  'menu.partner-type': 'Partner Type',
   'menu.job-list': 'Job List',
   'menu.all-jobs': 'All Jobs',
 
@@ -161,6 +163,8 @@ module.exports = {
 
   // partners
   'partner.title': 'Partner',
+  'partner-list.title': 'Partner List',
+  'partner-type.title': 'Partner Type',
 
   // innovation type
   'basic-type-category.title': 'Basic Type Category',
