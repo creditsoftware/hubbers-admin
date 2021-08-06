@@ -38,3 +38,6 @@ export * from './job/job-category/actions';
 export * from './team/all-teams/actions';
 export * from './team/team-member/actions';
 export * from './team/team-member-role/actions';
+export * from './partner/partner/actions';
+export * from './partner/partner-type/actions';
+export * from './partner/partner-contact/actions';

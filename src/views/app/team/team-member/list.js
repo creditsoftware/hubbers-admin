@@ -43,7 +43,6 @@ const TeamMemberList = () => {
         message: 'Error',
         description: error.data.message,
         placement: 'bottomRight',
-        duration: 0,
       });
     }
   };

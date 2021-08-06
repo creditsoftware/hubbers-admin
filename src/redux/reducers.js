@@ -27,6 +27,9 @@ import jobCategory from './job/job-category/reducer';
 import team from './team/all-teams/reducer';
 import teamMember from './team/team-member/reducer';
 import teamMemberRole from './team/team-member-role/reducer';
+import partner from './partner/partner/reducer';
+import partnerType from './partner/partner-type/reducer';
+import partnerContact from './partner/partner-contact/reducer';
 
 const reducers = combineReducers({
   menu,
@@ -58,6 +61,9 @@ const reducers = combineReducers({
   team,
   teamMember,
   teamMemberRole,
+  partner,
+  partnerType,
+  partnerContact,
 });
 
 export default reducers;

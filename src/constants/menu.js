@@ -124,9 +124,21 @@ const data = [
     id: 'partner',
     icon: 'iconsminds-user',
     label: 'menu.partner',
+    roles: [UserRole.Admin, UserRole.Editor],
     to: `${adminRoot}/partner`,
+    subs: [
+      {
+        icon: 'simple-icon-paper-plane',
+        label: 'menu.partner-list',
+        to: `${adminRoot}/partner/partner-list`,
+      },
+      {
+        icon: 'simple-icon-paper-plane',
+        label: 'menu.partner-type',
+        to: `${adminRoot}/partner/partner-type`,
+      },
+    ],
   },
-
   {
     id: 'job-list',
     icon: 'iconsminds-three-arrow-fork',

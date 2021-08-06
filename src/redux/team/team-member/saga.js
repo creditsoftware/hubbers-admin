@@ -80,7 +80,7 @@ const createTeamMemberAsync = async ({ payload }) => {
 function* CreateTeamMember(payload) {
   try {
     const result = yield call(createTeamMemberAsync, payload);
-    if (result.status === 200 && result.succeess) {
+    if (result.status === 200 && result.data.success) {
       yield put(createTeamMemberSuccess(result.data.data));
       yield put(getAllTeamMember(payload.payload.teamId));
     } else {
@@ -102,7 +102,8 @@ const updateTeamMemberAsync = async ({ payload }) => {
 function* UpdateTeamMember(payload) {
   try {
     const result = yield call(updateTeamMemberAsync, payload);
-    if (result.status === 200 && result.succeess) {
+    console.log(result);
+    if (result.status === 200 && result.data.success) {
       yield put(updateTeamMemberSuccess(result.data.data));
       yield put(getAllTeamMember(payload.payload.teamId));
     } else {
