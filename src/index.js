@@ -17,9 +17,26 @@ import { getCurrentColor, setCurrentColor } from './helpers/Utils';
 const color =
   isMultiColorActive || isDarkSwitchActive ? getCurrentColor() : defaultColor;
 setCurrentColor(color);
-
+export const colors = [
+  'bluenavy',
+  'blueyale',
+  'blueolympic',
+  'greenmoss',
+  'greenlime',
+  'purplemonster',
+  'orangecarrot',
+  'redruby',
+  'yellowgranola',
+  'greysteel',
+];
+// const render = () => {
+//   import(`./assets/css/sass/themes/gogo.${color}.scss`).then(() => {
+//     require('./AppRenderer');
+//   });
+// };
+// render();
 const render = () => {
-  import(`./assets/css/sass/themes/gogo.${color}.scss`).then(() => {
+  import(`./assets/css/sass/themes/gogo.light.greenlime.scss`).then(() => {
     require('./AppRenderer');
   });
 };
