@@ -41,3 +41,4 @@ export * from './team/team-member-role/actions';
 export * from './partner/partner/actions';
 export * from './partner/partner-type/actions';
 export * from './partner/partner-contact/actions';
+export * from './module/moduleType/actions';

@@ -31,6 +31,7 @@ import teamMemberRoleSaga from './team/team-member-role/saga';
 import partnerSaga from './partner/partner/saga';
 import partnerTypeSaga from './partner/partner-type/saga';
 import partnerContactSaga from './partner/partner-contact/saga';
+import ModuleTypeSaga from './module/moduleType/saga';
 
 export default function* rootSaga(getState) {
   yield all([
@@ -63,5 +64,6 @@ export default function* rootSaga(getState) {
     partnerSaga(),
     partnerTypeSaga(),
     partnerContactSaga(),
+    ModuleTypeSaga(),
   ]);
 }

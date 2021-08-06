@@ -30,6 +30,7 @@ import teamMemberRole from './team/team-member-role/reducer';
 import partner from './partner/partner/reducer';
 import partnerType from './partner/partner-type/reducer';
 import partnerContact from './partner/partner-contact/reducer';
+import moduleType from './module/moduleType/reducer';
 
 const reducers = combineReducers({
   menu,
@@ -64,6 +65,7 @@ const reducers = combineReducers({
   partner,
   partnerType,
   partnerContact,
+  moduleType,
 });
 
 export default reducers;
