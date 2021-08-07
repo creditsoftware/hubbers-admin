@@ -9,10 +9,13 @@ import {
 import { IntlProvider } from 'react-intl';
 import './helpers/Firebase';
 import AppLocale from './lang';
-import ColorSwitcher from './components/common/ColorSwitcher';
+// import ColorSwitcher from './components/common/ColorSwitcher';
 import { NotificationContainer } from './components/common/react-notifications';
-import { isMultiColorActive, adminRoot } from './constants/defaultValues';
-import { getDirection } from './helpers/Utils';
+import { 
+  // isMultiColorActive,
+   adminRoot
+   } from './constants/defaultValues';
+// import { getDirection } from './helpers/Utils';
 import { ProtectedRoute, UserRole } from './helpers/authHelper';
 
 const ViewApp = React.lazy(() => import('./views/app'));
@@ -23,14 +26,14 @@ const ViewUnauthorized = React.lazy(() => import('./views/unauthorized'));
 class App extends React.Component {
   constructor(props) {
     super(props);
-    const direction = getDirection();
-    if (direction.isRtl) {
-      document.body.classList.add('rtl');
-      document.body.classList.remove('ltr');
-    } else {
+    // const direction = getDirection();
+    // if (direction.isRtl) {
+      // document.body.classList.add('rtl');
+      // document.body.classList.remove('ltr');
+    // } else {
       document.body.classList.add('ltr');
       document.body.classList.remove('rtl');
-    }
+    // }
   }
 
   render() {

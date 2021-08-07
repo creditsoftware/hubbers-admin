@@ -45,6 +45,8 @@ module.exports = {
   'menu.structure': 'Structure',
   'menu.course-structure': 'Course Structure',
   'menu.default': 'Default',
+  'menu.module': 'Module',
+  'menu.module-type': 'Module Type',
   'menu.content': 'Content',
   'menu.users': 'Users',
   'menu.investors': 'Investors',

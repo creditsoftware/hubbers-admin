@@ -4,25 +4,25 @@ import { DeleteOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import utils from '../../../../helpers/utils/index';
 import * as Actions from '../../../../redux/actions';
-import CreateTeamMemberRole from './create';
-import EditTeamMemberRole from './edit';
+import CreateModuleType from './create';
+import EditModuleType from './edit';
 
-const TeamMemberRoleList = () => {
+const List = () => {
   const dispatch = useDispatch();
-  const [teamMemberRoleList, setTeamMemberRoleList] = useState(null);
-  const { list } = useSelector((state) => state.teamMemberRole);
+  const [moduleTypeList, setModuleTypeList] = useState(null);
+  const { list } = useSelector((state) => state.moduleType);
   useEffect(() => {
-    dispatch(Actions.getAllTeamMemberRole());
+    dispatch(Actions.getAllModuleType());
   }, [dispatch]);
 
   useEffect(() => {
-    setTeamMemberRoleList(list);
+    setModuleTypeList(list);
   }, [list]);
 
-  console.log(teamMemberRoleList);
+  console.log(moduleTypeList);
 
   const handleDelete = (id) => {
-    dispatch(Actions.deleteTeamMemberRole(id));
+    dispatch(Actions.deleteModuleType(id));
   };
   const tableColumns = [
     {
@@ -46,9 +46,9 @@ const TeamMemberRoleList = () => {
       /* eslint-disable */
       render: (_, elm) => (
         <Space>
-          <EditTeamMemberRole id={elm.id} data={teamMemberRoleList} />
+          <EditModuleType id={elm.id} data={moduleTypeList} />
           <Popconfirm
-            title="Do you remove this TeamMemberRole?"
+            title="Do you remove this ModuleType?"
             onConfirm={() => handleDelete(elm.id)}
             okText="Yes"
             cancelText="No"
@@ -63,16 +63,16 @@ const TeamMemberRoleList = () => {
   return (
     <Card>
       <div className="w-100 text-right mb-3">
-        <CreateTeamMemberRole />
+        <CreateModuleType />
       </div>
       <div className="table-responsive">
         <Table
           rowKey="id"
           columns={tableColumns}
-          dataSource={teamMemberRoleList}
+          dataSource={moduleTypeList}
         />
       </div>
     </Card>
   );
 };
-export default TeamMemberRoleList;
+export default List;

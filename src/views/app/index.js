@@ -24,6 +24,7 @@ const Partner = React.lazy(() => import('./partner'));
 const Options = React.lazy(() => import('./options'));
 const JobList = React.lazy(() => import('./job-list'));
 const BlankPage = React.lazy(() => import('./blank-page'));
+const Module = React.lazy(() => import('./module'));
 const App = ({ match }) => {
   return (
     <AppLayout>
@@ -74,6 +75,12 @@ const App = ({ match }) => {
               // exact
               path={`${match.url}/team`}
               render={(props) => <Team {...props} />}
+            />
+
+            <Route
+              // exact
+              path={`${match.url}/module`}
+              render={(props) => <Module {...props} />}
             />
 
             <Route

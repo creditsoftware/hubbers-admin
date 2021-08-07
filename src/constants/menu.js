@@ -121,6 +121,30 @@ const data = [
     ],
   },
   {
+    id: 'module',
+    icon: 'iconsminds-user',
+    label: 'menu.module',
+    roles: [UserRole.Admin, UserRole.Editor],
+    to: `${adminRoot}/module`,
+    subs: [
+      {
+        icon: 'simple-icon-paper-plane',
+        label: 'menu.module-type',
+        to: `${adminRoot}/module/module-type`,
+      },
+      // {
+      //   icon: 'simple-icon-paper-plane',
+      //   label: 'menu.team-member',
+      //   to: `${adminRoot}/team/team-member`,
+      // },
+      // {
+      //   icon: 'simple-icon-paper-plane',
+      //   label: 'menu.team-member-role',
+      //   to: `${adminRoot}/team/team-member-role`,
+      // },
+    ],
+  },
+  {
     id: 'partner',
     icon: 'iconsminds-user',
     label: 'menu.partner',
