@@ -39,9 +39,7 @@ function* GetAllCourseStructure() {
       );
     }
   } catch (error) {
-    yield put(
-      getAllCourseStructureError('Get All CourseStructure Error !')
-    );
+    yield put(getAllCourseStructureError('Get All CourseStructure Error !'));
   }
 }
 
@@ -57,10 +55,10 @@ function* CreateCourseStructure(payload) {
   try {
     const result = yield call(createCourseStructureAsync, payload);
     if (result.status === 200 && result.statusText === 'OK') {
-      if(result.data.errors){
-        yield put(createCourseStructureError(result.data.errors))
+      if (result.data.errors) {
+        yield put(createCourseStructureError(result.data.errors));
       }
-      if(result.data.result) {
+      if (result.data.result) {
         yield put(createCourseStructureSuccess(result.data.result));
       }
       yield put(getAllCourseStructure());
@@ -72,9 +70,7 @@ function* CreateCourseStructure(payload) {
       );
     }
   } catch (error) {
-    yield put(
-      createCourseStructureError('Create CourseStructure Error !')
-    );
+    yield put(createCourseStructureError('Create CourseStructure Error !'));
   }
 }
 
@@ -100,9 +96,7 @@ function* UpdateCourseStructure(payload) {
       );
     }
   } catch (error) {
-    yield put(
-      updateCourseStructureError('Update CourseStructure Error !')
-    );
+    yield put(updateCourseStructureError('Update CourseStructure Error !'));
   }
 }
 
@@ -126,9 +120,7 @@ function* DeleteCourseStructure(payload) {
       );
     }
   } catch (error) {
-    yield put(
-      deleteCourseStructureError('Delete CourseStructure Error !')
-    );
+    yield put(deleteCourseStructureError('Delete CourseStructure Error !'));
   }
 }
 

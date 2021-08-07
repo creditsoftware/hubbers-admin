@@ -12,7 +12,7 @@ const TeamMemberRole = ({ match }) => {
     <>
       <Row>
         <Colxx xxs="12">
-          <Breadcrumb heading="team-member-role.title" match={match} />
+          <Breadcrumb heading="module-type.title" match={match} />
           <Separator className="mb-5" />
         </Colxx>
       </Row>

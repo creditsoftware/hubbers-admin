@@ -11,10 +11,10 @@ import './helpers/Firebase';
 import AppLocale from './lang';
 // import ColorSwitcher from './components/common/ColorSwitcher';
 import { NotificationContainer } from './components/common/react-notifications';
-import { 
+import {
   // isMultiColorActive,
-   adminRoot
-   } from './constants/defaultValues';
+  adminRoot,
+} from './constants/defaultValues';
 // import { getDirection } from './helpers/Utils';
 import { ProtectedRoute, UserRole } from './helpers/authHelper';
 
@@ -28,11 +28,11 @@ class App extends React.Component {
     super(props);
     // const direction = getDirection();
     // if (direction.isRtl) {
-      // document.body.classList.add('rtl');
-      // document.body.classList.remove('ltr');
+    // document.body.classList.add('rtl');
+    // document.body.classList.remove('ltr');
     // } else {
-      document.body.classList.add('ltr');
-      document.body.classList.remove('rtl');
+    document.body.classList.add('ltr');
+    document.body.classList.remove('rtl');
     // }
   }
 

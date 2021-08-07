@@ -30,12 +30,10 @@ function* GetAllModuleType() {
   try {
     const result = yield call(getAllModuleTypeAsync);
     if (result.status === 200 && result.statusText === 'OK') {
-      yield put(getAllModuleTypeSuccess(result.data));
+      yield put(getAllModuleTypeSuccess(result.data.result));
     } else {
       yield put(
-        getAllModuleTypeError(
-          'Get All Module Type Response is not success!'
-        )
+        getAllModuleTypeError('Get All Module Type Response is not success!')
       );
     }
   } catch (error) {
@@ -59,9 +57,7 @@ function* CreateModuleType(payload) {
       yield put(getAllModuleType());
     } else {
       yield put(
-        createModuleTypeError(
-          'Create Module Type Response is not success!'
-        )
+        createModuleTypeError('Create Module Type Response is not success!')
       );
     }
   } catch (error) {
@@ -85,9 +81,7 @@ function* UpdateModuleType(payload) {
       yield put(getAllModuleType());
     } else {
       yield put(
-        updateModuleTypeError(
-          'Update Module Type Response is not success!'
-        )
+        updateModuleTypeError('Update Module Type Response is not success!')
       );
     }
   } catch (error) {
@@ -109,9 +103,7 @@ function* DeleteModuleType(payload) {
       yield put(getAllModuleType());
     } else {
       yield put(
-        deleteModuleTypeError(
-          'Delete Module Type Response is not success!'
-        )
+        deleteModuleTypeError('Delete Module Type Response is not success!')
       );
     }
   } catch (error) {

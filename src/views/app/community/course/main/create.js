@@ -88,7 +88,14 @@ const Create = () => {
                 <Input
                   placeholder="Please enter Course name"
                   onChange={(e) =>
-                    form.setFieldsValue({ slug: e.target.value ? `${slugify(e.target.value)}-${getRandomInt(100000, 999999)}` : '' })
+                    form.setFieldsValue({
+                      slug: e.target.value
+                        ? `${slugify(e.target.value)}-${getRandomInt(
+                            100000,
+                            999999
+                          )}`
+                        : '',
+                    })
                   }
                 />
               </Form.Item>
@@ -97,7 +104,9 @@ const Create = () => {
               <Form.Item
                 name="slug"
                 label="Course Slug"
-                rules={[{ required: true, message: 'Please enter Course Slug' }]}
+                rules={[
+                  { required: true, message: 'Please enter Course Slug' },
+                ]}
                 className="ml-2"
               >
                 <Input disabled placeholder="Please enter Course Slug" />

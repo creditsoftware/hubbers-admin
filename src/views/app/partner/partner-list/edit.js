@@ -147,7 +147,7 @@ const EditPartner = ({ id, data }) => {
             </Select>
           </Form.Item>
           <Row>
-          <Col span={12} className="pr-2">
+            <Col span={12} className="pr-2">
               <Form.Item
                 name="isGlobal"
                 label="Global/Local"
@@ -157,7 +157,7 @@ const EditPartner = ({ id, data }) => {
                   placeholder="Select Global or Local"
                   onChange={changeIsGlobal}
                 >
-                  <Option key="global" value={true}>
+                  <Option key="global" value>
                     Global
                   </Option>
                   <Option key="local" value={false}>

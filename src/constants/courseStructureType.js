@@ -1,14 +1,19 @@
-const courseStructureType = [{
+const courseStructureType = [
+  {
     key: 'courseType',
-    name: 'Course Type'
-}, {
+    name: 'Course Type',
+  },
+  {
     key: 'instructor',
-    name: 'Instructor'
-}, {
+    name: 'Instructor',
+  },
+  {
     key: 'section',
-    name: 'Section'
-}, {
+    name: 'Section',
+  },
+  {
     key: 'courseUnit',
-    name: 'Course Unit'
-}];
+    name: 'Course Unit',
+  },
+];
 export default courseStructureType;

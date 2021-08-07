@@ -12,13 +12,13 @@ import courseStructureType from '../../../../../constants/courseStructureType';
 const { TextArea } = Input;
 const { Option } = Select;
 
-const Create = ({...props}) => {
+const Create = ({ ...props }) => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
   React.useEffect(() => {
-    form.setFieldsValue({category:props.currentCategory})
-  },[props])
+    form.setFieldsValue({ category: props.currentCategory });
+  }, [form, props]);
   const showDrawer = () => {
     setVisible(true);
   };
@@ -57,14 +57,10 @@ const Create = ({...props}) => {
               <Form.Item
                 name="name"
                 label="Name"
-                rules={[
-                  { required: true, message: 'Please enter Name' },
-                ]}
+                rules={[{ required: true, message: 'Please enter Name' }]}
                 className="mr-2"
               >
-                <Input
-                  placeholder="Name"
-                />
+                <Input placeholder="Name" />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -76,9 +72,7 @@ const Create = ({...props}) => {
                 ]}
                 className="mr-2"
               >
-                <Input
-                  placeholder="Name"
-                />
+                <Input placeholder="Name" />
               </Form.Item>
             </Col>
           </Row>
@@ -88,13 +82,14 @@ const Create = ({...props}) => {
                 name="iaName"
                 label="Indefinite Article Name"
                 rules={[
-                  { required: true, message: 'Please enter Indefinite Article Name' },
+                  {
+                    required: true,
+                    message: 'Please enter Indefinite Article Name',
+                  },
                 ]}
                 className="mr-2"
               >
-                <Input
-                  placeholder="a Name"
-                />
+                <Input placeholder="a Name" />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -106,9 +101,7 @@ const Create = ({...props}) => {
                 ]}
                 className="mr-2"
               >
-                <Input
-                  placeholder="Names"
-                />
+                <Input placeholder="Names" />
               </Form.Item>
             </Col>
           </Row>
@@ -118,13 +111,14 @@ const Create = ({...props}) => {
                 name="ppName"
                 label="Possessive Plural Name"
                 rules={[
-                  { required: true, message: 'Please enter Possessive Plural Name' },
+                  {
+                    required: true,
+                    message: 'Please enter Possessive Plural Name',
+                  },
                 ]}
                 className="mr-2"
               >
-                <Input
-                  placeholder="Your Names"
-                />
+                <Input placeholder="Your Names" />
               </Form.Item>
             </Col>
             <Col span={12}>

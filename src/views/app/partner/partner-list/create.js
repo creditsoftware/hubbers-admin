@@ -134,7 +134,7 @@ const CreatePartner = () => {
                   placeholder="Select Global or Local"
                   onChange={changeIsGlobal}
                 >
-                  <Option key="global" value={true}>
+                  <Option key="global" value>
                     Global
                   </Option>
                   <Option key="local" value={false}>

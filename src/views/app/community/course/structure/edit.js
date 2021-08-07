@@ -60,14 +60,10 @@ const GroupEdit = ({ id, data }) => {
               <Form.Item
                 name="name"
                 label="Name"
-                rules={[
-                  { required: true, message: 'Please enter Name' },
-                ]}
+                rules={[{ required: true, message: 'Please enter Name' }]}
                 className="mr-2"
               >
-                <Input
-                  placeholder="Name"
-                />
+                <Input placeholder="Name" />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -79,9 +75,7 @@ const GroupEdit = ({ id, data }) => {
                 ]}
                 className="mr-2"
               >
-                <Input
-                  placeholder="Name"
-                />
+                <Input placeholder="Name" />
               </Form.Item>
             </Col>
           </Row>
@@ -91,13 +85,14 @@ const GroupEdit = ({ id, data }) => {
                 name="iaName"
                 label="Indefinite Article Name"
                 rules={[
-                  { required: true, message: 'Please enter Indefinite Article Name' },
+                  {
+                    required: true,
+                    message: 'Please enter Indefinite Article Name',
+                  },
                 ]}
                 className="mr-2"
               >
-                <Input
-                  placeholder="a Name"
-                />
+                <Input placeholder="a Name" />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -109,9 +104,7 @@ const GroupEdit = ({ id, data }) => {
                 ]}
                 className="mr-2"
               >
-                <Input
-                  placeholder="Names"
-                />
+                <Input placeholder="Names" />
               </Form.Item>
             </Col>
           </Row>
@@ -121,13 +114,14 @@ const GroupEdit = ({ id, data }) => {
                 name="ppName"
                 label="Possessive Plural Name"
                 rules={[
-                  { required: true, message: 'Please enter Possessive Plural Name' },
+                  {
+                    required: true,
+                    message: 'Please enter Possessive Plural Name',
+                  },
                 ]}
                 className="mr-2"
               >
-                <Input
-                  placeholder="Your Names"
-                />
+                <Input placeholder="Your Names" />
               </Form.Item>
             </Col>
             <Col span={12}>

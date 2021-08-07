@@ -1,18 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Card, Space, Table, Tooltip, Popconfirm, Button, Select, notification } from 'antd';
+import {
+  Card,
+  Space,
+  Table,
+  Tooltip,
+  Popconfirm,
+  Button,
+  Select,
+  notification,
+} from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import utils from '../../../../../helpers/utils/index';
 import * as Actions from '../../../../../redux/actions';
 import CourseStructureCreate from './create';
 import EditCourseStructure from './edit';
 import courseStructureType from '../../../../../constants/courseStructureType';
-const {Option} = Select;
+
+const { Option } = Select;
 const CourseStructureList = () => {
   const dispatch = useDispatch();
-  const [filteredCourseStructureList, setFilteredCourseStructureList] = useState(null);
+  const [filteredCourseStructureList, setFilteredCourseStructureList] =
+    useState(null);
   const [courseStructureList, setCourseStructureList] = useState(null);
-  const[currentCategory, setCurrentCategory] = useState('courseType');
+  const [currentCategory, setCurrentCategory] = useState('courseType');
   const { list, error } = useSelector((state) => state.courseStructure);
   const [pagination, setPagenation] = React.useState({
     current: 1,
@@ -24,24 +35,25 @@ const CourseStructureList = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if(error) {
-      notification['error']({
+    if (error) {
+      notification.error({
         message: 'Error',
-        placement:'bottomRight',
-        description:
-          error[0]?.message
+        placement: 'bottomRight',
+        description: error[0]?.message,
       });
     }
-  },[error]);
+  }, [error]);
 
   useEffect(() => {
     setCourseStructureList(list);
   }, [list]);
   useEffect(() => {
-    if(courseStructureList) {
-      setFilteredCourseStructureList(courseStructureList.filter((l) => l.category === currentCategory));
+    if (courseStructureList) {
+      setFilteredCourseStructureList(
+        courseStructureList.filter((l) => l.category === currentCategory)
+      );
     }
-  },[courseStructureList, currentCategory])
+  }, [courseStructureList, currentCategory]);
 
   const tableColumns = [
     {
@@ -136,9 +148,9 @@ const CourseStructureList = () => {
   return (
     <Card>
       <div className="mb-3 d-flex" style={{ justifyContent: 'space-between' }}>
-      <Select
+        <Select
           style={{ width: 200 }}
-          onChange={(e)=>setCurrentCategory(e)}
+          onChange={(e) => setCurrentCategory(e)}
           placeholder="Type Category"
           value={currentCategory}
         >
@@ -150,7 +162,10 @@ const CourseStructureList = () => {
             );
           })}
         </Select>
-        <CourseStructureCreate currentCategory={currentCategory} setCurrentCategory={setCurrentCategory} />
+        <CourseStructureCreate
+          currentCategory={currentCategory}
+          setCurrentCategory={setCurrentCategory}
+        />
       </div>
       <div className="table-responsive">
         <Table

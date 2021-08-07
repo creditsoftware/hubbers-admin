@@ -166,6 +166,9 @@ module.exports = {
   'team-member.title': 'Team Member',
   'team-member-role.title': 'Team Member Role',
 
+  // module
+  'module-type.title': 'Module Type',
+
   // partners
   'partner.title': 'Partner',
   'partner-list.title': 'Partner List',
