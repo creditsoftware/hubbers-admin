@@ -14,6 +14,7 @@ import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
 import CommunitySelect from '../../../../components/util-components/selector/CommunitySelect';
 import UserSelect from '../../../../components/util-components/selector/UserSelect';
+import LanguageSelect from '../../../../components/util-components/selector/LanguageSelect';
 import UploadImage from '../../../../components/UploadImage';
 
 const { TextArea } = Input;
@@ -25,22 +26,15 @@ const CreatePartner = () => {
   const [form] = Form.useForm();
   const [isGlobal, setIsGlobal] = useState(null);
   const [typeList, setTypeList] = useState(null);
-  const [languageList, setLanguageList] = useState(null);
   const { partnerTypeList } = useSelector((state) => state.partnerType);
-  const { list } = useSelector((state) => state.language);
 
   useEffect(() => {
     dispatch(Actions.getAllPartnerType());
-    dispatch(Actions.getAllLanguage());
   }, [dispatch]);
 
   useEffect(() => {
     setTypeList(partnerTypeList);
   }, [partnerTypeList]);
-
-  useEffect(() => {
-    setLanguageList(list);
-  }, [list]);
 
   const showDrawer = () => {
     setVisible(true);
@@ -113,15 +107,7 @@ const CreatePartner = () => {
             label="Language"
             rules={[{ required: true, message: 'Please choose a language' }]}
           >
-            <Select placeholder="Please select a language">
-              {languageList?.map((item) => {
-                return (
-                  <Option key={item.id} value={item.name}>
-                    {item.name}
-                  </Option>
-                );
-              })}
-            </Select>
+            <LanguageSelect idValue={false} />
           </Form.Item>
           <Row>
             <Col span={12} className="pr-2">

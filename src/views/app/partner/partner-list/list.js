@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Table, Button, Popconfirm, Space } from 'antd';
+import { Card, Table, Button, Popconfirm, Space, Avatar } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import utils from '../../../../helpers/utils/index';
@@ -27,6 +27,15 @@ const AllParters = () => {
       title: 'ID',
       dataIndex: 'id',
       sorter: (a, b) => utils.antdTableSorter(a, b, 'id'),
+    },
+    {
+      title: 'Image',
+      dataIndex: 'featuredImageUrl',
+      /* eslint-disable */
+      render: (_, record) => (
+        <Avatar size={42} src={record.featuredImageUrl} />
+      ),
+      /* eslint-enable */
     },
     {
       title: 'name',
