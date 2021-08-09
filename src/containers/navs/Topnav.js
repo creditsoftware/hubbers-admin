@@ -20,159 +20,159 @@ import {
 } from '../../redux/actions';
 
 import {
-  menuHiddenBreakpoint,
-  searchPath,
-  localeOptions,
-  isDarkSwitchActive,
+  // menuHiddenBreakpoint,
+  // searchPath,
+  // localeOptions,
+  // isDarkSwitchActive,
   adminRoot,
 } from '../../constants/defaultValues';
 
 import { MobileMenuIcon, MenuIcon } from '../../components/svg';
-import TopnavEasyAccess from './Topnav.EasyAccess';
-import TopnavNotifications from './Topnav.Notifications';
-import TopnavDarkSwitch from './Topnav.DarkSwitch';
+// import TopnavEasyAccess from './Topnav.EasyAccess';
+// import TopnavNotifications from './Topnav.Notifications';
+// import TopnavDarkSwitch from './Topnav.DarkSwitch';
 
-import { getDirection, setDirection } from '../../helpers/Utils';
+// import { getDirection, setDirection } from '../../helpers/Utils';
 import * as Actions from '../../redux/actions';
 
 const TopNav = ({
-  intl,
-  history,
+  // intl,
+  // history,
   containerClassnames,
   menuClickCount,
   selectedMenuHasSubItems,
-  locale,
+  // locale,
   setContainerClassnamesAction,
   clickOnMobileMenuAction,
-  changeLocaleAction,
-  logoutUser,
+  // changeLocaleAction,
+  // logoutUser,
   currentUser,
 }) => {
-  const [isInFullScreen, setIsInFullScreen] = useState(false);
-  const [searchKeyword, setSearchKeyword] = useState('');
+  // const [isInFullScreen, setIsInFullScreen] = useState(false);
+  // const [searchKeyword, setSearchKeyword] = useState('');
 
-  const search = () => {
-    history.push(`${searchPath}?key=${searchKeyword}`);
-    setSearchKeyword('');
-  };
+  // const search = () => {
+  //   history.push(`${searchPath}?key=${searchKeyword}`);
+  //   setSearchKeyword('');
+  // };
 
-  const handleChangeLocale = (_locale, direction) => {
-    changeLocaleAction(_locale);
+  // const handleChangeLocale = (_locale, direction) => {
+  //   changeLocaleAction(_locale);
 
-    const currentDirection = getDirection().direction;
-    if (direction !== currentDirection) {
-      setDirection(direction);
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
-    }
-  };
+  //   const currentDirection = getDirection().direction;
+  //   if (direction !== currentDirection) {
+  //     setDirection(direction);
+  //     setTimeout(() => {
+  //       window.location.reload();
+  //     }, 500);
+  //   }
+  // };
 
-  const isInFullScreenFn = () => {
-    return (
-      (document.fullscreenElement && document.fullscreenElement !== null) ||
-      (document.webkitFullscreenElement &&
-        document.webkitFullscreenElement !== null) ||
-      (document.mozFullScreenElement &&
-        document.mozFullScreenElement !== null) ||
-      (document.msFullscreenElement && document.msFullscreenElement !== null)
-    );
-  };
+  // const isInFullScreenFn = () => {
+  //   return (
+  //     (document.fullscreenElement && document.fullscreenElement !== null) ||
+  //     (document.webkitFullscreenElement &&
+  //       document.webkitFullscreenElement !== null) ||
+  //     (document.mozFullScreenElement &&
+  //       document.mozFullScreenElement !== null) ||
+  //     (document.msFullscreenElement && document.msFullscreenElement !== null)
+  //   );
+  // };
 
-  const handleSearchIconClick = (e) => {
-    if (window.innerWidth < menuHiddenBreakpoint) {
-      let elem = e.target;
-      if (!e.target.classList.contains('search')) {
-        if (e.target.parentElement.classList.contains('search')) {
-          elem = e.target.parentElement;
-        } else if (
-          e.target.parentElement.parentElement.classList.contains('search')
-        ) {
-          elem = e.target.parentElement.parentElement;
-        }
-      }
+  // const handleSearchIconClick = (e) => {
+  //   if (window.innerWidth < menuHiddenBreakpoint) {
+  //     let elem = e.target;
+  //     if (!e.target.classList.contains('search')) {
+  //       if (e.target.parentElement.classList.contains('search')) {
+  //         elem = e.target.parentElement;
+  //       } else if (
+  //         e.target.parentElement.parentElement.classList.contains('search')
+  //       ) {
+  //         elem = e.target.parentElement.parentElement;
+  //       }
+  //     }
 
-      if (elem.classList.contains('mobile-view')) {
-        search();
-        elem.classList.remove('mobile-view');
-        removeEventsSearch();
-      } else {
-        elem.classList.add('mobile-view');
-        addEventsSearch();
-      }
-    } else {
-      search();
-    }
-    e.stopPropagation();
-  };
+  //     if (elem.classList.contains('mobile-view')) {
+  //       search();
+  //       elem.classList.remove('mobile-view');
+  //       removeEventsSearch();
+  //     } else {
+  //       elem.classList.add('mobile-view');
+  //       addEventsSearch();
+  //     }
+  //   } else {
+  //     search();
+  //   }
+  //   e.stopPropagation();
+  // };
 
-  const handleDocumentClickSearch = (e) => {
-    let isSearchClick = false;
-    if (
-      e.target &&
-      e.target.classList &&
-      (e.target.classList.contains('navbar') ||
-        e.target.classList.contains('simple-icon-magnifier'))
-    ) {
-      isSearchClick = true;
-      if (e.target.classList.contains('simple-icon-magnifier')) {
-        search();
-      }
-    } else if (
-      e.target.parentElement &&
-      e.target.parentElement.classList &&
-      e.target.parentElement.classList.contains('search')
-    ) {
-      isSearchClick = true;
-    }
+  // const handleDocumentClickSearch = (e) => {
+  //   let isSearchClick = false;
+  //   if (
+  //     e.target &&
+  //     e.target.classList &&
+  //     (e.target.classList.contains('navbar') ||
+  //       e.target.classList.contains('simple-icon-magnifier'))
+  //   ) {
+  //     isSearchClick = true;
+  //     if (e.target.classList.contains('simple-icon-magnifier')) {
+  //       search();
+  //     }
+  //   } else if (
+  //     e.target.parentElement &&
+  //     e.target.parentElement.classList &&
+  //     e.target.parentElement.classList.contains('search')
+  //   ) {
+  //     isSearchClick = true;
+  //   }
 
-    if (!isSearchClick) {
-      const input = document.querySelector('.mobile-view');
-      if (input && input.classList) input.classList.remove('mobile-view');
-      removeEventsSearch();
-      setSearchKeyword('');
-    }
-  };
+  //   if (!isSearchClick) {
+  //     const input = document.querySelector('.mobile-view');
+  //     if (input && input.classList) input.classList.remove('mobile-view');
+  //     removeEventsSearch();
+  //     setSearchKeyword('');
+  //   }
+  // };
 
-  const removeEventsSearch = () => {
-    document.removeEventListener('click', handleDocumentClickSearch, true);
-  };
+  // const removeEventsSearch = () => {
+  //   document.removeEventListener('click', handleDocumentClickSearch, true);
+  // };
 
-  const addEventsSearch = () => {
-    document.addEventListener('click', handleDocumentClickSearch, true);
-  };
+  // const addEventsSearch = () => {
+  //   document.addEventListener('click', handleDocumentClickSearch, true);
+  // };
 
-  const handleSearchInputKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      search();
-    }
-  };
+  // const handleSearchInputKeyPress = (e) => {
+  //   if (e.key === 'Enter') {
+  //     search();
+  //   }
+  // };
 
-  const toggleFullScreen = () => {
-    const isFS = isInFullScreenFn();
+  // const toggleFullScreen = () => {
+  //   const isFS = isInFullScreenFn();
 
-    const docElm = document.documentElement;
-    if (!isFS) {
-      if (docElm.requestFullscreen) {
-        docElm.requestFullscreen();
-      } else if (docElm.mozRequestFullScreen) {
-        docElm.mozRequestFullScreen();
-      } else if (docElm.webkitRequestFullScreen) {
-        docElm.webkitRequestFullScreen();
-      } else if (docElm.msRequestFullscreen) {
-        docElm.msRequestFullscreen();
-      }
-    } else if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-      document.mozCancelFullScreen();
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen();
-    }
-    setIsInFullScreen(!isFS);
-  };
+  //   const docElm = document.documentElement;
+  //   if (!isFS) {
+  //     if (docElm.requestFullscreen) {
+  //       docElm.requestFullscreen();
+  //     } else if (docElm.mozRequestFullScreen) {
+  //       docElm.mozRequestFullScreen();
+  //     } else if (docElm.webkitRequestFullScreen) {
+  //       docElm.webkitRequestFullScreen();
+  //     } else if (docElm.msRequestFullscreen) {
+  //       docElm.msRequestFullscreen();
+  //     }
+  //   } else if (document.exitFullscreen) {
+  //     document.exitFullscreen();
+  //   } else if (document.webkitExitFullscreen) {
+  //     document.webkitExitFullscreen();
+  //   } else if (document.mozCancelFullScreen) {
+  //     document.mozCancelFullScreen();
+  //   } else if (document.msExitFullscreen) {
+  //     document.msExitFullscreen();
+  //   }
+  //   setIsInFullScreen(!isFS);
+  // };
 
   const handleLogout = () => {
     logoutUser();
@@ -217,7 +217,7 @@ const TopNav = ({
     clickOnMobileMenuAction(_containerClassnames);
   };
 
-  const { messages } = intl;
+  // const { messages } = intl;
   return (
     <nav className="navbar fixed-top">
       <div className="d-flex align-items-center navbar-left">
@@ -240,7 +240,7 @@ const TopNav = ({
           <MobileMenuIcon />
         </NavLink>
 
-        <div className="search">
+        {/* <div className="search">
           <Input
             name="searchKeyword"
             id="searchKeyword"
@@ -255,9 +255,9 @@ const TopNav = ({
           >
             <i className="simple-icon-magnifier" />
           </span>
-        </div>
+        </div> */}
 
-        <div className="d-inline-block">
+        {/* <div className="d-inline-block">
           <UncontrolledDropdown className="ml-2">
             <DropdownToggle
               caret
@@ -280,7 +280,7 @@ const TopNav = ({
               })}
             </DropdownMenu>
           </UncontrolledDropdown>
-        </div>
+        </div> */}
       </div>
       <NavLink className="navbar-logo" to={adminRoot}>
         <span className="logo d-none d-xs-block" />
@@ -288,8 +288,8 @@ const TopNav = ({
       </NavLink>
 
       <div className="navbar-right">
-        {isDarkSwitchActive && <TopnavDarkSwitch />}
-        <div className="header-icons d-inline-block align-middle">
+        {/* {isDarkSwitchActive && <TopnavDarkSwitch />} */}
+        {/* <div className="header-icons d-inline-block align-middle">
           <TopnavEasyAccess />
           <TopnavNotifications />
           <button
@@ -304,7 +304,7 @@ const TopNav = ({
               <i className="simple-icon-size-fullscreen d-block" />
             )}
           </button>
-        </div>
+        </div> */}
         <div className="user d-inline-block">
           <UncontrolledDropdown className="dropdown-menu-right">
             <DropdownToggle className="p-0" color="empty">

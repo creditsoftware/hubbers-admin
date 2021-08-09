@@ -5,7 +5,7 @@ import { Drawer, Form, Button, Col, Input, Card } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import AvatarUpload from '../../../../components/util-components/Upload/AvatarUpload';
 import * as Actions from '../../../../redux/actions';
-import { slugify } from '../../../../helpers/Utils';
+import { getRandomInt, slugify } from '../../../../helpers/Utils';
 import CountrySelect from '../../../../components/util-components/selector/CountrySelect';
 import UserSelect from '../../../../components/util-components/selector/UserSelect';
 
@@ -73,7 +73,7 @@ const CreateCommunity = () => {
                 <Input
                   placeholder="Please enter Community Name"
                   onChange={(e) =>
-                    form.setFieldsValue({ slug: slugify(e.target.value) })
+                    form.setFieldsValue({ slug: `${slugify(e.target.value)}-${getRandomInt(100000, 999999)}` })
                   }
                 />
               </Form.Item>
