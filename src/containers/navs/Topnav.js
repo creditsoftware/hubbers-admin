@@ -45,7 +45,7 @@ const TopNav = ({
   setContainerClassnamesAction,
   clickOnMobileMenuAction,
   // changeLocaleAction,
-  // logoutUser,
+  logoutUser,
   currentUser,
 }) => {
   // const [isInFullScreen, setIsInFullScreen] = useState(false);
