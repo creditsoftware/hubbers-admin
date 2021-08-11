@@ -1,27 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Table, Button, Popconfirm, Space, Avatar } from 'antd';
+import { Card, Table, Button, Popconfirm, Avatar, Space } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
-import utils from '../../../../helpers/utils/index';
-import * as Actions from '../../../../redux/actions';
-import CreatePartner from './create';
-import EditPartner from './edit';
+import utils from '../../../helpers/utils/index';
+import * as Actions from '../../../redux/actions';
+import CreateTestimonial from './create';
+import EditTestimonial from './edit';
 
-const AllParters = () => {
+const TestimonialsList = () => {
   const dispatch = useDispatch();
-  const [tableList, setTableList] = useState(null);
-  const { partnerList } = useSelector((state) => state.partner);
+  const [tableList, setTableList] = useState([]);
+  const { list } = useSelector((state) => state.testimonials);
+
   useEffect(() => {
-    dispatch(Actions.getAllPartner());
+    dispatch(Actions.getAllTestimonials());
   }, [dispatch]);
 
   useEffect(() => {
-    setTableList(partnerList);
-  }, [partnerList]);
+    setTableList(list);
+  }, [list]);
 
   const handleDelete = (id) => {
-    dispatch(Actions.deletePartner(id));
+    dispatch(Actions.deleteTestimonial(id));
   };
+
   const tableColumns = [
     {
       title: 'ID',
@@ -30,37 +32,21 @@ const AllParters = () => {
     },
     {
       title: 'Image',
-      dataIndex: 'featuredImageUrl',
+      dataIndex: 'imageUrl',
       /* eslint-disable */
       render: (_, record) => (
-        <Avatar size={42} src={record.featuredImageUrl} />
+        <Avatar size={30} src={record.imageUrl} />
       ),
       /* eslint-enable */
     },
     {
-      title: 'name',
+      title: ' Name',
       dataIndex: 'name',
       sorter: (a, b) => utils.antdTableSorter(a, b, 'name'),
     },
     {
-      title: 'Type',
-      dataIndex: 'partnertype',
-      /* eslint-disable */
-      render: (_, record) => (
-        <span>{record.partnertype?.name}</span>
-      ),
-      /* eslint-enable */
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'partnertype'),
-    },
-    {
-      title: 'Language',
-      dataIndex: 'language',
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'language'),
-    },
-    {
-      title: 'Address',
-      dataIndex: 'address',
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'address'),
+      title: 'Role',
+      dataIndex: 'role',
     },
     {
       title: 'Actions',
@@ -68,9 +54,9 @@ const AllParters = () => {
       /* eslint-disable */
       render: (_, elm) => (
         <Space>
-          <EditPartner id={elm.id} data={tableList} />
+          <EditTestimonial id={elm.id} data={tableList} />
           <Popconfirm
-            title="Do you remove this Partner?"
+            title="Do you remove this testimonial?"
             onConfirm={() => handleDelete(elm.id)}
             okText="Yes"
             cancelText="No"
@@ -85,7 +71,7 @@ const AllParters = () => {
   return (
     <Card>
       <div className="w-100 text-right mb-3">
-        <CreatePartner />
+        <CreateTestimonial />
       </div>
       <div className="table-responsive">
         <Table rowKey="id" columns={tableColumns} dataSource={tableList} />
@@ -93,4 +79,4 @@ const AllParters = () => {
     </Card>
   );
 };
-export default AllParters;
+export default TestimonialsList;

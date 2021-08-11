@@ -164,6 +164,12 @@ const data = [
     ],
   },
   {
+    id: 'testimonials',
+    icon: 'iconsminds-user',
+    label: 'menu.testimonials',
+    to: `${adminRoot}/testimonials`,
+  },
+  {
     id: 'job-list',
     icon: 'iconsminds-three-arrow-fork',
     label: 'menu.job-list',

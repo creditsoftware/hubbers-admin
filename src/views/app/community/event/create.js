@@ -763,7 +763,22 @@ const CreateEvent = () => {
               name="description"
               rules={[{ required: true, message: 'Please enter description!' }]}
             >
-              <TextArea type="text" placeholder="decribe your new event" />
+              <TextArea
+                rows={3}
+                type="text"
+                placeholder="decribe your new event"
+              />
+            </Form.Item>
+            <p className="mb-2 mt-4 fw-6">Agenda</p>
+            <Form.Item
+              name="agenda"
+              rules={[{ required: true, message: 'Please enter agenda!' }]}
+            >
+              <TextArea
+                rows={3}
+                type="text"
+                placeholder="Please enter agenda"
+              />
             </Form.Item>
             <Form.Item
               name="createdBy"
