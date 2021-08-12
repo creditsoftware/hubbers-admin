@@ -817,7 +817,11 @@ const EditEvent = ({ id, data }) => {
               name="description"
               rules={[{ required: true, message: 'Please enter description!' }]}
             >
-              <TextArea type="text" placeholder="decribe your new event" />
+              <TextArea
+                row={3}
+                type="text"
+                placeholder="Please enter description"
+              />
             </Form.Item>
             <p className="mb-2 mt-4 fw-6">Agenda</p>
             <Form.Item

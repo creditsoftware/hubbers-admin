@@ -33,11 +33,11 @@ function* GetAllTestimonials() {
       yield put(getAllTestimonialsSuccess(result.data.data));
     } else {
       yield put(
-        getAllTestimonialsError('Get All Testimonials Response is not success!')
+        getAllTestimonialsError('Failed to get all testimonials!')
       );
     }
   } catch (error) {
-    yield put(getAllTestimonialsError('Get All Testimonials Error !'));
+    yield put(getAllTestimonialsError('Failed to get all testimonials!'));
   }
 }
 
@@ -57,11 +57,11 @@ function* CreateTestimonial(payload) {
       yield put(getAllTestimonials());
     } else {
       yield put(
-        createTestimonialError('Create Testimonial Response is not success!')
+        createTestimonialError('Failed to create testimonial!')
       );
     }
   } catch (error) {
-    yield put(createTestimonialError('Create Testimonial Error !'));
+    yield put(createTestimonialError('Failed to create testimonial!'));
   }
 }
 
@@ -81,11 +81,11 @@ function* UpdateTestimonial(payload) {
       yield put(getAllTestimonials());
     } else {
       yield put(
-        updateTestimonialError('Update Testimonial Response is not success!')
+        updateTestimonialError('Failed to update testimonial!')
       );
     }
   } catch (error) {
-    yield put(updateTestimonialError('Update Testimonial Error !'));
+    yield put(updateTestimonialError('Failed to update testimonial!'));
   }
 }
 
@@ -103,11 +103,11 @@ function* DeleteTestimonial(payload) {
       yield put(getAllTestimonials());
     } else {
       yield put(
-        deleteTestimonialError('Delete Testimonial Response is not success!')
+        deleteTestimonialError('Failed to delete testimonial!')
       );
     }
   } catch (error) {
-    yield put(deleteTestimonialError('Delete Testimonial Error !'));
+    yield put(deleteTestimonialError('Failed to delete testimonial!'));
   }
 }
 

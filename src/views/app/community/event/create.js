@@ -766,7 +766,7 @@ const CreateEvent = () => {
               <TextArea
                 rows={3}
                 type="text"
-                placeholder="decribe your new event"
+                placeholder="Please enter description"
               />
             </Form.Item>
             <p className="mb-2 mt-4 fw-6">Agenda</p>
