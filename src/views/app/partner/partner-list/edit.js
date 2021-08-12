@@ -22,6 +22,7 @@ import CommunitySelect from '../../../../components/util-components/selector/Com
 import UserSelect from '../../../../components/util-components/selector/UserSelect';
 import LanguageSelect from '../../../../components/util-components/selector/LanguageSelect';
 import UploadImage from '../../../../components/UploadImage';
+import { slugify } from '../../../../helpers/Utils';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -100,7 +101,21 @@ const EditPartner = ({ id, data }) => {
             label="Partner Name"
             rules={[{ required: true, message: 'Please enter Partner Name' }]}
           >
-            <Input placeholder="Please enter Partner Name" />
+            <Input
+              placeholder="Please enter Partner Name"
+              onChange={(e) =>
+                form.setFieldsValue({
+                  slug: slugify(`${e.target.value}`),
+                })
+              }
+            />
+          </Form.Item>
+          <Form.Item
+            name="slug"
+            label="Slug"
+            rules={[{ required: true, message: 'Please enter Slug' }]}
+          >
+            <Input placeholder="Please enter Slug" disabled />
           </Form.Item>
           <Form.Item
             name="typeId"

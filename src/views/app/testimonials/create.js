@@ -4,7 +4,6 @@ import { Drawer, Form, Button, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import UploadImage from '../../../components/UploadImage';
 import * as Actions from '../../../redux/actions';
-import { slugify } from '../../../helpers/Utils';
 
 const { TextArea } = Input;
 
@@ -50,21 +49,7 @@ const TestimonialCreate = () => {
             label="Name"
             rules={[{ required: true, message: 'Please enter Name' }]}
           >
-            <Input
-              placeholder="Please enter Name"
-              onChange={(e) =>
-                form.setFieldsValue({
-                  slug: slugify(`${e.target.value} ${type}`),
-                })
-              }
-            />
-          </Form.Item>
-          <Form.Item
-            name="slug"
-            label="Slug"
-            rules={[{ required: true, message: 'Please enter Slug' }]}
-          >
-            <Input placeholder="Please enter Slug" disabled />
+            <Input placeholder="Please enter Name" />
           </Form.Item>
           <Form.Item
             name="role"
