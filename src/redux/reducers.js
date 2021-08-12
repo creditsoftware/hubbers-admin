@@ -31,6 +31,7 @@ import partner from './partner/partner/reducer';
 import partnerType from './partner/partner-type/reducer';
 import partnerContact from './partner/partner-contact/reducer';
 import moduleType from './module/moduleType/reducer';
+import testimonials from './testimonials/reducer';
 
 const reducers = combineReducers({
   menu,
@@ -66,6 +67,7 @@ const reducers = combineReducers({
   partnerType,
   partnerContact,
   moduleType,
+  testimonials,
 });
 
 export default reducers;
