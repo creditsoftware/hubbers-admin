@@ -59,6 +59,12 @@ const TestimonialCreate = () => {
             <Input placeholder="Please enter Role" />
           </Form.Item>
           <Form.Item
+            name="linkedinUrl"
+            label="Linkedin Url"
+          >
+            <Input placeholder="Please enter linkedin url" />
+          </Form.Item>
+          <Form.Item
             name="content"
             label="Content"
             rules={[{ required: true, message: 'Please enter Content' }]}
