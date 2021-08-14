@@ -16,7 +16,7 @@ const TeamMemberList = () => {
   const { list } = useSelector((state) => state.team);
   const { memberList, error } = useSelector((state) => state.teamMember);
   const [searchTeamList, setSearchTeamList] = useState();
-  
+
   const errorNotification = (error) => {
     if (!error.data.success) {
       notification.error({

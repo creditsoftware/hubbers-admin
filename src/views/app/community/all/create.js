@@ -73,7 +73,12 @@ const CreateCommunity = () => {
                 <Input
                   placeholder="Please enter Community Name"
                   onChange={(e) =>
-                    form.setFieldsValue({ slug: `${slugify(e.target.value)}-${getRandomInt(100000, 999999)}` })
+                    form.setFieldsValue({
+                      slug: `${slugify(e.target.value)}-${getRandomInt(
+                        100000,
+                        999999
+                      )}`,
+                    })
                   }
                 />
               </Form.Item>

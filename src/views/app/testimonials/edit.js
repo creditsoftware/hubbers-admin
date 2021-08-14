@@ -66,10 +66,7 @@ const EditTestimonial = ({ id, data }) => {
           >
             <Input placeholder="Please enter Role" />
           </Form.Item>
-          <Form.Item
-            name="linkedinUrl"
-            label="Linkedin Url"
-          >
+          <Form.Item name="linkedinUrl" label="Linkedin Url">
             <Input placeholder="Please enter linkedin url" />
           </Form.Item>
           <Form.Item
