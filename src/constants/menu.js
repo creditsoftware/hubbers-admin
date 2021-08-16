@@ -145,6 +145,20 @@ const data = [
     ],
   },
   {
+    id: 'contest',
+    icon: 'iconsminds-shop-4',
+    label: 'menu.contest',
+    roles: [UserRole.Admin, UserRole.Editor],
+    to: `${adminRoot}/contest`,
+    subs: [
+      {
+        icon: 'simple-icon-paper-plane',
+        label: 'menu.contest-description',
+        to: `${adminRoot}/contest/contest-description`,
+      },
+    ]
+  },
+  {
     id: 'partner',
     icon: 'iconsminds-user',
     label: 'menu.partner',

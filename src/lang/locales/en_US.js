@@ -47,6 +47,8 @@ module.exports = {
   'menu.default': 'Default',
   'menu.module': 'Module',
   'menu.module-type': 'Module Type',
+  'menu.contest': 'Contest',
+  'menu.contest-description': 'Contest Description',
   'menu.content': 'Content',
   'menu.users': 'Users',
   'menu.investors': 'Investors',
@@ -168,6 +170,10 @@ module.exports = {
 
   // module
   'module-type.title': 'Module Type',
+
+  // contest
+  'contest.title': 'Contest',
+  'contest-description.title': 'Contest Description',
 
   // partners
   'partner.title': 'Partner',

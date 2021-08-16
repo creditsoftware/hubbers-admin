@@ -33,6 +33,8 @@ import partnerTypeSaga from './partner/partner-type/saga';
 import partnerContactSaga from './partner/partner-contact/saga';
 import ModuleTypeSaga from './module/moduleType/saga';
 
+import ContestDescriptionSaga from './contest/contestDescription/saga';
+
 export default function* rootSaga(getState) {
   yield all([
     adminSaga(),
@@ -65,5 +67,6 @@ export default function* rootSaga(getState) {
     partnerTypeSaga(),
     partnerContactSaga(),
     ModuleTypeSaga(),
+    ContestDescriptionSaga()
   ]);
 }
