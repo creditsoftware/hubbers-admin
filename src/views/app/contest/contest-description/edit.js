@@ -13,6 +13,7 @@ import {
   EditOutlined,
 } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
+import CKEditor5 from '../../../../components/util-components/CkEditor';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -84,7 +85,7 @@ const EditDescription = ({ id, data }) => {
               }
             ]}
           >
-            <TextArea rows="5" />
+            <CKEditor5 />
           </Form.Item>
           <Form.Item
             name="category"
