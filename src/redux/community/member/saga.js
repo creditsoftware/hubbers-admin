@@ -1,13 +1,17 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import api from '../../../ApiConfig';
 import {
-  CREATE_MEMBER,
+  GET_MEMBER_LIST_BY_COMMUNITY,
   GET_ALL_MEMBER,
+  CREATE_MEMBER,
   UPDATE_MEMBER,
   DELETE_MEMBER,
 } from '../../types/community/member';
 
 import {
+  getMemberListByCommunity,
+  getMemberListByCommunitySuccess,
+  getMemberListByCommunityError,
   getAllMember,
   getAllMemberSuccess,
   getAllMemberError,
@@ -18,6 +22,26 @@ import {
   deleteMemberSuccess,
   deleteMemberError,
 } from './actions';
+
+const getMemberListByCommunityAsync = async (payload) => {
+  return api
+    .get(`/community/member/${payload.payload}`)
+    .then((res) => res)
+    .catch((error) => error);
+};
+
+function* GetMemberListByCommunity(payload) {
+  try {
+    const result = yield call(getMemberListByCommunityAsync, payload);
+    if (result.status === 200 && result.statusText === 'OK') {
+      yield put(getMemberListByCommunitySuccess(result.data.data));
+    } else {
+      yield put(getMemberListByCommunityError('Failed to get members by community!'));
+    }
+  } catch (error) {
+    yield put(getMemberListByCommunityError('Failed to get members by community!'));
+  }
+}
 
 const getAllMemberAsync = async () => {
   return api
@@ -53,7 +77,7 @@ function* CreateMember(payload) {
     const result = yield call(createMemberAsync, payload);
     if (result.status === 200 && result.statusText === 'OK') {
       yield put(createMemberSuccess(result.data.data));
-      yield put(getAllMember());
+      yield put(getMemberListByCommunity(payload.payload.communityId));
     } else {
       yield put(createMemberError('Create Member Response is not success!'));
     }
@@ -77,7 +101,7 @@ function* UpdateMember(payload) {
     const result = yield call(updateMemberAsync, payload);
     if (result.status === 200 && result.statusText === 'OK') {
       yield put(updateMemberSuccess(result.data.data));
-      yield put(getAllMember());
+      yield put(getMemberListByCommunity(payload.payload.communityId));
     } else {
       yield put(updateMemberError('Update Member Response is not success!'));
     }
@@ -99,7 +123,7 @@ function* DeleteMember(payload) {
     const result = yield call(deleteMemberAsync, payload);
     if (result.status === 200 && result.statusText === 'OK') {
       yield put(deleteMemberSuccess(result.data.data));
-      yield put(getAllMember());
+      yield put(getMemberListByCommunity(payload.payload.communityId));
     } else {
       yield put(deleteMemberError('Delete Member Response is not success!'));
     }
@@ -109,6 +133,9 @@ function* DeleteMember(payload) {
   }
 }
 
+export function* watchGetMemberListByCommunity() {
+  yield takeEvery(GET_MEMBER_LIST_BY_COMMUNITY, GetMemberListByCommunity);
+}
 export function* watchGetAllMember() {
   yield takeEvery(GET_ALL_MEMBER, GetAllMember);
 }
@@ -124,6 +151,7 @@ export function* watchDeleteMember() {
 
 export default function* rootSaga() {
   yield all([
+    fork(watchGetMemberListByCommunity),
     fork(watchGetAllMember),
     fork(watchCreateMember),
     fork(watchUpdateMember),

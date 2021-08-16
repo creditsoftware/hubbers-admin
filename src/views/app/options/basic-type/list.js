@@ -18,6 +18,7 @@ const BasicTypeList = () => {
   const [basicTypeList, setBasicTypeList] = useState(null);
   const [categoryList, setCategoryList] = useState(null);
   const [currentCategory, setCurrentCategory] = useState('product');
+  const [orderFlag, setOrderFlag] = useState(false);
   const { list } = useSelector((state) => state.basicType);
   const { typeList } = useSelector((state) => state.basicTypeCategory);
   const [pagination, setPagenation] = React.useState({
@@ -26,8 +27,8 @@ const BasicTypeList = () => {
   });
 
   useEffect(() => {
-    dispatch(Actions.getAllBasicTypeCategory());
-  }, [dispatch]);
+    dispatch(Actions.getAllBasicType(currentCategory));
+  }, [currentCategory]);
 
   useEffect(() => {
     setCategoryList(typeList);
@@ -38,16 +39,15 @@ const BasicTypeList = () => {
   }, [categoryList, typeList]);
 
   useEffect(() => {
-    dispatch(Actions.getAllBasicType(currentCategory));
-  }, [currentCategory, dispatch]);
-
-  useEffect(() => {
     setBasicTypeList(list);
   }, [list]);
 
   useEffect(() => {
-    if (basicTypeList?.length > 0) {
+    if (basicTypeList?.length > 0 && orderFlag === false) {
       setCurrentCategory(basicTypeList[0].category);
+    }
+    else {
+      setOrderFlag(false);
     }
   }, [basicTypeList]);
 
@@ -60,6 +60,7 @@ const BasicTypeList = () => {
   };
 
   const handleOrder = (id, flag) => {
+    setOrderFlag(true);
     dispatch(Actions.orderBasicType({ id, flag, currentCategory }));
   };
 

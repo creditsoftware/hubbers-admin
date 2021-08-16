@@ -1,4 +1,10 @@
 import {
+  GET_ALL_COMMUNITY_ROLE,
+  GET_ALL_COMMUNITY_ROLE_SUCCESS,
+  GET_ALL_COMMUNITY_ROLE_ERROR,
+  GET_COMMUNITY_LIST_BY_ROLE,
+  GET_COMMUNITY_LIST_BY_ROLE_SUCCESS,
+  GET_COMMUNITY_LIST_BY_ROLE_ERROR,
   GET_ALL_COMMUNITY,
   GET_ALL_COMMUNITY_SUCCESS,
   GET_ALL_COMMUNITY_ERROR,
@@ -18,6 +24,8 @@ import {
 
 const INIT_STATE = {
   loading: false,
+  roleList: [],
+  communityList: [],
   community: [],
   singlecommunity: null,
   newCommunity: null,
@@ -27,6 +35,31 @@ const INIT_STATE = {
 
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
+
+    case GET_ALL_COMMUNITY_ROLE:
+      return { ...state, loading: true };
+    case GET_ALL_COMMUNITY_ROLE_SUCCESS:
+      return { ...state, loading: false, roleList: action.payload };
+    case GET_ALL_COMMUNITY_ROLE_ERROR:
+      return {
+        ...state,
+        loading: false,
+        roleList: [],
+        error: action.payload,
+      };
+    
+    case GET_COMMUNITY_LIST_BY_ROLE:
+      return { ...state, loading: true };
+    case GET_COMMUNITY_LIST_BY_ROLE_SUCCESS:
+      return { ...state, loading: false, communityList: action.payload };
+    case GET_COMMUNITY_LIST_BY_ROLE_ERROR:
+      return {
+        ...state,
+        loading: false,
+        communityList: [],
+        error: action.payload,
+      };
+      
     case GET_ALL_COMMUNITY:
       return { ...state, loading: true };
     case GET_ALL_COMMUNITY_SUCCESS:
