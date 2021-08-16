@@ -25,12 +25,12 @@ const EditDescription = ({ id, data }) => {
   const categories = ['description', 'official', 'market'];
 
   useEffect(() => {
+    console.log(data);
     const v = data.filter((d) => d.id === id)[0];
     setEditValue({ ...v });
-    form.setFieldsValue({...v});
   }, [data, id, form]);
-  
   const showDrawer = () => {
+    form.setFieldsValue({...editValue});
     setVisible(true);
   };
 
