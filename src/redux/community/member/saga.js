@@ -25,7 +25,7 @@ import {
 
 const getMemberListByCommunityAsync = async (payload) => {
   return api
-    .get(`/community/member/${payload.payload}`)
+    .get(`/community/member/member-list-by-community/${payload.payload}`)
     .then((res) => res)
     .catch((error) => error);
 };

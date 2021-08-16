@@ -32,7 +32,7 @@ import {
 const getAllCommunityRoleAsync = async () =>
   /* eslint-disable */
   await api
-    .get(`/community/role-list`)
+    .get(`/community/role`)
     .then((res) => res)
     .catch((error) => error);
     /* eslint-enable */
@@ -55,7 +55,7 @@ function* GetAllCommunityRole() {
 const getCommunityListByRoleAsync = async (payload) =>
   /* eslint-disable */
   await api
-    .get(`/community/${payload.payload}`)
+    .get(`/community/c-g-list-by-role/${payload.payload}`)
     .then((res) => res)
     .catch((error) => error);
     /* eslint-enable */
