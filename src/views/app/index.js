@@ -27,6 +27,7 @@ const Options = React.lazy(() => import('./options'));
 const JobList = React.lazy(() => import('./job-list'));
 const BlankPage = React.lazy(() => import('./blank-page'));
 const Module = React.lazy(() => import('./module'));
+const ContestDescription = React.lazy(() => import('./contest/contest-description'));
 const App = ({ match }) => {
   return (
     <AppLayout>
@@ -83,6 +84,12 @@ const App = ({ match }) => {
               // exact
               path={`${match.url}/module`}
               render={(props) => <Module {...props} />}
+            />
+
+            <Route
+              // exact
+              path={`${match.url}/contest/contest-description`}
+              render={(props) => <ContestDescription {...props} />}
             />
 
             <Route
