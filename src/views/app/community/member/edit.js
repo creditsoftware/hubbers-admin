@@ -5,11 +5,12 @@ import { EditOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
 import UserSelect from '../../../../components/util-components/selector/UserSelect';
 import CommunitySelect from '../../../../components/util-components/selector/CommunitySelect';
+import GroupSelect from '../../../../components/util-components/selector/GroupSelect';
 import CommunityMemberRoleSelect from '../../../../components/util-components/selector/CommunityMemberRoleSelect';
 
 const { Option } = Select;
 
-const Edit = ({ id, data }) => {
+const Edit = ({ id, data, role }) => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
@@ -65,8 +66,9 @@ const Edit = ({ id, data }) => {
                   name="communityId"
                   label="Community"
                   rules={[{ required: true, message: 'Please select!' }]}
+                  className="mr-2"
                 >
-                  <CommunitySelect />
+                  {role===1?<CommunitySelect />:<GroupSelect />}
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -96,7 +98,7 @@ const Edit = ({ id, data }) => {
                       message: 'Please choose the role',
                     },
                   ]}
-                  className="ml-2"
+                  className="mr-2"
                 >
                   <CommunityMemberRoleSelect />
                 </Form.Item>
