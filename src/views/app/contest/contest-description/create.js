@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Drawer, Form, Button, Input, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import CKEditor5 from '../../../../components/util-components/CkEditor';
 import * as Actions from '../../../../redux/actions';
 const { TextArea } = Input;
 const { Option } = Select;
@@ -61,7 +62,7 @@ const CreateDescription = () => {
               }
             ]}
           >
-            <TextArea rows="5" />
+            <CKEditor5 />
           </Form.Item>
           <Form.Item
             name="category"
