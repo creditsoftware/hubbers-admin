@@ -31,11 +31,8 @@ import partner from './partner/partner/reducer';
 import partnerType from './partner/partner-type/reducer';
 import partnerContact from './partner/partner-contact/reducer';
 import moduleType from './module/moduleType/reducer';
-<<<<<<< HEAD
 import testimonials from './testimonials/reducer';
-=======
 import contestDescription from './contest/contestDescription/reducer';
->>>>>>> f578d85a254e6008e8b8b487c993131ec7a168aa
 
 const reducers = combineReducers({
   menu,
