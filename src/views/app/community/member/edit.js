@@ -68,7 +68,7 @@ const Edit = ({ id, data, role }) => {
                   rules={[{ required: true, message: 'Please select!' }]}
                   className="mr-2"
                 >
-                  {role===1?<CommunitySelect />:<GroupSelect />}
+                  {role === 1 ? <CommunitySelect /> : <GroupSelect />}
                 </Form.Item>
               </Col>
               <Col span={12}>

@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Row } from 'reactstrap';
 import { Drawer, Form, Button, Col, Input, Select, Switch, Space } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
-import * as Actions from '../../../../redux/actions';
-import CommunitySelect from '../../../../components/util-components/selector/CommunitySelect';
-import UserSelect from '../../../../components/util-components/selector/UserSelect';
-import { slugify } from '../../../../helpers/Utils';
+import * as Actions from '../../../../../redux/actions';
+import CommunitySelect from '../../../../../components/util-components/selector/CommunitySelect';
+import UserSelect from '../../../../../components/util-components/selector/UserSelect';
+import { slugify } from '../../../../../helpers/Utils';
 
 const { Option } = Select;
 const { TextArea } = Input;

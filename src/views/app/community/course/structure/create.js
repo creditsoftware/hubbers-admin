@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Row } from 'reactstrap';
-import { Drawer, Form, Button, Col, Input, Switch, Space, Select } from 'antd';
+import { Drawer, Form, Button, Col, Input, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../../redux/actions';
-import CommunitySelect from '../../../../../components/util-components/selector/CommunitySelect';
-import UserSelect from '../../../../../components/util-components/selector/UserSelect';
-import { getRandomInt, slugify } from '../../../../../helpers/Utils';
 import courseStructureType from '../../../../../constants/courseStructureType';
 
-const { TextArea } = Input;
 const { Option } = Select;
 
 const Create = ({ ...props }) => {

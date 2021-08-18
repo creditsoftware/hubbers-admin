@@ -35,7 +35,6 @@ const INIT_STATE = {
 
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
-
     case GET_ALL_COMMUNITY_ROLE:
       return { ...state, loading: true };
     case GET_ALL_COMMUNITY_ROLE_SUCCESS:
@@ -47,7 +46,7 @@ export default (state = INIT_STATE, action) => {
         roleList: [],
         error: action.payload,
       };
-    
+
     case GET_COMMUNITY_LIST_BY_ROLE:
       return { ...state, loading: true };
     case GET_COMMUNITY_LIST_BY_ROLE_SUCCESS:
@@ -59,7 +58,7 @@ export default (state = INIT_STATE, action) => {
         communityList: [],
         error: action.payload,
       };
-      
+
     case GET_ALL_COMMUNITY:
       return { ...state, loading: true };
     case GET_ALL_COMMUNITY_SUCCESS:

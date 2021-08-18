@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Card, Table, Space, Select, Popconfirm, Button, Image, Avatar } from 'antd';
+import {
+  Card,
+  Table,
+  Space,
+  Select,
+  Popconfirm,
+  Button,
+  Image,
+  Avatar,
+} from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import utils from '../../../../helpers/utils/index';
 import * as Actions from '../../../../redux/actions';
@@ -31,21 +40,27 @@ const Member = () => {
     setCommunityRoleList(communityAll.roleList);
     setCurrentCommunityRole(communityAll.roleList[0]?.id);
     dispatch(Actions.getCommunityListByRole(communityAll.roleList[0]?.id));
-  }, [communityAll.roleList]);
+  }, [communityAll.roleList, dispatch]);
 
   useEffect(() => {
     setCommunityList(communityAll.communityList);
-    setCurrentCommunity(communityAll.communityList && communityAll.communityList[0]?.id);
-    dispatch(Actions.getMemberListByCommunity(communityAll.communityList && communityAll.communityList[0]?.id));
-  }, [communityAll.communityList]);
+    setCurrentCommunity(
+      communityAll.communityList && communityAll.communityList[0]?.id
+    );
+    dispatch(
+      Actions.getMemberListByCommunity(
+        communityAll.communityList && communityAll.communityList[0]?.id
+      )
+    );
+  }, [communityAll.communityList, dispatch]);
 
   useEffect(() => {
     setTableList(list);
-    if(list?.length){
+    if (list?.length) {
       setCurrentCommunity(list[0].communityId);
     }
   }, [list]);
-  
+
   const onChangeCommunityRole = (value) => {
     setCurrentCommunityRole(value);
     dispatch(Actions.getCommunityListByRole(value));
@@ -55,7 +70,6 @@ const Member = () => {
     setCurrentCommunity(value);
     dispatch(Actions.getMemberListByCommunity(value));
   };
-
 
   const handleDelete = (id) => {
     dispatch(Actions.deleteMember(id));
@@ -196,21 +210,37 @@ const Member = () => {
   };
   return (
     <Card>
-      <div className="mb-3" style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div
+        className="mb-3"
+        style={{ display: 'flex', justifyContent: 'space-between' }}
+      >
         <div>
-          <Select style={{ width: '160px' }} value={currentCommunityRole} onChange={onChangeCommunityRole}>
-            {
-              communityRoleList?.map((item)=>{
-                return <Option key={item.id} value={item.id}>{item.name}</Option>;
-              })
-            }
+          <Select
+            style={{ width: '160px' }}
+            value={currentCommunityRole}
+            onChange={onChangeCommunityRole}
+          >
+            {communityRoleList?.map((item) => {
+              return (
+                <Option key={item.id} value={item.id}>
+                  {item.name}
+                </Option>
+              );
+            })}
           </Select>
-          <Select className="ml-3" style={{ width: '160px' }} value={currentCommunity} onChange={onChangeCommunity}>
-            {
-              communityList?.map((item)=>{
-                return <Option key={item.id} value={item.id}>{item.name}</Option>
-              })
-            }
+          <Select
+            className="ml-3"
+            style={{ width: '160px' }}
+            value={currentCommunity}
+            onChange={onChangeCommunity}
+          >
+            {communityList?.map((item) => {
+              return (
+                <Option key={item.id} value={item.id}>
+                  {item.name}
+                </Option>
+              );
+            })}
           </Select>
         </div>
         <div>

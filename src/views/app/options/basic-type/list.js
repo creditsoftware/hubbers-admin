@@ -28,7 +28,7 @@ const BasicTypeList = () => {
 
   useEffect(() => {
     dispatch(Actions.getAllBasicType(currentCategory));
-  }, [currentCategory]);
+  }, [currentCategory, dispatch]);
 
   useEffect(() => {
     setCategoryList(typeList);
@@ -45,11 +45,10 @@ const BasicTypeList = () => {
   useEffect(() => {
     if (basicTypeList?.length > 0 && orderFlag === false) {
       setCurrentCategory(basicTypeList[0].category);
-    }
-    else {
+    } else {
       setOrderFlag(false);
     }
-  }, [basicTypeList]);
+  }, [basicTypeList, orderFlag]);
 
   const deleteBasicType = (id) => {
     dispatch(Actions.deleteBasicType({ id, currentCategory }));

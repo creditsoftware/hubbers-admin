@@ -64,8 +64,13 @@ const EditPartner = ({ id, data }) => {
   };
 
   const onSubmit = (values) => {
-    if (values.isGlobal) values.ifLocal = '';
-    dispatch(Actions.updatePartner({ ...values, id }));
+    dispatch(
+      Actions.updatePartner({
+        ...values,
+        ifLocal: values.isGlobal ? '' : values.ifLocal,
+        id,
+      })
+    );
     onClose();
   };
 
@@ -220,7 +225,7 @@ const EditPartner = ({ id, data }) => {
           <Form.Item name="description" label="Sponsor Description">
             <TextArea rows={3} placeholder="Please enter sponsor description" />
           </Form.Item>
-          <label>Contact Reason</label>
+          <p>Contact Reason</p>
           <Form.List name="contactReason" label="Contact Reason">
             {(fields, { add, remove }) => (
               <>

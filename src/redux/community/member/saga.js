@@ -36,10 +36,14 @@ function* GetMemberListByCommunity(payload) {
     if (result.status === 200 && result.statusText === 'OK') {
       yield put(getMemberListByCommunitySuccess(result.data.data));
     } else {
-      yield put(getMemberListByCommunityError('Failed to get members by community!'));
+      yield put(
+        getMemberListByCommunityError('Failed to get members by community!')
+      );
     }
   } catch (error) {
-    yield put(getMemberListByCommunityError('Failed to get members by community!'));
+    yield put(
+      getMemberListByCommunityError('Failed to get members by community!')
+    );
   }
 }
 

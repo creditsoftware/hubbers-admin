@@ -27,7 +27,9 @@ const Options = React.lazy(() => import('./options'));
 const JobList = React.lazy(() => import('./job-list'));
 const BlankPage = React.lazy(() => import('./blank-page'));
 const Module = React.lazy(() => import('./module'));
-const ContestDescription = React.lazy(() => import('./contest/contest-description'));
+const ContestDescription = React.lazy(() =>
+  import('./contest/contest-description')
+);
 const App = ({ match }) => {
   return (
     <AppLayout>

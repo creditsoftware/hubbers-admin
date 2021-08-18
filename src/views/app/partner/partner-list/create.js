@@ -51,8 +51,12 @@ const CreatePartner = () => {
   };
 
   const onSubmit = (values) => {
-    if (values.isGlobal) values.ifLocal = '';
-    dispatch(Actions.createPartner(values));
+    dispatch(
+      Actions.createPartner({
+        ...values,
+        ifLocal: values.isGlobal ? '' : values.ifLocal,
+      })
+    );
     onClose();
   };
 
@@ -198,12 +202,12 @@ const CreatePartner = () => {
           <Form.Item name="description" label="Sponsor Description">
             <TextArea rows={3} placeholder="Please enter sponsor description" />
           </Form.Item>
-          <label>Contact Reason</label>
+          <p>Contact Reason</p>
           <Form.List name="contactReason" label="Contact Reason">
             {(fields, { add, remove }) => (
               <>
                 {fields.map(({ key, name, fieldKey, ...restField }) => (
-                  <Row>
+                  <Row key={key}>
                     <Col flex="auto">
                       <Form.Item
                         name={[name]}

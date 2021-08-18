@@ -69,6 +69,6 @@ export default function* rootSaga(getState) {
     partnerContactSaga(),
     ModuleTypeSaga(),
     testimonialsSaga(),
-    ContestDescriptionSaga()
+    ContestDescriptionSaga(),
   ]);
 }

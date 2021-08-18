@@ -9,7 +9,7 @@ import CommunitySelect from '../../../../components/util-components/selector/Com
 import GroupSelect from '../../../../components/util-components/selector/GroupSelect';
 import CommunityMemberRoleSelect from '../../../../components/util-components/selector/CommunityMemberRoleSelect';
 
-const Create = ({role}) => {
+const Create = ({ role }) => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
@@ -55,7 +55,7 @@ const Create = ({role}) => {
                 rules={[{ required: true, message: 'Please select!' }]}
                 className="mr-2"
               >
-                {role===1?<CommunitySelect />:<GroupSelect />}
+                {role === 1 ? <CommunitySelect /> : <GroupSelect />}
               </Form.Item>
             </Col>
             <Col span={12}>

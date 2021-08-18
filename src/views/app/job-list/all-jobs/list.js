@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Table, Button, Popconfirm, Avatar, Space } from 'antd';
+import { Card, Table, Button, Popconfirm, Space } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import utils from '../../../../helpers/utils/index';

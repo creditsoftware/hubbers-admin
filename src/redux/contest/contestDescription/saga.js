@@ -19,7 +19,7 @@ import {
   updateDescriptionSuccess,
   updateDescriptionError,
   deleteDescriptionSuccess,
-  deleteDescriptionError
+  deleteDescriptionError,
 } from './actions';
 
 const getAllDescriptionAsync = async () => {
@@ -32,12 +32,14 @@ const getAllDescriptionAsync = async () => {
 function* GetAllDescription() {
   try {
     const result = yield call(getAllDescriptionAsync);
-    if(result.status === 200 && result.statusText === 'OK') {
+    if (result.status === 200 && result.statusText === 'OK') {
       yield put(getAllDescriptionSuccess(result.data));
     } else {
-      yield put(getAllDescriptionError('Get All Description Response is not success!'))
+      yield put(
+        getAllDescriptionError('Get All Description Response is not success!')
+      );
     }
-  } catch(error) {
+  } catch (error) {
     yield put(getAllDescriptionError('Get All Description Error !'));
   }
 }
@@ -45,11 +47,11 @@ function* GetAllDescription() {
 const createDescriptionAsync = async (payload) => {
   return api
     .post('/contest/contest-description', {
-      ...payload
+      ...payload,
     })
     .then((res) => res)
     .catch((error) => error);
-}
+};
 
 function* CreateDescription(payload) {
   try {
@@ -58,7 +60,9 @@ function* CreateDescription(payload) {
       yield put(createDescriptionSuccess(result.data.data));
       yield put(getAllDescription());
     } else {
-      yield put(createDescriptionError('Create Description Response is not success!'));
+      yield put(
+        createDescriptionError('Create Description Response is not success!')
+      );
     }
   } catch (error) {
     yield put(createDescriptionError('Create Description Error !'));
@@ -68,11 +72,11 @@ function* CreateDescription(payload) {
 const updateDescriptionAsync = async (payload) => {
   return api
     .put(`/contest/contest-description/${payload.id}`, {
-      ...payload
+      ...payload,
     })
     .then((res) => res)
     .catch((error) => error);
-}
+};
 
 function* UpdateDescription(payload) {
   try {
@@ -81,7 +85,9 @@ function* UpdateDescription(payload) {
       yield put(updateDescriptionSuccess(result.data.data));
       yield put(getAllDescription());
     } else {
-      yield put(updateDescriptionError('Update Description Response is not success!'));
+      yield put(
+        updateDescriptionError('Update Description Response is not success!')
+      );
     }
   } catch (error) {
     yield put(updateDescriptionError('Update Description Error !'));
@@ -93,7 +99,7 @@ const deleteDescriptionAsync = async (id) => {
     .delete(`/contest/contest-description/${id}`)
     .then((res) => res)
     .catch((error) => error);
-}
+};
 
 function* DeleteDescription(payload) {
   try {
@@ -102,7 +108,9 @@ function* DeleteDescription(payload) {
       yield put(deleteDescriptionSuccess(result.data.data));
       yield put(getAllDescription());
     } else {
-      yield put(deleteDescriptionError('Delete Description Response is not success!'));
+      yield put(
+        deleteDescriptionError('Delete Description Response is not success!')
+      );
     }
   } catch (error) {
     yield put(deleteDescriptionError('Delete Description Error !'));
@@ -114,15 +122,15 @@ export function* watchGetAllDescription() {
 }
 
 export function* watchCreateDescription() {
-  yield takeEvery(CREATE_CONTEST_DESCRIPTION, CreateDescription)
+  yield takeEvery(CREATE_CONTEST_DESCRIPTION, CreateDescription);
 }
 
 export function* watchUpdateDescription() {
-  yield takeEvery(UPDATE_CONTEST_DESCRIPTION, UpdateDescription)
+  yield takeEvery(UPDATE_CONTEST_DESCRIPTION, UpdateDescription);
 }
 
 export function* watchDeleteDescription() {
-  yield takeEvery(DELETE_CONTEST_DESCRIPTION, DeleteDescription)
+  yield takeEvery(DELETE_CONTEST_DESCRIPTION, DeleteDescription);
 }
 
 export default function* rootSaga() {
@@ -131,5 +139,5 @@ export default function* rootSaga() {
     fork(watchCreateDescription),
     fork(watchUpdateDescription),
     fork(watchDeleteDescription),
-  ])
+  ]);
 }

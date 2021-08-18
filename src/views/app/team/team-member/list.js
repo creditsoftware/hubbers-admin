@@ -17,11 +17,11 @@ const TeamMemberList = () => {
   const { memberList, error } = useSelector((state) => state.teamMember);
   const [searchTeamList, setSearchTeamList] = useState();
 
-  const errorNotification = (error) => {
-    if (!error.data.success) {
+  const errorNotification = (err) => {
+    if (!err.data.success) {
       notification.error({
         message: 'Error',
-        description: error.data.message,
+        description: err.data.message,
         placement: 'bottomRight',
       });
     }
@@ -35,16 +35,22 @@ const TeamMemberList = () => {
     setTeamList(list);
     setSearchTeamList(list);
     setCurrentTeam(list[0]?.id);
-    list[0]?.id && dispatch(Actions.getAllTeamMember(list[0]?.id));
+    if (list[0]?.id) {
+      dispatch(Actions.getAllTeamMember(list[0]?.id));
+    }
   }, [dispatch, list]);
 
   useEffect(() => {
     setTeamMemberList(memberList);
-    memberList[0]?.teamId && setCurrentTeam(memberList[0]?.teamId);
+    if (memberList[0]?.teamId) {
+      setCurrentTeam(memberList[0]?.teamId);
+    }
   }, [memberList]);
 
   useEffect(() => {
-    error && errorNotification(error);
+    if (error) {
+      errorNotification(error);
+    }
   }, [error]);
 
   const getMemberList = (teamId) => {

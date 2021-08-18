@@ -156,7 +156,7 @@ const data = [
         label: 'menu.contest-description',
         to: `${adminRoot}/contest/contest-description`,
       },
-    ]
+    ],
   },
   {
     id: 'partner',

@@ -36,7 +36,7 @@ export const getAllCommunityRoleError = (data) => ({
 
 export const getCommunityListByRole = (data) => ({
   type: GET_COMMUNITY_LIST_BY_ROLE,
-  payload: data
+  payload: data,
 });
 export const getCommunityListByRoleSuccess = (data) => ({
   type: GET_COMMUNITY_LIST_BY_ROLE_SUCCESS,

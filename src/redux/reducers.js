@@ -69,7 +69,7 @@ const reducers = combineReducers({
   partnerContact,
   moduleType,
   testimonials,
-  contestDescription
+  contestDescription,
 });
 
 export default reducers;

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Row } from 'reactstrap';
-import { Drawer, Form, Button, Col, Input, Select, Switch, Space } from 'antd';
+import { Drawer, Form, Button, Col, Input, Select } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../../redux/actions';
 import courseStructureType from '../../../../../constants/courseStructureType';

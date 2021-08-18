@@ -43,9 +43,7 @@ function* GetAllCommunityRole() {
     if (result.status === 200 && result.statusText === 'OK') {
       yield put(getAllCommunityRoleSuccess(result.data.data));
     } else {
-      yield put(
-        getAllCommunityRoleError('Failed to get all community roles!')
-      );
+      yield put(getAllCommunityRoleError('Failed to get all community roles!'));
     }
   } catch (error) {
     yield put(getAllCommunityRoleError('Failed to get all community roles!'));
@@ -71,7 +69,9 @@ function* GetCommunityListByRole(payload) {
       );
     }
   } catch (error) {
-    yield put(getCommunityListByRoleError('Failed to get community list by roles!'));
+    yield put(
+      getCommunityListByRoleError('Failed to get community list by roles!')
+    );
   }
 }
 

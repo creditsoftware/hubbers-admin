@@ -4,12 +4,8 @@ import { GET_ALL_USER_ROLES } from '../types/user-role';
 
 import { getAllUserRolesSuccess, getAllUserRolesError } from './actions';
 
-export function* watchGetAllUserRoles() {
-  yield takeEvery(GET_ALL_USER_ROLES, AllUserRoles);
-}
-
 const getAllUserRolesAsync = async () =>
-  await api
+  api
     .get(`/user-role`)
     .then((res) => res)
     .catch((error) => error);
@@ -27,6 +23,10 @@ function* AllUserRoles() {
   } catch (error) {
     yield put(getAllUserRolesError('Get All UserRoles Error !'));
   }
+}
+
+export function* watchGetAllUserRoles() {
+  yield takeEvery(GET_ALL_USER_ROLES, AllUserRoles);
 }
 
 export default function* rootSaga() {
