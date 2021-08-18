@@ -48,7 +48,7 @@ const ContestDescriptionList = () => {
       /* eslint-disable */
       render: (_, record) => (
         <div className="d-flex">
-          <span>{record.description}</span>
+          <div dangerouslySetInnerHTML={{__html:record.description}} />
         </div>
       ),
       /* eslint-enable */
