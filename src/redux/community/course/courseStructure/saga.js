@@ -22,7 +22,7 @@ import {
 
 const getAllCourseStructureAsync = async () => {
   return api
-    .get(`/community/course/structure`)
+    .get(`/community/course/course-structure`)
     .then((res) => res)
     .catch((error) => error);
 };
@@ -45,7 +45,7 @@ function* GetAllCourseStructure() {
 
 const createCourseStructureAsync = async ({ payload }) => {
   return api
-    .post(`/community/course/structure`, {
+    .post(`/community/course/course-structure`, {
       ...payload,
     })
     .then((res) => res)
@@ -76,7 +76,7 @@ function* CreateCourseStructure(payload) {
 
 const updateCourseStructureAsync = async ({ payload }) => {
   return api
-    .put(`/community/course/structure/${payload.id}`, {
+    .put(`/community/course/course-structure/${payload.id}`, {
       ...payload,
     })
     .then((res) => res)
@@ -102,7 +102,7 @@ function* UpdateCourseStructure(payload) {
 
 const deleteCourseStructureAsync = async (payload) => {
   return api
-    .delete(`/community/course/structure/${payload.payload}`)
+    .delete(`/community/course/course-structure/${payload.payload}`)
     .then((res) => res)
     .catch((error) => error);
 };
