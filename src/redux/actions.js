@@ -43,4 +43,5 @@ export * from './partner/partner-type/actions';
 export * from './partner/partner-contact/actions';
 export * from './module/moduleType/actions';
 
+export * from './contest/contestList/actions';
 export * from './contest/contestDescription/actions';

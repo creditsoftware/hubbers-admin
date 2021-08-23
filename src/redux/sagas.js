@@ -33,6 +33,7 @@ import partnerTypeSaga from './partner/partner-type/saga';
 import partnerContactSaga from './partner/partner-contact/saga';
 import ModuleTypeSaga from './module/moduleType/saga';
 
+import ContestListSaga from './contest/contestList/saga';
 import ContestDescriptionSaga from './contest/contestDescription/saga';
 
 export default function* rootSaga(getState) {
@@ -67,6 +68,7 @@ export default function* rootSaga(getState) {
     partnerTypeSaga(),
     partnerContactSaga(),
     ModuleTypeSaga(),
+    ContestListSaga(),
     ContestDescriptionSaga()
   ]);
 }

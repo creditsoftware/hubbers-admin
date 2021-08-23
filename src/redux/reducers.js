@@ -31,6 +31,7 @@ import partner from './partner/partner/reducer';
 import partnerType from './partner/partner-type/reducer';
 import partnerContact from './partner/partner-contact/reducer';
 import moduleType from './module/moduleType/reducer';
+import contestList from './contest/contestList/reducer';
 import contestDescription from './contest/contestDescription/reducer';
 
 const reducers = combineReducers({
@@ -67,6 +68,7 @@ const reducers = combineReducers({
   partnerType,
   partnerContact,
   moduleType,
+  contestList,
   contestDescription
 });
 
