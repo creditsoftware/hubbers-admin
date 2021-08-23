@@ -5,6 +5,7 @@ import 'ckeditor5-build-classic-dna';
 
 import AppLayout from '../../layout/AppLayout';
 import { ProtectedRoute, UserRole } from '../../helpers/authHelper';
+import ContestList from './contest/contest-list/list';
 
 const Dashboard = React.lazy(() => import('./dashboard'));
 const Admins = React.lazy(() => import('./admin'));
@@ -86,6 +87,12 @@ const App = ({ match }) => {
               // exact
               path={`${match.url}/module`}
               render={(props) => <Module {...props} />}
+            />
+
+            <Route
+              // exact
+              path={`${match.url}/contest/contest-list`}
+              render={(props) => <ContestList {...props} />}
             />
 
             <Route

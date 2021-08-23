@@ -153,6 +153,11 @@ const data = [
     subs: [
       {
         icon: 'simple-icon-paper-plane',
+        label: 'menu.contest-list',
+        to: `${adminRoot}/contest/contest-list`,
+      },
+      {
+        icon: 'simple-icon-paper-plane',
         label: 'menu.contest-description',
         to: `${adminRoot}/contest/contest-description`,
       },
