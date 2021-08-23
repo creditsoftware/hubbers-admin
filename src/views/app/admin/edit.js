@@ -43,12 +43,11 @@ const AdminCreate = ({ id, data }) => {
   };
 
   const onSubmit = (values) => {
-    values.id = id;
     delete values.confirmPassword;
     if (!values.password) {
       delete values.password;
     }
-    dispatch(Actions.updateAdmin(values));
+    dispatch(Actions.updateAdmin({ ...values, id }));
     onClose();
   };
 
@@ -157,9 +156,9 @@ const AdminCreate = ({ id, data }) => {
               >
                 <Select placeholder="Please choose the Role">
                   {roleList &&
-                    roleList.map((item, index) => {
+                    roleList.map((item) => {
                       return (
-                        <Option key={index} value={item.id}>
+                        <Option key={item.id} value={item.id}>
                           {item.name}
                         </Option>
                       );

@@ -49,6 +49,7 @@ module.exports = {
   'menu.module-type': 'Module Type',
   'menu.contest': 'Contest',
   'menu.contest-list': 'Contest List',
+  'menu.contest-member': 'Contest Member',
   'menu.contest-description': 'Contest Description',
   'menu.content': 'Content',
   'menu.users': 'Users',
@@ -61,6 +62,9 @@ module.exports = {
   'menu.partner': 'Partner',
   'menu.partner-list': 'Partner List',
   'menu.partner-type': 'Partner Type',
+
+  'menu.testimonials': 'Testimonials',
+
   'menu.job-list': 'Job List',
   'menu.all-jobs': 'All Jobs',
 
@@ -175,12 +179,16 @@ module.exports = {
   // contest
   'contest.title': 'Contest',
   'contest-list.title': 'Contest List',
+  'contest-member.title': 'Contest Member',
   'contest-description.title': 'Contest Description',
 
   // partners
   'partner.title': 'Partner',
   'partner-list.title': 'Partner List',
   'partner-type.title': 'Partner Type',
+
+  // testimonials
+  'testimonials.title': 'Testimonials',
 
   // innovation type
   'basic-type-category.title': 'Basic Type Category',

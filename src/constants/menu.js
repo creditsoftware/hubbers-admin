@@ -158,10 +158,15 @@ const data = [
       },
       {
         icon: 'simple-icon-paper-plane',
+        label: 'menu.contest-member',
+        to: `${adminRoot}/contest/contest-member`,
+      },
+      {
+        icon: 'simple-icon-paper-plane',
         label: 'menu.contest-description',
         to: `${adminRoot}/contest/contest-description`,
       },
-    ]
+    ],
   },
   {
     id: 'partner',
@@ -181,6 +186,12 @@ const data = [
         to: `${adminRoot}/partner/partner-type`,
       },
     ],
+  },
+  {
+    id: 'testimonials',
+    icon: 'iconsminds-user',
+    label: 'menu.testimonials',
+    to: `${adminRoot}/testimonials`,
   },
   {
     id: 'job-list',

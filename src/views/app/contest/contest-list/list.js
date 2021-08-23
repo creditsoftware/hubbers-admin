@@ -43,6 +43,18 @@ const ContestList = () => {
       /* eslint-enable */
     },
     {
+      title: 'Name',
+      dataIndex: 'name',
+      /* eslint-disable */
+      render: (_, record) => (
+        <Space>
+          {record.name}
+        </Space>
+      ),
+      /* eslint-enable */
+      sorter: (a, b) => utils.antdTableSorter(a, b, 'name'),
+    },
+    {
       title: 'Judges',
       dataIndex: 'nbJudge',
       /* eslint-disable */

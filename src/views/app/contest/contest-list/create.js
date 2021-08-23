@@ -32,7 +32,7 @@ const CreateContestList = () => {
   return (
     <>
       <Button type="primary" onClick={showDrawer}>
-        <PlusOutlined /> Create New Description
+        <PlusOutlined /> Create New Contest
       </Button>
       <Drawer
         title="Create a New Contest"

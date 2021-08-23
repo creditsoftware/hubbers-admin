@@ -14,7 +14,9 @@ import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
 import CommunitySelect from '../../../../components/util-components/selector/CommunitySelect';
 import UserSelect from '../../../../components/util-components/selector/UserSelect';
+import LanguageSelect from '../../../../components/util-components/selector/LanguageSelect';
 import UploadImage from '../../../../components/UploadImage';
+import { slugify } from '../../../../helpers/Utils';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -25,22 +27,15 @@ const CreatePartner = () => {
   const [form] = Form.useForm();
   const [isGlobal, setIsGlobal] = useState(null);
   const [typeList, setTypeList] = useState(null);
-  const [languageList, setLanguageList] = useState(null);
   const { partnerTypeList } = useSelector((state) => state.partnerType);
-  const { list } = useSelector((state) => state.language);
 
   useEffect(() => {
     dispatch(Actions.getAllPartnerType());
-    dispatch(Actions.getAllLanguage());
   }, [dispatch]);
 
   useEffect(() => {
     setTypeList(partnerTypeList);
   }, [partnerTypeList]);
-
-  useEffect(() => {
-    setLanguageList(list);
-  }, [list]);
 
   const showDrawer = () => {
     setVisible(true);
@@ -56,8 +51,12 @@ const CreatePartner = () => {
   };
 
   const onSubmit = (values) => {
-    if (values.isGlobal) values.ifLocal = '';
-    dispatch(Actions.createPartner(values));
+    dispatch(
+      Actions.createPartner({
+        ...values,
+        ifLocal: values.isGlobal ? '' : values.ifLocal,
+      })
+    );
     onClose();
   };
 
@@ -84,7 +83,21 @@ const CreatePartner = () => {
             label="Partner Name"
             rules={[{ required: true, message: 'Please enter Partner Name' }]}
           >
-            <Input placeholder="Please enter Partner Name" />
+            <Input
+              placeholder="Please enter Partner Name"
+              onChange={(e) =>
+                form.setFieldsValue({
+                  slug: slugify(`${e.target.value}`),
+                })
+              }
+            />
+          </Form.Item>
+          <Form.Item
+            name="slug"
+            label="Slug"
+            rules={[{ required: true, message: 'Please enter Slug' }]}
+          >
+            <Input placeholder="Please enter Slug" disabled />
           </Form.Item>
           <Form.Item
             name="typeId"
@@ -113,15 +126,7 @@ const CreatePartner = () => {
             label="Language"
             rules={[{ required: true, message: 'Please choose a language' }]}
           >
-            <Select placeholder="Please select a language">
-              {languageList?.map((item) => {
-                return (
-                  <Option key={item.id} value={item.name}>
-                    {item.name}
-                  </Option>
-                );
-              })}
-            </Select>
+            <LanguageSelect idValue={false} />
           </Form.Item>
           <Row>
             <Col span={12} className="pr-2">
@@ -197,12 +202,12 @@ const CreatePartner = () => {
           <Form.Item name="description" label="Sponsor Description">
             <TextArea rows={3} placeholder="Please enter sponsor description" />
           </Form.Item>
-          <label>Contact Reason</label>
+          <p>Contact Reason</p>
           <Form.List name="contactReason" label="Contact Reason">
             {(fields, { add, remove }) => (
               <>
                 {fields.map(({ key, name, fieldKey, ...restField }) => (
-                  <Row>
+                  <Row key={key}>
                     <Col flex="auto">
                       <Form.Item
                         name={[name]}

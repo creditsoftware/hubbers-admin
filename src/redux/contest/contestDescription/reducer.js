@@ -4,7 +4,7 @@ import {
   GET_ALL_CONTEST_DESCRIPTION,
   GET_ALL_CONTEST_DESCRIPTION_SUCCESS,
   GET_ALL_CONTEST_DESCRIPTION_ERROR,
-  CREATE_CONTEST_DESCRIPTION
+  CREATE_CONTEST_DESCRIPTION,
 } from '../../types/contest/contestType';
 
 const INIT_STATE = {
@@ -18,25 +18,25 @@ export default (state = INIT_STATE, action) => {
     case GET_ALL_CONTEST_DESCRIPTION:
       return {
         ...state,
-        loading: true
-      }
+        loading: true,
+      };
     case GET_ALL_CONTEST_DESCRIPTION_SUCCESS:
       return {
         ...state,
         loading: false,
         descriptionList: action.payload.data,
-      }
+      };
     case GET_ALL_CONTEST_DESCRIPTION_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload,
-      }
+      };
     case CREATE_CONTEST_DESCRIPTION:
       return {
         ...state,
         loading: true,
-      }
+      };
     case CREATE_ADMIN_ROLE_SUCCESS:
       return {
         ...state,
@@ -51,6 +51,6 @@ export default (state = INIT_STATE, action) => {
     default:
       return {
         ...state,
-      }
+      };
   }
-}
+};

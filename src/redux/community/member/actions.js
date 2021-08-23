@@ -1,10 +1,13 @@
 import {
-  CREATE_MEMBER,
-  CREATE_MEMBER_ERROR,
-  CREATE_MEMBER_SUCCESS,
+  GET_MEMBER_LIST_BY_COMMUNITY,
+  GET_MEMBER_LIST_BY_COMMUNITY_ERROR,
+  GET_MEMBER_LIST_BY_COMMUNITY_SUCCESS,
   GET_ALL_MEMBER,
   GET_ALL_MEMBER_ERROR,
   GET_ALL_MEMBER_SUCCESS,
+  CREATE_MEMBER,
+  CREATE_MEMBER_ERROR,
+  CREATE_MEMBER_SUCCESS,
   UPDATE_MEMBER,
   UPDATE_MEMBER_ERROR,
   UPDATE_MEMBER_SUCCESS,
@@ -13,6 +16,19 @@ import {
   DELETE_MEMBER_SUCCESS,
 } from '../../types/community/member';
 
+export const getMemberListByCommunity = (data) => ({
+  type: GET_MEMBER_LIST_BY_COMMUNITY,
+  payload: data,
+});
+export const getMemberListByCommunitySuccess = (data) => ({
+  type: GET_MEMBER_LIST_BY_COMMUNITY_SUCCESS,
+  payload: data,
+});
+export const getMemberListByCommunityError = (data) => ({
+  type: GET_MEMBER_LIST_BY_COMMUNITY_ERROR,
+  payload: data,
+});
+
 export const getAllMember = () => ({
   type: GET_ALL_MEMBER,
 });
@@ -20,7 +36,6 @@ export const getAllMemberSuccess = (data) => ({
   type: GET_ALL_MEMBER_SUCCESS,
   payload: data,
 });
-
 export const getAllMemberError = (data) => ({
   type: GET_ALL_MEMBER_ERROR,
   payload: data,

@@ -22,7 +22,7 @@ import {
 } from './actions';
 
 const getAllUsersAsync = async () =>
-  await api
+  api
     .get(`/user`)
     .then((res) => res)
     .catch((error) => error);
@@ -45,7 +45,7 @@ export function* watchGetAllUsers() {
 }
 
 const getUsersAsync = async ({ payload }) =>
-  await api
+  api
     .get(`/user/${payload}`)
     .then((res) => res)
     .catch((error) => error);
@@ -68,7 +68,7 @@ export function* watchGetUser() {
 }
 
 const updateUserAsync = async ({ payload }) =>
-  await api
+  api
     .put(`/user/detail/${payload.id}`, { ...payload.data })
     .then((res) => res)
     .catch((error) => error);
@@ -92,7 +92,7 @@ export function* watchUpdateUser() {
 }
 
 const createUserAsync = async ({ payload }) =>
-  await api
+  api
     .post(`/user`, { ...payload })
     .then((res) => res)
     .catch((error) => error);

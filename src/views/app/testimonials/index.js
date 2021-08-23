@@ -1,25 +1,22 @@
 import React from 'react';
 import { Row } from 'reactstrap';
-import {
-  Colxx,
-  Separator,
-} from '../../../../../components/common/CustomBootstrap';
-import Breadcrumb from '../../../../../containers/navs/Breadcrumb';
-import CourseList from './list';
+import { Colxx, Separator } from '../../../components/common/CustomBootstrap';
+import Breadcrumb from '../../../containers/navs/Breadcrumb';
+import TestimonialsList from './list';
 
-const Course = ({ match }) => {
+const Testimonials = ({ match }) => {
   return (
     <>
       <Row>
         <Colxx xxs="12">
-          <Breadcrumb heading="community.title" match={match} />
+          <Breadcrumb heading="testimonials.title" match={match} />
           <Separator className="mb-5" />
         </Colxx>
       </Row>
       <Colxx xxs="12" className="mb-4">
         <div>
           <div style={{ marginTop: 10 }}>
-            <CourseList />
+            <TestimonialsList />
           </div>
         </div>
       </Colxx>
@@ -27,4 +24,4 @@ const Course = ({ match }) => {
   );
 };
 
-export default Course;
+export default Testimonials;
