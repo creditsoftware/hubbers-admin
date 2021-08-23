@@ -83,7 +83,7 @@ function* loginWithEmailPassword({ payload }) {
 const logoutAsync = async () => {
   return api
     .post(`/auth/admin/signout`)
-    .then((res) => {
+    .then(() => {
       // console.log('logout result =>', res);
     })
     .catch((error) => error);

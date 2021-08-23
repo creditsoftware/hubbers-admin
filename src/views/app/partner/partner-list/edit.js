@@ -20,7 +20,9 @@ import moment from 'moment';
 import * as Actions from '../../../../redux/actions';
 import CommunitySelect from '../../../../components/util-components/selector/CommunitySelect';
 import UserSelect from '../../../../components/util-components/selector/UserSelect';
+import LanguageSelect from '../../../../components/util-components/selector/LanguageSelect';
 import UploadImage from '../../../../components/UploadImage';
+import { slugify } from '../../../../helpers/Utils';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -31,23 +33,15 @@ const EditPartner = ({ id, data }) => {
   const [form] = Form.useForm();
   const [isGlobal, setIsGlobal] = useState(null);
   const [typeList, setTypeList] = useState(null);
-  const [partnerContact, setPartnerContact] = useState(null);
-  const [languageList, setLanguageList] = useState(null);
   const { partnerTypeList } = useSelector((state) => state.partnerType);
-  const { list } = useSelector((state) => state.language);
 
   useEffect(() => {
     dispatch(Actions.getAllPartnerType());
-    dispatch(Actions.getAllLanguage());
   }, [dispatch]);
 
   useEffect(() => {
     setTypeList(partnerTypeList);
   }, [partnerTypeList]);
-
-  useEffect(() => {
-    setLanguageList(list);
-  }, [list]);
 
   const showDrawer = () => {
     const filterData = data.filter((item) => item.id === id);
@@ -70,8 +64,13 @@ const EditPartner = ({ id, data }) => {
   };
 
   const onSubmit = (values) => {
-    if (values.isGlobal) values.ifLocal = '';
-    dispatch(Actions.updatePartner({ ...values, id }));
+    dispatch(
+      Actions.updatePartner({
+        ...values,
+        ifLocal: values.isGlobal ? '' : values.ifLocal,
+        id,
+      })
+    );
     onClose();
   };
 
@@ -107,7 +106,21 @@ const EditPartner = ({ id, data }) => {
             label="Partner Name"
             rules={[{ required: true, message: 'Please enter Partner Name' }]}
           >
-            <Input placeholder="Please enter Partner Name" />
+            <Input
+              placeholder="Please enter Partner Name"
+              onChange={(e) =>
+                form.setFieldsValue({
+                  slug: slugify(`${e.target.value}`),
+                })
+              }
+            />
+          </Form.Item>
+          <Form.Item
+            name="slug"
+            label="Slug"
+            rules={[{ required: true, message: 'Please enter Slug' }]}
+          >
+            <Input placeholder="Please enter Slug" disabled />
           </Form.Item>
           <Form.Item
             name="typeId"
@@ -136,15 +149,7 @@ const EditPartner = ({ id, data }) => {
             label="Language"
             rules={[{ required: true, message: 'Please choose a language' }]}
           >
-            <Select placeholder="Please select a language">
-              {languageList?.map((item) => {
-                return (
-                  <Option key={item.id} value={item.name}>
-                    {item.name}
-                  </Option>
-                );
-              })}
-            </Select>
+            <LanguageSelect idValue={false} />
           </Form.Item>
           <Row>
             <Col span={12} className="pr-2">
@@ -220,7 +225,7 @@ const EditPartner = ({ id, data }) => {
           <Form.Item name="description" label="Sponsor Description">
             <TextArea rows={3} placeholder="Please enter sponsor description" />
           </Form.Item>
-          <label>Contact Reason</label>
+          <p>Contact Reason</p>
           <Form.List name="contactReason" label="Contact Reason">
             {(fields, { add, remove }) => (
               <>

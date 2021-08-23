@@ -35,7 +35,6 @@ const JobEdit = ({ id, data }) => {
         ...filterData[0],
         skill,
         neededSkill,
-        neededSkill,
         startDate: filterData[0].startDate
           ? moment(filterData[0].startDate)
           : '',

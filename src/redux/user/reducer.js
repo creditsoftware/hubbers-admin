@@ -43,10 +43,6 @@ export default (state = INIT_STATE, action) => {
       return { ...state, loading: true };
     case CREATE_USER:
       return { ...state, loading: true };
-    case GET_USER_SUCCESS:
-      return { ...state, loading: false, createUser: action.payload };
-    case GET_USER_ERROR:
-      return { ...state, loading: false, error: action.payload };
     case DELETE_USER:
       return {
         ...state,

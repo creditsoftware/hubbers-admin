@@ -61,6 +61,9 @@ module.exports = {
   'menu.partner': 'Partner',
   'menu.partner-list': 'Partner List',
   'menu.partner-type': 'Partner Type',
+
+  'menu.testimonials': 'Testimonials',
+
   'menu.job-list': 'Job List',
   'menu.all-jobs': 'All Jobs',
 
@@ -181,6 +184,9 @@ module.exports = {
   'partner.title': 'Partner',
   'partner-list.title': 'Partner List',
   'partner-type.title': 'Partner Type',
+
+  // testimonials
+  'testimonials.title': 'Testimonials',
 
   // innovation type
   'basic-type-category.title': 'Basic Type Category',

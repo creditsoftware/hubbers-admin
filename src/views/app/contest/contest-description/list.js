@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Table, Button, Popconfirm, Avatar, Space } from 'antd';
+import { Card, Table, Button, Popconfirm, Space } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import utils from '../../../../helpers/utils/index';
@@ -10,7 +10,7 @@ import EditDescription from './edit';
 
 const ContestDescriptionList = () => {
   const dispatch = useDispatch();
-  const [ list, setList] = useState(null);
+  const [list, setList] = useState(null);
   const { descriptionList } = useSelector((state) => state.contestDescription);
   useEffect(() => {
     dispatch(Actions.getAllDescription());
@@ -23,7 +23,7 @@ const ContestDescriptionList = () => {
   const handleDelete = (id) => {
     dispatch(Actions.deleteDescription(id));
   };
-  
+
   const tableColumns = [
     {
       title: 'Id',

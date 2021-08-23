@@ -1,27 +1,75 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Card, Space, Table, Popconfirm, Button, Avatar, Image } from 'antd';
+import {
+  Card,
+  Table,
+  Space,
+  Select,
+  Popconfirm,
+  Button,
+  Image,
+  Avatar,
+} from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import utils from '../../../../helpers/utils/index';
 import * as Actions from '../../../../redux/actions';
 import CreateCommunity from './create';
 import EditCommunity from './edit';
 
+const { Option } = Select;
+
 const Member = () => {
   const dispatch = useDispatch();
-  const [memberList, SetMemberList] = useState(null);
-  const { member } = useSelector((state) => state);
+  const { communityAll } = useSelector((state) => state);
+  const { list } = useSelector((state) => state.member);
+  const [communityRoleList, setCommunityRoleList] = useState([]);
+  const [communityList, setCommunityList] = useState([]);
+  const [tableList, setTableList] = useState([]);
+  const [currentCommunityRole, setCurrentCommunityRole] = useState(null);
+  const [currentCommunity, setCurrentCommunity] = useState(null);
   const [pagination, setPagenation] = React.useState({
     current: 1,
     pageSize: 5,
   });
+
   useEffect(() => {
-    dispatch(Actions.getAllMember());
+    dispatch(Actions.getAllCommunityRole());
   }, [dispatch]);
 
   useEffect(() => {
-    SetMemberList(member.list);
-  }, [member]);
+    setCommunityRoleList(communityAll.roleList);
+    setCurrentCommunityRole(communityAll.roleList[0]?.id);
+    dispatch(Actions.getCommunityListByRole(communityAll.roleList[0]?.id));
+  }, [communityAll.roleList, dispatch]);
+
+  useEffect(() => {
+    setCommunityList(communityAll.communityList);
+    setCurrentCommunity(
+      communityAll.communityList && communityAll.communityList[0]?.id
+    );
+    dispatch(
+      Actions.getMemberListByCommunity(
+        communityAll.communityList && communityAll.communityList[0]?.id
+      )
+    );
+  }, [communityAll.communityList, dispatch]);
+
+  useEffect(() => {
+    setTableList(list);
+    if (list?.length) {
+      setCurrentCommunity(list[0].communityId);
+    }
+  }, [list]);
+
+  const onChangeCommunityRole = (value) => {
+    setCurrentCommunityRole(value);
+    dispatch(Actions.getCommunityListByRole(value));
+  };
+
+  const onChangeCommunity = (value) => {
+    setCurrentCommunity(value);
+    dispatch(Actions.getMemberListByCommunity(value));
+  };
 
   const handleDelete = (id) => {
     dispatch(Actions.deleteMember(id));
@@ -142,7 +190,7 @@ const Member = () => {
       /* eslint-disable */
       render: (_, elm) => (
         <Space>
-          <EditCommunity id={elm.id} data={memberList} />
+          <EditCommunity id={elm.id} data={tableList} role={currentCommunityRole} />
           <Popconfirm
             title="Are you sure delete this Member?"
             onConfirm={() => handleDelete(elm.id)}
@@ -162,14 +210,48 @@ const Member = () => {
   };
   return (
     <Card>
-      <div className="text-right mb-3">
-        <CreateCommunity />
+      <div
+        className="mb-3"
+        style={{ display: 'flex', justifyContent: 'space-between' }}
+      >
+        <div>
+          <Select
+            style={{ width: '160px' }}
+            value={currentCommunityRole}
+            onChange={onChangeCommunityRole}
+          >
+            {communityRoleList?.map((item) => {
+              return (
+                <Option key={item.id} value={item.id}>
+                  {item.name}
+                </Option>
+              );
+            })}
+          </Select>
+          <Select
+            className="ml-3"
+            style={{ width: '160px' }}
+            value={currentCommunity}
+            onChange={onChangeCommunity}
+          >
+            {communityList?.map((item) => {
+              return (
+                <Option key={item.id} value={item.id}>
+                  {item.name}
+                </Option>
+              );
+            })}
+          </Select>
+        </div>
+        <div>
+          <CreateCommunity role={currentCommunityRole} />
+        </div>
       </div>
       <div className="table-responsive">
         <Table
           rowKey="id"
           columns={tableColumns}
-          dataSource={memberList}
+          dataSource={tableList}
           pagination={pagination}
           onChange={handleTableChange}
         />

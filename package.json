@@ -1,12 +1,12 @@
 {
-  "name": "gogo-react",
+  "name": "hubbers-admin",
   "version": "5.2.0",
-  "description": "Gogo - React Bootstrap 4 Admin Dashboard Template",
+  "description": "Hubbers Admin Panel",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
-    "@ckeditor/ckeditor5-react": "^3.0.2",
     "@glidejs/glide": "^3.4.1",
+    "@ckeditor/ckeditor5-react": "^3.0.2",
     "antd": "^4.16.1",
     "availity-reactstrap-validation": "^2.6.1",
     "axios": "^0.19.2",

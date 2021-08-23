@@ -116,6 +116,7 @@ const UploadImage = ({
         action={`${API_UPLOAD_URL}/image`}
         beforeUpload={beforeHandle}
         onChange={changeHandle}
+        {...props}
       >
         {url ? (
           <Badge

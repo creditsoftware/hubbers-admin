@@ -40,7 +40,7 @@ export const createDescriptionError = (data) => ({
 export const updateDescription = (data) => ({
   type: UPDATE_CONTEST_DESCRIPTION,
   payload: data,
-})
+});
 export const updateDescriptionSuccess = (data) => ({
   type: UPDATE_CONTEST_DESCRIPTION_SUCCESS,
   payload: data,
@@ -52,7 +52,7 @@ export const updateDescriptionError = (data) => ({
 export const deleteDescription = (data) => ({
   type: DELETE_CONTEST_DESCRIPTION,
   payload: data,
-})
+});
 export const deleteDescriptionSuccess = (data) => ({
   type: DELETE_CONTEST_DESCRIPTION_SUCCESS,
   payload: data,

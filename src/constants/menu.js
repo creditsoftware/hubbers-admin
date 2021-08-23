@@ -161,7 +161,7 @@ const data = [
         label: 'menu.contest-description',
         to: `${adminRoot}/contest/contest-description`,
       },
-    ]
+    ],
   },
   {
     id: 'partner',
@@ -181,6 +181,12 @@ const data = [
         to: `${adminRoot}/partner/partner-type`,
       },
     ],
+  },
+  {
+    id: 'testimonials',
+    icon: 'iconsminds-user',
+    label: 'menu.testimonials',
+    to: `${adminRoot}/testimonials`,
   },
   {
     id: 'job-list',

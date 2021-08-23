@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Drawer, Form, Button, Input, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import CKEditor5 from '../../../../components/util-components/CkEditor';
 import * as Actions from '../../../../redux/actions';
-const { TextArea } = Input;
+
 const { Option } = Select;
 
 const CreateDescription = () => {
@@ -58,8 +58,8 @@ const CreateDescription = () => {
             rules={[
               {
                 required: true,
-                message: 'Please enter description'
-              }
+                message: 'Please enter description',
+              },
             ]}
           >
             <CKEditor5 />
@@ -70,16 +70,16 @@ const CreateDescription = () => {
             rules={[
               {
                 required: true,
-                message: 'Please enter category'
-              }
+                message: 'Please enter category',
+              },
             ]}
           >
             <Select>
-              {
-                categories.map((category, index) =>
-                  <Option key={index} value={category}>{category}</Option>
-                )
-              }
+              {categories.map((category) => (
+                <Option key={category} value={category}>
+                  {category}
+                </Option>
+              ))}
             </Select>
           </Form.Item>
           <div className="pb-2">

@@ -1,21 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  Drawer,
-  Form,
-  Button,
-  Input,
-  Select,
-  Tooltip,
-} from 'antd';
+import { Drawer, Form, Button, Input, Select, Tooltip } from 'antd';
 
-import {
-  EditOutlined,
-} from '@ant-design/icons';
+import { EditOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
 import CKEditor5 from '../../../../components/util-components/CkEditor';
 
-const { TextArea } = Input;
 const { Option } = Select;
 
 const EditDescription = ({ id, data }) => {
@@ -30,7 +20,7 @@ const EditDescription = ({ id, data }) => {
     setEditValue({ ...v });
   }, [data, id, form]);
   const showDrawer = () => {
-    form.setFieldsValue({...editValue});
+    form.setFieldsValue({ ...editValue });
     setVisible(true);
   };
 
@@ -40,7 +30,7 @@ const EditDescription = ({ id, data }) => {
   };
 
   const onSubmit = (values) => {
-    dispatch(Actions.updateDescription({...values, id}));
+    dispatch(Actions.updateDescription({ ...values, id }));
     onClose();
   };
 
@@ -80,8 +70,8 @@ const EditDescription = ({ id, data }) => {
             rules={[
               {
                 required: true,
-                message: 'Please enter description'
-              }
+                message: 'Please enter description',
+              },
             ]}
           >
             <CKEditor5 />
@@ -92,16 +82,16 @@ const EditDescription = ({ id, data }) => {
             rules={[
               {
                 required: true,
-                message: 'Please enter category'
-              }
+                message: 'Please enter category',
+              },
             ]}
           >
             <Select>
-              {
-                categories.map((category, index) =>
-                  <Option key={index} value={category}>{category}</Option>
-                )
-              }
+              {categories.map((category) => (
+                <Option key={category} value={category}>
+                  {category}
+                </Option>
+              ))}
             </Select>
           </Form.Item>
           <div className="pb-2">

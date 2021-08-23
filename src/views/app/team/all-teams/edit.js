@@ -27,8 +27,7 @@ const EditTeam = ({ id, data }) => {
   };
 
   const onSubmit = (values) => {
-    values.id = id;
-    dispatch(Actions.updateTeam(values));
+    dispatch(Actions.updateTeam({ ...values, id }));
     onClose();
   };
 

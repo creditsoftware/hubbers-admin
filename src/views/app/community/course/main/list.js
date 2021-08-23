@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card, Space, Table, Tooltip, Popconfirm, Button } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
-import utils from '../../../../helpers/utils/index';
-import * as Actions from '../../../../redux/actions';
+import utils from '../../../../../helpers/utils/index';
+import * as Actions from '../../../../../redux/actions';
 import GroupCreate from './create';
 import EditGroup from './edit';
 
