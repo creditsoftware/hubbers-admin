@@ -7,7 +7,7 @@ import {
 import Breadcrumb from '../../../../../containers/navs/Breadcrumb';
 import CourseList from './list';
 
-const Course = ({ match }) => {
+const CourseMain = ({ match }) => {
   return (
     <>
       <Row>
@@ -27,4 +27,4 @@ const Course = ({ match }) => {
   );
 };
 
-export default Course;
+export default CourseMain;

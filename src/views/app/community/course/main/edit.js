@@ -1,43 +1,53 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row } from 'reactstrap';
-import { Drawer, Form, Button, Col, Input, Select, Switch, Space } from 'antd';
+import { Drawer, Form, Row, Col, Space, Input, Select, Switch, Button } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
-import * as Actions from '../../../../../redux/actions';
+import { getRandomInt, slugify } from '../../../../../helpers/Utils';
 import CommunitySelect from '../../../../../components/util-components/selector/CommunitySelect';
 import UserSelect from '../../../../../components/util-components/selector/UserSelect';
-import { slugify } from '../../../../../helpers/Utils';
+import * as Actions from '../../../../../redux/actions';
 
-const { Option } = Select;
 const { TextArea } = Input;
+const { Option } = Select;
 
-const GroupEdit = ({ id, data }) => {
+const CourseEdit = ({ id, data }) => {
+
   const dispatch = useDispatch();
+  const { groupPrivacyOptionList } = useSelector((state) => state.groupPrivacyOption);
+  const { list } = useSelector((state) => state.courseStructure);
+  const [privacyOption, setPrivacyOption] = useState([]);
+  const [courseStructureList, setCourseStructureList] = useState(null);
   const [visible, setVisible] = useState(false);
-  const [form] = Form.useForm();
-  const [published, setPublished] = useState(true);
   const [isGlobal, setIsGlobal] = useState(false);
-  const [privacyOption, setPrivacyOption] = useState(null);
-  const { groupPrivacyOptionList } = useSelector(
-    (state) => state.groupPrivacyOption
-  );
+  const [published, setPublished] = useState(true);
+  const [form] = Form.useForm();
 
   useEffect(() => {
     dispatch(Actions.getAllGroupPrivacyOption());
+    dispatch(Actions.getAllCourseStructure());
   }, [dispatch]);
 
   useEffect(() => {
     setPrivacyOption(groupPrivacyOptionList);
   }, [groupPrivacyOptionList]);
 
+  useEffect(() => {
+    setCourseStructureList(list);
+  }, [list]);
+
   const showDrawer = () => {
     const filterData = data.filter((item) => item.id === id);
     if (filterData.length > 0) {
       form.setFieldsValue({
         ...filterData[0],
+        instructor: filterData[0].detail?.instructor,
+        section: filterData[0].detail?.section,
+        cType: filterData[0].detail?.cType,
+        unit: filterData[0].detail?.unit
       });
     }
     setPublished(filterData[0].published);
+    setIsGlobal(filterData[0].isGlobal);
     setVisible(true);
   };
 
@@ -47,7 +57,50 @@ const GroupEdit = ({ id, data }) => {
   };
 
   const onSubmit = (values) => {
-    dispatch(Actions.updateGroup({ ...values, id, published, isGlobal }));
+    dispatch(Actions.createCourse({
+      ...values,
+      id,
+      published,
+      isGlobal,
+      detail: {
+        instructor: {
+          id: values.instructor,
+          name: courseStructureList.filterData((item) => item.id === values.instructor)[0].name,
+          singularName: courseStructureList.filterData((item) => item.id === values.instructor)[0].singularName,
+          iaName: courseStructureList.filterData((item) => item.id === values.instructor)[0].iaName,
+          pluralName: courseStructureList.filterData((item) => item.id === values.instructor)[0].pluralName,
+          ppName: courseStructureList.filterData((item) => item.id === values.instructor)[0].ppName,
+          category: courseStructureList.filterData((item) => item.id === values.instructor)[0].category,
+        },
+        section: {
+          id: values.section,
+          name: courseStructureList.filterData((item) => item.id === values.section)[0].name,
+          singularName: courseStructureList.filterData((item) => item.id === values.section)[0].singularName,
+          iaName: courseStructureList.filterData((item) => item.id === values.section)[0].iaName,
+          pluralName: courseStructureList.filterData((item) => item.id === values.section)[0].pluralName,
+          ppName: courseStructureList.filterData((item) => item.id === values.section)[0].ppName,
+          category: courseStructureList.filterData((item) => item.id === values.section)[0].category,
+        },
+        cType: {
+          id: values.cType,
+          name: courseStructureList.filterData((item) => item.id === values.cType)[0].name,
+          singularName: courseStructureList.filterData((item) => item.id === values.cType)[0].singularName,
+          iaName: courseStructureList.filterData((item) => item.id === values.cType)[0].iaName,
+          pluralName: courseStructureList.filterData((item) => item.id === values.cType)[0].pluralName,
+          ppName: courseStructureList.filterData((item) => item.id === values.cType)[0].ppName,
+          category: courseStructureList.filterData((item) => item.id === values.cType)[0].category,
+        },
+        unit: {
+          id: values.unit,
+          name: courseStructureList.filterData((item) => item.id === values.unit)[0].name,
+          singularName: courseStructureList.filterData((item) => item.id === values.unit)[0].singularName,
+          iaName: courseStructureList.filterData((item) => item.id === values.unit)[0].iaName,
+          pluralName: courseStructureList.filterData((item) => item.id === values.unit)[0].pluralName,
+          ppName: courseStructureList.filterData((item) => item.id === values.unit)[0].ppName,
+          category: courseStructureList.filterData((item) => item.id === values.unit)[0].category,
+        }
+      }
+    }));
     onClose();
   };
 
@@ -60,7 +113,7 @@ const GroupEdit = ({ id, data }) => {
         size="small"
       />
       <Drawer
-        title="Update a Group"
+        title="Update a course"
         width={542}
         onClose={onClose}
         visible={visible}
@@ -79,85 +132,22 @@ const GroupEdit = ({ id, data }) => {
                 <Form.Item label="Published" name="published" className="mb-0">
                   <Switch checked={published} onChange={setPublished} />
                 </Form.Item>
-                <Form.Item label="Global" name="isGlobal" className="mb-0">
+                <Form.Item label="Global" name="isGlobal" className="mb-0 ml-3">
                   <Switch checked={isGlobal} onChange={setIsGlobal} />
                 </Form.Item>
               </Space>
             </Col>
-          </Row>
-          <Row>
-            <Col span={12}>
-              <Form.Item
-                name="name"
-                label="Group Title"
-                rules={[
-                  { required: true, message: 'Please enter Group Title' },
-                ]}
-                className="mr-2"
-              >
-                <Input
-                  placeholder="Please enter Group Title"
-                  onChange={(e) =>
-                    form.setFieldsValue({ slug: slugify(e.target.value) })
-                  }
-                />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                name="slug"
-                label="Group Slug"
-                rules={[{ required: true, message: 'Please enter Group Slug' }]}
-                className="ml-2"
-              >
-                <Input disabled placeholder="Please enter Group Slug" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={12}>
+            <Col span={24}>
               <Form.Item
                 name="communityId"
                 label="Community Name"
                 rules={
-                  !isGlobal
-                    ? [{ required: true, message: 'Please choose a community' }]
-                    : []
+                  !isGlobal ? [{ required: true, message: 'Please choose a community' }] : []
                 }
-                className="mr-2"
               >
                 <CommunitySelect disabled={isGlobal} />
               </Form.Item>
             </Col>
-            <Col span={12}>
-              <Form.Item
-                name="privacyOptionId"
-                label="Privacy Option"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please choose the Option',
-                  },
-                ]}
-                className="ml-2"
-              >
-                <Select
-                  style={{ width: '100%' }}
-                  placeholder="Please choose the Option"
-                >
-                  {privacyOption &&
-                    privacyOption.map((item) => {
-                      return (
-                        <Option key={item.id} value={item.id}>
-                          {item.name}
-                        </Option>
-                      );
-                    })}
-                </Select>
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={16}>
             <Col span={24}>
               <Form.Item
                 name="createdBy"
@@ -172,18 +162,159 @@ const GroupEdit = ({ id, data }) => {
                 <UserSelect />
               </Form.Item>
             </Col>
-          </Row>
-          <Row gutter={16}>
+            <Col span={24}>
+              <Form.Item
+                name="name"
+                label="Course Title"
+                rules={[
+                  { required: true, message: 'Please enter title' },
+                ]}
+              >
+                <Input
+                  placeholder="Please enter title"
+                  onChange={(e) =>
+                    form.setFieldsValue({
+                      slug: e.target.value ? `${slugify(e.target.value)}-${getRandomInt(100000, 999999)}` : ''
+                    })
+                  }
+                />
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item
+                hidden
+                name="slug"
+                label="Course Slug"
+                rules={[
+                  { required: true, message: 'Please enter Course Slug' },
+                ]}
+                className="ml-2"
+              >
+                <Input disabled placeholder="Please enter Course Slug" />
+              </Form.Item>
+            </Col>
             <Col span={24}>
               <Form.Item name="tagLine" label="Tag Line">
                 <TextArea rows={3} placeholder="Please enter Tag Line" />
               </Form.Item>
             </Col>
-          </Row>
-          <Row gutter={16}>
             <Col span={24}>
               <Form.Item name="description" label="Description">
                 <TextArea rows={3} placeholder="Please enter Description" />
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item
+                name="privacyOptionId"
+                label="Privacy Option"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please choose the Option',
+                  },
+                ]}
+              >
+                <Select
+                  style={{ width: '100%' }}
+                  placeholder="Please choose the Option"
+                >
+                  {privacyOption && privacyOption.map((item) => {
+                    return (
+                      <Option key={item.id} value={item.id}>
+                        {item.name}
+                      </Option>
+                    );
+                  })}
+                </Select>
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={24}>
+              <Form.Item
+                name={['detail', 'cType']}
+                label="Table of Contents"
+              >
+                <Select
+                  style={{ width: '100%' }}
+                  placeholder="Please choose the type"
+                >
+                  {courseStructureList && courseStructureList.map((item) => {
+                    if (item.category === 'courseType') {
+                      return (
+                        <Option
+                          key={item.id}
+                          value={item.id}
+                        >
+                          {item.name}
+                        </Option>
+                      );
+                    }
+                  })}
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item
+                name={['detail', 'unit']}
+                label="Lessons"
+              >
+                <Select
+                  style={{ width: '100%' }}
+                  placeholder="Please choose the type"
+                >
+                  {courseStructureList && courseStructureList.map((item) => {
+                    if (item.category === 'courseUnit') {
+                      return (
+                        <Option key={item.id} value={item.id}>
+                          {item.name}
+                        </Option>
+                      );
+                    }
+                  })}
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item
+                name={['detail', 'section']}
+                label="Sections"
+              >
+                <Select
+                  style={{ width: '100%' }}
+                  placeholder="Please choose the type"
+                >
+                  {courseStructureList && courseStructureList.map((item) => {
+                    if (item.category === 'section') {
+                      return (
+                        <Option key={item.id} value={item.id}>
+                          {item.name}
+                        </Option>
+                      );
+                    }
+                  })}
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item
+                name={['detail', 'instructor']}
+                label="Instructors"
+              >
+                <Select
+                  style={{ width: '100%' }}
+                  placeholder="Please choose the type"
+                >
+                  {courseStructureList && courseStructureList.map((item) => {
+                    if (item.category === 'instructor') {
+                      return (
+                        <Option key={item.id} value={item.id}>
+                          {item.name}
+                        </Option>
+                      );
+                    }
+                  })}
+                </Select>
               </Form.Item>
             </Col>
           </Row>
@@ -193,7 +324,7 @@ const GroupEdit = ({ id, data }) => {
                 Cancel
               </Button>
               <Button type="primary" htmlType="submit">
-                Update
+                Submit
               </Button>
             </Col>
           </Row>
@@ -203,4 +334,4 @@ const GroupEdit = ({ id, data }) => {
   );
 };
 
-export default GroupEdit;
+export default CourseEdit;

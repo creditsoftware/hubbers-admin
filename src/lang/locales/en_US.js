@@ -91,6 +91,7 @@ module.exports = {
   'menu.language-level': 'Language Level',
 
   'menu.country': 'Country',
+  'menu.timezone': 'Timezone',
 
   /* 04.Error Page */
   'pages.error-title': 'Ooops... looks like an error occurred!',
@@ -199,6 +200,8 @@ module.exports = {
   'hubbers-team.title': 'Hubbers Team',
 
   'country.title': 'Country',
+
+  'timezone.title': 'Timezone',
 
   'language.title': 'Language',
 

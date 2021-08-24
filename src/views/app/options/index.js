@@ -13,6 +13,8 @@ const LanguageLevel = React.lazy(() => import('./language-level'));
 
 const Country = React.lazy(() => import('./country'));
 
+const Timezone = React.lazy(() => import('./timezone'));
+
 const Options = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -46,6 +48,11 @@ const Options = ({ match }) => (
       <Route
         path={`${match.url}/country`}
         render={(props) => <Country {...props} />}
+      />
+
+      <Route
+        path={`${match.url}/timezone`}
+        render={(props) => <Timezone {...props} />}
       />
 
       <Redirect to="/error" />

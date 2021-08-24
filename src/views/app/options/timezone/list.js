@@ -4,28 +4,28 @@ import { Card, Space, Table, Tooltip, Popconfirm, Button } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import utils from '../../../../helpers/utils/index';
 import * as Actions from '../../../../redux/actions';
-import CreateCountry from './create';
-import EditCountry from './edit';
+import CreateTimezone from './create';
+import EditTimezone from './edit';
 
-const CountryList = () => {
+const TimezoneList = () => {
   const dispatch = useDispatch();
-  const [countryList, SetCountryList] = useState(null);
-  const { list } = useSelector((state) => state.country);
+  const [timezoneList, SetTimezoneList] = useState(null);
+  const { list } = useSelector((state) => state.timezone);
   const [pagination, setPagenation] = React.useState({
     current: 1,
-    pageSize: 5,
+    pageSize: 10,
   });
 
   useEffect(() => {
-    dispatch(Actions.getAllCountry());
+    dispatch(Actions.getAllTimezone());
   }, [dispatch]);
 
   useEffect(() => {
-    SetCountryList(list);
+    SetTimezoneList(list);
   }, [list]);
 
-  const deleteCountry = (id) => {
-    dispatch(Actions.deleteCountry(id));
+  const deleteTimezone = (id) => {
+    dispatch(Actions.deleteTimezone(id));
   };
 
   const tableColumns = [
@@ -35,34 +35,19 @@ const CountryList = () => {
       sorter: (a, b) => utils.antdTableSorter(a, b, 'id'),
     },
     {
-      title: ' Name',
-      dataIndex: 'name',
-      /* eslint-disable */
-      render: (_, record) => (
-        <span>{record.name}</span>
-      ),
-      /* eslint-enable */
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'name'),
+      title: 'Value',
+      dataIndex: 'value',
+      sorter: (a, b) => utils.antdTableSorter(a, b, 'value'),
     },
     {
-      title: 'Short Name',
-      dataIndex: 'shortName',
-      /* eslint-disable */
-      render: (_, record) => (
-        <span>{record.shortName}</span>
-      ),
-      /* eslint-enable */
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'shortName'),
+      title: 'Abbr',
+      dataIndex: 'abbr',
+      sorter: (a, b) => utils.antdTableSorter(a, b, 'abbr'),
     },
     {
-      title: 'Continent',
-      dataIndex: 'continent',
-      /* eslint-disable */
-      render: (_, record) => (
-        <span>{record.continent}</span>
-      ),
-      /* eslint-enable */
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'continent'),
+      title: 'UTC', 
+      dataIndex: 'utc',
+      sorter: (a, b) => utils.antdTableSorter(a, b, 'utc'),
     },
     {
       title: 'Actions',
@@ -70,11 +55,11 @@ const CountryList = () => {
       /* eslint-disable */
       render: (_, elm) => (
         <Space>
-          <EditCountry id={elm.id} data={countryList} />
+          <EditTimezone id={elm.id} data={timezoneList} />
           <Tooltip title="Delete">
             <Popconfirm
               title="Are you sure delete this Item?"
-              onConfirm={() => deleteCountry(elm.id)}
+              onConfirm={() => deleteTimezone(elm.id)}
               onCancel={() => console.log('Canceled to delete')}
               okText="Yes"
               cancelText="No"
@@ -93,13 +78,13 @@ const CountryList = () => {
   return (
     <Card>
       <div className="text-right mb-3">
-        <CreateCountry />
+        <CreateTimezone />
       </div>
       <div className="table-responsive">
         <Table
           rowKey="id"
           columns={tableColumns}
-          dataSource={countryList}
+          dataSource={timezoneList}
           pagination={pagination}
           onChange={handleTableChange}
         />
@@ -107,4 +92,4 @@ const CountryList = () => {
     </Card>
   );
 };
-export default CountryList;
+export default TimezoneList;

@@ -1,56 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Card, Space, Table, Tooltip, Popconfirm, Button } from 'antd';
+import { Card, Table, Space, Avatar, Tooltip, Popconfirm, Button } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import utils from '../../../../../helpers/utils/index';
 import * as Actions from '../../../../../redux/actions';
-import GroupCreate from './create';
-import EditGroup from './edit';
+import CourseCreate from './create';
+import EditCourse from './edit';
 
-const GroupList = () => {
+const CourseList = () => {
+  
   const dispatch = useDispatch();
-  const [groupList, setGroupList] = useState(null);
-  const { list } = useSelector((state) => state.group);
-  const [pagination, setPagenation] = React.useState({
+  
+  const { list } = useSelector((state) => state.courseMain);
+
+  const [courseList, setCourseList] = useState([]);
+  
+  const [pagination, setPagenation] = useState({
     current: 1,
-    pageSize: 5,
+    pageSize: 10,
   });
 
   useEffect(() => {
-    dispatch(Actions.getAllGroups());
-  }, [dispatch]);
+    dispatch(Actions.getAllCourse());
+  }, []);
 
   useEffect(() => {
-    setGroupList(list);
+    setCourseList(list);
   }, [list]);
-
-  console.log(list);
 
   const tableColumns = [
     {
       title: 'ID',
       dataIndex: 'id',
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'id'),
+    },
+    {
+      title: 'Creator',
+      dataIndex: 'createdBy',
+      /* eslint-disable */
+      render: (_, record) => (
+        <span>
+          <Avatar size={32} src={record.creator.avatar} />
+          <label className="ml-3">{record.creator.email}</label>
+        </span>
+      ),
+      /* eslint-enable */
     },
     {
       title: 'Title',
       dataIndex: 'name',
-      /* eslint-disable */
-      render: (_, record) => (
-        <span>{record.name}</span>
-      ),
-      /* eslint-enable */
       sorter: (a, b) => utils.antdTableSorter(a, b, 'name'),
     },
     {
-      title: 'Community Name',
+      title: 'Community',
       dataIndex: 'community',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.community.name}</span>
-        ),
+        <span>{record.isGlobal ? '' : record.community.name}</span>
+      ),
       /* eslint-enable */
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'community'),
     },
     {
       title: 'Privacy Option',
@@ -58,16 +65,6 @@ const GroupList = () => {
       /* eslint-disable */
       render: (_, record) => (
         <span>{record.privacyOption.name}</span>
-        ),
-      /* eslint-enable */
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'privacyOption'),
-    },
-    {
-      title: 'Published',
-      dataIndex: 'published',
-      /* eslint-disable */
-      render: (_, record) => (
-        <span>{record.published ? 'Published' : 'Not Published'}</span>
       ),
       /* eslint-enable */
     },
@@ -79,24 +76,17 @@ const GroupList = () => {
         <span>{record.isGlobal ? 'Global' : 'Not Global'}</span>
       ),
       /* eslint-enable */
+      sorter: (a, b) => utils.antdTableSorter(a, b, 'isGlobal'),
     },
     {
-      title: 'Created By',
-      dataIndex: 'createdBy',
+      title: 'Publish',
+      dataIndex: 'published',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.creator.email}</span>
+        <span>{record.published ? 'Published' : 'Not Published'}</span>
       ),
       /* eslint-enable */
-    },
-    {
-      title: 'Created At',
-      dataIndex: 'createdAt',
-      /* eslint-disable */
-      render: (_, record) => (
-        <span>{record.createdAt.split("T")[0]}</span>
-      ),
-      /* eslint-enable */
+      sorter: (a, b) => utils.antdTableSorter(a, b, 'published'),
     },
     {
       title: 'Actions',
@@ -104,35 +94,37 @@ const GroupList = () => {
       /* eslint-disable */
       render: (_, elm) => (
         <Space>
-          <EditGroup id={elm.id} data={groupList} />
-          <Tooltip title="Delete">
-            <Popconfirm
-              title="Are you sure delete this group?"
-              onConfirm={() => dispatch(Actions.deleteGroup(elm.id))}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Button danger icon={<DeleteOutlined />} size="small" />
-            </Popconfirm>
+          <Tooltip title="View/Edit">
+            <EditCourse id={elm.id} data={courseList} />
           </Tooltip>
+          <Popconfirm
+            title="Are you sure delete this group?"
+            onConfirm={() => dispatch(Actions.deleteCourse(elm.id))}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button danger icon={<DeleteOutlined />} size="small" />
+          </Popconfirm>
         </Space>
       ),
       /* eslint-enable */
     },
   ];
+
   const handleTableChange = (params) => {
     setPagenation(params.pagination);
   };
+
   return (
     <Card>
       <div className="text-right mb-3">
-        <GroupCreate />
+        <CourseCreate />
       </div>
       <div className="table-responsive">
         <Table
           rowKey="id"
           columns={tableColumns}
-          dataSource={groupList}
+          dataSource={courseList}
           pagination={pagination}
           onChange={handleTableChange}
         />
@@ -140,4 +132,4 @@ const GroupList = () => {
     </Card>
   );
 };
-export default GroupList;
+export default CourseList;

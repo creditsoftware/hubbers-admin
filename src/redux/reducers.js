@@ -8,6 +8,7 @@ import member from './community/member/reducer';
 import post from './community/post/reducer';
 import group from './community/group/reducer';
 import courseStructure from './community/course/courseStructure/reducer';
+import courseMain from './community/course/courseMain/reducer';
 import groupPrivacyOption from './community/groupPrivacyOption/reducer';
 import menu from './menu/reducer';
 import authUser from './auth/reducer';
@@ -19,6 +20,7 @@ import basicTypeCategory from './options/basic-type-category/reducer';
 import basicType from './options/basic-type/reducer';
 import expertiseCategory from './options/expertise-category/reducer';
 import country from './options/country/reducer';
+import timezone from './options/timezone/reducer';
 import language from './options/language/reducer';
 import languageLevel from './options/language-level/reducer';
 import hubbersTeam from './hubbers-team/reducer';
@@ -50,11 +52,13 @@ const reducers = combineReducers({
   group,
   groupPrivacyOption,
   courseStructure,
+  courseMain,
   // options
   basicTypeCategory,
   basicType,
   expertiseCategory,
   country,
+  timezone,
   language,
   languageLevel,
   communityAll,
