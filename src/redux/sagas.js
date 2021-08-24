@@ -15,11 +15,13 @@ import adminRoleSaga from './admin-role/saga';
 import groupSaga from './community/group/saga';
 import groupPrivacyOptionSaga from './community/groupPrivacyOption/saga';
 import courseStructureSaga from './community/course/courseStructure/saga';
+import courseMainSaga from './community/course/courseMain/saga';
 
 import basicTypeCategorySaga from './options/basic-type-category/saga';
 import basicTypeSaga from './options/basic-type/saga';
 import expertiseCategorySaga from './options/expertise-category/saga';
 import countrySaga from './options/country/saga';
+import timezoneSaga from './options/timezone/saga';
 import languageSaga from './options/language/saga';
 import languageLevelSaga from './options/language-level/saga';
 import hubbersTeamSaga from './hubbers-team/saga';
@@ -56,7 +58,9 @@ export default function* rootSaga(getState) {
     groupSaga(),
     groupPrivacyOptionSaga(),
     courseStructureSaga(),
+    courseMainSaga(),
     countrySaga(),
+    timezoneSaga(),
     languageSaga(),
     languageLevelSaga(),
     hubbersTeamSaga(),

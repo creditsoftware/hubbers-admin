@@ -72,15 +72,15 @@ const data = [
         label: 'menu.group',
         to: `${adminRoot}/community/group`,
       },
-      // {
-      //   icon: 'simple-icon-doc',
-      //   label: 'menu.course',
-      //   to: `${adminRoot}/community/course`,
-      // },
       {
         icon: 'simple-icon-doc',
         label: 'menu.course-structure',
         to: `${adminRoot}/community/course/structure`,
+      },
+      {
+        icon: 'simple-icon-doc',
+        label: 'menu.course',
+        to: `${adminRoot}/community/course`,
       },
     ],
   },
@@ -244,6 +244,11 @@ const data = [
         icon: 'simple-icon-paper-plane',
         label: 'menu.country',
         to: `${adminRoot}/options/country`,
+      },
+      {
+        icon: 'simple-icon-paper-plane',
+        label: 'menu.timezone',
+        to: `${adminRoot}/options/timezone`,
       },
     ],
   },

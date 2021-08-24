@@ -26,10 +26,12 @@ export * from './community/post/actions';
 export * from './community/group/actions';
 export * from './community/groupPrivacyOption/actions';
 export * from './community/course/courseStructure/actions';
+export * from './community/course/courseMain/actions';
 export * from './options/basic-type-category/actions';
 export * from './options/basic-type/actions';
 export * from './options/expertise-category/actions';
 export * from './options/country/actions';
+export * from './options/timezone/actions';
 export * from './options/language/actions';
 export * from './options/language-level/actions';
 export * from './hubbers-team/actions';
@@ -46,4 +48,3 @@ export * from './module/moduleType/actions';
 export * from './contest/contestList/actions';
 export * from './testimonials/actions';
 export * from './contest/contestDescription/actions';
-
