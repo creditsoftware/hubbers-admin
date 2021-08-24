@@ -32,11 +32,15 @@ import {
   GET_ALL_CONTEST_TYPE,
   GET_ALL_CONTEST_TYPE_SUCCESS,
   GET_ALL_CONTEST_TYPE_ERROR,
+  GET_ALL_CONTEST_MEMBER_LIST,
+  GET_ALL_CONTEST_MEMBER_LIST_SUCCESS,
+  GET_ALL_CONTEST_MEMBER_LIST_ERROR,
 } from '../../types/contest/contestType';
 
 const INIT_STATE = {
   loading: false,
   contestList: [],
+  contestMemberList: [],
   contestTypeList: [],
   productList: [],
   innovationList: [],
@@ -63,6 +67,23 @@ export default (state = INIT_STATE, action) => {
         contestList: action.payload,
       }
     case GET_ALL_CONTEST_LIST_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      }
+    case GET_ALL_CONTEST_MEMBER_LIST:
+      return {
+        ...state,
+        loading: true
+      }
+    case GET_ALL_CONTEST_MEMBER_LIST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        contestMemberList: action.payload,
+      }
+    case GET_ALL_CONTEST_MEMBER_LIST_ERROR:
       return {
         ...state,
         loading: false,

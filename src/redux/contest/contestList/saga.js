@@ -15,6 +15,10 @@ import {
   GET_ALL_CONTEST_GLOBAL_DESCRIPTION,
   GET_ALL_CONTEST_MARKET,
   GET_ALL_CONTEST_OFFICIAL,
+  GET_ALL_CONTEST_MEMBER_LIST,
+  DELETE_ALL_CONTEST_MEMBER_LIST,
+  CREATE_CONTEST_MEMBER_LIST,
+  UPDATE_CONTEST_MEMBER_LIST,
   // UPDATE_PARTNER,
   // DELETE_PARTNER,
 } from '../../types/contest/contestType';
@@ -46,12 +50,28 @@ import {
   getAllContestOfficialSuccess,
   getAllContestOfficialError,
   getAllContestMarketError,
-  getAllContestMarketSuccess
+  getAllContestMarketSuccess,
+  getAllContestMemberListSuccess,
+  getAllContestMemberListError,
+  deleteContestMemberListSuccess,
+  deleteContestMemberListError,
+  getAllContestMemberList,
+  createContestMemberSuccess,
+  createContestMemberError,
+  updateContestMemberListError,
+  updateContestMemberListSuccess
 } from './actions';
 
 const getAllContestListAsync = () => {
   return api
     .get(`/contest/contest-list`)
+    .then((res) => res)
+    .catch((error) => error);
+};
+
+const getAllContestMemberListAsync = () => {
+  return api
+    .get(`/contest/contest-member`)
     .then((res) => res)
     .catch((error) => error);
 };
@@ -115,6 +135,18 @@ function* GetAllContestList() {
     }
   } catch(error) {
     yield put(getAllContestListError('Get All Contest List Error !'));
+  }
+}
+
+function* GetAllContestMemberList() {
+  try {
+    const result = yield call(getAllContestMemberListAsync);
+    if(result.status === 200 && result.statusText === 'OK') {
+      yield put(getAllContestMemberListSuccess(result.data.data));
+    } else {
+    }
+  } catch(error) {
+    yield put(getAllContestMemberListError('Get All Contest List Error !'));
   }
 }
 
@@ -244,6 +276,15 @@ const createContestListAsync = async (payload) => {
     .catch((error) => error);
 }
 
+const createContestMemberListAsync = async (payload) => {
+  return api
+    .post('/contest/contest-member', {
+      ...payload
+    })
+    .then((res) => res)
+    .catch((error) => error);
+}
+
 function* CreateContestList(payload) {
   try {
     const result = yield call(createContestListAsync, payload.payload);
@@ -255,6 +296,43 @@ function* CreateContestList(payload) {
     }
   } catch (error) {
     yield put(createContestListError('Create ContestList Error !'));
+  }
+}
+
+function* CreateContestMemberList(payload) {
+  try {
+    const result = yield call(createContestMemberListAsync, payload.payload);
+    if (result.status === 200 && result.statusText === 'OK') {
+      yield put(createContestMemberSuccess(result.data.result));
+      yield put(getAllContestMemberList());
+    } else {
+      yield put(createContestMemberError('Create ContestList Response is not success!'));
+    }
+  } catch (error) {
+    yield put(createContestMemberError('Create ContestList Error !'));
+  }
+}
+
+const updateContestMemberListAsync = async (payload) => {
+  return api
+    .put(`/contest/contest-member/${payload.id}`, {
+      ...payload
+    })
+    .then((res) => res)
+    .catch((error) => error);
+}
+
+function* UpdateContestMemberList(payload) {
+  try {
+    const result = yield call(updateContestMemberListAsync, payload.payload);
+    if (result.status === 200 && result.statusText === 'OK') {
+      yield put(updateContestMemberListSuccess(result.data.result));
+      yield put(getAllContestMemberList());
+    } else {
+      yield put(updateContestMemberListError('Update Contest Member List Response is not success!'));
+    }
+  } catch (error) {
+    yield put(updateContestMemberListError('Update Contest Member List Error !'));
   }
 }
 
@@ -302,8 +380,45 @@ function* DeleteContestList(payload) {
   }
 }
 
+const deleteContestMemberListAsync = async (id) => {
+  return api
+    .delete(`/contest/contest-member/${id}`)
+    .then((res) => res)
+    .catch((error) => error);
+}
+
+function* DelAllContestMemberList(payload) {
+  try {
+    const result = yield call(deleteContestMemberListAsync, payload.payload);
+    if (result.status === 200 && result.statusText === 'OK') {
+      yield put(deleteContestMemberListSuccess(result.data.result));
+      yield put(getAllContestMemberList());
+    } else {
+      yield put(deleteContestMemberListError('Delete Contest Member List Response is not success!'));
+    }
+  } catch (error) {
+    yield put(deleteContestMemberListError('Delete ContestList Error !'));
+  }
+}
+
 export function* watchGetAllContestList() {
   yield takeEvery(GET_ALL_CONTEST_LIST, GetAllContestList);
+}
+
+export function* watchGetAllContestMemberList() {
+  yield takeEvery(GET_ALL_CONTEST_MEMBER_LIST, GetAllContestMemberList);
+}
+
+export function* watchCreateContestMemberList() {
+  yield takeEvery(CREATE_CONTEST_MEMBER_LIST, CreateContestMemberList);
+}
+
+export function* watchUpdateContestMemberList() {
+  yield takeEvery(UPDATE_CONTEST_MEMBER_LIST, UpdateContestMemberList);
+}
+
+export function* watchDelAllContestMemberList() {
+  yield takeEvery(DELETE_ALL_CONTEST_MEMBER_LIST, DelAllContestMemberList);
 }
 
 export function* watchCreateContestList() {
@@ -369,5 +484,8 @@ export default function* rootSaga() {
     fork(watchGetAllContestDescription),
     fork(watchGetAllContestOfficial),
     fork(watchGetAllContestMarket),
-  ])
-}
+    fork(watchGetAllContestMemberList),
+    fork(watchCreateContestMemberList),
+    fork(watchUpdateContestMemberList),
+    fork(watchDelAllContestMemberList),
+])}

@@ -158,6 +158,11 @@ const data = [
       },
       {
         icon: 'simple-icon-paper-plane',
+        label: 'menu.contest-member',
+        to: `${adminRoot}/contest/contest-member`,
+      },
+      {
+        icon: 'simple-icon-paper-plane',
         label: 'menu.contest-description',
         to: `${adminRoot}/contest/contest-description`,
       },

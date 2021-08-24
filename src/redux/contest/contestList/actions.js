@@ -2,6 +2,18 @@ import {
     GET_ALL_CONTEST_LIST,
     GET_ALL_CONTEST_LIST_SUCCESS,
     GET_ALL_CONTEST_LIST_ERROR,
+    GET_ALL_CONTEST_MEMBER_LIST,
+    GET_ALL_CONTEST_MEMBER_LIST_SUCCESS,
+    GET_ALL_CONTEST_MEMBER_LIST_ERROR,
+    CREATE_CONTEST_MEMBER_LIST,
+    CREATE_CONTEST_MEMBER_LIST_SUCCESS,
+    CREATE_CONTEST_MEMBER_LIST_ERROR,
+    UPDATE_CONTEST_MEMBER_LIST,
+    UPDATE_CONTEST_MEMBER_LIST_SUCCESS,
+    UPDATE_CONTEST_MEMBER_LIST_ERROR,
+    DELETE_ALL_CONTEST_MEMBER_LIST,
+    DELETE_ALL_CONTEST_MEMBER_LIST_SUCCESS,
+    DELETE_ALL_CONTEST_MEMBER_LIST_ERROR,
     GET_ALL_CONTEST_TYPE,
     GET_ALL_CONTEST_TYPE_SUCCESS,
     GET_ALL_CONTEST_TYPE_ERROR,
@@ -49,6 +61,57 @@ import {
   });
   export const getAllContestListError = (data) => ({
     type: GET_ALL_CONTEST_LIST_ERROR,
+    payload: data,
+  });
+
+  export const getAllContestMemberList = () => ({
+    type: GET_ALL_CONTEST_MEMBER_LIST,
+  });
+  export const getAllContestMemberListSuccess = (data) => ({
+    type: GET_ALL_CONTEST_MEMBER_LIST_SUCCESS,
+    payload: data,
+  });
+  export const getAllContestMemberListError = (data) => ({
+    type: GET_ALL_CONTEST_MEMBER_LIST_ERROR,
+    payload: data,
+  });
+
+  export const createContestMember = (data) => ({
+    type: CREATE_CONTEST_MEMBER_LIST,
+    payload: data
+  });
+  export const createContestMemberSuccess = (data) => ({
+    type: CREATE_CONTEST_MEMBER_LIST_SUCCESS,
+    payload: data,
+  });
+  export const createContestMemberError = (data) => ({
+    type: CREATE_CONTEST_MEMBER_LIST_ERROR,
+    payload: data,
+  });
+
+  export const updateContestMemberList = (data) => ({
+    type: UPDATE_CONTEST_MEMBER_LIST,
+    payload: data,
+  });
+  export const updateContestMemberListSuccess = (data) => ({
+    type: UPDATE_CONTEST_MEMBER_LIST_SUCCESS,
+    payload: data,
+  });
+  export const updateContestMemberListError = (data) => ({
+    type: UPDATE_CONTEST_MEMBER_LIST_ERROR,
+    payload: data,
+  });
+
+  export const deleteContestMemberList = (data) => ({
+    type: DELETE_ALL_CONTEST_MEMBER_LIST,
+    payload: data,
+  });
+  export const deleteContestMemberListSuccess = (data) => ({
+    type: DELETE_ALL_CONTEST_MEMBER_LIST_SUCCESS,
+    payload: data,
+  });
+  export const deleteContestMemberListError = (data) => ({
+    type: DELETE_ALL_CONTEST_MEMBER_LIST_ERROR,
     payload: data,
   });
 
