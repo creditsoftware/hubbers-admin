@@ -48,6 +48,8 @@ module.exports = {
   'menu.module': 'Module',
   'menu.module-type': 'Module Type',
   'menu.contest': 'Contest',
+  'menu.contest-list': 'Contest List',
+  'menu.contest-member': 'Contest Member',
   'menu.contest-description': 'Contest Description',
   'menu.content': 'Content',
   'menu.users': 'Users',
@@ -177,6 +179,8 @@ module.exports = {
 
   // contest
   'contest.title': 'Contest',
+  'contest-list.title': 'Contest List',
+  'contest-member.title': 'Contest Member',
   'contest-description.title': 'Contest Description',
 
   // partners

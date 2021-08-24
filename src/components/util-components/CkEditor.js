@@ -80,11 +80,13 @@ class MyUploadAdapter {
 }
 
 const DNXCustomUploadAdapterPlugin = (editor, onUpload) => {
-  editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-    loader.onUpload = editor.onUpload;
-    loader.accessToken = editor.accessToken;
-    return new MyUploadAdapter(loader, onUpload);
-  };
+  if(editor) {
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+      loader.onUpload = editor.onUpload;
+      loader.accessToken = editor.accessToken;
+      return new MyUploadAdapter(loader, onUpload);
+    };
+  }
 };
 const CKEditor5 = (props) => {
   const [comp, setComp] = React.useState({
