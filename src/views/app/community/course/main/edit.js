@@ -40,10 +40,10 @@ const CourseEdit = ({ id, data }) => {
     if (filterData.length > 0) {
       form.setFieldsValue({
         ...filterData[0],
-        instructor: filterData[0].detail?.instructor,
-        section: filterData[0].detail?.section,
-        cType: filterData[0].detail?.cType,
-        unit: filterData[0].detail?.unit
+        instructor: filterData[0].detail?.instructor.id,
+        section: filterData[0].detail?.section.id,
+        cType: filterData[0].detail?.cType.id,
+        unit: filterData[0].detail?.unit.id
       });
     }
     setPublished(filterData[0].published);
@@ -57,7 +57,7 @@ const CourseEdit = ({ id, data }) => {
   };
 
   const onSubmit = (values) => {
-    dispatch(Actions.createCourse({
+    dispatch(Actions.updateCourse({
       ...values,
       id,
       published,
@@ -65,39 +65,39 @@ const CourseEdit = ({ id, data }) => {
       detail: {
         instructor: {
           id: values.instructor,
-          name: courseStructureList.filterData((item) => item.id === values.instructor)[0].name,
-          singularName: courseStructureList.filterData((item) => item.id === values.instructor)[0].singularName,
-          iaName: courseStructureList.filterData((item) => item.id === values.instructor)[0].iaName,
-          pluralName: courseStructureList.filterData((item) => item.id === values.instructor)[0].pluralName,
-          ppName: courseStructureList.filterData((item) => item.id === values.instructor)[0].ppName,
-          category: courseStructureList.filterData((item) => item.id === values.instructor)[0].category,
+          name: courseStructureList?.filter((item) => item.id === values.instructor)[0].name,
+          singularName: courseStructureList?.filter((item) => item.id === values.instructor)[0].singularName,
+          iaName: courseStructureList?.filter((item) => item.id === values.instructor)[0].iaName,
+          pluralName: courseStructureList?.filter((item) => item.id === values.instructor)[0].pluralName,
+          ppName: courseStructureList?.filter((item) => item.id === values.instructor)[0].ppName,
+          category: courseStructureList?.filter((item) => item.id === values.instructor)[0].category,
         },
         section: {
           id: values.section,
-          name: courseStructureList.filterData((item) => item.id === values.section)[0].name,
-          singularName: courseStructureList.filterData((item) => item.id === values.section)[0].singularName,
-          iaName: courseStructureList.filterData((item) => item.id === values.section)[0].iaName,
-          pluralName: courseStructureList.filterData((item) => item.id === values.section)[0].pluralName,
-          ppName: courseStructureList.filterData((item) => item.id === values.section)[0].ppName,
-          category: courseStructureList.filterData((item) => item.id === values.section)[0].category,
+          name: courseStructureList?.filter((item) => item.id === values.section)[0].name,
+          singularName: courseStructureList?.filter((item) => item.id === values.section)[0].singularName,
+          iaName: courseStructureList?.filter((item) => item.id === values.section)[0].iaName,
+          pluralName: courseStructureList?.filter((item) => item.id === values.section)[0].pluralName,
+          ppName: courseStructureList?.filter((item) => item.id === values.section)[0].ppName,
+          category: courseStructureList?.filter((item) => item.id === values.section)[0].category,
         },
         cType: {
           id: values.cType,
-          name: courseStructureList.filterData((item) => item.id === values.cType)[0].name,
-          singularName: courseStructureList.filterData((item) => item.id === values.cType)[0].singularName,
-          iaName: courseStructureList.filterData((item) => item.id === values.cType)[0].iaName,
-          pluralName: courseStructureList.filterData((item) => item.id === values.cType)[0].pluralName,
-          ppName: courseStructureList.filterData((item) => item.id === values.cType)[0].ppName,
-          category: courseStructureList.filterData((item) => item.id === values.cType)[0].category,
+          name: courseStructureList?.filter((item) => item.id === values.cType)[0].name,
+          singularName: courseStructureList?.filter((item) => item.id === values.cType)[0].singularName,
+          iaName: courseStructureList?.filter((item) => item.id === values.cType)[0].iaName,
+          pluralName: courseStructureList?.filter((item) => item.id === values.cType)[0].pluralName,
+          ppName: courseStructureList?.filter((item) => item.id === values.cType)[0].ppName,
+          category: courseStructureList?.filter((item) => item.id === values.cType)[0].category,
         },
         unit: {
           id: values.unit,
-          name: courseStructureList.filterData((item) => item.id === values.unit)[0].name,
-          singularName: courseStructureList.filterData((item) => item.id === values.unit)[0].singularName,
-          iaName: courseStructureList.filterData((item) => item.id === values.unit)[0].iaName,
-          pluralName: courseStructureList.filterData((item) => item.id === values.unit)[0].pluralName,
-          ppName: courseStructureList.filterData((item) => item.id === values.unit)[0].ppName,
-          category: courseStructureList.filterData((item) => item.id === values.unit)[0].category,
+          name: courseStructureList?.filter((item) => item.id === values.unit)[0].name,
+          singularName: courseStructureList?.filter((item) => item.id === values.unit)[0].singularName,
+          iaName: courseStructureList?.filter((item) => item.id === values.unit)[0].iaName,
+          pluralName: courseStructureList?.filter((item) => item.id === values.unit)[0].pluralName,
+          ppName: courseStructureList?.filter((item) => item.id === values.unit)[0].ppName,
+          category: courseStructureList?.filter((item) => item.id === values.unit)[0].category,
         }
       }
     }));
@@ -232,8 +232,14 @@ const CourseEdit = ({ id, data }) => {
           <Row>
             <Col span={24}>
               <Form.Item
-                name={['detail', 'cType']}
+                name="cType"
                 label="Table of Contents"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please choose the type',
+                  },
+                ]}
               >
                 <Select
                   style={{ width: '100%' }}
@@ -256,8 +262,14 @@ const CourseEdit = ({ id, data }) => {
             </Col>
             <Col span={24}>
               <Form.Item
-                name={['detail', 'unit']}
+                name="unit"
                 label="Lessons"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please choose the lesson',
+                  },
+                ]}
               >
                 <Select
                   style={{ width: '100%' }}
@@ -277,8 +289,14 @@ const CourseEdit = ({ id, data }) => {
             </Col>
             <Col span={24}>
               <Form.Item
-                name={['detail', 'section']}
+                name="section"
                 label="Sections"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please choose the section',
+                  },
+                ]}
               >
                 <Select
                   style={{ width: '100%' }}
@@ -298,8 +316,14 @@ const CourseEdit = ({ id, data }) => {
             </Col>
             <Col span={24}>
               <Form.Item
-                name={['detail', 'instructor']}
+                name="instructor"
                 label="Instructors"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please choose the instructor',
+                  },
+                ]}
               >
                 <Select
                   style={{ width: '100%' }}
