@@ -35,9 +35,9 @@ const TimezoneList = () => {
       sorter: (a, b) => utils.antdTableSorter(a, b, 'id'),
     },
     {
-      title: 'Value',
-      dataIndex: 'value',
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'value'),
+      title: 'UTC', 
+      dataIndex: 'utc',
+      sorter: (a, b) => utils.antdTableSorter(a, b, 'utc'),
     },
     {
       title: 'Abbr',
@@ -45,9 +45,29 @@ const TimezoneList = () => {
       sorter: (a, b) => utils.antdTableSorter(a, b, 'abbr'),
     },
     {
-      title: 'UTC', 
-      dataIndex: 'utc',
-      sorter: (a, b) => utils.antdTableSorter(a, b, 'utc'),
+      title: 'Offset', 
+      dataIndex: 'offset',
+      sorter: (a, b) => utils.antdTableSorter(a, b, 'offset'),
+    },
+    {
+      title: 'Value',
+      dataIndex: 'value',
+      sorter: (a, b) => utils.antdTableSorter(a, b, 'value'),
+    },
+    {
+      title: 'Text',
+      dataIndex: 'text',
+      sorter: (a, b) => utils.antdTableSorter(a, b, 'text'),
+    },
+    {
+      title: 'Is DST',
+      dataIndex: 'isdst',
+      /* eslint-disable */
+      render: (_, record) => (
+        <span>{record.isdst ? 'True' : 'False'}</span>
+      ),
+      /* eslint-disable */
+      sorter: (a, b) => utils.antdTableSorter(a, b, 'isdst'),
     },
     {
       title: 'Actions',

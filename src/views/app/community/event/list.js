@@ -72,7 +72,7 @@ const EventList = () => {
       dataIndex: 'timezone',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.timezone}</span>
+        <span>{record.timezoneDetail.abbr}</span>
       ),
       /* eslint-enable */
       sorter: (a, b) => utils.antdTableSorter(a, b, 'timezone'),
