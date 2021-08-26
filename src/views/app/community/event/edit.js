@@ -48,6 +48,8 @@ const EditEvent = ({ id, data }) => {
   });
   const [isRepeat, setIsRepeat] = React.useState(false);
   const [isGlobal, setIsGlobal] = React.useState(false);
+  const [published, setPublished] = React.useState(false);
+  const [draft, setDraft] = React.useState(false);
   const [rsvp, setRsvp] = React.useState(false);
   const [repeatPeriod, setRepeatPeriod] = React.useState();
   const [endType, setEndType] = React.useState('date');
@@ -71,6 +73,8 @@ const EditEvent = ({ id, data }) => {
     };
     setDateTime({ ...dT });
     setIsGlobal(ed.isGlobal);
+    setDraft(ed.draft);
+    setPublished(ed.published);
     setIsRepeat(ed.isRepeat);
     setRepeatPeriod(ed.repeatPeriod);
     setEventType(ed.eventType);
@@ -113,6 +117,10 @@ const EditEvent = ({ id, data }) => {
     setVisible(false);
   };
 
+  const handleDraft = (e) => {
+    setDraft(e.target.checked);
+  };
+
   const updateEvent = (values) => {
     let uData = {
       id,
@@ -124,7 +132,22 @@ const EditEvent = ({ id, data }) => {
         repeatEndType: endType,
       },
       eventType,
+      published,
+      isGlobal,
+      draft,
     };
+    if (values.startDate===null) {
+      uData = {...uData, startDate: null}
+    }
+    if (values.startTime===null) {
+      uData = {...uData, startTime: null}
+    }
+    if (values.endDate===null) {
+      uData = {...uData, endDate: null}
+    }
+    if (values.endTime===null) {
+      uData = {...uData, endTime: null}
+    }
     if (uData.schedules) {
       let schedules = [...uData.schedules];
       schedules = schedules.map((s) => {
@@ -156,36 +179,78 @@ const EditEvent = ({ id, data }) => {
         <Form
           name="eventForm"
           onFinish={updateEvent}
-          ref={formRef}
           form={form}
           className="p-4 mt-4"
+          initialValues={{
+            isGlobal,
+            published,
+            draft,
+            isRepeat,
+            rsvp,
+            restrictEventLink: false,
+            closeRsvps: false,
+            eventType,
+            repeatEndType: endType,
+            onlineType: eventOnlineType,
+            customRepeatPeriod: { repeatEndType: 'date' },
+          }}
         >
           <>
             <Row>
               <Col span={12}>
-                <h2>Event Setting</h2>
+                <h2>Create Event</h2>
               </Col>
               <Col span={12}>
                 <Form.Item style={{ textAlign: 'right' }}>
                   <Button type="primary" htmlType="submit">
-                    Submit
+                    Save
                   </Button>
                 </Form.Item>
               </Col>
             </Row>
-            <Form.Item
-              name="isGlobal"
-              label={<b>Global</b>}
-              colon={false}
-              valuePropName="checked"
-            >
-              <Switch
-                onChange={(v) => {
-                  setIsGlobal(v);
-                  formRef.current.setFieldsValue({ communityId: null });
-                }}
-              />
-            </Form.Item>
+            <Row>
+              <Col span={12} className="d-flex">
+                <Form.Item
+                  name="isGlobal"
+                  label={<b>Global</b>}
+                  colon={false}
+                  valuePropName="checked"
+                  className="mr-4"
+                >
+                  <Switch
+                    onChange={(v) => {
+                      setIsGlobal(v);
+                      form.setFieldsValue({ communityId: null });
+                    }}
+                  />
+                </Form.Item>
+                <Form.Item
+                  name="published"
+                  label={<b>Published</b>}
+                  colon={false}
+                  valuePropName="checked"
+                  className="ml-4"
+                >
+                  <Switch
+                    onChange={(v) => {
+                      setPublished(v);
+                    }}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12} className="text-right">
+                <FormGroup check>
+                  <Label check>
+                    <RInput
+                      type="checkbox"
+                      defaultChecked={draft}
+                      onChange={handleDraft}
+                    />
+                    As Draft
+                  </Label>
+                </FormGroup>
+              </Col>
+            </Row>
             <p>Post to event in</p>
             <Row>
               <Col lg={11} md={11} sm={11}>
@@ -230,7 +295,7 @@ const EditEvent = ({ id, data }) => {
                     type="text"
                     placeholder="Add a title"
                     onChange={(v) =>
-                      formRef.current.setFieldsValue({
+                      form.setFieldsValue({
                         slug: slugify(v.target.value),
                       })
                     }
@@ -242,9 +307,6 @@ const EditEvent = ({ id, data }) => {
                 <p className="mb-2 mt-4 fw-6">Event slug</p>
                 <Form.Item
                   name="slug"
-                  rules={[
-                    { required: true, message: 'Please input event slug!' },
-                  ]}
                 >
                   <Input type="text" disabled placeholder="event slug" />
                 </Form.Item>
@@ -257,7 +319,11 @@ const EditEvent = ({ id, data }) => {
               <Col lg={24}>
                 <Form.Item
                   name="timezone"
-                  rules={[{ required: true, message: 'Please set timezone!' }]}
+                  rules={
+                    !draft
+                      ? [{ required: true, message: 'Please set timezone!' }]
+                      : []
+                  }
                 >
                   <TimezoneSelect />
                 </Form.Item>
@@ -270,9 +336,11 @@ const EditEvent = ({ id, data }) => {
                   <Col lg={12} md={12}>
                     <Form.Item
                       name="startDate"
-                      rules={[
-                        { required: true, message: 'Please set start date!' },
-                      ]}
+                      rules={
+                        !draft
+                          ? [{ required: true, message: 'Please set start date!' }]
+                          : []
+                      }
                     >
                       <DatePicker
                         style={{ width: '100%' }}
@@ -286,9 +354,11 @@ const EditEvent = ({ id, data }) => {
                   <Col lg={10} md={10}>
                     <Form.Item
                       name="startTime"
-                      rules={[
-                        { required: true, message: 'Please set start time!' },
-                      ]}
+                      rules={
+                        !draft
+                          ? [{ required: true, message: 'Please set start time!' }]
+                          : []
+                      }
                     >
                       <TimePicker
                         style={{ width: '100%' }}
@@ -307,9 +377,11 @@ const EditEvent = ({ id, data }) => {
                   <Col lg={12} md={12}>
                     <Form.Item
                       name="endDate"
-                      rules={[
-                        { required: true, message: 'Please set end date!' },
-                      ]}
+                      rules={
+                        !draft
+                          ? [{ required: true, message: 'Please set end date!' }]
+                          : []
+                      }
                     >
                       <DatePicker
                         style={{ width: '100%' }}
@@ -323,9 +395,11 @@ const EditEvent = ({ id, data }) => {
                   <Col lg={10} md={10}>
                     <Form.Item
                       name="endTime"
-                      rules={[
-                        { required: true, message: 'Please set end time!' },
-                      ]}
+                      rules={
+                        !draft
+                          ? [{ required: true, message: 'Please set end time!' }]
+                          : []
+                      }
                     >
                       <TimePicker
                         style={{ width: '100%' }}
@@ -353,9 +427,11 @@ const EditEvent = ({ id, data }) => {
                 <p className="mb-2 fw-6">Repeat period</p>
                 <Form.Item
                   name="repeatPeriod"
-                  rules={[
-                    { required: true, message: 'Please select repeat period!' },
-                  ]}
+                  rules={
+                    !draft
+                      ? [{ required: true, message: 'Please select repeat period!' }]
+                      : []
+                  }
                 >
                   <Select
                     onChange={(v) => setRepeatPeriod(v)}
@@ -377,8 +453,11 @@ const EditEvent = ({ id, data }) => {
                       <Col lg={11} md={11} sm={11}>
                         <Form.Item
                           name={['customRepeatPeriod', 'number']}
-                          rules={[{ required: true, message: 'Please enter!' }]}
-                        >
+                          rules={
+                            !draft
+                              ? [{ required: true, message: 'Please enter!' }]
+                              : []
+                          }                        >
                           <Input type="number" />
                         </Form.Item>
                       </Col>
@@ -386,9 +465,11 @@ const EditEvent = ({ id, data }) => {
                       <Col lg={11} md={11} sm={11}>
                         <Form.Item
                           name={['customRepeatPeriod', 'unit']}
-                          rules={[
-                            { required: true, message: 'Please select!' },
-                          ]}
+                          rules={
+                            !draft
+                              ? [{ required: true, message: 'Please select!' }]
+                              : []
+                          }
                         >
                           <Select style={{ width: '100%' }}>
                             {EventRepeatPeriodCustomUnit.map((item) => (
@@ -403,7 +484,11 @@ const EditEvent = ({ id, data }) => {
                     <p className="mb-2 mt-4 fw-6">Repeat On</p>
                     <Form.Item
                       name={['customRepeatPeriod', 'weekDays']}
-                      rules={[{ required: true, message: 'Please select!' }]}
+                      rules={
+                        !draft
+                          ? [{ required: true, message: 'Please select!' }]
+                          : []
+                      }
                     >
                       <Select
                         mode="multiple"
@@ -456,26 +541,15 @@ const EditEvent = ({ id, data }) => {
                         </Label>
                       </FormGroup>
                     </Space>
-                    {/* <Form.Item
-                      name={['customRepeatPeriod', 'repeatEndType']}
-                      rules={[{ required: true, message: 'Please select!' }]}
-                    >
-                      <Radio.Group onChange={(e) => setEndType(e.target.value)}>
-                        <Radio value="date">On Date</Radio>
-                        <Radio value="after">After</Radio>
-                        <Radio value="never">Never</Radio>
-                      </Radio.Group>
-                    </Form.Item> */}
                     <div className="mt-2">
                       {endType === 'date' && (
                         <Form.Item
                           name={['customRepeatPeriod', 'date']}
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Please enter the date!',
-                            },
-                          ]}
+                          rules={
+                            !draft
+                              ? [{ required: true, message: 'Please enter the date!' }]
+                              : []
+                          }
                         >
                           <DatePicker
                             onChange={(date, ds) =>
@@ -493,13 +567,11 @@ const EditEvent = ({ id, data }) => {
                             name={['customRepeatPeriod', 'occurences']}
                             label={<b>Occurrences</b>}
                             colon={false}
-                            rules={[
-                              {
-                                required: true,
-                                message:
-                                  'Please enter the number of the occurences!',
-                              },
-                            ]}
+                            rules={
+                              !draft
+                                ? [{ required: true, message: 'Please enter the number of the occurences!Please select!' }]
+                                : []
+                            }
                           >
                             <Input type="number" />
                           </Form.Item>
@@ -525,15 +597,6 @@ const EditEvent = ({ id, data }) => {
               </Col>
               <Col className="text-right" lg={12} md={12} sm={12}>
                 <Space>
-                  {/* <Form.Item
-                    name="eventType"
-                    className="mt-4 mb-2"
-                    rules={[{ required: true, message: 'Please select!' }]}
-                  > */}
-                  {/* <Radio.Group onChange={(e) => setEventType(e.target.value)}>
-                      <Radio value="online">Online</Radio>
-                      <Radio value="local">Local</Radio>
-                    </Radio.Group> */}
                   <FormGroup check>
                     <Label check>
                       <RInput
@@ -558,7 +621,6 @@ const EditEvent = ({ id, data }) => {
                       Local
                     </Label>
                   </FormGroup>
-                  {/* </Form.Item> */}
                 </Space>
               </Col>
             </Row>
@@ -567,7 +629,11 @@ const EditEvent = ({ id, data }) => {
                 <>
                   <Form.Item
                     name="onlineType"
-                    rules={[{ required: true, message: 'Please select!' }]}
+                    rules={
+                      !draft
+                        ? [{ required: true, message: 'Please select!' }]
+                        : []
+                    }
                   >
                     <Select
                       placeholder="Please select"
@@ -618,12 +684,11 @@ const EditEvent = ({ id, data }) => {
                         <p className="mb-2 fw-6">Link to your Meeting</p>
                         <Form.Item
                           name="onlineUrl"
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Please enter the link for the meeting!',
-                            },
-                          ]}
+                          rules={
+                            !draft
+                              ? [{ required: true, message: 'Please enter the link for the meeting!' }]
+                              : []
+                          }
                         >
                           <Input
                             type="text"
@@ -644,12 +709,11 @@ const EditEvent = ({ id, data }) => {
                         <p className="mb-2 fw-6">Link to your Webinar</p>
                         <Form.Item
                           name="onlineUrl"
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Please enter the link for the webinar!',
-                            },
-                          ]}
+                          rules={
+                            !draft
+                              ? [{ required: true, message: 'Please the link for the webinar!' }]
+                              : []
+                          }
                         >
                           <Input
                             type="text"
@@ -671,12 +735,11 @@ const EditEvent = ({ id, data }) => {
                         <p className="mb-2 fw-6">Link to your Live Video</p>
                         <Form.Item
                           name="onlineUrl"
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Please enter the link for video!',
-                            },
-                          ]}
+                          rules={
+                            !draft
+                              ? [{ required: true, message: 'Please enter the link for video!' }]
+                              : []
+                          }
                         >
                           <Input
                             type="text"
@@ -714,12 +777,11 @@ const EditEvent = ({ id, data }) => {
                   <Form.Item
                     name={['localContent', 'location', 'name']}
                     fieldKey={['name']}
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Please enter the location name!',
-                      },
-                    ]}
+                    rules={
+                      !draft
+                        ? [{ required: true, message: 'Please enter the location name!' }]
+                        : []
+                    }
                   >
                     <Input
                       type="text"
@@ -730,12 +792,11 @@ const EditEvent = ({ id, data }) => {
                   <Form.Item
                     name={['localContent', 'location', 'streetAddress']}
                     fieldKey={['streetAddress']}
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Please enter the street address!',
-                      },
-                    ]}
+                    rules={
+                      !draft
+                        ? [{ required: true, message: 'Please enter the street address!' }]
+                        : []
+                    }
                   >
                     <Input
                       type="text"
@@ -746,12 +807,11 @@ const EditEvent = ({ id, data }) => {
                   <Form.Item
                     name={['localContent', 'location', 'city']}
                     fieldKey={['city']}
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Please enter the city name!',
-                      },
-                    ]}
+                    rules={
+                      !draft
+                        ? [{ required: true, message: 'Please enter the city name!' }]
+                        : []
+                    }
                   >
                     <Input
                       type="text"
@@ -773,7 +833,11 @@ const EditEvent = ({ id, data }) => {
               <Form.Item
                 name="rsvp"
                 valuePropName="checked"
-                rules={[{ required: true, message: 'Please select!' }]}
+                rules={
+                  !draft
+                    ? [{ required: true, message: 'Please select!' }]
+                    : []
+                }
                 label={<b>RSVPs</b>}
                 colon={false}
               >
@@ -786,7 +850,11 @@ const EditEvent = ({ id, data }) => {
                   <Form.Item
                     name="restrictEventLink"
                     valuePropName="checked"
-                    rules={[{ required: true, message: 'Please select!' }]}
+                    rules={
+                      !draft
+                        ? [{ required: true, message: 'Please select!' }]
+                        : []
+                    }
                     label={<b>Restrict Event Link</b>}
                     colon={false}
                   >
@@ -797,7 +865,11 @@ const EditEvent = ({ id, data }) => {
                   <Form.Item
                     name="closeRsvps"
                     valuePropName="checked"
-                    rules={[{ required: true, message: 'Please select!' }]}
+                    rules={
+                      !draft
+                        ? [{ required: true, message: 'Please select!' }]
+                        : []
+                    }
                     label={<b>Close RSVPs</b>}
                     colon={false}
                   >
@@ -815,10 +887,14 @@ const EditEvent = ({ id, data }) => {
             <p className="mb-2 mt-4 fw-6">Description</p>
             <Form.Item
               name="description"
-              rules={[{ required: true, message: 'Please enter description!' }]}
+              rules={
+                !draft
+                  ? [{ required: true, message: 'Please enter description!' }]
+                  : []
+              }
             >
               <TextArea
-                row={3}
+                rows={3}
                 type="text"
                 placeholder="Please enter description"
               />
@@ -826,7 +902,11 @@ const EditEvent = ({ id, data }) => {
             <p className="mb-2 mt-4 fw-6">Agenda</p>
             <Form.Item
               name="agenda"
-              rules={[{ required: true, message: 'Please enter agenda!' }]}
+              rules={
+                !draft
+                  ? [{ required: true, message: 'Please enter agenda!' }]
+                  : []
+              }
             >
               <TextArea
                 rows={3}
@@ -836,7 +916,11 @@ const EditEvent = ({ id, data }) => {
             </Form.Item>
             <Form.Item
               name="createdBy"
-              rules={[{ required: true, message: 'Please select!' }]}
+              rules={
+                !draft
+                  ? [{ required: true, message: 'Please select!' }]
+                  : []
+              }
             >
               <CommunityMemberSelect
                 communityId={form.getFieldValue('communityId')}
@@ -855,9 +939,11 @@ const EditEvent = ({ id, data }) => {
                             {...field}
                             name={[field.name, 'name']}
                             fieldKey={[field.fieldKey, 'name']}
-                            rules={[
-                              { required: true, message: 'Name is required' },
-                            ]}
+                            rules={
+                              !draft
+                                ? [{ required: true, message: 'Name is required!' }]
+                                : []
+                            }
                           >
                             <Input type="text" placeholder="Name" />
                           </Form.Item>
@@ -869,12 +955,11 @@ const EditEvent = ({ id, data }) => {
                             {...field}
                             name={[field.name, 'position']}
                             fieldKey={[field.fieldKey, 'position']}
-                            rules={[
-                              {
-                                required: true,
-                                message: 'Position is required',
-                              },
-                            ]}
+                            rules={
+                              !draft
+                                ? [{ required: true, message: 'Position is required!' }]
+                                : []
+                            }
                           >
                             <Input type="text" placeholder="position" />
                           </Form.Item>
@@ -935,9 +1020,11 @@ const EditEvent = ({ id, data }) => {
                             {...field}
                             name={[field.name, 'time']}
                             fieldKey={[field.fieldKey, 'time']}
-                            rules={[
-                              { required: true, message: 'Name is required' },
-                            ]}
+                            rules={
+                              !draft
+                                ? [{ required: true, message: 'Name is required!' }]
+                                : []
+                            }
                           >
                             <TimePicker style={{ width: '100%' }} />
                           </Form.Item>
@@ -978,7 +1065,7 @@ const EditEvent = ({ id, data }) => {
             <Row style={{ flexDirection: 'row-reverse' }}>
               <Form.Item>
                 <Button type="primary" htmlType="submit">
-                  Submit
+                  Save
                 </Button>
               </Form.Item>
             </Row>

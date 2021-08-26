@@ -2,6 +2,9 @@ import {
   GET_MEMBER_LIST_BY_COMMUNITY,
   GET_MEMBER_LIST_BY_COMMUNITY_ERROR,
   GET_MEMBER_LIST_BY_COMMUNITY_SUCCESS,
+  GET_ALL_MEMBER,
+  GET_ALL_MEMBER_ERROR,
+  GET_ALL_MEMBER_SUCCESS,
   CREATE_MEMBER,
   CREATE_MEMBER_ERROR,
   UPDATE_MEMBER,
@@ -35,6 +38,23 @@ export default (state = INIT_STATE, action) => {
         ...state,
         loading: false,
         list: [],
+        error: action.payload,
+      };
+    case GET_ALL_MEMBER:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_ALL_MEMBER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        list: action.payload,
+      };
+    case GET_ALL_MEMBER_ERROR:
+      return {
+        ...state,
+        loading: false,
         error: action.payload,
       };
     case CREATE_MEMBER:

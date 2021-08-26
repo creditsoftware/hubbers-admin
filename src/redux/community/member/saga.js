@@ -12,7 +12,6 @@ import {
   getMemberListByCommunity,
   getMemberListByCommunitySuccess,
   getMemberListByCommunityError,
-  getAllMember,
   getAllMemberSuccess,
   getAllMemberError,
   createMemberSuccess,

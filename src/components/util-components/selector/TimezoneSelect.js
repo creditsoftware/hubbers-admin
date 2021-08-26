@@ -1,36 +1,46 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Select } from 'antd';
-import { timezoneList } from '../../../constants/timezone';
+import * as Actions from '../../../redux/actions';
 
 const { Option } = Select;
 
 const TimezoneSelect = ({ ...props }) => {
-  const [list, setlist] = React.useState([]);
-  React.useEffect(() => {
-    setlist(timezoneList);
-  }, []);
+  const dispatch = useDispatch();
+  const { list } = useSelector((state) => state.timezone);
+  const [timezoneList, setTimezoneList] = useState([]);
+
+  useEffect(() => {
+    dispatch(Actions.getAllTimezone());
+  }, [dispatch]);
+
+  useEffect(() => {
+    setTimezoneList(list);
+  }, [list]);
+
   const onSearch = (v) => {
-    const u = [...timezoneList];
+    const u = [...list];
     if (v) {
-      setlist([
+      setTimezoneList([
         ...u.filter(
-          (c) => c?.value?.toLowerCase().indexOf(v.toLowerCase()) > -1
+          (c) => (c?.abbr?.toLowerCase().indexOf(v.toLowerCase()) > -1) || (c?.utc?.toLowerCase().indexOf(v.toLowerCase()) > -1)
         ),
       ]);
     } else {
-      setlist(u);
+      setTimezoneList(u);
     }
   };
   return (
     <Select filterOption={false} showSearch onSearch={onSearch} {...props}>
-      {list &&
-        list.map((item) => {
+      {timezoneList &&
+        timezoneList.map((item) => {
           return (
-            <Option value={item.value} key={item.value}>
-              {`${item.abbr} / ${item.value}`}
+            <Option key={item.id} value={item.id}>
+              {`${item.abbr} (${item.utc})`}
             </Option>
           );
-        })}
+        })
+      }
     </Select>
   );
 };
