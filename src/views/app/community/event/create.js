@@ -44,20 +44,43 @@ const CreateEvent = () => {
       // date: ''
     },
   });
-  const [isRepeat, setIsRepeat] = React.useState(false);
-  const [isGlobal, setIsGlobal] = React.useState(false);
-  const [rsvp, setRsvp] = React.useState(false);
+  const [isRepeat, setIsRepeat] = React.useState(null);
+  const [isGlobal, setIsGlobal] = React.useState(null);
+  const [published, setPublished] = React.useState(null);
+  const [draft, setDraft] = React.useState(null);
+  const [rsvp, setRsvp] = React.useState(null);
   const [repeatPeriod, setRepeatPeriod] = React.useState();
   const [endType, setEndType] = React.useState('date');
   const [eventType, setEventType] = React.useState('online');
   const [eventOnlineType, setEventOnlineType] = React.useState('meeting');
 
   const showDrawer = () => {
+    form.resetFields();
+    setDateTime({
+      startDate: '',
+      endDate: '',
+      startTime: '',
+      endTime: '',
+      customRepeatPeriod: {},
+    });
+    setIsGlobal(false);
+    setPublished(true);
+    setDraft(false);
+    setIsRepeat(false);
+    setRepeatPeriod(null);
+    setEventType('online');
+    setEventOnlineType('meeting');
+    setRsvp(false);
+    setEndType('date');
     setVisible(true);
   };
 
   const onClose = () => {
     setVisible(false);
+  };
+
+  const handleDraft = (e) => {
+    setDraft(e.target.checked);
   };
 
   const createEvent = (values) => {
@@ -70,7 +93,22 @@ const CreateEvent = () => {
         repeatEndType: endType,
       },
       eventType,
+      isGlobal: isGlobal,
+      published: published,
+      draft: draft,
     };
+    if (values.startDate===null) {
+      data = {...data, startDate: null}
+    }
+    if (values.startTime===null) {
+      data = {...data, startTime: null}
+    }
+    if (values.endDate===null) {
+      data = {...data, endDate: null}
+    }
+    if (values.endTime===null) {
+      data = {...data, endTime: null}
+    }
     if (data.schedules) {
       let schedules = [...data.schedules];
       schedules = schedules.map((s) => {
@@ -80,21 +118,6 @@ const CreateEvent = () => {
       data = { ...data, schedules: [...schedules] };
     }
     dispatch(Actions.createEvent(data));
-    form.resetFields();
-    setDateTime({
-      startDate: '',
-      endDate: '',
-      startTime: '',
-      endTime: '',
-      customRepeatPeriod: {},
-    });
-    setIsGlobal(false);
-    setIsRepeat(false);
-    setRepeatPeriod(null);
-    setEventType('online');
-    setEventOnlineType('meeting');
-    setRsvp(false);
-    setEndType('date');
     onClose();
   };
   return (
@@ -103,7 +126,7 @@ const CreateEvent = () => {
         <PlusOutlined /> Create New Event
       </Button>
       <Drawer
-        title="Create a New Event"
+        title="Create a New Event"  
         width={1024}
         onClose={onClose}
         visible={visible}
@@ -116,6 +139,8 @@ const CreateEvent = () => {
           className="p-4 mt-4"
           initialValues={{
             isGlobal,
+            published,
+            draft,
             isRepeat,
             rsvp,
             restrictEventLink: false,
@@ -129,29 +154,58 @@ const CreateEvent = () => {
           <>
             <Row>
               <Col span={12}>
-                <h2>Event Setting</h2>
+                <h2>Create Event</h2>
               </Col>
               <Col span={12}>
                 <Form.Item style={{ textAlign: 'right' }}>
                   <Button type="primary" htmlType="submit">
-                    Submit
+                    Save
                   </Button>
                 </Form.Item>
               </Col>
             </Row>
-            <Form.Item
-              name="isGlobal"
-              label={<b>Global</b>}
-              colon={false}
-              valuePropName="checked"
-            >
-              <Switch
-                onChange={(v) => {
-                  setIsGlobal(v);
-                  form.setFieldsValue({ communityId: null });
-                }}
-              />
-            </Form.Item>
+            <Row>
+              <Col span={12} className="d-flex">
+                <Form.Item
+                  name="isGlobal"
+                  label={<b>Global</b>}
+                  colon={false}
+                  valuePropName="checked"
+                  className="mr-4"
+                >
+                  <Switch
+                    onChange={(v) => {
+                      setIsGlobal(v);
+                      form.setFieldsValue({ communityId: null });
+                    }}
+                  />
+                </Form.Item>
+                <Form.Item
+                  name="published"
+                  label={<b>Published</b>}
+                  colon={false}
+                  valuePropName="checked"
+                  className="ml-4"
+                >
+                  <Switch
+                    onChange={(v) => {
+                      setPublished(v);
+                    }}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12} className="text-right">
+                <FormGroup check>
+                  <Label check>
+                    <RInput
+                      type="checkbox"
+                      onChange={handleDraft}
+                    />
+                    As Draft
+                  </Label>
+                </FormGroup>
+              </Col>
+            </Row>
             <p>Post to event in</p>
             <Row>
               <Col lg={11} md={11} sm={11}>
@@ -208,9 +262,6 @@ const CreateEvent = () => {
                 <p className="mb-2 mt-4 fw-6">Event slug</p>
                 <Form.Item
                   name="slug"
-                  rules={[
-                    { required: true, message: 'Please input event slug!' },
-                  ]}
                 >
                   <Input type="text" disabled placeholder="event slug" />
                 </Form.Item>
@@ -223,7 +274,11 @@ const CreateEvent = () => {
               <Col lg={24}>
                 <Form.Item
                   name="timezone"
-                  rules={[{ required: true, message: 'Please set timezone!' }]}
+                  rules={
+                    !draft
+                      ? [{ required: true, message: 'Please set timezone!' }]
+                      : []
+                  }
                 >
                   <TimezoneSelect />
                 </Form.Item>
@@ -236,9 +291,11 @@ const CreateEvent = () => {
                   <Col lg={12} md={12}>
                     <Form.Item
                       name="startDate"
-                      rules={[
-                        { required: true, message: 'Please set start date!' },
-                      ]}
+                      rules={
+                        !draft
+                          ? [{ required: true, message: 'Please set start date!' }]
+                          : []
+                      }
                     >
                       <DatePicker
                         style={{ width: '100%' }}
@@ -252,9 +309,11 @@ const CreateEvent = () => {
                   <Col lg={10} md={10}>
                     <Form.Item
                       name="startTime"
-                      rules={[
-                        { required: true, message: 'Please set start time!' },
-                      ]}
+                      rules={
+                        !draft
+                          ? [{ required: true, message: 'Please set start time!' }]
+                          : []
+                      }
                     >
                       <TimePicker
                         style={{ width: '100%' }}
@@ -273,9 +332,11 @@ const CreateEvent = () => {
                   <Col lg={12} md={12}>
                     <Form.Item
                       name="endDate"
-                      rules={[
-                        { required: true, message: 'Please set end date!' },
-                      ]}
+                      rules={
+                        !draft
+                          ? [{ required: true, message: 'Please set end date!' }]
+                          : []
+                      }
                     >
                       <DatePicker
                         style={{ width: '100%' }}
@@ -289,9 +350,11 @@ const CreateEvent = () => {
                   <Col lg={10} md={10}>
                     <Form.Item
                       name="endTime"
-                      rules={[
-                        { required: true, message: 'Please set end time!' },
-                      ]}
+                      rules={
+                        !draft
+                          ? [{ required: true, message: 'Please set end time!' }]
+                          : []
+                      }
                     >
                       <TimePicker
                         style={{ width: '100%' }}
@@ -319,9 +382,11 @@ const CreateEvent = () => {
                 <p className="mb-2 fw-6">Repeat period</p>
                 <Form.Item
                   name="repeatPeriod"
-                  rules={[
-                    { required: true, message: 'Please select repeat period!' },
-                  ]}
+                  rules={
+                    !draft
+                      ? [{ required: true, message: 'Please select repeat period!' }]
+                      : []
+                  }
                 >
                   <Select
                     onChange={(v) => setRepeatPeriod(v)}
@@ -343,8 +408,11 @@ const CreateEvent = () => {
                       <Col lg={11} md={11} sm={11}>
                         <Form.Item
                           name={['customRepeatPeriod', 'number']}
-                          rules={[{ required: true, message: 'Please enter!' }]}
-                        >
+                          rules={
+                            !draft
+                              ? [{ required: true, message: 'Please enter!' }]
+                              : []
+                          }                        >
                           <Input type="number" />
                         </Form.Item>
                       </Col>
@@ -352,9 +420,11 @@ const CreateEvent = () => {
                       <Col lg={11} md={11} sm={11}>
                         <Form.Item
                           name={['customRepeatPeriod', 'unit']}
-                          rules={[
-                            { required: true, message: 'Please select!' },
-                          ]}
+                          rules={
+                            !draft
+                              ? [{ required: true, message: 'Please select!' }]
+                              : []
+                          }
                         >
                           <Select style={{ width: '100%' }}>
                             {EventRepeatPeriodCustomUnit.map((item) => (
@@ -369,7 +439,11 @@ const CreateEvent = () => {
                     <p className="mb-2 mt-4 fw-6">Repeat On</p>
                     <Form.Item
                       name={['customRepeatPeriod', 'weekDays']}
-                      rules={[{ required: true, message: 'Please select!' }]}
+                      rules={
+                        !draft
+                          ? [{ required: true, message: 'Please select!' }]
+                          : []
+                      }
                     >
                       <Select
                         mode="multiple"
@@ -426,12 +500,11 @@ const CreateEvent = () => {
                       {endType === 'date' && (
                         <Form.Item
                           name={['customRepeatPeriod', 'date']}
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Please enter the date!',
-                            },
-                          ]}
+                          rules={
+                            !draft
+                              ? [{ required: true, message: 'Please enter the date!' }]
+                              : []
+                          }
                         >
                           <DatePicker
                             onChange={(date, ds) =>
@@ -449,13 +522,11 @@ const CreateEvent = () => {
                             name={['customRepeatPeriod', 'occurences']}
                             label={<b>Occurrences</b>}
                             colon={false}
-                            rules={[
-                              {
-                                required: true,
-                                message:
-                                  'Please enter the number of the occurences!',
-                              },
-                            ]}
+                            rules={
+                              !draft
+                                ? [{ required: true, message: 'Please enter the number of the occurences!Please select!' }]
+                                : []
+                            }
                           >
                             <Input type="number" />
                           </Form.Item>
@@ -513,7 +584,11 @@ const CreateEvent = () => {
                 <>
                   <Form.Item
                     name="onlineType"
-                    rules={[{ required: true, message: 'Please select!' }]}
+                    rules={
+                      !draft
+                        ? [{ required: true, message: 'Please select!' }]
+                        : []
+                    }
                   >
                     <Select
                       placeholder="Please select"
@@ -564,12 +639,11 @@ const CreateEvent = () => {
                         <p className="mb-2 fw-6">Link to your Meeting</p>
                         <Form.Item
                           name="onlineUrl"
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Please enter the link for the meeting!',
-                            },
-                          ]}
+                          rules={
+                            !draft
+                              ? [{ required: true, message: 'Please enter the link for the meeting!' }]
+                              : []
+                          }
                         >
                           <Input
                             type="text"
@@ -590,12 +664,11 @@ const CreateEvent = () => {
                         <p className="mb-2 fw-6">Link to your Webinar</p>
                         <Form.Item
                           name="onlineUrl"
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Please enter the link for the webinar!',
-                            },
-                          ]}
+                          rules={
+                            !draft
+                              ? [{ required: true, message: 'Please the link for the webinar!' }]
+                              : []
+                          }
                         >
                           <Input
                             type="text"
@@ -617,12 +690,11 @@ const CreateEvent = () => {
                         <p className="mb-2 fw-6">Link to your Live Video</p>
                         <Form.Item
                           name="onlineUrl"
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Please enter the link for video!',
-                            },
-                          ]}
+                          rules={
+                            !draft
+                              ? [{ required: true, message: 'Please enter the link for video!' }]
+                              : []
+                          }
                         >
                           <Input
                             type="text"
@@ -660,12 +732,11 @@ const CreateEvent = () => {
                   <Form.Item
                     name={['localContent', 'location', 'name']}
                     fieldKey={['name']}
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Please enter the location name!',
-                      },
-                    ]}
+                    rules={
+                      !draft
+                        ? [{ required: true, message: 'Please enter the location name!' }]
+                        : []
+                    }
                   >
                     <Input
                       type="text"
@@ -676,12 +747,11 @@ const CreateEvent = () => {
                   <Form.Item
                     name={['localContent', 'location', 'streetAddress']}
                     fieldKey={['streetAddress']}
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Please enter the street address!',
-                      },
-                    ]}
+                    rules={
+                      !draft
+                        ? [{ required: true, message: 'Please enter the street address!' }]
+                        : []
+                    }
                   >
                     <Input
                       type="text"
@@ -692,12 +762,11 @@ const CreateEvent = () => {
                   <Form.Item
                     name={['localContent', 'location', 'city']}
                     fieldKey={['city']}
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Please enter the city name!',
-                      },
-                    ]}
+                    rules={
+                      !draft
+                        ? [{ required: true, message: 'Please enter the city name!' }]
+                        : []
+                    }
                   >
                     <Input
                       type="text"
@@ -719,7 +788,11 @@ const CreateEvent = () => {
               <Form.Item
                 name="rsvp"
                 valuePropName="checked"
-                rules={[{ required: true, message: 'Please select!' }]}
+                rules={
+                  !draft
+                    ? [{ required: true, message: 'Please select!' }]
+                    : []
+                }
                 label={<b>RSVPs</b>}
                 colon={false}
               >
@@ -732,7 +805,11 @@ const CreateEvent = () => {
                   <Form.Item
                     name="restrictEventLink"
                     valuePropName="checked"
-                    rules={[{ required: true, message: 'Please select!' }]}
+                    rules={
+                      !draft
+                        ? [{ required: true, message: 'Please select!' }]
+                        : []
+                    }
                     label={<b>Restrict Event Link</b>}
                     colon={false}
                   >
@@ -743,7 +820,11 @@ const CreateEvent = () => {
                   <Form.Item
                     name="closeRsvps"
                     valuePropName="checked"
-                    rules={[{ required: true, message: 'Please select!' }]}
+                    rules={
+                      !draft
+                        ? [{ required: true, message: 'Please select!' }]
+                        : []
+                    }
                     label={<b>Close RSVPs</b>}
                     colon={false}
                   >
@@ -761,7 +842,11 @@ const CreateEvent = () => {
             <p className="mb-2 mt-4 fw-6">Description</p>
             <Form.Item
               name="description"
-              rules={[{ required: true, message: 'Please enter description!' }]}
+              rules={
+                !draft
+                  ? [{ required: true, message: 'Please enter description!' }]
+                  : []
+              }
             >
               <TextArea
                 rows={3}
@@ -772,7 +857,11 @@ const CreateEvent = () => {
             <p className="mb-2 mt-4 fw-6">Agenda</p>
             <Form.Item
               name="agenda"
-              rules={[{ required: true, message: 'Please enter agenda!' }]}
+              rules={
+                !draft
+                  ? [{ required: true, message: 'Please enter agenda!' }]
+                  : []
+              }
             >
               <TextArea
                 rows={3}
@@ -782,7 +871,11 @@ const CreateEvent = () => {
             </Form.Item>
             <Form.Item
               name="createdBy"
-              rules={[{ required: true, message: 'Please select!' }]}
+              rules={
+                !draft
+                  ? [{ required: true, message: 'Please select!' }]
+                  : []
+              }
             >
               <CommunityMemberSelect
                 communityId={form.getFieldValue('communityId')}
@@ -801,9 +894,11 @@ const CreateEvent = () => {
                             {...field}
                             name={[field.name, 'name']}
                             fieldKey={[field.fieldKey, 'name']}
-                            rules={[
-                              { required: true, message: 'Name is required' },
-                            ]}
+                            rules={
+                              !draft
+                                ? [{ required: true, message: 'Name is required!' }]
+                                : []
+                            }
                           >
                             <Input type="text" placeholder="Name" />
                           </Form.Item>
@@ -815,12 +910,11 @@ const CreateEvent = () => {
                             {...field}
                             name={[field.name, 'position']}
                             fieldKey={[field.fieldKey, 'position']}
-                            rules={[
-                              {
-                                required: true,
-                                message: 'Position is required',
-                              },
-                            ]}
+                            rules={
+                              !draft
+                                ? [{ required: true, message: 'Position is required!' }]
+                                : []
+                            }
                           >
                             <Input type="text" placeholder="position" />
                           </Form.Item>
@@ -881,9 +975,11 @@ const CreateEvent = () => {
                             {...field}
                             name={[field.name, 'time']}
                             fieldKey={[field.fieldKey, 'time']}
-                            rules={[
-                              { required: true, message: 'Name is required' },
-                            ]}
+                            rules={
+                              !draft
+                                ? [{ required: true, message: 'Name is required!' }]
+                                : []
+                            }
                           >
                             <TimePicker style={{ width: '100%' }} />
                           </Form.Item>
@@ -924,7 +1020,7 @@ const CreateEvent = () => {
             <Row style={{ flexDirection: 'row-reverse' }}>
               <Form.Item>
                 <Button type="primary" htmlType="submit">
-                  Submit
+                  Save
                 </Button>
               </Form.Item>
             </Row>

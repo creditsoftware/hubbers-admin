@@ -23,7 +23,7 @@ const TimezoneSelect = ({ ...props }) => {
     if (v) {
       setTimezoneList([
         ...u.filter(
-          (c) => c?.value?.toLowerCase().indexOf(v.toLowerCase()) > -1
+          (c) => (c?.abbr?.toLowerCase().indexOf(v.toLowerCase()) > -1) || (c?.utc?.toLowerCase().indexOf(v.toLowerCase()) > -1)
         ),
       ]);
     } else {
@@ -36,7 +36,7 @@ const TimezoneSelect = ({ ...props }) => {
         timezoneList.map((item) => {
           return (
             <Option key={item.id} value={item.id}>
-              {`${item.abbr} / ${item.utc}`}
+              {`${item.abbr} (${item.utc})`}
             </Option>
           );
         })

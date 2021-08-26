@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card, Space, Table, Tooltip, Popconfirm, Button, Image } from 'antd';
@@ -72,7 +73,7 @@ const EventList = () => {
       dataIndex: 'timezone',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.timezoneDetail.abbr}</span>
+        <span>{record.timezoneDetail?.abbr}</span>
       ),
       /* eslint-enable */
       sorter: (a, b) => utils.antdTableSorter(a, b, 'timezone'),
@@ -82,7 +83,7 @@ const EventList = () => {
       dataIndex: 'created',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.creator.email}</span>
+        <span>{record.creator?.email}</span>
       ),
       /* eslint-enable */
     },
@@ -91,7 +92,7 @@ const EventList = () => {
       dataIndex: 'startDate',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.startDate}</span>
+        <span>{record.startDate?.split('T')[0]}</span>
       ),
       /* eslint-enable */
     },
@@ -100,7 +101,16 @@ const EventList = () => {
       dataIndex: 'endDate',
       /* eslint-disable */
       render: (_, record) => (
-        <span>{record.endDate}</span>
+        <span>{record.endDate?.split('T')[0]}</span>
+      ),
+      /* eslint-enable */
+    },
+    {
+      title: 'Created At',
+      dataIndex: 'createdAt',
+      /* eslint-disable */
+      render: (_, record) => (
+        <span>{record.createdAt?.split('T')[0]}</span>
       ),
       /* eslint-enable */
     },
@@ -123,6 +133,15 @@ const EventList = () => {
       /* eslint-enable */
     },
     {
+      title: 'Is Draft',
+      dataIndex: 'draft',
+      /* eslint-disable */
+      render: (_, record) => (
+        <span>{record.draft && 'Draft'}</span>
+      ),
+      /* eslint-enable */
+    },
+    {
       title: 'Published',
       dataIndex: 'published',
       /* eslint-disable */
@@ -138,7 +157,7 @@ const EventList = () => {
       render: (_, elm) => (
         <Space>
           <EditEvent id={elm.id} data={list} />
-          <Tooltip title="Delete">
+          {/* <Tooltip title="Delete">
             <Popconfirm
               title="Are you sure delete this Item?"
               onConfirm={() => console.log('delete')}
@@ -148,7 +167,7 @@ const EventList = () => {
             >
               <Button danger icon={<DeleteOutlined />} size="small" />
             </Popconfirm>
-          </Tooltip>
+          </Tooltip> */}
         </Space>
       ),
       /* eslint-enable */
