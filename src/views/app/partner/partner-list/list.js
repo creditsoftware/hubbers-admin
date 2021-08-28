@@ -10,7 +10,7 @@ import EditPartner from './edit';
 const AllParters = () => {
   const dispatch = useDispatch();
   const [tableList, setTableList] = useState(null);
-  const { partnerList } = useSelector((state) => state.contestDescription);
+  const { partnerList } = useSelector((state) => state.partner);
   useEffect(() => {
     dispatch(Actions.getAllPartner());
   }, [dispatch]);
