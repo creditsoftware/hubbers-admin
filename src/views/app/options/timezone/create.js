@@ -50,9 +50,7 @@ const CreateTimezone = () => {
               <Form.Item
                 name="value"
                 label="Timezone Value"
-                rules={[
-                  { required: true, message: 'Please enter value' },
-                ]}
+                rules={[{ required: true, message: 'Please enter value' }]}
               >
                 <Input placeholder="Please enter value" />
               </Form.Item>
@@ -79,11 +77,12 @@ const CreateTimezone = () => {
               <Form.Item
                 name="offset"
                 label="Offset"
-                rules={[
-                  { required: true, message: 'Please enter offset' },
-                ]}
+                rules={[{ required: true, message: 'Please enter offset' }]}
               >
-                <InputNumber placeholder="Please enter offset" style={{ width: '100%' }} />
+                <InputNumber
+                  placeholder="Please enter offset"
+                  style={{ width: '100%' }}
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -92,12 +91,13 @@ const CreateTimezone = () => {
               <Form.Item
                 name="isdst"
                 label="DST"
-                rules={[
-                  { required: true, message: 'Please choose a isDST' },
-                ]}
+                rules={[{ required: true, message: 'Please choose a isDST' }]}
               >
-                <Select placeholder="Please choose the isDST" style={{ width: '100%' }}>
-                  <Option value={true}>True</Option>
+                <Select
+                  placeholder="Please choose the isDST"
+                  style={{ width: '100%' }}
+                >
+                  <Option value>True</Option>
                   <Option value={false}>False</Option>
                 </Select>
               </Form.Item>

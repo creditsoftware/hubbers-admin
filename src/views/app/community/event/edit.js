@@ -36,7 +36,6 @@ const { TextArea } = Input;
 const EditEvent = ({ id, data }) => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
-  const formRef = React.createRef();
   const [dateTime, setDateTime] = React.useState({
     startDate: '',
     endDate: '',
@@ -59,11 +58,11 @@ const EditEvent = ({ id, data }) => {
   const [social, setSocial] = React.useState(null);
   const { socialList } = useSelector((state) => state.social);
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     dispatch(Actions.getAllSocial());
-  }, []);
+  }, [dispatch]);
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     setSocial(socialList);
   }, [socialList]);
 
@@ -146,17 +145,17 @@ const EditEvent = ({ id, data }) => {
       isGlobal,
       draft,
     };
-    if (values.startDate==null) {
-      uData = {...uData, startDate: null}
+    if (values.startDate == null) {
+      uData = { ...uData, startDate: null };
     }
-    if (values.startTime==null) {
-      uData = {...uData, startTime: null}
+    if (values.startTime == null) {
+      uData = { ...uData, startTime: null };
     }
-    if (values.endDate==null) {
-      uData = {...uData, endDate: null}
+    if (values.endDate == null) {
+      uData = { ...uData, endDate: null };
     }
-    if (values.endTime==null) {
-      uData = {...uData, endTime: null}
+    if (values.endTime == null) {
+      uData = { ...uData, endTime: null };
     }
     if (uData.schedules) {
       let schedules = [...uData.schedules];
@@ -315,9 +314,7 @@ const EditEvent = ({ id, data }) => {
               <Col lg={2} md={2} />
               <Col lg={11} md={11}>
                 <p className="mb-2 mt-4 fw-6">Event slug</p>
-                <Form.Item
-                  name="slug"
-                >
+                <Form.Item name="slug">
                   <Input type="text" disabled placeholder="event slug" />
                 </Form.Item>
               </Col>
@@ -348,7 +345,12 @@ const EditEvent = ({ id, data }) => {
                       name="startDate"
                       rules={
                         !draft
-                          ? [{ required: true, message: 'Please set start date!' }]
+                          ? [
+                              {
+                                required: true,
+                                message: 'Please set start date!',
+                              },
+                            ]
                           : []
                       }
                     >
@@ -366,7 +368,12 @@ const EditEvent = ({ id, data }) => {
                       name="startTime"
                       rules={
                         !draft
-                          ? [{ required: true, message: 'Please set start time!' }]
+                          ? [
+                              {
+                                required: true,
+                                message: 'Please set start time!',
+                              },
+                            ]
                           : []
                       }
                     >
@@ -389,7 +396,12 @@ const EditEvent = ({ id, data }) => {
                       name="endDate"
                       rules={
                         !draft
-                          ? [{ required: true, message: 'Please set end date!' }]
+                          ? [
+                              {
+                                required: true,
+                                message: 'Please set end date!',
+                              },
+                            ]
                           : []
                       }
                     >
@@ -407,7 +419,12 @@ const EditEvent = ({ id, data }) => {
                       name="endTime"
                       rules={
                         !draft
-                          ? [{ required: true, message: 'Please set end time!' }]
+                          ? [
+                              {
+                                required: true,
+                                message: 'Please set end time!',
+                              },
+                            ]
                           : []
                       }
                     >
@@ -439,7 +456,12 @@ const EditEvent = ({ id, data }) => {
                   name="repeatPeriod"
                   rules={
                     !draft
-                      ? [{ required: true, message: 'Please select repeat period!' }]
+                      ? [
+                          {
+                            required: true,
+                            message: 'Please select repeat period!',
+                          },
+                        ]
                       : []
                   }
                 >
@@ -467,7 +489,8 @@ const EditEvent = ({ id, data }) => {
                             !draft
                               ? [{ required: true, message: 'Please enter!' }]
                               : []
-                          }                        >
+                          }
+                        >
                           <Input type="number" />
                         </Form.Item>
                       </Col>
@@ -557,7 +580,12 @@ const EditEvent = ({ id, data }) => {
                           name={['customRepeatPeriod', 'date']}
                           rules={
                             !draft
-                              ? [{ required: true, message: 'Please enter the date!' }]
+                              ? [
+                                  {
+                                    required: true,
+                                    message: 'Please enter the date!',
+                                  },
+                                ]
                               : []
                           }
                         >
@@ -579,7 +607,13 @@ const EditEvent = ({ id, data }) => {
                             colon={false}
                             rules={
                               !draft
-                                ? [{ required: true, message: 'Please enter the number of the occurences!Please select!' }]
+                                ? [
+                                    {
+                                      required: true,
+                                      message:
+                                        'Please enter the number of the occurences!Please select!',
+                                    },
+                                  ]
                                 : []
                             }
                           >
@@ -696,7 +730,13 @@ const EditEvent = ({ id, data }) => {
                           name="onlineUrl"
                           rules={
                             !draft
-                              ? [{ required: true, message: 'Please enter the link for the meeting!' }]
+                              ? [
+                                  {
+                                    required: true,
+                                    message:
+                                      'Please enter the link for the meeting!',
+                                  },
+                                ]
                               : []
                           }
                         >
@@ -721,7 +761,12 @@ const EditEvent = ({ id, data }) => {
                           name="onlineUrl"
                           rules={
                             !draft
-                              ? [{ required: true, message: 'Please the link for the webinar!' }]
+                              ? [
+                                  {
+                                    required: true,
+                                    message: 'Please the link for the webinar!',
+                                  },
+                                ]
                               : []
                           }
                         >
@@ -747,7 +792,12 @@ const EditEvent = ({ id, data }) => {
                           name="onlineUrl"
                           rules={
                             !draft
-                              ? [{ required: true, message: 'Please enter the link for video!' }]
+                              ? [
+                                  {
+                                    required: true,
+                                    message: 'Please enter the link for video!',
+                                  },
+                                ]
                               : []
                           }
                         >
@@ -789,7 +839,12 @@ const EditEvent = ({ id, data }) => {
                     fieldKey={['name']}
                     rules={
                       !draft
-                        ? [{ required: true, message: 'Please enter the location name!' }]
+                        ? [
+                            {
+                              required: true,
+                              message: 'Please enter the location name!',
+                            },
+                          ]
                         : []
                     }
                   >
@@ -804,7 +859,12 @@ const EditEvent = ({ id, data }) => {
                     fieldKey={['streetAddress']}
                     rules={
                       !draft
-                        ? [{ required: true, message: 'Please enter the street address!' }]
+                        ? [
+                            {
+                              required: true,
+                              message: 'Please enter the street address!',
+                            },
+                          ]
                         : []
                     }
                   >
@@ -819,7 +879,12 @@ const EditEvent = ({ id, data }) => {
                     fieldKey={['city']}
                     rules={
                       !draft
-                        ? [{ required: true, message: 'Please enter the city name!' }]
+                        ? [
+                            {
+                              required: true,
+                              message: 'Please enter the city name!',
+                            },
+                          ]
                         : []
                     }
                   >
@@ -844,9 +909,7 @@ const EditEvent = ({ id, data }) => {
                 name="rsvp"
                 valuePropName="checked"
                 rules={
-                  !draft
-                    ? [{ required: true, message: 'Please select!' }]
-                    : []
+                  !draft ? [{ required: true, message: 'Please select!' }] : []
                 }
                 label={<b>RSVPs</b>}
                 colon={false}
@@ -927,9 +990,7 @@ const EditEvent = ({ id, data }) => {
             <Form.Item
               name="createdBy"
               rules={
-                !draft
-                  ? [{ required: true, message: 'Please select!' }]
-                  : []
+                !draft ? [{ required: true, message: 'Please select!' }] : []
               }
             >
               <CommunityMemberSelect
@@ -951,7 +1012,12 @@ const EditEvent = ({ id, data }) => {
                             fieldKey={[field.fieldKey, 'name']}
                             rules={
                               !draft
-                                ? [{ required: true, message: 'Name is required!' }]
+                                ? [
+                                    {
+                                      required: true,
+                                      message: 'Name is required!',
+                                    },
+                                  ]
                                 : []
                             }
                           >
@@ -967,7 +1033,12 @@ const EditEvent = ({ id, data }) => {
                             fieldKey={[field.fieldKey, 'position']}
                             rules={
                               !draft
-                                ? [{ required: true, message: 'Position is required!' }]
+                                ? [
+                                    {
+                                      required: true,
+                                      message: 'Position is required!',
+                                    },
+                                  ]
                                 : []
                             }
                           >
@@ -1032,7 +1103,12 @@ const EditEvent = ({ id, data }) => {
                             fieldKey={[field.fieldKey, 'time']}
                             rules={
                               !draft
-                                ? [{ required: true, message: 'Name is required!' }]
+                                ? [
+                                    {
+                                      required: true,
+                                      message: 'Name is required!',
+                                    },
+                                  ]
                                 : []
                             }
                           >
@@ -1073,14 +1149,14 @@ const EditEvent = ({ id, data }) => {
               )}
             </Form.List>
             <h1 style={{ fontSize: '17px' }}>Social Link</h1>
-            {
-              social?.length > 0 &&
-              social.map((item)=>{
-                return <Form.Item key={item.id} name={['social', `${item.name}`]}>
-                  <Input placeholder={`${item.name} link.`} />
-                </Form.Item>;
-              })
-            }
+            {social?.length > 0 &&
+              social.map((item) => {
+                return (
+                  <Form.Item key={item.id} name={['social', `${item.name}`]}>
+                    <Input placeholder={`${item.name} link.`} />
+                  </Form.Item>
+                );
+              })}
             <Row style={{ flexDirection: 'row-reverse' }}>
               <Form.Item>
                 <Button type="primary" htmlType="submit">

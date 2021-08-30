@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Row } from 'reactstrap';
-import { Drawer, Form, Button, Col, Input, InputNumber, Select, Tooltip } from 'antd';
+import {
+  Drawer,
+  Form,
+  Button,
+  Col,
+  Input,
+  InputNumber,
+  Select,
+  Tooltip,
+} from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
 
@@ -11,11 +20,11 @@ const EditTimezone = ({ id, data }) => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
-  
+
   const showDrawer = () => {
     const filterData = data.filter((item) => item.id === id);
     if (filterData.length > 0) {
-      form.setFieldsValue({...filterData[0]});
+      form.setFieldsValue({ ...filterData[0] });
     }
     setVisible(true);
   };
@@ -58,9 +67,7 @@ const EditTimezone = ({ id, data }) => {
               <Form.Item
                 name="value"
                 label="Timezone Value"
-                rules={[
-                  { required: true, message: 'Please enter value' },
-                ]}
+                rules={[{ required: true, message: 'Please enter value' }]}
               >
                 <Input placeholder="Please enter value" />
               </Form.Item>
@@ -87,11 +94,12 @@ const EditTimezone = ({ id, data }) => {
               <Form.Item
                 name="offset"
                 label="Offset"
-                rules={[
-                  { required: true, message: 'Please enter offset' },
-                ]}
+                rules={[{ required: true, message: 'Please enter offset' }]}
               >
-                <InputNumber placeholder="Please enter offset" style={{ width: '100%' }} />
+                <InputNumber
+                  placeholder="Please enter offset"
+                  style={{ width: '100%' }}
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -100,12 +108,13 @@ const EditTimezone = ({ id, data }) => {
               <Form.Item
                 name="isdst"
                 label="DST"
-                rules={[
-                  { required: true, message: 'Please choose a isDST' },
-                ]}
+                rules={[{ required: true, message: 'Please choose a isDST' }]}
               >
-                <Select placeholder="Please choose the isDST" style={{ width: '100%' }}>
-                  <Option value={true}>True</Option>
+                <Select
+                  placeholder="Please choose the isDST"
+                  style={{ width: '100%' }}
+                >
+                  <Option value>True</Option>
                   <Option value={false}>False</Option>
                 </Select>
               </Form.Item>

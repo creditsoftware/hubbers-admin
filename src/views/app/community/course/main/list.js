@@ -8,13 +8,12 @@ import CourseCreate from './create';
 import EditCourse from './edit';
 
 const CourseList = () => {
-  
   const dispatch = useDispatch();
-  
+
   const { list } = useSelector((state) => state.courseMain);
 
   const [courseList, setCourseList] = useState([]);
-  
+
   const [pagination, setPagenation] = useState({
     current: 1,
     pageSize: 10,
@@ -22,7 +21,7 @@ const CourseList = () => {
 
   useEffect(() => {
     dispatch(Actions.getAllCourse());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     setCourseList(list);

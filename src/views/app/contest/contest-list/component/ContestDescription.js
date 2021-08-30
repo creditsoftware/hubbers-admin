@@ -1,18 +1,22 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Input, Row, Col, Button, Select, Drawer } from 'antd';
-import * as Actions from '../../../../../redux/actions';
 import { FormGroup, Label, Input as RCB } from 'reactstrap';
-import {
-  PlusOutlined
-} from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
+import * as Actions from '../../../../../redux/actions';
 import CKEditor5 from '../../../../../components/util-components/CkEditor';
+
 const { Option } = Select;
 
-export const ContestDescription = ({ childrenVisible, onChildrenShow, onChildrenClose, form }) => {
+const ContestDescription = ({
+  childrenVisible,
+  onChildrenShow,
+  onChildrenClose,
+  form,
+}) => {
   const dispatch = useDispatch();
-  const [ currency, setCurrency ] = useState();
-  const [ description, setDescription ] = useState();
+  const [currency, setCurrency] = useState();
+  const [description, setDescription] = useState();
   const [value, setValue] = useState();
   const { currencyList } = useSelector((state) => state.contestList);
   const { descriptionList } = useSelector((state) => state.contestList);
@@ -24,13 +28,13 @@ export const ContestDescription = ({ childrenVisible, onChildrenShow, onChildren
     dispatch(Actions.getAllContestOfficial('official'));
     dispatch(Actions.getAllContestMarket('market'));
   }, [dispatch]);
-  
+
   useEffect(() => {
     setCurrency(currencyList);
   }, [currencyList]);
   const handleChange = (e) => {
     setValue('description');
-    if (e.target.value*1) {
+    if (e.target.value * 1) {
       setDescription(descriptionList);
       onChildrenShow();
     } else {
@@ -39,7 +43,7 @@ export const ContestDescription = ({ childrenVisible, onChildrenShow, onChildren
   };
   const handleOfficialChange = (e) => {
     setValue('officialRules');
-    if (e.target.value*1) {
+    if (e.target.value * 1) {
       setDescription(officialList);
       onChildrenShow();
     } else {
@@ -48,7 +52,7 @@ export const ContestDescription = ({ childrenVisible, onChildrenShow, onChildren
   };
   const handleMarketChange = (e) => {
     setValue('marketRules');
-    if (e.target.value*1) {
+    if (e.target.value * 1) {
       setDescription(marketList);
       onChildrenShow();
     } else {
@@ -61,10 +65,12 @@ export const ContestDescription = ({ childrenVisible, onChildrenShow, onChildren
     onChildrenClose();
   };
   return (
-    <React.Fragment>
-      <Row justify='space-between' align="middle">
+    <>
+      <Row justify="space-between" align="middle">
         <Col lg={10} md={12}>
-          <p className='mb-2 mt-3 fw-6'><b>Description</b></p>
+          <p className="mb-2 mt-3 fw-6">
+            <b>Description</b>
+          </p>
         </Col>
         <Col lg={10} md={12}>
           <Row justify="space-between">
@@ -98,8 +104,8 @@ export const ContestDescription = ({ childrenVisible, onChildrenShow, onChildren
         rules={[
           {
             required: true,
-            message: 'Please input the description'
-          }
+            message: 'Please input the description',
+          },
         ]}
       >
         <CKEditor5 />
@@ -111,23 +117,25 @@ export const ContestDescription = ({ childrenVisible, onChildrenShow, onChildren
         onClose={onChildrenClose}
         visible={childrenVisible}
       >
-        {
-          description && description.data && description.data.map((val, index) =>
+        {description &&
+          description.data &&
+          description.data.map((val, index) => (
             <Button
-              key={index}
+              key={val.title}
               block
-              type='dashed'
-              className='mt-4'
+              type="dashed"
+              className="mt-4"
               onClick={(e) => handleClick(index, e)}
             >
               {val.title}
             </Button>
-          )
-        }
+          ))}
       </Drawer>
-      <Row justify='space-between' align="middle">
+      <Row justify="space-between" align="middle">
         <Col lg={10} md={12}>
-          <p className='mb-2 mt-3 fw-6'><b>Official Rules</b></p>
+          <p className="mb-2 mt-3 fw-6">
+            <b>Official Rules</b>
+          </p>
         </Col>
         <Col lg={10} md={12}>
           <Row justify="space-between">
@@ -161,15 +169,17 @@ export const ContestDescription = ({ childrenVisible, onChildrenShow, onChildren
         rules={[
           {
             required: true,
-            message: 'Please input the officialRules'
-          }
+            message: 'Please input the officialRules',
+          },
         ]}
       >
         <CKEditor5 />
       </Form.Item>
-      <Row justify='space-between' align="middle">
+      <Row justify="space-between" align="middle">
         <Col lg={10} md={12}>
-          <p className='mb-2 mt-3 fw-6'><b>Market Rules</b></p>
+          <p className="mb-2 mt-3 fw-6">
+            <b>Market Rules</b>
+          </p>
         </Col>
         <Col lg={10} md={12}>
           <Row justify="space-between">
@@ -203,33 +213,35 @@ export const ContestDescription = ({ childrenVisible, onChildrenShow, onChildren
         rules={[
           {
             required: true,
-            message: 'Please input the marketRules'
-          }
+            message: 'Please input the marketRules',
+          },
         ]}
       >
         <CKEditor5 />
       </Form.Item>
-      <p className='mb-2 mt-3 fw-6'><b>Criterias</b></p>
+      <p className="mb-2 mt-3 fw-6">
+        <b>Criterias</b>
+      </p>
       <Form.List name="criterias">
         {(fields, { add, remove }) => (
           <>
-            {fields.map(field => (
+            {fields.map((field) => (
               <React.Fragment key={field.key}>
                 <Row>
                   <Col md={11}>
-                    <p className='mb-2 mt-4 fw-6'>Title</p>
+                    <p className="mb-2 mt-4 fw-6">Title</p>
                     <Form.Item
                       {...field}
                       name={[field.name, 'title']}
                       fieldKey={[field.fieldKey, 'title']}
                       rules={[{ required: true, message: 'Title is required' }]}
                     >
-                      <Input placeholder='criterias title' />
+                      <Input placeholder="criterias title" />
                     </Form.Item>
                   </Col>
                   <Col lg={2} md={2} sm={2} />
                   <Col md={11}>
-                    <p className='mb-2 mt-4 fw-6'>Description</p>
+                    <p className="mb-2 mt-4 fw-6">Description</p>
                     <Form.Item
                       {...field}
                       name={[field.name, 'description']}
@@ -240,97 +252,118 @@ export const ContestDescription = ({ childrenVisible, onChildrenShow, onChildren
                   </Col>
                 </Row>
                 <div className="text-right mb-3">
-                  <Button danger onClick={() => remove(field.name)}>Remove</Button>
+                  <Button danger onClick={() => remove(field.name)}>
+                    Remove
+                  </Button>
                 </div>
               </React.Fragment>
             ))}
             <Form.Item>
-              <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+              <Button
+                type="dashed"
+                onClick={() => add()}
+                block
+                icon={<PlusOutlined />}
+              >
                 Add Criteria
               </Button>
             </Form.Item>
           </>
         )}
       </Form.List>
-      <p className='mb-2 mt-3 fw-6'><b>Marks</b></p>
+      <p className="mb-2 mt-3 fw-6">
+        <b>Marks</b>
+      </p>
       <Form.List name="prize">
         {(fields, { add, remove }) => (
           <>
-            {fields.map(field => (
+            {fields.map((field) => (
               <React.Fragment key={field.key}>
                 <Row>
                   <Col md={24}>
                     <Row>
                       <Col md={4}>
-                        <p className='mb-2 mt-4 fw-6'>Name</p>
+                        <p className="mb-2 mt-4 fw-6">Name</p>
                         <Form.Item
                           {...field}
                           name={[field.name, 'name']}
                           fieldKey={[field.fieldKey, 'name']}
-                          rules={[{ required: true, message: 'name is required' }]}
+                          rules={[
+                            { required: true, message: 'name is required' },
+                          ]}
                         >
-                          <Input placeholder='prize name' />
+                          <Input placeholder="prize name" />
                         </Form.Item>
                       </Col>
                       <Col lg={1} md={1} sm={1} />
                       <Col md={4}>
-                        <p className='mb-2 mt-4 fw-6'>Standing</p>
+                        <p className="mb-2 mt-4 fw-6">Standing</p>
                         <Form.Item
                           {...field}
                           name={[field.name, 'standing']}
                           fieldKey={[field.fieldKey, 'standing']}
-                          rules={[{ required: true, message: 'standing is required' }]}
+                          rules={[
+                            { required: true, message: 'standing is required' },
+                          ]}
                         >
-                          <Input type='number' placeholder='prize standing' />
+                          <Input type="number" placeholder="prize standing" />
                         </Form.Item>
                       </Col>
                       <Col lg={1} md={1} sm={1} />
                       <Col md={4}>
-                        <p className='mb-2 mt-4 fw-6'>Amount</p>
+                        <p className="mb-2 mt-4 fw-6">Amount</p>
                         <Form.Item
                           {...field}
                           name={[field.name, 'prize']}
                           fieldKey={[field.fieldKey, 'prize']}
-                          rules={[{ required: true, message: 'amount is required' }]}
+                          rules={[
+                            { required: true, message: 'amount is required' },
+                          ]}
                         >
-                          <Input type='number' placeholder='prize amount' />
+                          <Input type="number" placeholder="prize amount" />
                         </Form.Item>
                       </Col>
                       <Col lg={1} md={1} sm={1} />
                       <Col md={4}>
-                        <p className='mb-2 mt-4 fw-6'>Currency</p>
+                        <p className="mb-2 mt-4 fw-6">Currency</p>
                         <Form.Item
                           {...field}
                           name={[field.name, 'currencyId']}
                           fieldKey={[field.fieldKey, 'currencyId']}
-                          rules={[{ required: true, message: 'currency is required' }]}
+                          rules={[
+                            { required: true, message: 'currency is required' },
+                          ]}
                         >
                           <Select>
-                            {
-                              currency &&
-                              currency.map((currency, index) => {
-                                return <Option key={index} value={currency.id}>{currency.name}</Option>;
-                              })
-                            }
+                            {currency &&
+                              currency.map((c) => {
+                                return (
+                                  <Option key={c.id} value={c.id}>
+                                    {c.name}
+                                  </Option>
+                                );
+                              })}
                           </Select>
                         </Form.Item>
                       </Col>
                       <Col lg={1} md={1} sm={1} />
                       <Col md={4}>
-                        <p className='mb-2 mt-4 fw-6'>Royalty</p>
+                        <p className="mb-2 mt-4 fw-6">Royalty</p>
                         <Form.Item
                           {...field}
                           name={[field.name, 'royalty']}
                           fieldKey={[field.fieldKey, 'royalty']}
-                          rules={[{ required: true, message: 'royalty is required' }]}
+                          rules={[
+                            { required: true, message: 'royalty is required' },
+                          ]}
                         >
-                          <Input type='number' placeholder='prize royalty' />
+                          <Input type="number" placeholder="prize royalty" />
                         </Form.Item>
                       </Col>
                     </Row>
                   </Col>
                   <Col md={24}>
-                    <p className='mb-2 mt-4 fw-6'>Description</p>
+                    <p className="mb-2 mt-4 fw-6">Description</p>
                     <Form.Item
                       {...field}
                       name={[field.name, 'description']}
@@ -341,18 +374,27 @@ export const ContestDescription = ({ childrenVisible, onChildrenShow, onChildren
                   </Col>
                 </Row>
                 <div className="text-right mb-3">
-                  <Button danger onClick={() => remove(field.name)}>Remove</Button>
+                  <Button danger onClick={() => remove(field.name)}>
+                    Remove
+                  </Button>
                 </div>
               </React.Fragment>
             ))}
             <Form.Item>
-              <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+              <Button
+                type="dashed"
+                onClick={() => add()}
+                block
+                icon={<PlusOutlined />}
+              >
                 Add Prize
               </Button>
             </Form.Item>
           </>
         )}
       </Form.List>
-    </React.Fragment>
+    </>
   );
 };
+
+export default ContestDescription;

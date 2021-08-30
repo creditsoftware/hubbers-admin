@@ -56,11 +56,11 @@ const CreateEvent = () => {
   const [social, setSocial] = React.useState(null);
   const { socialList } = useSelector((state) => state.social);
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     dispatch(Actions.getAllSocial());
-  }, []);
+  }, [dispatch]);
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     setSocial(socialList);
   }, [socialList]);
 
@@ -103,21 +103,21 @@ const CreateEvent = () => {
         repeatEndType: endType,
       },
       eventType,
-      isGlobal: isGlobal,
-      published: published,
-      draft: draft,
+      isGlobal,
+      published,
+      draft,
     };
-    if (values.startDate==null) {
-      data = {...data, startDate: null}
+    if (values.startDate == null) {
+      data = { ...data, startDate: null };
     }
-    if (values.startTime==null) {
-      data = {...data, startTime: null}
+    if (values.startTime == null) {
+      data = { ...data, startTime: null };
     }
-    if (values.endDate==null) {
-      data = {...data, endDate: null}
+    if (values.endDate == null) {
+      data = { ...data, endDate: null };
     }
-    if (values.endTime==null) {
-      data = {...data, endTime: null}
+    if (values.endTime == null) {
+      data = { ...data, endTime: null };
     }
     if (data.schedules) {
       let schedules = [...data.schedules];
@@ -137,7 +137,7 @@ const CreateEvent = () => {
         <PlusOutlined /> Create New Event
       </Button>
       <Drawer
-        title="Create a New Event"  
+        title="Create a New Event"
         width={1024}
         onClose={onClose}
         visible={visible}
@@ -208,10 +208,7 @@ const CreateEvent = () => {
               <Col span={12} className="text-right">
                 <FormGroup check>
                   <Label check>
-                    <RInput
-                      type="checkbox"
-                      onChange={handleDraft}
-                    />
+                    <RInput type="checkbox" onChange={handleDraft} />
                     As Draft
                   </Label>
                 </FormGroup>
@@ -271,9 +268,7 @@ const CreateEvent = () => {
               <Col lg={2} md={2} />
               <Col lg={11} md={11}>
                 <p className="mb-2 mt-4 fw-6">Event slug</p>
-                <Form.Item
-                  name="slug"
-                >
+                <Form.Item name="slug">
                   <Input type="text" disabled placeholder="event slug" />
                 </Form.Item>
               </Col>
@@ -304,7 +299,12 @@ const CreateEvent = () => {
                       name="startDate"
                       rules={
                         !draft
-                          ? [{ required: true, message: 'Please set start date!' }]
+                          ? [
+                              {
+                                required: true,
+                                message: 'Please set start date!',
+                              },
+                            ]
                           : []
                       }
                     >
@@ -322,7 +322,12 @@ const CreateEvent = () => {
                       name="startTime"
                       rules={
                         !draft
-                          ? [{ required: true, message: 'Please set start time!' }]
+                          ? [
+                              {
+                                required: true,
+                                message: 'Please set start time!',
+                              },
+                            ]
                           : []
                       }
                     >
@@ -345,7 +350,12 @@ const CreateEvent = () => {
                       name="endDate"
                       rules={
                         !draft
-                          ? [{ required: true, message: 'Please set end date!' }]
+                          ? [
+                              {
+                                required: true,
+                                message: 'Please set end date!',
+                              },
+                            ]
                           : []
                       }
                     >
@@ -363,7 +373,12 @@ const CreateEvent = () => {
                       name="endTime"
                       rules={
                         !draft
-                          ? [{ required: true, message: 'Please set end time!' }]
+                          ? [
+                              {
+                                required: true,
+                                message: 'Please set end time!',
+                              },
+                            ]
                           : []
                       }
                     >
@@ -395,7 +410,12 @@ const CreateEvent = () => {
                   name="repeatPeriod"
                   rules={
                     !draft
-                      ? [{ required: true, message: 'Please select repeat period!' }]
+                      ? [
+                          {
+                            required: true,
+                            message: 'Please select repeat period!',
+                          },
+                        ]
                       : []
                   }
                 >
@@ -423,7 +443,8 @@ const CreateEvent = () => {
                             !draft
                               ? [{ required: true, message: 'Please enter!' }]
                               : []
-                          }                        >
+                          }
+                        >
                           <Input type="number" />
                         </Form.Item>
                       </Col>
@@ -513,7 +534,12 @@ const CreateEvent = () => {
                           name={['customRepeatPeriod', 'date']}
                           rules={
                             !draft
-                              ? [{ required: true, message: 'Please enter the date!' }]
+                              ? [
+                                  {
+                                    required: true,
+                                    message: 'Please enter the date!',
+                                  },
+                                ]
                               : []
                           }
                         >
@@ -535,7 +561,13 @@ const CreateEvent = () => {
                             colon={false}
                             rules={
                               !draft
-                                ? [{ required: true, message: 'Please enter the number of the occurences!Please select!' }]
+                                ? [
+                                    {
+                                      required: true,
+                                      message:
+                                        'Please enter the number of the occurences!Please select!',
+                                    },
+                                  ]
                                 : []
                             }
                           >
@@ -652,7 +684,13 @@ const CreateEvent = () => {
                           name="onlineUrl"
                           rules={
                             !draft
-                              ? [{ required: true, message: 'Please enter the link for the meeting!' }]
+                              ? [
+                                  {
+                                    required: true,
+                                    message:
+                                      'Please enter the link for the meeting!',
+                                  },
+                                ]
                               : []
                           }
                         >
@@ -677,7 +715,12 @@ const CreateEvent = () => {
                           name="onlineUrl"
                           rules={
                             !draft
-                              ? [{ required: true, message: 'Please the link for the webinar!' }]
+                              ? [
+                                  {
+                                    required: true,
+                                    message: 'Please the link for the webinar!',
+                                  },
+                                ]
                               : []
                           }
                         >
@@ -703,7 +746,12 @@ const CreateEvent = () => {
                           name="onlineUrl"
                           rules={
                             !draft
-                              ? [{ required: true, message: 'Please enter the link for video!' }]
+                              ? [
+                                  {
+                                    required: true,
+                                    message: 'Please enter the link for video!',
+                                  },
+                                ]
                               : []
                           }
                         >
@@ -745,7 +793,12 @@ const CreateEvent = () => {
                     fieldKey={['name']}
                     rules={
                       !draft
-                        ? [{ required: true, message: 'Please enter the location name!' }]
+                        ? [
+                            {
+                              required: true,
+                              message: 'Please enter the location name!',
+                            },
+                          ]
                         : []
                     }
                   >
@@ -760,7 +813,12 @@ const CreateEvent = () => {
                     fieldKey={['streetAddress']}
                     rules={
                       !draft
-                        ? [{ required: true, message: 'Please enter the street address!' }]
+                        ? [
+                            {
+                              required: true,
+                              message: 'Please enter the street address!',
+                            },
+                          ]
                         : []
                     }
                   >
@@ -775,7 +833,12 @@ const CreateEvent = () => {
                     fieldKey={['city']}
                     rules={
                       !draft
-                        ? [{ required: true, message: 'Please enter the city name!' }]
+                        ? [
+                            {
+                              required: true,
+                              message: 'Please enter the city name!',
+                            },
+                          ]
                         : []
                     }
                   >
@@ -800,9 +863,7 @@ const CreateEvent = () => {
                 name="rsvp"
                 valuePropName="checked"
                 rules={
-                  !draft
-                    ? [{ required: true, message: 'Please select!' }]
-                    : []
+                  !draft ? [{ required: true, message: 'Please select!' }] : []
                 }
                 label={<b>RSVPs</b>}
                 colon={false}
@@ -883,9 +944,7 @@ const CreateEvent = () => {
             <Form.Item
               name="createdBy"
               rules={
-                !draft
-                  ? [{ required: true, message: 'Please select!' }]
-                  : []
+                !draft ? [{ required: true, message: 'Please select!' }] : []
               }
             >
               <CommunityMemberSelect
@@ -907,7 +966,12 @@ const CreateEvent = () => {
                             fieldKey={[field.fieldKey, 'name']}
                             rules={
                               !draft
-                                ? [{ required: true, message: 'Name is required!' }]
+                                ? [
+                                    {
+                                      required: true,
+                                      message: 'Name is required!',
+                                    },
+                                  ]
                                 : []
                             }
                           >
@@ -923,7 +987,12 @@ const CreateEvent = () => {
                             fieldKey={[field.fieldKey, 'position']}
                             rules={
                               !draft
-                                ? [{ required: true, message: 'Position is required!' }]
+                                ? [
+                                    {
+                                      required: true,
+                                      message: 'Position is required!',
+                                    },
+                                  ]
                                 : []
                             }
                           >
@@ -988,7 +1057,12 @@ const CreateEvent = () => {
                             fieldKey={[field.fieldKey, 'time']}
                             rules={
                               !draft
-                                ? [{ required: true, message: 'Name is required!' }]
+                                ? [
+                                    {
+                                      required: true,
+                                      message: 'Name is required!',
+                                    },
+                                  ]
                                 : []
                             }
                           >
@@ -1029,14 +1103,14 @@ const CreateEvent = () => {
               )}
             </Form.List>
             <h1 style={{ fontSize: '17px' }}>Social Link</h1>
-            {
-              social?.length > 0 &&
-              social.map((item)=>{
-                return <Form.Item key={item.id} name={['social', `${item.name}`]}>
-                  <Input placeholder={`${item.name} link.`} />
-                </Form.Item>;
-              })
-            }
+            {social?.length > 0 &&
+              social.map((item) => {
+                return (
+                  <Form.Item key={item.id} name={['social', `${item.name}`]}>
+                    <Input placeholder={`${item.name} link.`} />
+                  </Form.Item>
+                );
+              })}
             <Row style={{ flexDirection: 'row-reverse' }}>
               <Form.Item>
                 <Button type="primary" htmlType="submit">

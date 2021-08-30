@@ -35,7 +35,7 @@ const TimezoneList = () => {
       sorter: (a, b) => utils.antdTableSorter(a, b, 'id'),
     },
     {
-      title: 'UTC', 
+      title: 'UTC',
       dataIndex: 'utc',
       sorter: (a, b) => utils.antdTableSorter(a, b, 'utc'),
     },
@@ -45,7 +45,7 @@ const TimezoneList = () => {
       sorter: (a, b) => utils.antdTableSorter(a, b, 'abbr'),
     },
     {
-      title: 'Offset', 
+      title: 'Offset',
       dataIndex: 'offset',
       sorter: (a, b) => utils.antdTableSorter(a, b, 'offset'),
     },

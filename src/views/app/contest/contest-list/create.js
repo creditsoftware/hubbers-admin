@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import { Drawer, Form, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
-import { ContestConfirm } from './component/ContestConfirm';
-import { ContestDescription } from './component/ContestDescription';
+import ContestConfirm from './component/ContestConfirm';
+import ContestDescription from './component/ContestDescription';
 
 const CreateContestList = () => {
   const dispatch = useDispatch();
@@ -48,7 +48,12 @@ const CreateContestList = () => {
           className="px-4 py-5"
         >
           <ContestConfirm form={form} />
-          <ContestDescription childrenVisible={childrenDrawer} onChildrenShow={showChildrenDrawer} onChildrenClose={onChildrenClose} form={form} />
+          <ContestDescription
+            childrenVisible={childrenDrawer}
+            onChildrenShow={showChildrenDrawer}
+            onChildrenClose={onChildrenClose}
+            form={form}
+          />
           <div className="pb-2">
             <Button onClick={onClose} style={{ marginRight: 12 }}>
               Cancel

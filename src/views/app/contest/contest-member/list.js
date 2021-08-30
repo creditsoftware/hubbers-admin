@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Table, Button, Popconfirm, Image, Space } from 'antd';
-import { CheckOutlined, CloseOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Card, Table, Button, Popconfirm, Space } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
+import Avatar from 'antd/lib/avatar/avatar';
 import utils from '../../../../helpers/utils/index';
 import * as Actions from '../../../../redux/actions';
-import Avatar from 'antd/lib/avatar/avatar';
 import CreateContestMember from './create';
-// import EditContestList from './edit';
-// import CreateUserButton from './create-user';
-// import EditDescription from './edit';
 
 const ContestMemberList = () => {
   const dispatch = useDispatch();
@@ -26,8 +23,8 @@ const ContestMemberList = () => {
     dispatch(Actions.deleteContestMemberList(id));
   };
   const handleChageRole = (id, isActive) => {
-    dispatch(Actions.updateContestMemberList({id, isActive}))
-  }
+    dispatch(Actions.updateContestMemberList({ id, isActive }));
+  };
 
   const tableColumns = [
     {

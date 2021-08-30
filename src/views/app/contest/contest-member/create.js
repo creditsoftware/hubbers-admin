@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Drawer, Form, Button, Input, Select } from 'antd';
+import { Drawer, Form, Button, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import CKEditor5 from '../../../../components/util-components/CkEditor';
 import * as Actions from '../../../../redux/actions';
 
 const { Option } = Select;
@@ -64,11 +63,12 @@ const CreateContestMember = () => {
             rules={[{ required: true, message: 'Please enter member' }]}
           >
             <Select>
-              {user && user.map((item, index) => (
-                <Option key={index} value={item.id}>
-                  {item.firstname} {item.lastname}
-                </Option>
-              ))}
+              {user &&
+                user.map((item) => (
+                  <Option key={item.id} value={item.id}>
+                    {item.firstname} {item.lastname}
+                  </Option>
+                ))}
             </Select>
           </Form.Item>
           <Form.Item
@@ -82,11 +82,12 @@ const CreateContestMember = () => {
             ]}
           >
             <Select>
-              {contest && contest.map((item, index) => (
-                <Option key={index} value={item.id}>
-                  {item.name}
-                </Option>
-              ))}
+              {contest &&
+                contest.map((item) => (
+                  <Option key={item.id} value={item.id}>
+                    {item.name}
+                  </Option>
+                ))}
             </Select>
           </Form.Item>
           <Form.Item
@@ -100,8 +101,8 @@ const CreateContestMember = () => {
             ]}
           >
             <Select>
-              {role.map((item, index) => (
-                <Option key={index} value={item}>
+              {role.map((item) => (
+                <Option key={item} value={item}>
                   {item}
                 </Option>
               ))}

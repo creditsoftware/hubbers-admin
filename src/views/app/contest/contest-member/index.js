@@ -1,6 +1,9 @@
 import React from 'react';
 import { Row } from 'reactstrap';
-import { Colxx, Separator } from '../../../../components/common/CustomBootstrap';
+import {
+  Colxx,
+  Separator,
+} from '../../../../components/common/CustomBootstrap';
 import Breadcrumb from '../../../../containers/navs/Breadcrumb';
 import ContestMemberList from './list';
 
@@ -18,7 +21,7 @@ const ContestMember = ({ match }) => {
           <div style={{ marginTop: 10 }}>
             <ContestMemberList />
           </div>
-        </div>  
+        </div>
       </Colxx>
     </>
   );

@@ -23,7 +23,9 @@ const TimezoneSelect = ({ ...props }) => {
     if (v) {
       setTimezoneList([
         ...u.filter(
-          (c) => (c?.abbr?.toLowerCase().indexOf(v.toLowerCase()) > -1) || (c?.utc?.toLowerCase().indexOf(v.toLowerCase()) > -1)
+          (c) =>
+            c?.abbr?.toLowerCase().indexOf(v.toLowerCase()) > -1 ||
+            c?.utc?.toLowerCase().indexOf(v.toLowerCase()) > -1
         ),
       ]);
     } else {
@@ -39,8 +41,7 @@ const TimezoneSelect = ({ ...props }) => {
               {`${item.abbr} (${item.utc})`}
             </Option>
           );
-        })
-      }
+        })}
     </Select>
   );
 };

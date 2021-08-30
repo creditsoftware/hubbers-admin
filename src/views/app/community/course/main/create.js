@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Drawer, Form, Row, Col, Space, Input, Select, Switch, Button } from 'antd';
+import {
+  Drawer,
+  Form,
+  Row,
+  Col,
+  Space,
+  Input,
+  Select,
+  Switch,
+  Button,
+} from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { getRandomInt, slugify } from '../../../../../helpers/Utils';
 import CommunitySelect from '../../../../../components/util-components/selector/CommunitySelect';
@@ -11,9 +21,10 @@ const { TextArea } = Input;
 const { Option } = Select;
 
 const CourseCreate = () => {
-
   const dispatch = useDispatch();
-  const { groupPrivacyOptionList } = useSelector((state) => state.groupPrivacyOption);
+  const { groupPrivacyOptionList } = useSelector(
+    (state) => state.groupPrivacyOption
+  );
   const { list } = useSelector((state) => state.courseStructure);
   const [privacyOption, setPrivacyOption] = useState([]);
   const [courseStructureList, setCourseStructureList] = useState(null);
@@ -45,49 +56,99 @@ const CourseCreate = () => {
   };
 
   const onSubmit = (values) => {
-    dispatch(Actions.createCourse({
-      ...values,
-      published,
-      isGlobal,
-      detail: {
-        instructor: {
-          id: values.instructor,
-          name: courseStructureList?.filter((item) => item.id === values.instructor)[0].name,
-          singularName: courseStructureList?.filter((item) => item.id === values.instructor)[0].singularName,
-          iaName: courseStructureList?.filter((item) => item.id === values.instructor)[0].iaName,
-          pluralName: courseStructureList?.filter((item) => item.id === values.instructor)[0].pluralName,
-          ppName: courseStructureList?.filter((item) => item.id === values.instructor)[0].ppName,
-          category: courseStructureList?.filter((item) => item.id === values.instructor)[0].category,
+    dispatch(
+      Actions.createCourse({
+        ...values,
+        published,
+        isGlobal,
+        detail: {
+          instructor: {
+            id: values.instructor,
+            name: courseStructureList?.filter(
+              (item) => item.id === values.instructor
+            )[0].name,
+            singularName: courseStructureList?.filter(
+              (item) => item.id === values.instructor
+            )[0].singularName,
+            iaName: courseStructureList?.filter(
+              (item) => item.id === values.instructor
+            )[0].iaName,
+            pluralName: courseStructureList?.filter(
+              (item) => item.id === values.instructor
+            )[0].pluralName,
+            ppName: courseStructureList?.filter(
+              (item) => item.id === values.instructor
+            )[0].ppName,
+            category: courseStructureList?.filter(
+              (item) => item.id === values.instructor
+            )[0].category,
+          },
+          section: {
+            id: values.section,
+            name: courseStructureList?.filter(
+              (item) => item.id === values.section
+            )[0].name,
+            singularName: courseStructureList?.filter(
+              (item) => item.id === values.section
+            )[0].singularName,
+            iaName: courseStructureList?.filter(
+              (item) => item.id === values.section
+            )[0].iaName,
+            pluralName: courseStructureList?.filter(
+              (item) => item.id === values.section
+            )[0].pluralName,
+            ppName: courseStructureList?.filter(
+              (item) => item.id === values.section
+            )[0].ppName,
+            category: courseStructureList?.filter(
+              (item) => item.id === values.section
+            )[0].category,
+          },
+          cType: {
+            id: values.cType,
+            name: courseStructureList?.filter(
+              (item) => item.id === values.cType
+            )[0].name,
+            singularName: courseStructureList?.filter(
+              (item) => item.id === values.cType
+            )[0].singularName,
+            iaName: courseStructureList?.filter(
+              (item) => item.id === values.cType
+            )[0].iaName,
+            pluralName: courseStructureList?.filter(
+              (item) => item.id === values.cType
+            )[0].pluralName,
+            ppName: courseStructureList?.filter(
+              (item) => item.id === values.cType
+            )[0].ppName,
+            category: courseStructureList?.filter(
+              (item) => item.id === values.cType
+            )[0].category,
+          },
+          unit: {
+            id: values.unit,
+            name: courseStructureList?.filter(
+              (item) => item.id === values.unit
+            )[0].name,
+            singularName: courseStructureList?.filter(
+              (item) => item.id === values.unit
+            )[0].singularName,
+            iaName: courseStructureList?.filter(
+              (item) => item.id === values.unit
+            )[0].iaName,
+            pluralName: courseStructureList?.filter(
+              (item) => item.id === values.unit
+            )[0].pluralName,
+            ppName: courseStructureList?.filter(
+              (item) => item.id === values.unit
+            )[0].ppName,
+            category: courseStructureList?.filter(
+              (item) => item.id === values.unit
+            )[0].category,
+          },
         },
-        section: {
-          id: values.section,
-          name: courseStructureList?.filter((item) => item.id === values.section)[0].name,
-          singularName: courseStructureList?.filter((item) => item.id === values.section)[0].singularName,
-          iaName: courseStructureList?.filter((item) => item.id === values.section)[0].iaName,
-          pluralName: courseStructureList?.filter((item) => item.id === values.section)[0].pluralName,
-          ppName: courseStructureList?.filter((item) => item.id === values.section)[0].ppName,
-          category: courseStructureList?.filter((item) => item.id === values.section)[0].category,
-        },
-        cType: {
-          id: values.cType,
-          name: courseStructureList?.filter((item) => item.id === values.cType)[0].name,
-          singularName: courseStructureList?.filter((item) => item.id === values.cType)[0].singularName,
-          iaName: courseStructureList?.filter((item) => item.id === values.cType)[0].iaName,
-          pluralName: courseStructureList?.filter((item) => item.id === values.cType)[0].pluralName,
-          ppName: courseStructureList?.filter((item) => item.id === values.cType)[0].ppName,
-          category: courseStructureList?.filter((item) => item.id === values.cType)[0].category,
-        },
-        unit: {
-          id: values.unit,
-          name: courseStructureList?.filter((item) => item.id === values.unit)[0].name,
-          singularName: courseStructureList?.filter((item) => item.id === values.unit)[0].singularName,
-          iaName: courseStructureList?.filter((item) => item.id === values.unit)[0].iaName,
-          pluralName: courseStructureList?.filter((item) => item.id === values.unit)[0].pluralName,
-          ppName: courseStructureList?.filter((item) => item.id === values.unit)[0].ppName,
-          category: courseStructureList?.filter((item) => item.id === values.unit)[0].category,
-        }
-      }
-    }));
+      })
+    );
     onClose();
   };
 
@@ -126,7 +187,9 @@ const CourseCreate = () => {
                 name="communityId"
                 label="Community Name"
                 rules={
-                  !isGlobal ? [{ required: true, message: 'Please choose a community' }] : []
+                  !isGlobal
+                    ? [{ required: true, message: 'Please choose a community' }]
+                    : []
                 }
               >
                 <CommunitySelect disabled={isGlobal} />
@@ -150,15 +213,18 @@ const CourseCreate = () => {
               <Form.Item
                 name="name"
                 label="Course Title"
-                rules={[
-                  { required: true, message: 'Please enter title' },
-                ]}
+                rules={[{ required: true, message: 'Please enter title' }]}
               >
                 <Input
                   placeholder="Please enter title"
                   onChange={(e) =>
                     form.setFieldsValue({
-                      slug: e.target.value ? `${slugify(e.target.value)}-${getRandomInt(100000, 999999)}` : ''
+                      slug: e.target.value
+                        ? `${slugify(e.target.value)}-${getRandomInt(
+                            100000,
+                            999999
+                          )}`
+                        : '',
                     })
                   }
                 />
@@ -202,13 +268,14 @@ const CourseCreate = () => {
                   style={{ width: '100%' }}
                   placeholder="Please choose the Option"
                 >
-                  {privacyOption && privacyOption.map((item) => {
-                    return (
-                      <Option key={item.id} value={item.id}>
-                        {item.name}
-                      </Option>
-                    );
-                  })}
+                  {privacyOption &&
+                    privacyOption.map((item) => {
+                      return (
+                        <Option key={item.id} value={item.id}>
+                          {item.name}
+                        </Option>
+                      );
+                    })}
                 </Select>
               </Form.Item>
             </Col>
@@ -229,18 +296,16 @@ const CourseCreate = () => {
                   style={{ width: '100%' }}
                   placeholder="Please choose the type"
                 >
-                  {courseStructureList && courseStructureList.map((item) => {
-                    if (item.category === 'courseType') {
-                      return (
-                        <Option
-                          key={item.id}
-                          value={item.id}
-                        >
-                          {item.name}
-                        </Option>
-                      );
-                    }
-                  })}
+                  {courseStructureList &&
+                    courseStructureList.map((item) => {
+                      if (item.category === 'courseType') {
+                        return (
+                          <Option key={item.id} value={item.id}>
+                            {item.name}
+                          </Option>
+                        );
+                      }
+                    })}
                 </Select>
               </Form.Item>
             </Col>
@@ -259,15 +324,16 @@ const CourseCreate = () => {
                   style={{ width: '100%' }}
                   placeholder="Please choose the type"
                 >
-                  {courseStructureList && courseStructureList.map((item) => {
-                    if (item.category === 'courseUnit') {
-                      return (
-                        <Option key={item.id} value={item.id}>
-                          {item.name}
-                        </Option>
-                      );
-                    }
-                  })}
+                  {courseStructureList &&
+                    courseStructureList.map((item) => {
+                      if (item.category === 'courseUnit') {
+                        return (
+                          <Option key={item.id} value={item.id}>
+                            {item.name}
+                          </Option>
+                        );
+                      }
+                    })}
                 </Select>
               </Form.Item>
             </Col>
@@ -286,15 +352,16 @@ const CourseCreate = () => {
                   style={{ width: '100%' }}
                   placeholder="Please choose the type"
                 >
-                  {courseStructureList && courseStructureList.map((item) => {
-                    if (item.category === 'section') {
-                      return (
-                        <Option key={item.id} value={item.id}>
-                          {item.name}
-                        </Option>
-                      );
-                    }
-                  })}
+                  {courseStructureList &&
+                    courseStructureList.map((item) => {
+                      if (item.category === 'section') {
+                        return (
+                          <Option key={item.id} value={item.id}>
+                            {item.name}
+                          </Option>
+                        );
+                      }
+                    })}
                 </Select>
               </Form.Item>
             </Col>
@@ -313,15 +380,16 @@ const CourseCreate = () => {
                   style={{ width: '100%' }}
                   placeholder="Please choose the type"
                 >
-                  {courseStructureList && courseStructureList.map((item) => {
-                    if (item.category === 'instructor') {
-                      return (
-                        <Option key={item.id} value={item.id}>
-                          {item.name}
-                        </Option>
-                      );
-                    }
-                  })}
+                  {courseStructureList &&
+                    courseStructureList.map((item) => {
+                      if (item.category === 'instructor') {
+                        return (
+                          <Option key={item.id} value={item.id}>
+                            {item.name}
+                          </Option>
+                        );
+                      }
+                    })}
                 </Select>
               </Form.Item>
             </Col>

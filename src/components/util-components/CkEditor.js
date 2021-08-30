@@ -80,7 +80,7 @@ class MyUploadAdapter {
 }
 
 const DNXCustomUploadAdapterPlugin = (editor, onUpload) => {
-  if(editor) {
+  if (editor) {
     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
       loader.onUpload = editor.onUpload;
       loader.accessToken = editor.accessToken;

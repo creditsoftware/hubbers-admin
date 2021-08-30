@@ -59,7 +59,7 @@ import {
   createContestMemberSuccess,
   createContestMemberError,
   updateContestMemberListError,
-  updateContestMemberListSuccess
+  updateContestMemberListSuccess,
 } from './actions';
 
 const getAllContestListAsync = () => {
@@ -128,12 +128,14 @@ const getAllContestDescriptionAsync = (category) => {
 function* GetAllContestList() {
   try {
     const result = yield call(getAllContestListAsync);
-    if(result.status === 200 && result.statusText === 'OK') {
+    if (result.status === 200 && result.statusText === 'OK') {
       yield put(getAllContestListSuccess(result.data.result));
     } else {
-      yield put(getAllContestListError('Get All Contest List Response is not success!'))
+      yield put(
+        getAllContestListError('Get All Contest List Response is not success!')
+      );
     }
-  } catch(error) {
+  } catch (error) {
     yield put(getAllContestListError('Get All Contest List Error !'));
   }
 }
@@ -141,11 +143,11 @@ function* GetAllContestList() {
 function* GetAllContestMemberList() {
   try {
     const result = yield call(getAllContestMemberListAsync);
-    if(result.status === 200 && result.statusText === 'OK') {
+    if (result.status === 200 && result.statusText === 'OK') {
       yield put(getAllContestMemberListSuccess(result.data.data));
     } else {
     }
-  } catch(error) {
+  } catch (error) {
     yield put(getAllContestMemberListError('Get All Contest List Error !'));
   }
 }
@@ -153,12 +155,14 @@ function* GetAllContestMemberList() {
 function* GetAllContestType() {
   try {
     const result = yield call(getAllContestTypeAsync);
-    if(result.status === 200 && result.statusText === 'OK') {
+    if (result.status === 200 && result.statusText === 'OK') {
       yield put(getAllContestTypeSuccess(result.data.data));
     } else {
-      yield put(getAllContestTypeError('Get All Contest Type Response is not success!'))
+      yield put(
+        getAllContestTypeError('Get All Contest Type Response is not success!')
+      );
     }
-  } catch(error) {
+  } catch (error) {
     yield put(getAllContestTypeError('Get All Contest Type Error !'));
   }
 }
@@ -166,12 +170,16 @@ function* GetAllContestType() {
 function* GetAllContestProduct() {
   try {
     const result = yield call(getAllContestProductAsync);
-    if(result.status === 200 && result.statusText === 'OK') {
+    if (result.status === 200 && result.statusText === 'OK') {
       yield put(getAllContestProductSuccess(result.data.data));
     } else {
-      yield put(getAllContestProductError('Get All Contest Product Response is not success!'))
+      yield put(
+        getAllContestProductError(
+          'Get All Contest Product Response is not success!'
+        )
+      );
     }
-  } catch(error) {
+  } catch (error) {
     yield put(getAllContestProductError('Get All Contest Product Error !'));
   }
 }
@@ -179,25 +187,33 @@ function* GetAllContestProduct() {
 function* GetAllContestInnovation() {
   try {
     const result = yield call(getAllContestInnovationAsync);
-    if(result.status === 200 && result.statusText === 'OK') {
+    if (result.status === 200 && result.statusText === 'OK') {
       yield put(getAllContestInnovationSuccess(result.data.data));
     } else {
-      yield put(getAllContestInnovationError('Get All Contest Innovation Response is not success!'))
+      yield put(
+        getAllContestInnovationError(
+          'Get All Contest Innovation Response is not success!'
+        )
+      );
     }
-  } catch(error) {
-    yield put(getAllContestInnovationError('Get All Contest Innovation Error !'));
+  } catch (error) {
+    yield put(
+      getAllContestInnovationError('Get All Contest Innovation Error !')
+    );
   }
 }
 
 function* GetAllContestTech() {
   try {
     const result = yield call(getAllContestTechAsync);
-    if(result.status === 200 && result.statusText === 'OK') {
+    if (result.status === 200 && result.statusText === 'OK') {
       yield put(getAllContestTechSuccess(result.data.data));
     } else {
-      yield put(getAllContestTechError('Get All Contest Tech Response is not success!'))
+      yield put(
+        getAllContestTechError('Get All Contest Tech Response is not success!')
+      );
     }
-  } catch(error) {
+  } catch (error) {
     yield put(getAllContestTechError('Get All Contest Tech Error !'));
   }
 }
@@ -205,12 +221,16 @@ function* GetAllContestTech() {
 function* GetAllContestPrizeCurrency() {
   try {
     const result = yield call(getAllContestPrizeCurrencyAsync);
-    if(result.status === 200 && result.statusText === 'OK') {
+    if (result.status === 200 && result.statusText === 'OK') {
       yield put(getAllCurrencySuccess(result.data.result));
     } else {
-      yield put(getAllCurrencyError('Get All Contest Prize Currency Response is not success!'))
+      yield put(
+        getAllCurrencyError(
+          'Get All Contest Prize Currency Response is not success!'
+        )
+      );
     }
-  } catch(error) {
+  } catch (error) {
     yield put(getAllCurrencyError('Get All Contest Prize Currency Error !'));
   }
 }
@@ -218,12 +238,16 @@ function* GetAllContestPrizeCurrency() {
 function* GetAllContestCountry() {
   try {
     const result = yield call(getAllContestCountryAsync);
-    if(result.status === 200 && result.statusText === 'OK') {
+    if (result.status === 200 && result.statusText === 'OK') {
       yield put(getAllContestCountrySuccess(result.data.data));
     } else {
-      yield put(getAllContestCountryError('Get All Contest Country Response is not success!'))
+      yield put(
+        getAllContestCountryError(
+          'Get All Contest Country Response is not success!'
+        )
+      );
     }
-  } catch(error) {
+  } catch (error) {
     yield put(getAllContestCountryError('Get All Contest Country Error !'));
   }
 }
@@ -231,25 +255,35 @@ function* GetAllContestCountry() {
 function* GetAllContestDescription(category) {
   try {
     const result = yield call(getAllContestDescriptionAsync, category.category);
-    if(result.status === 200 && result.statusText === 'OK') {
+    if (result.status === 200 && result.statusText === 'OK') {
       yield put(getAllContestDescriptionSuccess(result.data));
     } else {
-      yield put(getAllContestDescriptionError('Get All Contest Description Response is not success!'))
+      yield put(
+        getAllContestDescriptionError(
+          'Get All Contest Description Response is not success!'
+        )
+      );
     }
-  } catch(error) {
-    yield put(getAllContestDescriptionError('Get All Contest Description Error !'));
+  } catch (error) {
+    yield put(
+      getAllContestDescriptionError('Get All Contest Description Error !')
+    );
   }
 }
 
 function* GetAllContestOfficial(category) {
   try {
     const result = yield call(getAllContestDescriptionAsync, category.category);
-    if(result.status === 200 && result.statusText === 'OK') {
+    if (result.status === 200 && result.statusText === 'OK') {
       yield put(getAllContestOfficialSuccess(result.data));
     } else {
-      yield put(getAllContestOfficialError('Get All Contest Official Response is not success!'))
+      yield put(
+        getAllContestOfficialError(
+          'Get All Contest Official Response is not success!'
+        )
+      );
     }
-  } catch(error) {
+  } catch (error) {
     yield put(getAllContestOfficialError('Get All Contest Official Error !'));
   }
 }
@@ -257,12 +291,16 @@ function* GetAllContestOfficial(category) {
 function* GetAllContestMarket(category) {
   try {
     const result = yield call(getAllContestDescriptionAsync, category.category);
-    if(result.status === 200 && result.statusText === 'OK') {
+    if (result.status === 200 && result.statusText === 'OK') {
       yield put(getAllContestMarketSuccess(result.data));
     } else {
-      yield put(getAllContestMarketError('Get All Contest Market Response is not success!'))
+      yield put(
+        getAllContestMarketError(
+          'Get All Contest Market Response is not success!'
+        )
+      );
     }
-  } catch(error) {
+  } catch (error) {
     yield put(getAllContestMarketError('Get All Contest Market Error !'));
   }
 }
@@ -270,20 +308,20 @@ function* GetAllContestMarket(category) {
 const createContestListAsync = async (payload) => {
   return api
     .post('/contest/contest-list', {
-      ...payload
+      ...payload,
     })
     .then((res) => res)
     .catch((error) => error);
-}
+};
 
 const createContestMemberListAsync = async (payload) => {
   return api
     .post('/contest/contest-member', {
-      ...payload
+      ...payload,
     })
     .then((res) => res)
     .catch((error) => error);
-}
+};
 
 function* CreateContestList(payload) {
   try {
@@ -292,7 +330,9 @@ function* CreateContestList(payload) {
       yield put(createContestListSuccess(result.data.result));
       yield put(getAllContestList());
     } else {
-      yield put(createContestListError('Create ContestList Response is not success!'));
+      yield put(
+        createContestListError('Create ContestList Response is not success!')
+      );
     }
   } catch (error) {
     yield put(createContestListError('Create ContestList Error !'));
@@ -306,7 +346,9 @@ function* CreateContestMemberList(payload) {
       yield put(createContestMemberSuccess(result.data.result));
       yield put(getAllContestMemberList());
     } else {
-      yield put(createContestMemberError('Create ContestList Response is not success!'));
+      yield put(
+        createContestMemberError('Create ContestList Response is not success!')
+      );
     }
   } catch (error) {
     yield put(createContestMemberError('Create ContestList Error !'));
@@ -316,11 +358,11 @@ function* CreateContestMemberList(payload) {
 const updateContestMemberListAsync = async (payload) => {
   return api
     .put(`/contest/contest-member/${payload.id}`, {
-      ...payload
+      ...payload,
     })
     .then((res) => res)
     .catch((error) => error);
-}
+};
 
 function* UpdateContestMemberList(payload) {
   try {
@@ -329,21 +371,27 @@ function* UpdateContestMemberList(payload) {
       yield put(updateContestMemberListSuccess(result.data.result));
       yield put(getAllContestMemberList());
     } else {
-      yield put(updateContestMemberListError('Update Contest Member List Response is not success!'));
+      yield put(
+        updateContestMemberListError(
+          'Update Contest Member List Response is not success!'
+        )
+      );
     }
   } catch (error) {
-    yield put(updateContestMemberListError('Update Contest Member List Error !'));
+    yield put(
+      updateContestMemberListError('Update Contest Member List Error !')
+    );
   }
 }
 
 const updateContestListAsync = async (payload) => {
   return api
     .put(`/contest/contest-list/${payload.id}`, {
-      ...payload
+      ...payload,
     })
     .then((res) => res)
     .catch((error) => error);
-}
+};
 
 function* UpdateContestList(payload) {
   try {
@@ -352,7 +400,9 @@ function* UpdateContestList(payload) {
       yield put(updateContestListSuccess(result.data.result));
       yield put(getAllContestList());
     } else {
-      yield put(updateContestListError('Update ContestList Response is not success!'));
+      yield put(
+        updateContestListError('Update ContestList Response is not success!')
+      );
     }
   } catch (error) {
     yield put(updateContestListError('Update ContestList Error !'));
@@ -364,7 +414,7 @@ const deleteContestListAsync = async (id) => {
     .delete(`/contest/contest-list/${id}`)
     .then((res) => res)
     .catch((error) => error);
-}
+};
 
 function* DeleteContestList(payload) {
   try {
@@ -373,7 +423,9 @@ function* DeleteContestList(payload) {
       yield put(deleteContestListSuccess(result.data.result));
       yield put(getAllContestList());
     } else {
-      yield put(deleteContestListError('Delete ContestList Response is not success!'));
+      yield put(
+        deleteContestListError('Delete ContestList Response is not success!')
+      );
     }
   } catch (error) {
     yield put(deleteContestListError('Delete ContestList Error !'));
@@ -385,7 +437,7 @@ const deleteContestMemberListAsync = async (id) => {
     .delete(`/contest/contest-member/${id}`)
     .then((res) => res)
     .catch((error) => error);
-}
+};
 
 function* DelAllContestMemberList(payload) {
   try {
@@ -394,7 +446,11 @@ function* DelAllContestMemberList(payload) {
       yield put(deleteContestMemberListSuccess(result.data.result));
       yield put(getAllContestMemberList());
     } else {
-      yield put(deleteContestMemberListError('Delete Contest Member List Response is not success!'));
+      yield put(
+        deleteContestMemberListError(
+          'Delete Contest Member List Response is not success!'
+        )
+      );
     }
   } catch (error) {
     yield put(deleteContestMemberListError('Delete ContestList Error !'));
@@ -422,15 +478,15 @@ export function* watchDelAllContestMemberList() {
 }
 
 export function* watchCreateContestList() {
-  yield takeEvery(CREATE_CONTEST_LIST, CreateContestList)
+  yield takeEvery(CREATE_CONTEST_LIST, CreateContestList);
 }
 
 export function* watchUpdateContestList() {
-  yield takeEvery(UPDATE_CONTEST_LIST, UpdateContestList)
+  yield takeEvery(UPDATE_CONTEST_LIST, UpdateContestList);
 }
 
 export function* watchDeleteContestList() {
-  yield takeEvery(DELETE_CONTEST_LIST, DeleteContestList)
+  yield takeEvery(DELETE_CONTEST_LIST, DeleteContestList);
 }
 
 export function* watchGetAllContestType() {
@@ -488,4 +544,5 @@ export default function* rootSaga() {
     fork(watchCreateContestMemberList),
     fork(watchUpdateContestMemberList),
     fork(watchDelAllContestMemberList),
-])}
+  ]);
+}

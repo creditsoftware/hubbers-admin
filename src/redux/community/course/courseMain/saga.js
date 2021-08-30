@@ -32,11 +32,7 @@ function* GetAllCourse() {
     if (result.status === 200 && result.statusText === 'OK') {
       yield put(getAllCourseSuccess(result.data.data));
     } else {
-      yield put(
-        getAllCourseError(
-          'Faild to get all courses!'
-        )
-      );
+      yield put(getAllCourseError('Faild to get all courses!'));
     }
   } catch (error) {
     yield put(getAllCourseError('Faild to get all courses!'));
@@ -63,11 +59,7 @@ function* CreateCourse(payload) {
       }
       yield put(getAllCourse());
     } else {
-      yield put(
-        createCourseError(
-          'Faild to create course!'
-        )
-      );
+      yield put(createCourseError('Faild to create course!'));
     }
   } catch (error) {
     yield put(createCourseError('Faild to create course!'));
@@ -89,11 +81,7 @@ function* UpdateCourse(payload) {
       yield put(updateCourseSuccess(result.data.result));
       yield put(getAllCourse());
     } else {
-      yield put(
-        updateCourseError(
-          'Faild to update course!'
-        )
-      );
+      yield put(updateCourseError('Faild to update course!'));
     }
   } catch (error) {
     yield put(updateCourseError('Faild to update course!'));
@@ -113,11 +101,7 @@ function* DeleteCourse(payload) {
       yield put(deleteCourseSuccess(result.data.result));
       yield put(getAllCourse());
     } else {
-      yield put(
-        deleteCourseError(
-          'Faild to delete course!'
-        )
-      );
+      yield put(deleteCourseError('Faild to delete course!'));
     }
   } catch (error) {
     yield put(deleteCourseError('Faild to delete course!'));

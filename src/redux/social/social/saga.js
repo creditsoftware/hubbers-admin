@@ -1,14 +1,9 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import api from '../../../ApiConfig';
 
-import {
-  GET_ALL_SOCIAL,
-} from '../../types/social/social';
+import { GET_ALL_SOCIAL } from '../../types/social/social';
 
-import {
-  getAllSocialSuccess,
-  getAllSocialError,
-} from './actions';
+import { getAllSocialSuccess, getAllSocialError } from './actions';
 
 const getAllSocialAsync = async () => {
   return api
@@ -34,7 +29,5 @@ export function* watchGetAllSocial() {
 }
 
 export default function* rootSaga() {
-  yield all([
-    fork(watchGetAllSocial),
-  ]);
+  yield all([fork(watchGetAllSocial)]);
 }

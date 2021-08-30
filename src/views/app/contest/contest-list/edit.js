@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import { Drawer, Form, Button, Tooltip } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import * as Actions from '../../../../redux/actions';
-import { ContestConfirm } from './component/ContestConfirm';
-import { ContestDescription } from './component/ContestDescription';
+import ContestConfirm from './component/ContestConfirm';
+import ContestDescription from './component/ContestDescription';
 
 const EditContestList = ({ id, data }) => {
   const dispatch = useDispatch();
@@ -17,23 +17,25 @@ const EditContestList = ({ id, data }) => {
     setEditValue({ ...v });
   }, [data, id, form]);
   const showDrawer = () => {
-    let productId = [];
-    editValue.products.map((val) => {
-      productId = [...productId,val.id];
-    })
-    let innovationId = [];
-    editValue.innovations.map((val) => {
-      innovationId = [...innovationId,val.id];
-    })
-    let techId = [];
-    editValue.techs.map((val) => {
-      techId = [...techId,val.id];
-    })
-    let countryId = [];
-    editValue.country.map((val) => {
-      countryId = [...countryId,val.id];
-    })
-    form.setFieldsValue({ ...editValue, productId, innovationId, techId, countryId });
+    const productId = editValue.products.map((val) => {
+      return val.id;
+    });
+    const innovationId = editValue.innovations.map((val) => {
+      return val.id;
+    });
+    const techId = editValue.techs.map((val) => {
+      return val.id;
+    });
+    const countryId = editValue.country.map((val) => {
+      return val.id;
+    });
+    form.setFieldsValue({
+      ...editValue,
+      productId,
+      innovationId,
+      techId,
+      countryId,
+    });
     setVisible(true);
   };
   const showChildrenDrawer = () => {
@@ -47,7 +49,7 @@ const EditContestList = ({ id, data }) => {
     setVisible(false);
   };
   const onSubmit = (values) => {
-    dispatch(Actions.updateContestList({...values, id}));
+    dispatch(Actions.updateContestList({ ...values, id }));
     onClose();
   };
 
@@ -75,7 +77,12 @@ const EditContestList = ({ id, data }) => {
           className="px-4 py-5"
         >
           <ContestConfirm form={form} />
-          <ContestDescription childrenVisible={childrenDrawer} onChildrenShow={showChildrenDrawer} onChildrenClose={onChildrenClose} form={form} />
+          <ContestDescription
+            childrenVisible={childrenDrawer}
+            onChildrenShow={showChildrenDrawer}
+            onChildrenClose={onChildrenClose}
+            form={form}
+          />
           <div className="pb-2">
             <Button onClick={onClose} style={{ marginRight: 12 }}>
               Cancel

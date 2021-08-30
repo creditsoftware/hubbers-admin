@@ -36,7 +36,9 @@ function* GetAllTimezone() {
     if (result.status === 200 && result.statusText === 'OK') {
       yield put(getAllTimezoneSuccess(result.data.data));
     } else {
-      yield put(getAllTimezoneError('Get All Timezone Response is not success!'));
+      yield put(
+        getAllTimezoneError('Get All Timezone Response is not success!')
+      );
     }
   } catch (error) {
     yield put(getAllTimezoneError('Get All Timezone Error !'));
@@ -81,7 +83,9 @@ function* CreateTimezone(payload) {
       yield put(createTimezoneSuccess(result.data.data));
       yield put(getAllTimezone());
     } else {
-      yield put(createTimezoneError('Create Timezone Response is not success!'));
+      yield put(
+        createTimezoneError('Create Timezone Response is not success!')
+      );
     }
   } catch (error) {
     console.log(error);
@@ -106,7 +110,9 @@ function* UpdateTimezone(payload) {
       yield put(updateTimezoneSuccess(result.data.data));
       yield put(getAllTimezone());
     } else {
-      yield put(updateTimezoneError('Update Timezone Response is not success!'));
+      yield put(
+        updateTimezoneError('Update Timezone Response is not success!')
+      );
     }
   } catch (error) {
     console.log(error);
@@ -130,7 +136,9 @@ function* DeleteTimezone(payload) {
       yield put(deleteTimezoneSuccess());
       yield put(getAllTimezone());
     } else {
-      yield put(deleteTimezoneError('Delete Timezone Response is not success!'));
+      yield put(
+        deleteTimezoneError('Delete Timezone Response is not success!')
+      );
     }
   } catch (error) {
     console.log(error);
