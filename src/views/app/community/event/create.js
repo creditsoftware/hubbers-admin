@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FormGroup, Label, Input as RInput } from 'reactstrap';
 import {
   Row,
@@ -53,6 +53,16 @@ const CreateEvent = () => {
   const [endType, setEndType] = React.useState('date');
   const [eventType, setEventType] = React.useState('online');
   const [eventOnlineType, setEventOnlineType] = React.useState('meeting');
+  const [social, setSocial] = React.useState(null);
+  const { socialList } = useSelector((state) => state.social);
+
+  React.useEffect(()=>{
+    dispatch(Actions.getAllSocial());
+  }, []);
+
+  React.useEffect(()=>{
+    setSocial(socialList);
+  }, [socialList]);
 
   const showDrawer = () => {
     form.resetFields();
@@ -97,16 +107,16 @@ const CreateEvent = () => {
       published: published,
       draft: draft,
     };
-    if (values.startDate===null) {
+    if (values.startDate==null) {
       data = {...data, startDate: null}
     }
-    if (values.startTime===null) {
+    if (values.startTime==null) {
       data = {...data, startTime: null}
     }
-    if (values.endDate===null) {
+    if (values.endDate==null) {
       data = {...data, endDate: null}
     }
-    if (values.endTime===null) {
+    if (values.endTime==null) {
       data = {...data, endTime: null}
     }
     if (data.schedules) {
@@ -117,6 +127,7 @@ const CreateEvent = () => {
       delete data.schedules;
       data = { ...data, schedules: [...schedules] };
     }
+    console.log(data);
     dispatch(Actions.createEvent(data));
     onClose();
   };
@@ -1017,6 +1028,15 @@ const CreateEvent = () => {
                 </>
               )}
             </Form.List>
+            <h1 style={{ fontSize: '17px' }}>Social Link</h1>
+            {
+              social?.length > 0 &&
+              social.map((item)=>{
+                return <Form.Item key={item.id} name={['social', `${item.name}`]}>
+                  <Input placeholder={`${item.name} link.`} />
+                </Form.Item>;
+              })
+            }
             <Row style={{ flexDirection: 'row-reverse' }}>
               <Form.Item>
                 <Button type="primary" htmlType="submit">

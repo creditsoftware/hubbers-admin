@@ -36,6 +36,7 @@ import moduleType from './module/moduleType/reducer';
 import contestList from './contest/contestList/reducer';
 import testimonials from './testimonials/reducer';
 import contestDescription from './contest/contestDescription/reducer';
+import social from './social/social/reducer';
 
 const reducers = combineReducers({
   menu,
@@ -76,6 +77,7 @@ const reducers = combineReducers({
   contestList,
   testimonials,
   contestDescription,
+  social,
 });
 
 export default reducers;

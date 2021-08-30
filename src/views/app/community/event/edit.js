@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { FormGroup, Label, Input as RInput } from 'reactstrap';
 import {
@@ -56,6 +56,16 @@ const EditEvent = ({ id, data }) => {
   const [eventType, setEventType] = React.useState('online');
   const [eventOnlineType, setEventOnlineType] = React.useState('meeting');
   const [form] = Form.useForm();
+  const [social, setSocial] = React.useState(null);
+  const { socialList } = useSelector((state) => state.social);
+
+  React.useEffect(()=>{
+    dispatch(Actions.getAllSocial());
+  }, []);
+
+  React.useEffect(()=>{
+    setSocial(socialList);
+  }, [socialList]);
 
   const showDrawer = () => {
     const ed = { ...data.filter((d) => d.id === id)[0] };
@@ -136,16 +146,16 @@ const EditEvent = ({ id, data }) => {
       isGlobal,
       draft,
     };
-    if (values.startDate===null) {
+    if (values.startDate==null) {
       uData = {...uData, startDate: null}
     }
-    if (values.startTime===null) {
+    if (values.startTime==null) {
       uData = {...uData, startTime: null}
     }
-    if (values.endDate===null) {
+    if (values.endDate==null) {
       uData = {...uData, endDate: null}
     }
-    if (values.endTime===null) {
+    if (values.endTime==null) {
       uData = {...uData, endTime: null}
     }
     if (uData.schedules) {
@@ -1062,6 +1072,15 @@ const EditEvent = ({ id, data }) => {
                 </>
               )}
             </Form.List>
+            <h1 style={{ fontSize: '17px' }}>Social Link</h1>
+            {
+              social?.length > 0 &&
+              social.map((item)=>{
+                return <Form.Item key={item.id} name={['social', `${item.name}`]}>
+                  <Input placeholder={`${item.name} link.`} />
+                </Form.Item>;
+              })
+            }
             <Row style={{ flexDirection: 'row-reverse' }}>
               <Form.Item>
                 <Button type="primary" htmlType="submit">
